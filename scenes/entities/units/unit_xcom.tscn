@@ -1,0 +1,165 @@
+[gd_scene load_steps=23 format=3 uid="uid://bb6lroyh85hju"]
+
+[ext_resource type="Texture2D" uid="uid://b6nafn8umvh6n" path="res://assets/sprites/DISCIPLE_OF_DAGON.png" id="1_7hvb2"]
+[ext_resource type="SpriteFrames" uid="uid://ebvhi7pq2ssa" path="res://assets/tilesets/legs_frames.tres" id="2_y06hx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_65wxq"]
+atlas = ExtResource("1_7hvb2")
+region = Rect2(256, 80, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jp8qa"]
+atlas = ExtResource("1_7hvb2")
+region = Rect2(288, 80, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a2mpa"]
+atlas = ExtResource("1_7hvb2")
+region = Rect2(320, 80, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w57qd"]
+atlas = ExtResource("1_7hvb2")
+region = Rect2(352, 80, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vungd"]
+atlas = ExtResource("1_7hvb2")
+region = Rect2(384, 80, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_od56g"]
+atlas = ExtResource("1_7hvb2")
+region = Rect2(416, 80, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kcbyx"]
+atlas = ExtResource("1_7hvb2")
+region = Rect2(448, 80, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jvw8b"]
+atlas = ExtResource("1_7hvb2")
+region = Rect2(480, 80, 32, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tfv3o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_65wxq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jp8qa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a2mpa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w57qd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vungd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_od56g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kcbyx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jvw8b")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ted8x"]
+atlas = ExtResource("1_7hvb2")
+region = Rect2(0, 120, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o51fu"]
+atlas = ExtResource("1_7hvb2")
+region = Rect2(32, 120, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5dgii"]
+atlas = ExtResource("1_7hvb2")
+region = Rect2(64, 120, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5vru3"]
+atlas = ExtResource("1_7hvb2")
+region = Rect2(96, 120, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cvghn"]
+atlas = ExtResource("1_7hvb2")
+region = Rect2(128, 120, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b8cnl"]
+atlas = ExtResource("1_7hvb2")
+region = Rect2(160, 120, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_acnhg"]
+atlas = ExtResource("1_7hvb2")
+region = Rect2(192, 120, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7vt4y"]
+atlas = ExtResource("1_7hvb2")
+region = Rect2(224, 120, 32, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tqbae"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ted8x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o51fu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5dgii")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5vru3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cvghn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b8cnl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_acnhg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7vt4y")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8o32u"]
+atlas = ExtResource("1_7hvb2")
+region = Rect2(0, 80, 32, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5hklt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8o32u")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="LeftArm" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_tfv3o")
+frame_progress = 0.6725939
+
+[node name="RightArm" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_tqbae")
+frame_progress = 0.700408
+
+[node name="Body" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_5hklt")
+frame_progress = 0.09325246
+
+[node name="Legs" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("2_y06hx")
+animation = &"NE"

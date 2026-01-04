@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bi3jy3gh5rmgd"]
+
+[ext_resource type="Script" uid="uid://cyik5o370gh8s" path="res://scripts/entities/wall.gd" id="1_ylooh"]
+[ext_resource type="Texture2D" uid="uid://cx0svah2ihker" path="res://assets/tilesets/walls.png" id="2_u0bys"]
+
+[node name="Wall" type="Node2D"]
+script = ExtResource("1_ylooh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_u0bys")
+hframes = 16

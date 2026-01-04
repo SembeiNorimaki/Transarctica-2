@@ -1,0 +1,24 @@
+[gd_scene load_steps=6 format=3 uid="uid://c4ootr6722cxr"]
+
+[ext_resource type="TileSet" uid="uid://dq6wq7mdob237" path="res://scenes/maps/terrain.tres" id="1_6jll5"]
+[ext_resource type="TileSet" uid="uid://b3xyt5p8pqsj3" path="res://scenes/maps/units.tres" id="2_4bwdg"]
+[ext_resource type="TileSet" uid="uid://m8lemettqwv0" path="res://scenes/maps/buildings.tres" id="3_4bwdg"]
+[ext_resource type="TileSet" uid="uid://bp81jt0bp4oe3" path="res://scenes/maps/walls.tres" id="4_73fdq"]
+[ext_resource type="TileSet" uid="uid://b34sap0wu11qe" path="res://scenes/maps/roads.tres" id="5_73fdq"]
+
+[node name="GenericMap" type="Node2D"]
+
+[node name="Terrain" type="TileMapLayer" parent="."]
+tile_set = ExtResource("1_6jll5")
+
+[node name="Roads" type="TileMapLayer" parent="."]
+tile_set = ExtResource("5_73fdq")
+
+[node name="Units" type="TileMapLayer" parent="."]
+tile_set = ExtResource("2_4bwdg")
+
+[node name="Buildings" type="TileMapLayer" parent="."]
+tile_set = ExtResource("3_4bwdg")
+
+[node name="Walls" type="TileMapLayer" parent="."]
+tile_set = ExtResource("4_73fdq")

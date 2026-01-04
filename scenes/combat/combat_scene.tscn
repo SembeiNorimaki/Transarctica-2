@@ -1,0 +1,126 @@
+[gd_scene load_steps=25 format=3 uid="uid://c68jhe1kv0a2s"]
+
+[ext_resource type="Script" uid="uid://c0ko7vg1yfs6e" path="res://scripts/combat_scene.gd" id="1_jecyb"]
+[ext_resource type="PackedScene" uid="uid://crkg3fnf4hnfd" path="res://scenes/combat/managers/unit_manager.tscn" id="2_n81vl"]
+[ext_resource type="PackedScene" uid="uid://c3mqqpvan0hte" path="res://scenes/maps/level_1.tscn" id="2_w220i"]
+[ext_resource type="PackedScene" uid="uid://cacigncdesbk0" path="res://scenes/combat/managers/building_manager.tscn" id="3_w220i"]
+[ext_resource type="PackedScene" uid="uid://cppu4nf8qtuhw" path="res://scenes/combat/managers/wall_manager.tscn" id="5_3c7v3"]
+[ext_resource type="PackedScene" uid="uid://ch1611f2p6brv" path="res://scenes/combat/controllers/camera_controller.tscn" id="7_ptoiq"]
+[ext_resource type="PackedScene" uid="uid://0m4i4uv2gkbt" path="res://scenes/combat/managers/selection_manager.tscn" id="7_ycbfl"]
+[ext_resource type="Script" uid="uid://d2oce6gqr1km1" path="res://scripts/overlays/units_overlay.gd" id="10_3c7v3"]
+[ext_resource type="Script" uid="uid://0ss8oruyrctq" path="res://scripts/services/grid_service.gd" id="10_rui7j"]
+[ext_resource type="Script" uid="uid://b3m21ey262gd6" path="res://scripts/services/tile_occupancy_service.gd" id="11_1ny26"]
+[ext_resource type="Script" uid="uid://bjmpeorfb3bal" path="res://scripts/overlays/buildings_overlay.gd" id="11_etgvb"]
+[ext_resource type="Script" uid="uid://bq2b3d3l2wv0e" path="res://scripts/services/terrain_service.gd" id="11_rui7j"]
+[ext_resource type="Script" uid="uid://ja6lxsbuuwp6" path="res://scripts/services/road_service.gd" id="11_wpptk"]
+[ext_resource type="Script" uid="uid://b4jd85mhfrf6m" path="res://scripts/state_machine/combat_state_machine.gd" id="12_eseuk"]
+[ext_resource type="Script" uid="uid://dl0vi3dty8ifv" path="res://scripts/overlays/walls_overlay.gd" id="12_gai5b"]
+[ext_resource type="Script" uid="uid://cc3jvcdr0an6x" path="res://scripts/services/pathfinding_service.gd" id="12_wpptk"]
+[ext_resource type="Script" uid="uid://cik144jwb0o5k" path="res://scripts/overlays/roads_overlay.gd" id="13_eq4tg"]
+[ext_resource type="Script" uid="uid://f5sk7dbtjeks" path="res://scripts/overlays/paths_overlay.gd" id="15_b5i4r"]
+[ext_resource type="Script" uid="uid://7snu4imr82xi" path="res://scripts/state_machine/idle_state.gd" id="15_eq4tg"]
+[ext_resource type="Script" uid="uid://csssto82cb0js" path="res://scripts/state_machine/unit_selected_state.gd" id="16_vtex6"]
+[ext_resource type="Script" uid="uid://d20m1xg8tspgg" path="res://scripts/state_machine/aiming_state.gd" id="17_ycbfl"]
+[ext_resource type="Script" uid="uid://b7axsd2sfd5fa" path="res://scripts/state_machine/unit_moving_state.gd" id="21_1ny26"]
+[ext_resource type="PackedScene" uid="uid://bb6lroyh85hju" path="res://scenes/entities/units/unit_xcom.tscn" id="23_be03f"]
+[ext_resource type="PackedScene" uid="uid://wpbgnm7ncbc3" path="res://scenes/entities/units/ghost.tscn" id="24_4f2bx"]
+
+[node name="CombatScene" type="Node2D"]
+script = ExtResource("1_jecyb")
+
+[node name="MapRoot" type="Node2D" parent="."]
+
+[node name="Level1" parent="MapRoot" instance=ExtResource("2_w220i")]
+
+[node name="Managers" type="Node" parent="."]
+
+[node name="UnitManager" parent="Managers" instance=ExtResource("2_n81vl")]
+
+[node name="BuildingManager" parent="Managers" instance=ExtResource("3_w220i")]
+
+[node name="WallManager" parent="Managers" instance=ExtResource("5_3c7v3")]
+
+[node name="SelectionManager" parent="Managers" instance=ExtResource("7_ycbfl")]
+
+[node name="Controllers" type="Node" parent="."]
+
+[node name="CameraController" parent="Controllers" instance=ExtResource("7_ptoiq")]
+
+[node name="Services" type="Node" parent="."]
+
+[node name="RoadService" type="Node" parent="Services"]
+script = ExtResource("11_wpptk")
+
+[node name="TerrainService" type="Node" parent="Services"]
+script = ExtResource("11_rui7j")
+
+[node name="GridService" type="Node" parent="Services"]
+script = ExtResource("10_rui7j")
+
+[node name="TileOccupancyService" type="Node" parent="Services"]
+script = ExtResource("11_1ny26")
+
+[node name="PathfindingService" type="Node" parent="Services"]
+script = ExtResource("12_wpptk")
+
+[node name="Containers" type="Node2D" parent="."]
+
+[node name="Units" type="Node2D" parent="Containers"]
+
+[node name="Buildings" type="Node2D" parent="Containers"]
+
+[node name="Roads" type="Node2D" parent="Containers"]
+position = Vector2(0, 2)
+
+[node name="Walls" type="Node2D" parent="Containers"]
+
+[node name="Overlays" type="Node2D" parent="."]
+
+[node name="UnitsOverlay" type="Node2D" parent="Overlays"]
+script = ExtResource("10_3c7v3")
+
+[node name="BuildingsOverlay" type="Node2D" parent="Overlays"]
+script = ExtResource("11_etgvb")
+
+[node name="WallsOverlay" type="Node2D" parent="Overlays"]
+script = ExtResource("12_gai5b")
+
+[node name="RoadsOverlay" type="Node2D" parent="Overlays"]
+script = ExtResource("13_eq4tg")
+
+[node name="PathsOverlay" type="Node2D" parent="Overlays"]
+script = ExtResource("15_b5i4r")
+
+[node name="CombatStateMachine" type="Node" parent="."]
+script = ExtResource("12_eseuk")
+
+[node name="IdleState" type="Node" parent="CombatStateMachine"]
+script = ExtResource("15_eq4tg")
+
+[node name="UnitSelectedState" type="Node" parent="CombatStateMachine"]
+script = ExtResource("16_vtex6")
+
+[node name="UnitMovingState" type="Node" parent="CombatStateMachine"]
+script = ExtResource("21_1ny26")
+
+[node name="AimingState" type="Node" parent="CombatStateMachine"]
+script = ExtResource("17_ycbfl")
+
+[node name="Labels" type="CanvasLayer" parent="."]
+
+[node name="StateLabel" type="Label" parent="Labels"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "AAA"
+
+[node name="FPSLabel" type="Label" parent="Labels"]
+offset_top = 18.0
+offset_right = 40.0
+offset_bottom = 41.0
+text = "FPS"
+
+[node name="Node2D" parent="." instance=ExtResource("23_be03f")]
+position = Vector2(35, 278)
+
+[node name="Node2D2" parent="." instance=ExtResource("24_4f2bx")]
+position = Vector2(16, 278)

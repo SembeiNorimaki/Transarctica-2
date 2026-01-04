@@ -1,0 +1,80 @@
+[gd_scene load_steps=12 format=3 uid="uid://wpbgnm7ncbc3"]
+
+[ext_resource type="Texture2D" uid="uid://4pyyiieltlx2" path="res://assets/sprites/GhostBlue.png" id="1_qfiam"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4yqf1"]
+atlas = ExtResource("1_qfiam")
+region = Rect2(2, 2, 40, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ujehq"]
+atlas = ExtResource("1_qfiam")
+region = Rect2(2, 41, 40, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xxieq"]
+atlas = ExtResource("1_qfiam")
+region = Rect2(2, 80, 40, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tlgxu"]
+atlas = ExtResource("1_qfiam")
+region = Rect2(2, 119, 40, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a8i62"]
+atlas = ExtResource("1_qfiam")
+region = Rect2(2, 158, 40, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lgc52"]
+atlas = ExtResource("1_qfiam")
+region = Rect2(2, 197, 40, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jtttc"]
+atlas = ExtResource("1_qfiam")
+region = Rect2(2, 236, 40, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sjrnw"]
+atlas = ExtResource("1_qfiam")
+region = Rect2(2, 275, 40, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vclsc"]
+atlas = ExtResource("1_qfiam")
+region = Rect2(2, 314, 40, 36)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_t1jbh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4yqf1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ujehq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xxieq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tlgxu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a8i62")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lgc52")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jtttc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sjrnw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vclsc")
+}],
+"loop": true,
+"name": &"N",
+"speed": 5.0
+}]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_t1jbh")
+animation = &"N"

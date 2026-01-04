@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2h1ersdlkl0y"]
+
+[ext_resource type="Script" uid="uid://dgb4c3nujsfhb" path="res://scripts/entities/building_types.gd" id="1_ar65x"]
+
+[node name="BuildingTypes" type="Node"]
+script = ExtResource("1_ar65x")

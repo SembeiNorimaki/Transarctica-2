@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://00ientiahpfi"]
+
+[ext_resource type="PackedScene" uid="uid://bt6edw4t4rxak" path="res://scenes/entities/units/unit.tscn" id="1_4mb72"]
+
+[node name="Tank" instance=ExtResource("1_4mb72")]
+
+[node name="Sprite" parent="." index="0"]
+frame = 8

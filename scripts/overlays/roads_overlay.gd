@@ -1,0 +1,32 @@
+extends Node2D
+
+var grid_service: GridService
+var tile_occupancy_service: TileOccupancyService
+var road_service: RoadService
+
+func _ready():
+	set_process(false)
+	#update()
+
+func redraw():
+	pass
+	_draw()
+
+func _draw():
+	if grid_service == null or tile_occupancy_service == null:
+		return
+	for tile in road_service.get_occupied_tiles():
+		var world_pos = grid_service.tile_to_world(tile)
+		var local_pos = grid_service.world_to_screen(world_pos)
+		
+		var half_width = grid_service.tile_size.x / 2.0
+		var half_height = grid_service.tile_size.y / 2.0
+		
+		var points = PackedVector2Array([
+			local_pos + Vector2(0, -half_height), # Top
+			local_pos + Vector2(half_width, 0), # Right
+			local_pos + Vector2(0, half_height), # Bottom
+			local_pos + Vector2(-half_width, 0) # Left
+		])
+		draw_colored_polygon(points, Color(1.0, 1.0, 0.0, 0.3))
+		#draw_circle(local_pos, 5, Color(1.0, 1.0, 0.0))

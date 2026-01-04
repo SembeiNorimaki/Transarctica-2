@@ -1,0 +1,67 @@
+[gd_resource type="SpriteFrames" load_steps=10 format=3 uid="uid://ebvhi7pq2ssa"]
+
+[ext_resource type="Texture2D" uid="uid://b6nafn8umvh6n" path="res://assets/sprites/DISCIPLE_OF_DAGON.png" id="1_dihgt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wqnqc"]
+atlas = ExtResource("1_dihgt")
+region = Rect2(256, 120, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jav6h"]
+atlas = ExtResource("1_dihgt")
+region = Rect2(288, 120, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4u4i5"]
+atlas = ExtResource("1_dihgt")
+region = Rect2(320, 120, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2fo4y"]
+atlas = ExtResource("1_dihgt")
+region = Rect2(352, 120, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ki4ap"]
+atlas = ExtResource("1_dihgt")
+region = Rect2(384, 120, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u3h1k"]
+atlas = ExtResource("1_dihgt")
+region = Rect2(416, 120, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_snu4f"]
+atlas = ExtResource("1_dihgt")
+region = Rect2(448, 120, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dklrq"]
+atlas = ExtResource("1_dihgt")
+region = Rect2(480, 120, 32, 40)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wqnqc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jav6h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4u4i5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2fo4y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ki4ap")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u3h1k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_snu4f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dklrq")
+}],
+"loop": true,
+"name": &"NE",
+"speed": 5.0
+}]
