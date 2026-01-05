@@ -1,9 +1,9 @@
 extends Node
 class_name AimingState
 
-var machine: CombatStateMachine
+var machine: StateMachine
 # Injected by CombatStateMachine
-var combat_scene: Node2D
+var parent_scene: Node2D
 
 func _ready():
     machine = get_parent()

@@ -13,15 +13,15 @@
 [ext_resource type="Script" uid="uid://bjmpeorfb3bal" path="res://scripts/overlays/buildings_overlay.gd" id="11_etgvb"]
 [ext_resource type="Script" uid="uid://bq2b3d3l2wv0e" path="res://scripts/services/terrain_service.gd" id="11_rui7j"]
 [ext_resource type="Script" uid="uid://ja6lxsbuuwp6" path="res://scripts/services/road_service.gd" id="11_wpptk"]
-[ext_resource type="Script" uid="uid://b4jd85mhfrf6m" path="res://scripts/state_machine/combat_state_machine.gd" id="12_eseuk"]
 [ext_resource type="Script" uid="uid://dl0vi3dty8ifv" path="res://scripts/overlays/walls_overlay.gd" id="12_gai5b"]
 [ext_resource type="Script" uid="uid://cc3jvcdr0an6x" path="res://scripts/services/pathfinding_service.gd" id="12_wpptk"]
 [ext_resource type="Script" uid="uid://cik144jwb0o5k" path="res://scripts/overlays/roads_overlay.gd" id="13_eq4tg"]
 [ext_resource type="Script" uid="uid://f5sk7dbtjeks" path="res://scripts/overlays/paths_overlay.gd" id="15_b5i4r"]
-[ext_resource type="Script" uid="uid://7snu4imr82xi" path="res://scripts/state_machine/idle_state.gd" id="15_eq4tg"]
-[ext_resource type="Script" uid="uid://csssto82cb0js" path="res://scripts/state_machine/unit_selected_state.gd" id="16_vtex6"]
-[ext_resource type="Script" uid="uid://d20m1xg8tspgg" path="res://scripts/state_machine/aiming_state.gd" id="17_ycbfl"]
-[ext_resource type="Script" uid="uid://b7axsd2sfd5fa" path="res://scripts/state_machine/unit_moving_state.gd" id="21_1ny26"]
+[ext_resource type="Script" uid="uid://7snu4imr82xi" path="res://scripts/combat_state_machine/idle_state.gd" id="15_eq4tg"]
+[ext_resource type="Script" uid="uid://csssto82cb0js" path="res://scripts/combat_state_machine/unit_selected_state.gd" id="16_vtex6"]
+[ext_resource type="Script" uid="uid://d20m1xg8tspgg" path="res://scripts/combat_state_machine/aiming_state.gd" id="17_ycbfl"]
+[ext_resource type="Script" uid="uid://k8wb022mp2v5" path="res://scripts/state_machine.gd" id="18_4f2bx"]
+[ext_resource type="Script" uid="uid://b7axsd2sfd5fa" path="res://scripts/combat_state_machine/unit_moving_state.gd" id="21_1ny26"]
 [ext_resource type="PackedScene" uid="uid://bb6lroyh85hju" path="res://scenes/entities/units/unit_xcom.tscn" id="23_be03f"]
 [ext_resource type="PackedScene" uid="uid://wpbgnm7ncbc3" path="res://scenes/entities/units/ghost.tscn" id="24_4f2bx"]
 
@@ -92,7 +92,7 @@ script = ExtResource("13_eq4tg")
 script = ExtResource("15_b5i4r")
 
 [node name="CombatStateMachine" type="Node" parent="."]
-script = ExtResource("12_eseuk")
+script = ExtResource("18_4f2bx")
 
 [node name="IdleState" type="Node" parent="CombatStateMachine"]
 script = ExtResource("15_eq4tg")
@@ -120,7 +120,7 @@ offset_bottom = 41.0
 text = "FPS"
 
 [node name="Node2D" parent="." instance=ExtResource("23_be03f")]
-position = Vector2(35, 278)
+position = Vector2(32, 323)
 
 [node name="Node2D2" parent="." instance=ExtResource("24_4f2bx")]
-position = Vector2(16, 278)
+position = Vector2(-118, 286)

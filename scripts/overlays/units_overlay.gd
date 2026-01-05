@@ -8,7 +8,6 @@ func _ready():
 	#update()
 
 func redraw():
-	pass
 	_draw()
 
 func _draw():
