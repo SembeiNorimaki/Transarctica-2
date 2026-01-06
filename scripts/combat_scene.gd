@@ -33,12 +33,11 @@ extends Node2D
 # Labels
 @onready var state_label = $Labels/StateLabel
 
+#region initialization
 func _ready() -> void:
 	_inject_services()
-	_wire_signals()
+	call_deferred("_wire_signals")
 	_load_map("level_1")
-	_initialize_systems()
-
 
 func _inject_services():
 	# Managers
@@ -65,18 +64,23 @@ func _inject_services():
 	pathfinding_service.tile_occupancy_service = tile_occupancy_service
 	pathfinding_service.terrain_service = terrain_service
 	pathfinding_service.road_service = road_service
-
 	
 func _wire_signals():
+	print("Wiring signals")
 	camera_controller.connect("camera_moved", grid_service.update_camera_transform)
 
 	unit_manager.connect("unit_spawned", units_overlay.redraw)
-	unit_manager.connect("unit_tile_changed", units_overlay.redraw)
+	unit_manager.connect("unit_tile_changed", units_overlay.update)
+	unit_manager.connect("unit_tile_changed", paths_overlay.update)
 	unit_manager.connect("unit_removed", units_overlay.redraw)
+	unit_manager.connect("unit_reached_destination", _unit_reached_destination)
 
 	building_manager.connect("building_spawned", buildings_overlay.redraw)
 	building_manager.connect("building_removed", buildings_overlay.redraw)
 
+#endregion
+
+#region Map Loading
 
 func _load_map(map_name: String) -> void:
 	# The default map is already in the scene
@@ -143,18 +147,30 @@ func _spawn_roads_from_map(roads_tilemap: TileMapLayer) -> void:
 	for tile in roads_tilemap.get_used_cells():
 		road_service.spawn_road(tile)
 
-func _initialize_systems() -> void:
-	pass
+#endregion
+
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		var tile = grid_service.screen_to_tile(event.position)
 		state_machine.current_state.handle_click(tile, event.button_index)
+	if event is InputEventKey and event.pressed and not event.echo:
+		state_machine.current_state.handle_key(event)
+
+	
 
 func update_state_label(state_name: String) -> void:
 	if state_label:
 		state_label.text = "State: %s" % state_name
+
+func _unit_reached_destination(unit):
+	state_machine.set_state("IdleState")
+
+func select_next_unit():
+	var next_unit = unit_manager.get_next_unit()
+	if next_unit:
+		state_machine.set_state("UnitSelectedState", {"selected_unit": next_unit})
 
 func _process(delta: float) -> void:
 	$Labels/FPSLabel.text = "FPS: %s" % Engine.get_frames_per_second()

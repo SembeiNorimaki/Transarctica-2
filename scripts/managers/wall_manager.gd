@@ -15,7 +15,7 @@ func _ready() -> void:
 	pass
 
 func spawn_wall(tile_pos, owner_id) -> void:
-	print("Spawning a wall at %s" % tile_pos)
+	# print("Spawning a wall at %s" % tile_pos)
 	var wall = WALL_SCENE.instantiate()
 	
 	# convert tile -> world

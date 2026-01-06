@@ -12,7 +12,7 @@ func _ready() -> void:
 	pass
 
 func spawn_road(tile_pos) -> void:
-	print("Spawning a road at %s" % tile_pos)
+	# print("Spawning a road at %s" % tile_pos)
 	# Register road
 	if tile_pos not in road_tiles:
 		road_tiles[tile_pos] = true

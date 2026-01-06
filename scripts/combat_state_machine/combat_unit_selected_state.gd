@@ -12,14 +12,30 @@ var preview_path: Array[Vector2i] = []
 func _ready():
 	state_machine = get_parent()
 	
-func enter(prev):
-	print("Entered unit selected state with unit %s" % selected_unit)
-	print(parent_scene.selection_manager)
+func enter(prev, params={}):
+	selected_unit = params["selected_unit"]
 	parent_scene.selection_manager.select_unit(selected_unit)
 
-func exit(next):
+func exit(next, params={}):
 	print("Exiting unit selected state")
-	parent_scene.selection_manager.clear_selection()
+	#parent_scene.selection_manager.clear_selection()
+
+func update(delta: float):
+	pass
+
+func _confirm_move():
+	# Order the unit to move
+	var unit_manager = parent_scene.unit_manager
+	unit_manager.start_unit_movement(selected_unit, preview_path)
+
+	# Clear preview
+	#preview_tile = Vector2i(-1, -1)
+	#preview_path.clear()
+	#parent_scene.paths_overlay.clear_path()
+
+	# Transition to moving state
+	state_machine.set_state("UnitMovingState", {"selected_unit": selected_unit})
+
 
 func handle_click(tile: Vector2i, button_index: int):
 	if button_index == MOUSE_BUTTON_LEFT:
@@ -36,9 +52,7 @@ func handle_click(tile: Vector2i, button_index: int):
 		
 		# case 3: clicked a different unit -> select it
 		elif units[0] != selected_unit:
-			var next = state_machine.states["UnitSelectedState"]
-			next.selected_unit = units[0]
-			state_machine.set_state("UnitSelectedState")
+			state_machine.set_state("UnitSelectedState", units[0])
 	
 	elif button_index == MOUSE_BUTTON_RIGHT:
 		# Clicked on the same tile -> confirm path
@@ -60,21 +74,14 @@ func handle_click(tile: Vector2i, button_index: int):
 		
 		# store preview tile and path
 		preview_tile = tile
+		#path.pop_front()  # remove the first element of the path, since it's the current tile
 		preview_path = path
 		
 		# draw path overlay
 		parent_scene.paths_overlay.show_path(path)
 
-
-func _confirm_move():
-	# Order the unit to move
-	var unit_manager = parent_scene.unit_manager
-	unit_manager.start_unit_movement(selected_unit, preview_path)
-
-	# Clear preview
-	#preview_tile = Vector2i(-1, -1)
-	#preview_path.clear()
-	#parent_scene.paths_overlay.clear_path()
-
-	# Transition to moving state
-	state_machine.set_state("UnitMovingState")
+func handle_key(event: InputEventKey):
+	if event.is_action_pressed("tab"): 
+		parent_scene.select_next_unit()
+	elif event.is_action_pressed("a"):
+		state_machine.set_state("UnitAimingState")

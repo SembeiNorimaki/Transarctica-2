@@ -1,5 +1,5 @@
 extends Node
-class_name StateMachine
+class_name StateMachineOLD
 
 var parent_scene: Node2D
 var current_state: Node = null

@@ -28,7 +28,7 @@ func unregister(tile: Vector2i, entity: Object) -> void:
         _occupied_tiles.erase(tile)
 
 
-# QUERIES
+#region QUERIES
 func get_entities(tile: Vector2i) -> Array:
     return _occupied_tiles.get(tile, [])
 
@@ -65,6 +65,7 @@ func is_occupied(tile: Vector2i) -> bool:
     
 func is_blocked(tile: Vector2i) -> bool:
     return is_occupied(tile)
+#endregion
 
 # DEBUGGING HELPERS
 func get_all_occupied_tiles() -> Array:

@@ -1,5 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://bxvy71vn0m6d3"]
+[gd_scene load_steps=3 format=3 uid="uid://bxvy71vn0m6d3"]
 
 [ext_resource type="PackedScene" uid="uid://bt6edw4t4rxak" path="res://scenes/entities/units/unit.tscn" id="1_o7uc1"]
+[ext_resource type="SpriteFrames" uid="uid://dvmne0640f8o" path="res://assets/tilesets/artillery_frames.tres" id="2_2o3rs"]
 
 [node name="Artillery" instance=ExtResource("1_o7uc1")]
+
+[node name="Sprite" parent="." index="0"]
+sprite_frames = ExtResource("2_2o3rs")
+animation = &"W"
