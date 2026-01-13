@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://clrxlqblyhtyd"
-path="res://.godot/imported/FOREST.PNG-6ab767e61c7900c9382b212f70bbd0b7.ctex"
+uid="uid://dpvmemkma78nb"
+path="res://.godot/imported/CULTIVAT.PNG-8922ddddbe671baf7e1aead43e97a4f8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tilesets/FOREST.PNG"
-dest_files=["res://.godot/imported/FOREST.PNG-6ab767e61c7900c9382b212f70bbd0b7.ctex"]
+source_file="res://assets/tilesets/CULTIVAT.PNG"
+dest_files=["res://.godot/imported/CULTIVAT.PNG-8922ddddbe671baf7e1aead43e97a4f8.ctex"]
 
 [params]
 

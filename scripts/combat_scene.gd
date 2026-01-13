@@ -110,6 +110,9 @@ func _load_map(map_name: String) -> void:
 	_spawn_buildings_from_map(new_map.get_node("Buildings"))
 	_spawn_walls_from_map(new_map.get_node("Walls"))
 	_spawn_roads_from_map(new_map.get_node("Roads"))
+
+
+	grid_service.test()
 	
 	#building_manager.spawn_buildings_from_map(map_instance.buildings)
 	#wall_manager.spawn_walls_from_map(map_instance.walls)
@@ -153,7 +156,9 @@ func _spawn_roads_from_map(roads_tilemap: TileMapLayer) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
-		var tile = grid_service.screen_to_tile(event.position)
+		var world = grid_service.screen_to_world(event.position) 
+		var tile = grid_service.world_to_tile(world)
+		print(event.position, world, tile)
 		state_machine.current_state.handle_click(tile, event.button_index)
 	if event is InputEventKey and event.pressed and not event.echo:
 		state_machine.current_state.handle_key(event)

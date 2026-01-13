@@ -18,9 +18,12 @@ func _ready() -> void:
 	pass
 
 func spawn_building(tile_pos, building_type, owner_id) -> void:
-	print("Spawning a %s" % building_type)
+	print("Spawning a %s at location %s" % [building_type, tile_pos])
 	var building_type_ = BuildingTypes.TYPES[building_type]
 	var building = building_type_.scene.instantiate()
+	var building_footprint_ = building_type_.footprint
+	var building_tiles_ = BuildingTypes.FOOTPRINTS[building_footprint_]
+
 	
 	# convert tile -> world
 	var world_pos = grid_service.tile_to_world(tile_pos)
@@ -33,7 +36,8 @@ func spawn_building(tile_pos, building_type, owner_id) -> void:
 	get_node("../../Containers/Buildings").add_child(building)
 
 	# Register in occupancy
-	tile_occupancy_service.register(tile_pos, building)
+	for tile_ in building_tiles_:
+		tile_occupancy_service.register(tile_, building)
 
 	# Register in buildings_to_tile
 	buildings_to_tile[building] = tile_pos

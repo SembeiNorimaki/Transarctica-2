@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c68jhe1kv0a2s"]
+[gd_scene load_steps=23 format=3 uid="uid://c68jhe1kv0a2s"]
 
 [ext_resource type="Script" uid="uid://c0ko7vg1yfs6e" path="res://scripts/combat_scene.gd" id="1_jecyb"]
 [ext_resource type="PackedScene" uid="uid://crkg3fnf4hnfd" path="res://scenes/combat/managers/unit_manager.tscn" id="2_n81vl"]
@@ -22,8 +22,6 @@
 [ext_resource type="Script" uid="uid://b2h206dmxnp2u" path="res://scripts/combat_state_machine/combat_unit_selected_state.gd" id="20_4f2bx"]
 [ext_resource type="Script" uid="uid://gi7f8o4i1aa" path="res://scripts/combat_state_machine/combat_unit_moving_state.gd" id="21_x34vi"]
 [ext_resource type="Script" uid="uid://du1pqxf1c2pk4" path="res://scripts/combat_state_machine/combat_unit_aiming_state.gd" id="22_4f2bx"]
-[ext_resource type="PackedScene" uid="uid://bb6lroyh85hju" path="res://scenes/entities/units/unit_xcom.tscn" id="23_be03f"]
-[ext_resource type="PackedScene" uid="uid://wpbgnm7ncbc3" path="res://scenes/entities/units/ghost.tscn" id="24_4f2bx"]
 
 [node name="CombatScene" type="Node2D"]
 script = ExtResource("1_jecyb")
@@ -118,9 +116,3 @@ offset_top = 18.0
 offset_right = 40.0
 offset_bottom = 41.0
 text = "FPS"
-
-[node name="Node2D" parent="." instance=ExtResource("23_be03f")]
-position = Vector2(32, 323)
-
-[node name="Node2D2" parent="." instance=ExtResource("24_4f2bx")]
-position = Vector2(-118, 286)

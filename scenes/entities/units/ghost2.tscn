@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://k6nbfetkwqq6"]
+
+[ext_resource type="PackedScene" uid="uid://bt6edw4t4rxak" path="res://scenes/entities/units/unit.tscn" id="1_v3hpd"]
+[ext_resource type="SpriteFrames" uid="uid://1ion1ft07h3n" path="res://assets/sprites/ghost.tres" id="2_vwsx5"]
+
+[node name="Ghost" instance=ExtResource("1_v3hpd")]
+
+[node name="Sprite" parent="." index="0"]
+position = Vector2(0, -17)
+sprite_frames = ExtResource("2_vwsx5")
+animation = &"S"

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://ysig1tby6uoi"]
+
+[ext_resource type="PackedScene" uid="uid://bt6edw4t4rxak" path="res://scenes/entities/units/unit.tscn" id="1_60t8m"]
+[ext_resource type="SpriteFrames" uid="uid://coyrjsvfyxtg5" path="res://assets/tilesets/torso_frames.tres" id="2_klak8"]
+
+[node name="UnitXcom" instance=ExtResource("1_60t8m")]
+
+[node name="Sprite" parent="." index="0"]
+sprite_frames = ExtResource("2_klak8")
+animation = &"NE"
