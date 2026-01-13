@@ -7,7 +7,7 @@ const TYPES = {
     },
     "power_plant": {
         "scene": preload("res://scenes/entities/buildings/power_plant.tscn"),
-        "footprint": Vector2i(1, 1)
+        "footprint": Vector2i(4, 4)
     }
 }
 

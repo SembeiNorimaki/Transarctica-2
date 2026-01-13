@@ -12,7 +12,7 @@ position = Vector2(1, 0)
 tile_map_data = PackedByteArray("AAAHAAIAAAAAAAIAAAAIAAUAAAAAAAMAAAA=")
 
 [node name="Buildings" parent="." index="3"]
-tile_map_data = PackedByteArray("AAABAAEAAAACAAAAAAA=")
+tile_map_data = PackedByteArray("AAABAAEAAAACAAAAAAAMAAMAAAACAAAAAAANAAoAAAACAAAAAAA=")
 
 [node name="Left" parent="XcomBuidings" index="0"]
 tile_map_data = PackedByteArray("AAAPAAoAAAABAAAAAAAPAAkAAAABAAAAAAAPAAgAAAABAAAAAAALAAoAAAABAAAAAAALAAkAAAABAAAAAAALAAgAAAABAAAAAAA=")

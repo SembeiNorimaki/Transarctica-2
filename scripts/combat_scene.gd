@@ -16,6 +16,7 @@ extends Node2D
 @onready var tile_occupancy_service = $Services/TileOccupancyService
 @onready var pathfinding_service = $Services/PathfindingService
 @onready var terrain_service = $Services/TerrainService
+@onready var navigation_graph_service = $Services/NavigationGraphService
 
 # Overlays
 @onready var units_overlay = $Overlays/UnitsOverlay
@@ -23,6 +24,8 @@ extends Node2D
 @onready var walls_overlay = $Overlays/WallsOverlay
 @onready var roads_overlay = $Overlays/RoadsOverlay
 @onready var paths_overlay = $Overlays/PathsOverlay
+@onready var mouse_hover_overlay = $Overlays/MouseHoverOverlay
+@onready var navigation_graph_overlay = $Overlays/NavigationGraphOverlay
 
 # Map 
 @onready var map_root = $MapRoot
@@ -38,6 +41,7 @@ func _ready() -> void:
 	_inject_services()
 	call_deferred("_wire_signals")
 	_load_map("level_1")
+	navigation_graph_service.build_graph()
 
 func _inject_services():
 	# Managers
@@ -59,11 +63,18 @@ func _inject_services():
 	walls_overlay.tile_occupancy_service = tile_occupancy_service
 	roads_overlay.road_service = road_service
 	paths_overlay.grid_service = grid_service
+	mouse_hover_overlay.grid_service = grid_service
+	navigation_graph_overlay.navigation_graph_service = navigation_graph_service
+	navigation_graph_overlay.grid_service = grid_service
 
 	# Services
 	pathfinding_service.tile_occupancy_service = tile_occupancy_service
 	pathfinding_service.terrain_service = terrain_service
 	pathfinding_service.road_service = road_service
+	navigation_graph_service.grid_service = grid_service
+	navigation_graph_service.terrain_service = terrain_service
+	navigation_graph_service.tile_occupancy_service = tile_occupancy_service
+
 	
 func _wire_signals():
 	print("Wiring signals")
@@ -153,10 +164,9 @@ func _spawn_roads_from_map(roads_tilemap: TileMapLayer) -> void:
 #endregion
 
 
-
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
-		var world = grid_service.screen_to_world(event.position) 
+		var world = grid_service.screen_to_world(event.position)
 		var tile = grid_service.world_to_tile(world)
 		print(event.position, world, tile)
 		state_machine.current_state.handle_click(tile, event.button_index)
@@ -164,7 +174,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		state_machine.current_state.handle_key(event)
 
 	
-
 func update_state_label(state_name: String) -> void:
 	if state_label:
 		state_label.text = "State: %s" % state_name

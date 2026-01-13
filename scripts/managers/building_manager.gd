@@ -36,8 +36,8 @@ func spawn_building(tile_pos, building_type, owner_id) -> void:
 	get_node("../../Containers/Buildings").add_child(building)
 
 	# Register in occupancy
-	for tile_ in building_tiles_:
-		tile_occupancy_service.register(tile_, building)
+	for tile_offset in building_tiles_:
+		tile_occupancy_service.register(tile_pos + tile_offset, building)
 
 	# Register in buildings_to_tile
 	buildings_to_tile[building] = tile_pos

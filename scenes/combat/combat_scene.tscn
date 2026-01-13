@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c68jhe1kv0a2s"]
+[gd_scene load_steps=26 format=3 uid="uid://c68jhe1kv0a2s"]
 
 [ext_resource type="Script" uid="uid://c0ko7vg1yfs6e" path="res://scripts/combat_scene.gd" id="1_jecyb"]
 [ext_resource type="PackedScene" uid="uid://crkg3fnf4hnfd" path="res://scenes/combat/managers/unit_manager.tscn" id="2_n81vl"]
@@ -15,11 +15,14 @@
 [ext_resource type="Script" uid="uid://ja6lxsbuuwp6" path="res://scripts/services/road_service.gd" id="11_wpptk"]
 [ext_resource type="Script" uid="uid://dl0vi3dty8ifv" path="res://scripts/overlays/walls_overlay.gd" id="12_gai5b"]
 [ext_resource type="Script" uid="uid://cc3jvcdr0an6x" path="res://scripts/services/pathfinding_service.gd" id="12_wpptk"]
+[ext_resource type="Script" uid="uid://cw1txxugdjt33" path="res://scripts/services/navigation_graph_service.gd" id="13_4f2bx"]
 [ext_resource type="Script" uid="uid://cik144jwb0o5k" path="res://scripts/overlays/roads_overlay.gd" id="13_eq4tg"]
 [ext_resource type="Script" uid="uid://f5sk7dbtjeks" path="res://scripts/overlays/paths_overlay.gd" id="15_b5i4r"]
 [ext_resource type="Script" uid="uid://k8wb022mp2v5" path="res://scripts/state_machine.gd" id="18_4f2bx"]
+[ext_resource type="Script" uid="uid://bi4ij63uyiyhm" path="res://scripts/overlays/mouse_hover_overlay.gd" id="18_be03f"]
 [ext_resource type="Script" uid="uid://clfy4iwe84arf" path="res://scripts/combat_state_machine/combat_idle_state.gd" id="19_be03f"]
 [ext_resource type="Script" uid="uid://b2h206dmxnp2u" path="res://scripts/combat_state_machine/combat_unit_selected_state.gd" id="20_4f2bx"]
+[ext_resource type="Script" uid="uid://tfkljqvf3c22" path="res://scripts/overlays/navigation_graph_overlay.gd" id="20_x34vi"]
 [ext_resource type="Script" uid="uid://gi7f8o4i1aa" path="res://scripts/combat_state_machine/combat_unit_moving_state.gd" id="21_x34vi"]
 [ext_resource type="Script" uid="uid://du1pqxf1c2pk4" path="res://scripts/combat_state_machine/combat_unit_aiming_state.gd" id="22_4f2bx"]
 
@@ -61,6 +64,9 @@ script = ExtResource("11_1ny26")
 [node name="PathfindingService" type="Node" parent="Services"]
 script = ExtResource("12_wpptk")
 
+[node name="NavigationGraphService" type="Node" parent="Services"]
+script = ExtResource("13_4f2bx")
+
 [node name="Containers" type="Node2D" parent="."]
 
 [node name="Units" type="Node2D" parent="Containers"]
@@ -88,6 +94,12 @@ script = ExtResource("13_eq4tg")
 
 [node name="PathsOverlay" type="Node2D" parent="Overlays"]
 script = ExtResource("15_b5i4r")
+
+[node name="MouseHoverOverlay" type="Node2D" parent="Overlays"]
+script = ExtResource("18_be03f")
+
+[node name="NavigationGraphOverlay" type="Node2D" parent="Overlays"]
+script = ExtResource("20_x34vi")
 
 [node name="CombatStateMachine" type="Node" parent="."]
 script = ExtResource("18_4f2bx")
