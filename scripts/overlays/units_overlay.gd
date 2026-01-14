@@ -21,13 +21,12 @@ func _draw():
 	if grid_service == null or tile_occupancy_service == null:
 		return
 	for tile in tile_occupancy_service.get_occupied_tiles():
-		
 		var units = tile_occupancy_service.get_units(tile)
 		if units.is_empty():
 			continue
 		
 		var world_pos = grid_service.tile_to_world(tile)
-		var local_pos = grid_service.world_to_screen(world_pos)
+		var local_pos = world_pos
 		print(tile, world_pos, local_pos)
 		var half_width = grid_service.tile_size.x / 2.0
 		var half_height = grid_service.tile_size.y / 2.0

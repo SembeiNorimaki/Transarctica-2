@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://clrxlqblyhtyd"
-path="res://.godot/imported/FOREST.PNG-6ab767e61c7900c9382b212f70bbd0b7.ctex"
+uid="uid://1rsotxpe31xx"
+path="res://.godot/imported/GhostRed.png-04177389dfd870a68cdcc6a771f9536c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tilesets/FOREST.PNG"
-dest_files=["res://.godot/imported/FOREST.PNG-6ab767e61c7900c9382b212f70bbd0b7.ctex"]
+source_file="res://assets/sprites/GhostRed.png"
+dest_files=["res://.godot/imported/GhostRed.png-04177389dfd870a68cdcc6a771f9536c.ctex"]
 
 [params]
 

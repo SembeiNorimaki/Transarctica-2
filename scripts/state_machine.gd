@@ -1,22 +1,23 @@
 extends Node
 class_name StateMachine
 
-var parent_scene: Node2D = null
+var parent_scene = null
 var current_state: Node = null
 var states: Dictionary = {}
 var id: String
 
-func _ready():	
+func _ready():
 	parent_scene = get_parent()
 	id = parent_scene.name
 	print("State machine %s ready" % id)
 	# Discover all child states automatically
 	for child in get_children():
+		print("Discovered child state %s with parent %s" % [child.name, parent_scene])
 		states[child.name] = child
 		child.parent_scene = parent_scene
 	call_deferred("init")
 
-func init() -> void:	
+func init() -> void:
 	# Initialize to IdleState
 	if states.has("IdleState"):
 		set_state("IdleState")
@@ -27,7 +28,7 @@ func init() -> void:
 func _process(delta: float) -> void:
 	current_state.update(delta)
 	
-func set_state(new_state_str: String, params={}) -> void:
+func set_state(new_state_str: String, params = {}) -> void:
 	var new_state = states[new_state_str]
 	print("SM %s Setting state to %s with params %s" % [id, new_state.name, params])
 	if current_state:

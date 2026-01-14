@@ -1,4 +1,5 @@
 extends Node
+class_name SelectionManager
 
 var selected_unit: Unit = null
 

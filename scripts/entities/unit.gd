@@ -1,7 +1,7 @@
 extends Node2D
 class_name Unit
 
-@onready var sprite : AnimatedSprite2D = $Sprite
+@onready var sprite: AnimatedSprite2D = $Sprite
 @onready var sprite_selected = $SpriteSelected
 @onready var action_sm = $ActionStateMachine
 
@@ -16,6 +16,7 @@ var current_tile = Vector2i(-1, -1)
 var target_tile = Vector2i(-1, -1)
 
 var id: String = ""
+var team_id: String = ""
 var move_speed := 80.0
 var orientation := "SE"
 
@@ -35,6 +36,13 @@ func set_id(id_: String) -> void:
 	else:
 		push_error("Unit already has an id")
 
+
+func set_team(team_id_: String):
+	team_id = team_id_
+	if team_id == "enemy":
+		sprite.modulate = Color.RED
+	
+
 #func _process(delta: float) -> void:
 	#action_sm.update(delta)
 	#var target_pos = grid_service.tile_to_world(target_tile)
@@ -45,7 +53,7 @@ func set_id(id_: String) -> void:
 	#    unit_manager.on_unit_reached_tile(self)
 
 
-func set_state(state: String, params={}) -> void:
+func set_state(state: String, params = {}) -> void:
 	action_sm.set_state(state, params)
 	state_label.text = state
 
@@ -72,4 +80,3 @@ func on_arrived_to_tile(tile: Vector2i):
 func on_movement_finished() -> void:
 	#set_process(false)
 	emit_signal("movement_finished")
-

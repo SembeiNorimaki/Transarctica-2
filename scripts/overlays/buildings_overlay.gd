@@ -4,6 +4,7 @@ var grid_service: GridService
 var tile_occupancy_service: TileOccupancyService
 
 func redraw() -> void:
+    print("Redrawing walls overlay")
     _draw()
 
 func _draw():

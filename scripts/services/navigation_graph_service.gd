@@ -5,6 +5,7 @@ class_name NavigationGraphService
 var grid_service: GridService # conversions between tile, world, and screen coordinates
 var terrain_service: TerrainService
 var tile_occupancy_service: TileOccupancyService # whether a tile is occupied by a unit, building or wall
+var edge_occupancy_service: EdgeOccupancyService
 var map_width := 31
 var map_height := 31
 
@@ -34,18 +35,18 @@ func build_graph():
 	_build_nodes()
 	_build_edges()
 
-#region Public API
-func block_edge(a: Vector2i, b: Vector2i):
-	blocked_edges[_edge_key(a, b)] = true
-	_update_edge(a, b)
+# #region Public API
+# func block_edge(a: Vector2i, b: Vector2i):
+# 	blocked_edges[_edge_key(a, b)] = true
+# 	_update_edge(a, b)
 
-func unblock_edge(a: Vector2i, b: Vector2i):
-	blocked_edges.erase(_edge_key(a, b))
-	_update_edge(a, b)
+# func unblock_edge(a: Vector2i, b: Vector2i):
+# 	blocked_edges.erase(_edge_key(a, b))
+# 	_update_edge(a, b)
 
-func is_edge_blocked(a: Vector2i, b: Vector2i) -> bool:
-	return blocked_edges.has(_edge_key(a, b))
-#endregion
+# func is_edge_blocked(a: Vector2i, b: Vector2i) -> bool:
+# 	return blocked_edges.has(_edge_key(a, b))
+# #endregion
 
 
 #region Graph Construction
@@ -74,7 +75,7 @@ func _build_edges():
 				continue
 			if not nodes[neighbor].walkable:
 				continue
-			if is_edge_blocked(tile, neighbor):
+			if edge_occupancy_service.is_edge_blocked(tile, neighbor):
 				continue
 
 			var edge = EdgeData.new()
@@ -93,5 +94,5 @@ func _edge_key(a: Vector2i, b: Vector2i) -> String:
 func _update_edge(a: Vector2i, b: Vector2i):
 	var key = _edge_key(a, b)
 	if edges.has(key):
-		edges[key].walkable = is_edge_blocked(a, b)
+		edges[key].walkable = edge_occupancy_service.is_edge_blocked(a, b)
 #endregion

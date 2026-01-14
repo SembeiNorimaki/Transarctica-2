@@ -4,6 +4,7 @@ extends Node2D
 @onready var unit_manager = $Managers/UnitManager
 @onready var building_manager = $Managers/BuildingManager
 @onready var wall_manager = $Managers/WallManager
+@onready var turn_manager = $Managers/TurnManager
 
 @onready var selection_manager = $Managers/SelectionManager
 
@@ -17,6 +18,7 @@ extends Node2D
 @onready var pathfinding_service = $Services/PathfindingService
 @onready var terrain_service = $Services/TerrainService
 @onready var navigation_graph_service = $Services/NavigationGraphService
+@onready var edge_occupancy_service = $Services/EdgeOccupancyService
 
 # Overlays
 @onready var units_overlay = $Overlays/UnitsOverlay
@@ -35,13 +37,18 @@ extends Node2D
 
 # Labels
 @onready var state_label = $Labels/StateLabel
+@onready var turn_label = $Labels/TurnLabel
+
 
 #region initialization
 func _ready() -> void:
 	_inject_services()
+	_register_teams()
 	call_deferred("_wire_signals")
 	_load_map("level_1")
 	navigation_graph_service.build_graph()
+
+	turn_manager.start_combat()
 
 func _inject_services():
 	# Managers
@@ -50,10 +57,11 @@ func _inject_services():
 	building_manager.tile_occupancy_service = tile_occupancy_service
 	building_manager.grid_service = grid_service
 	wall_manager.tile_occupancy_service = tile_occupancy_service
+	wall_manager.edge_occupancy_service = edge_occupancy_service
 	wall_manager.grid_service = grid_service
-	#road_service.tile_occupancy_service = tile_occupancy_service
-	#road_service.grid_service = grid_service
-	
+	turn_manager.unit_manager = unit_manager
+	turn_manager.selection_manager = selection_manager
+
 	# Overlays
 	units_overlay.grid_service = grid_service
 	units_overlay.tile_occupancy_service = tile_occupancy_service
@@ -61,6 +69,7 @@ func _inject_services():
 	buildings_overlay.tile_occupancy_service = tile_occupancy_service
 	walls_overlay.grid_service = grid_service
 	walls_overlay.tile_occupancy_service = tile_occupancy_service
+	walls_overlay.edge_occupancy_service = edge_occupancy_service
 	roads_overlay.road_service = road_service
 	paths_overlay.grid_service = grid_service
 	mouse_hover_overlay.grid_service = grid_service
@@ -74,8 +83,13 @@ func _inject_services():
 	navigation_graph_service.grid_service = grid_service
 	navigation_graph_service.terrain_service = terrain_service
 	navigation_graph_service.tile_occupancy_service = tile_occupancy_service
+	navigation_graph_service.edge_occupancy_service = edge_occupancy_service
 
-	
+
+func _register_teams():
+	turn_manager.register_team("player")
+	turn_manager.register_team("enemy")
+
 func _wire_signals():
 	print("Wiring signals")
 	camera_controller.connect("camera_moved", grid_service.update_camera_transform)
@@ -89,10 +103,12 @@ func _wire_signals():
 	building_manager.connect("building_spawned", buildings_overlay.redraw)
 	building_manager.connect("building_removed", buildings_overlay.redraw)
 
+	wall_manager.connect("wall_spawned", walls_overlay.redraw)
+	wall_manager.connect("wall_removed", walls_overlay.redraw)
+
 #endregion
 
 #region Map Loading
-
 func _load_map(map_name: String) -> void:
 	# The default map is already in the scene
 	#if map_name == "level_1":
@@ -133,7 +149,7 @@ func _spawn_units_from_map(units_tilemap: TileMapLayer) -> void:
 	for tile in units_tilemap.get_used_cells():
 		var atlas_coords = units_tilemap.get_cell_atlas_coords(tile)
 		var unit_type = UnitTypes.get_unit_type_from_atlas_coords(atlas_coords)
-		var owner_id = 0
+		var owner_id = UnitTypes.get_owner_id_from_atlas_coords(atlas_coords)
 		unit_manager.spawn_unit(tile, unit_type, owner_id)
 
 		# Remove the placeholder tile
@@ -149,18 +165,30 @@ func _spawn_buildings_from_map(buildings_tilemap: TileMapLayer) -> void:
 		# Remove the placeholder tile
 		buildings_tilemap.erase_cell(tile)
 
-func _spawn_walls_from_map(walls_tilemap: TileMapLayer) -> void:
-	for tile in walls_tilemap.get_used_cells():
-		var owner_id = 0
-		wall_manager.spawn_wall(tile, owner_id)
+func _spawn_walls_from_map(walls_container: Node2D) -> void:
+	# Walls are divided in 3 tilesets: Full, Left & Right
+	var full_tilemap: TileMapLayer = walls_container.get_node("Full")
+	var left_tilemap: TileMapLayer = walls_container.get_node("Left")
+	var right_tilemap: TileMapLayer = walls_container.get_node("Right")
 
+	for tile in full_tilemap.get_used_cells():
+		wall_manager.spawn_full_wall(tile)
 		# Remove the placeholder tile
-		walls_tilemap.erase_cell(tile)
+		full_tilemap.erase_cell(tile)
+
+	for tile in left_tilemap.get_used_cells():
+		wall_manager.spawn_left_wall(tile)
+		# Remove the placeholder tile
+		left_tilemap.erase_cell(tile)
+
+	for tile in right_tilemap.get_used_cells():
+		wall_manager.spawn_right_wall(tile)
+		# Remove the placeholder tile
+		right_tilemap.erase_cell(tile)
 
 func _spawn_roads_from_map(roads_tilemap: TileMapLayer) -> void:
 	for tile in roads_tilemap.get_used_cells():
 		road_service.spawn_road(tile)
-
 #endregion
 
 
@@ -178,6 +206,10 @@ func update_state_label(state_name: String) -> void:
 	if state_label:
 		state_label.text = "State: %s" % state_name
 
+func update_turn_label(turn_id: String) -> void:
+	if turn_label:
+		turn_label.text = "Turn: %s" % turn_id
+
 func _unit_reached_destination(unit):
 	state_machine.set_state("IdleState")
 
@@ -185,6 +217,13 @@ func select_next_unit():
 	var next_unit = unit_manager.get_next_unit()
 	if next_unit:
 		state_machine.set_state("UnitSelectedState", {"selected_unit": next_unit})
+
+func register_units_in_turn_manager():
+	for unit in unit_manager.get_player_units():
+		turn_manager.register_unit("player", unit)
+	for unit in unit_manager.get_enemy_units():
+		turn_manager.register_unit("enemy", unit)
+		
 
 func _process(delta: float) -> void:
 	$Labels/FPSLabel.text = "FPS: %s" % Engine.get_frames_per_second()

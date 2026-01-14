@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://c68jhe1kv0a2s"]
+[gd_scene load_steps=28 format=3 uid="uid://c68jhe1kv0a2s"]
 
 [ext_resource type="Script" uid="uid://c0ko7vg1yfs6e" path="res://scripts/combat_scene.gd" id="1_jecyb"]
 [ext_resource type="PackedScene" uid="uid://crkg3fnf4hnfd" path="res://scenes/combat/managers/unit_manager.tscn" id="2_n81vl"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cacigncdesbk0" path="res://scenes/combat/managers/building_manager.tscn" id="3_w220i"]
 [ext_resource type="PackedScene" uid="uid://cppu4nf8qtuhw" path="res://scenes/combat/managers/wall_manager.tscn" id="5_3c7v3"]
 [ext_resource type="PackedScene" uid="uid://ch1611f2p6brv" path="res://scenes/combat/controllers/camera_controller.tscn" id="7_ptoiq"]
+[ext_resource type="PackedScene" uid="uid://bso7t6rtx8srg" path="res://scenes/combat/managers/turn_manager.tscn" id="7_vjejt"]
 [ext_resource type="PackedScene" uid="uid://0m4i4uv2gkbt" path="res://scenes/combat/managers/selection_manager.tscn" id="7_ycbfl"]
 [ext_resource type="Script" uid="uid://d2oce6gqr1km1" path="res://scripts/overlays/units_overlay.gd" id="10_3c7v3"]
 [ext_resource type="Script" uid="uid://0ss8oruyrctq" path="res://scripts/services/grid_service.gd" id="10_rui7j"]
@@ -17,6 +18,7 @@
 [ext_resource type="Script" uid="uid://cc3jvcdr0an6x" path="res://scripts/services/pathfinding_service.gd" id="12_wpptk"]
 [ext_resource type="Script" uid="uid://cw1txxugdjt33" path="res://scripts/services/navigation_graph_service.gd" id="13_4f2bx"]
 [ext_resource type="Script" uid="uid://cik144jwb0o5k" path="res://scripts/overlays/roads_overlay.gd" id="13_eq4tg"]
+[ext_resource type="Script" uid="uid://d2ktl7ghvdn82" path="res://scripts/services/edge_occupancy_service.gd" id="14_0gh8j"]
 [ext_resource type="Script" uid="uid://f5sk7dbtjeks" path="res://scripts/overlays/paths_overlay.gd" id="15_b5i4r"]
 [ext_resource type="Script" uid="uid://k8wb022mp2v5" path="res://scripts/state_machine.gd" id="18_4f2bx"]
 [ext_resource type="Script" uid="uid://bi4ij63uyiyhm" path="res://scripts/overlays/mouse_hover_overlay.gd" id="18_be03f"]
@@ -43,6 +45,8 @@ script = ExtResource("1_jecyb")
 
 [node name="SelectionManager" parent="Managers" instance=ExtResource("7_ycbfl")]
 
+[node name="TurnManager" parent="Managers" instance=ExtResource("7_vjejt")]
+
 [node name="Controllers" type="Node" parent="."]
 
 [node name="CameraController" parent="Controllers" instance=ExtResource("7_ptoiq")]
@@ -67,16 +71,19 @@ script = ExtResource("12_wpptk")
 [node name="NavigationGraphService" type="Node" parent="Services"]
 script = ExtResource("13_4f2bx")
 
+[node name="EdgeOccupancyService" type="Node" parent="Services"]
+script = ExtResource("14_0gh8j")
+
 [node name="Containers" type="Node2D" parent="."]
-
-[node name="Units" type="Node2D" parent="Containers"]
-
-[node name="Buildings" type="Node2D" parent="Containers"]
 
 [node name="Roads" type="Node2D" parent="Containers"]
 position = Vector2(0, 2)
 
 [node name="Walls" type="Node2D" parent="Containers"]
+
+[node name="Buildings" type="Node2D" parent="Containers"]
+
+[node name="Units" type="Node2D" parent="Containers"]
 
 [node name="Overlays" type="Node2D" parent="."]
 
@@ -121,10 +128,16 @@ script = ExtResource("22_4f2bx")
 [node name="StateLabel" type="Label" parent="Labels"]
 offset_right = 40.0
 offset_bottom = 23.0
-text = "AAA"
+text = "State:"
 
 [node name="FPSLabel" type="Label" parent="Labels"]
 offset_top = 18.0
 offset_right = 40.0
 offset_bottom = 41.0
 text = "FPS"
+
+[node name="TurnLabel" type="Label" parent="Labels"]
+offset_top = 37.0
+offset_right = 45.0
+offset_bottom = 60.0
+text = "Turn: "

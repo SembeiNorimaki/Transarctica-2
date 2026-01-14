@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://bso7t6rtx8srg"]
+
+[ext_resource type="Script" uid="uid://2sbgq8ns7bjj" path="res://scripts/managers/turn_manager.gd" id="1_dcflo"]
+[ext_resource type="Script" uid="uid://k8wb022mp2v5" path="res://scripts/state_machine.gd" id="2_0t54u"]
+[ext_resource type="Script" uid="uid://ddmimfrxyp3bs" path="res://scripts/turn_state_machine/player_turn_state.gd" id="2_s2hvu"]
+[ext_resource type="Script" uid="uid://r8s2y0s44wtq" path="res://scripts/turn_state_machine/enemy_turn_state.gd" id="3_0t54u"]
+
+[node name="TurnManager" type="Node"]
+script = ExtResource("1_dcflo")
+
+[node name="TurnStateMachine" type="Node" parent="."]
+script = ExtResource("2_0t54u")
+metadata/_custom_type_script = "uid://k8wb022mp2v5"
+
+[node name="PlayerTurnState" type="Node" parent="TurnStateMachine"]
+script = ExtResource("2_s2hvu")
+metadata/_custom_type_script = "uid://ddmimfrxyp3bs"
+
+[node name="EnemyTurnState" type="Node" parent="TurnStateMachine"]
+script = ExtResource("3_0t54u")
+metadata/_custom_type_script = "uid://r8s2y0s44wtq"
