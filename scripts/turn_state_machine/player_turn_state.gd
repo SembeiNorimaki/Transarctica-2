@@ -1,19 +1,22 @@
-extends Node
+extends GenericState
 class_name PlayerTurnState
 
 var tm: TurnManager
 var units := []
 var index := 0
-var parent_scene: TurnManager
 
 func _init(tm_: TurnManager) -> void:
     tm = tm_
+
 
 func enter(prev, params = {}):
     units = tm.unit_manager.get_units_by_team("player")
     index = 0
     tm.emit_signal("turn_started", "player")
     _activate_next_unit()
+
+func exit(next, params = {}) -> void:
+    pass
 
 func _activate_next_unit():
     if index >= units.size():
@@ -29,6 +32,3 @@ func on_unit_finished() -> void:
     tm.emit_signal("unit_finished", units[index])
     index += 1
     _activate_next_unit()
-
-func exit(next, params = {}) -> void:
-    pass

@@ -1,7 +1,8 @@
-extends Node
+extends GenericState
+class_name UnitActionMoveState
 
-var parent_scene: Node = null
-var unit : Unit = null
+
+var unit: Unit = null
 
 var delta_to_orientation = {
 	Vector2i(1, 0): "SE",
@@ -32,11 +33,11 @@ var target_position = Vector2i.ZERO
 var target_tile = Vector2i.ZERO
 
 # params should contain injected scenes and parameters needed by the node
-func enter(prev, params={}):    
-	unit = params["unit"] 
-	var current_tile : Vector2i = unit.current_tile
+func enter(prev, params = {}):
+	unit = params["unit"]
+	var current_tile: Vector2i = unit.current_tile
 	target_tile = unit.target_tile
-	var grid_service : GridService = unit.grid_service
+	var grid_service: GridService = unit.grid_service
 
 	target_position = grid_service.tile_to_world(target_tile)
 
@@ -51,7 +52,7 @@ func enter(prev, params={}):
 	# calculate orientation
 
 
-func exit(next, params={}):
+func exit(next, params = {}):
 	pass
 
 func update(delta: float):
@@ -64,6 +65,5 @@ func update(delta: float):
 		unit.position = new_pos
 	
 	
-
 func handle_click(tile: Vector2i, button_index: int):
 	pass

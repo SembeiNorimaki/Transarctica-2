@@ -26,9 +26,10 @@ func _ready() -> void:
 	pass
 	#set_process(false)
 
-func initialize(id_: String) -> void:
+func initialize(id_: String, team_id_: String) -> void:
 	id = id_
 	id_label.text = id
+	set_team(team_id_)
 
 func set_id(id_: String) -> void:
 	if id == "":

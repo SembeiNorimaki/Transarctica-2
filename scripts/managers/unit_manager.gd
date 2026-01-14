@@ -21,7 +21,7 @@ func _ready() -> void:
 	pass
 
 #region unit spawning
-func spawn_unit(tile_pos, unit_type, owner_id) -> void:
+func spawn_unit(tile_pos, unit_type, owner_id: String) -> void:
 	print("Spawning a %s" % unit_type)
 
 	var id = "u" + str(next_unit_id)
@@ -33,7 +33,7 @@ func spawn_unit(tile_pos, unit_type, owner_id) -> void:
 	unit.grid_service = grid_service
 	unit.unit_manager = self
 
-	unit.call_deferred("initialize", id)
+	unit.call_deferred("initialize", id, owner_id)
 	
 	# convert tile -> world
 	var world_pos = grid_service.tile_to_world(tile_pos)
@@ -84,7 +84,7 @@ func get_next_unit() -> Unit:
 #region Movement orchestration
 func start_unit_movement(unit: Unit, path: Array[Vector2i]) -> void:
 	print("Received path %s for unit %s" % [path, unit.id])
-	path.pop_front()  # remove first point since it's the current tile
+	path.pop_front() # remove first point since it's the current tile
 	unit_paths[unit] = path
 	_give_next_tile(unit)
 

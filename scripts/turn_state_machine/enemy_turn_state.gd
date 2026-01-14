@@ -1,15 +1,14 @@
-extends Node
+extends GenericState
 class_name EnemyTurnState
 
 var tm: TurnManager
 var units := []
 var index := 0
-var parent_scene: TurnManager
 
 
-func _init(turn_manager):
-    tm = turn_manager
-
+func _init(tm_):
+    tm = tm_
+   
 func enter(prev, params = {}):
     units = tm.unit_manager.get_units_for_team("enemy")
     units = units.filter(func(u): return not u.is_dead())

@@ -1,9 +1,6 @@
-extends Node
+extends GenericState
 class_name UnitSelectedState
 
-var state_machine: StateMachine
-# Injected by CombatStateMachine
-var parent_scene: Node2D
 var selected_unit: Unit = null
 
 var preview_tile: Vector2i = Vector2i(-1, -1)
@@ -12,11 +9,11 @@ var preview_path: Array[Vector2i] = []
 func _ready():
 	state_machine = get_parent()
 	
-func enter(prev, params={}):
+func enter(prev, params = {}):
 	selected_unit = params["selected_unit"]
-	parent_scene.selection_manager.select_unit(selected_unit)
+	owner_node.selection_manager.select_unit(selected_unit)
 
-func exit(next, params={}):
+func exit(next, params = {}):
 	print("Exiting unit selected state")
 	#parent_scene.selection_manager.clear_selection()
 
@@ -25,7 +22,7 @@ func update(delta: float):
 
 func _confirm_move():
 	# Order the unit to move
-	var unit_manager = parent_scene.unit_manager
+	var unit_manager = owner_node.unit_manager
 	unit_manager.start_unit_movement(selected_unit, preview_path)
 
 	# Clear preview
@@ -40,7 +37,7 @@ func _confirm_move():
 func handle_click(tile: Vector2i, button_index: int):
 	if button_index == MOUSE_BUTTON_LEFT:
 		# Check if there is a unit in this tile:
-		var units: Array = parent_scene.tile_occupancy_service.get_units(tile)
+		var units: Array = owner_node.tile_occupancy_service.get_units(tile)
 
 		# case 1: clicked on a tile without units:
 		if units.size() == 0:
@@ -60,8 +57,8 @@ func handle_click(tile: Vector2i, button_index: int):
 			_confirm_move()
 			return
 		# Otherwise calculate new path
-		var pathfinder = parent_scene.pathfinding_service
-		var unit_manager = parent_scene.unit_manager
+		var pathfinder = owner_node.pathfinding_service
+		var unit_manager = owner_node.unit_manager
 		var unit_tile = unit_manager.get_unit_tile(selected_unit)
 		var path = pathfinder.find_path(unit_tile, tile)
 
@@ -69,7 +66,7 @@ func handle_click(tile: Vector2i, button_index: int):
 			# clear stuff
 			preview_tile = Vector2i(-1, -1)
 			preview_path.clear()
-			parent_scene.paths_overlay.clear_path()
+			owner_node.paths_overlay.clear_path()
 			return
 		
 		# store preview tile and path
@@ -78,10 +75,10 @@ func handle_click(tile: Vector2i, button_index: int):
 		preview_path = path
 		
 		# draw path overlay
-		parent_scene.paths_overlay.show_path(path)
+		owner_node.paths_overlay.show_path(path)
 
 func handle_key(event: InputEventKey):
-	if event.is_action_pressed("tab"): 
-		parent_scene.select_next_unit()
+	if event.is_action_pressed("tab"):
+		owner_node.select_next_unit()
 	elif event.is_action_pressed("a"):
 		state_machine.set_state("UnitAimingState")

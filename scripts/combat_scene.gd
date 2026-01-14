@@ -150,6 +150,8 @@ func _spawn_units_from_map(units_tilemap: TileMapLayer) -> void:
 		var atlas_coords = units_tilemap.get_cell_atlas_coords(tile)
 		var unit_type = UnitTypes.get_unit_type_from_atlas_coords(atlas_coords)
 		var owner_id = UnitTypes.get_owner_id_from_atlas_coords(atlas_coords)
+
+		print("***Spawning unit %s of owner %s at tile %s" % [unit_type, owner_id, tile])
 		unit_manager.spawn_unit(tile, unit_type, owner_id)
 
 		# Remove the placeholder tile
@@ -193,6 +195,9 @@ func _spawn_roads_from_map(roads_tilemap: TileMapLayer) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if _handle_global_input(event):
+		return
+
 	if event is InputEventMouseButton and event.pressed:
 		var world = grid_service.screen_to_world(event.position)
 		var tile = grid_service.world_to_tile(world)
@@ -201,7 +206,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		state_machine.current_state.handle_key(event)
 
-	
+func _handle_global_input(event: InputEvent) -> bool:
+	if event.is_action_pressed("e"):
+		turn_manager.finish_turn()
+		return true
+	return false
+
 func update_state_label(state_name: String) -> void:
 	if state_label:
 		state_label.text = "State: %s" % state_name

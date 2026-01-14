@@ -42,7 +42,6 @@ func _draw():
 
 		var half_width = grid_service.tile_size.x / 2.0
 		var half_height = grid_service.tile_size.y / 2.0
-		print("BBB", edge_str, local_pos)
 
 		var points = PackedVector2Array([
 			local_pos + Vector2(-2, -half_height - 4),

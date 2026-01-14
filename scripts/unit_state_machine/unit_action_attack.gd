@@ -1,11 +1,11 @@
-extends Node
+extends GenericState
+class_name UnitActionAttackState
 
-var parent_scene: Node = null
 
-func enter(prev, params={}):
+func enter(prev, params = {}):
 	pass
 
-func exit(next, params={}):
+func exit(next, params = {}):
 	pass
 
 func update(delta: float):
