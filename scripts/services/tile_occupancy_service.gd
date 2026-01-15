@@ -63,6 +63,14 @@ func get_roads(tile: Vector2i) -> Array:
 func is_occupied(tile: Vector2i) -> bool:
     return _occupied_tiles.has(tile)
     
+func is_occupied_static(tile: Vector2i) -> bool:
+    if _occupied_tiles.has(tile):
+        for entity in _occupied_tiles[tile]:
+            if entity is not Unit:
+                return true
+    return false
+
+
 func is_blocked(tile: Vector2i) -> bool:
     return is_occupied(tile)
 #endregion

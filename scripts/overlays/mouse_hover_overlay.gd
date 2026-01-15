@@ -29,4 +29,4 @@ func _draw():
 			local_pos + Vector2(0, half_height), # Bottom
 			local_pos + Vector2(-half_width, 0) # Left
 		])
-		draw_colored_polygon(points, Color(0.0, 1.0, 0.0, 0.3))
+		#draw_colored_polygon(points, Color(0.0, 1.0, 0.0, 0.3))

@@ -10,10 +10,10 @@ func set_owner_node(owner: Node) -> void:
 func set_state_machine(sm: StateMachine) -> void:
     state_machine = sm
 
-func enter(prev, params = {}):
-    pass
+func enter(params = {}):
+    print("Generic enter")
 
-func exit(next, params = {}):
+func exit(params = {}):
     pass
 
 func update(delta: float):

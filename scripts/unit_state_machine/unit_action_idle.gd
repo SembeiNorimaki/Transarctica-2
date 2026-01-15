@@ -2,10 +2,10 @@ extends GenericState
 
 class_name UnitActionIdleState
 
-func enter(prev, params = {}):
+func enter(params = {}):
 	pass
 
-func exit(next, params = {}):
+func exit(params = {}):
 	pass
 
 func update(delta: float):

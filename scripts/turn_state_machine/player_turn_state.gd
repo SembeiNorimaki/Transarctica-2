@@ -9,13 +9,15 @@ func _init(tm_: TurnManager) -> void:
     tm = tm_
 
 
-func enter(prev, params = {}):
+func enter(params = {}):
+    print("Player Turn State Enter")
     units = tm.unit_manager.get_units_by_team("player")
+    print("EnterEnemyturnstate.Enemyunits: %s" % units)
     index = 0
     tm.emit_signal("turn_started", "player")
     _activate_next_unit()
 
-func exit(next, params = {}) -> void:
+func exit(params = {}) -> void:
     pass
 
 func _activate_next_unit():

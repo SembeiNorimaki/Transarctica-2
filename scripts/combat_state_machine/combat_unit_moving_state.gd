@@ -7,12 +7,12 @@ var selected_unit: Unit = null
 func _ready():
 	pass
 
-func enter(prev, params = {}):
+func enter(params = {}):
 	print("Enter combat unit moving state with params %s", params)
 	selected_unit = params["selected_unit"]
 	#parent_scene.selection_manager.select_unit(selected_unit)
 
-func exit(next, params = {}):
+func exit(params = {}):
 	pass
 	#parent_scene.selection_manager.clear_selection()
 

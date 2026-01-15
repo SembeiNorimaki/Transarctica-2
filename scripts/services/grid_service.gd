@@ -5,6 +5,7 @@ class_name GridService
 # Injected by CombatScene
 var tile_size: Vector2i
 var map_origin: Vector2
+var map_size: Vector2i
 var camera_transform: Transform2D
 
 
@@ -45,6 +46,8 @@ func get_neighbors(tile: Vector2i) -> Array[Vector2i]:
 			if x == 0 and y == 0:
 				continue
 			neighbors.append(tile + Vector2i(x, y))
+
+		neighbors = [tile + Vector2i(1, 0), tile + Vector2i(-1, 0), tile + Vector2i(0, 1), tile + Vector2i(0, -1)]
 	return neighbors
 
 func screen_to_world(screen_pos: Vector2) -> Vector2:

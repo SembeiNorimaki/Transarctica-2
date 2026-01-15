@@ -34,7 +34,4 @@ func _draw():
 		var to_world_pos = grid_service.tile_to_world(to_tile)
 		#var from_screen_pos = inv.xform(from_world_pos)
 		#var to_screen_pos = inv.xform(to_world_pos)
-		if edge.walkable:
-			draw_line(from_world_pos, to_world_pos, blocked_edge_color)
-		else:
-			draw_line(from_world_pos, to_world_pos, edge_color)
+		draw_line(from_world_pos, to_world_pos, blocked_edge_color)

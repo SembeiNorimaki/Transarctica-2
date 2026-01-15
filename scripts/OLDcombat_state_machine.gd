@@ -26,7 +26,7 @@ func init() -> void:
 func set_state(new_state: Node) -> void:
 	print("Setting state to %s" % new_state.name)
 	if current_state:
-		current_state.exit(new_state)
+		current_state.exit({})
 	var prev_state = current_state
 	current_state = new_state
 	parent_scene.update_state_label(new_state.name)

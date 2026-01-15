@@ -33,7 +33,7 @@ var target_position = Vector2i.ZERO
 var target_tile = Vector2i.ZERO
 
 # params should contain injected scenes and parameters needed by the node
-func enter(prev, params = {}):
+func enter(params = {}):
 	unit = params["unit"]
 	var current_tile: Vector2i = unit.current_tile
 	target_tile = unit.target_tile
@@ -52,7 +52,7 @@ func enter(prev, params = {}):
 	# calculate orientation
 
 
-func exit(next, params = {}):
+func exit(params = {}):
 	pass
 
 func update(delta: float):

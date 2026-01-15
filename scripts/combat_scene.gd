@@ -80,6 +80,7 @@ func _inject_services():
 	pathfinding_service.tile_occupancy_service = tile_occupancy_service
 	pathfinding_service.terrain_service = terrain_service
 	pathfinding_service.road_service = road_service
+	pathfinding_service.navigation_graph_service = navigation_graph_service
 	navigation_graph_service.grid_service = grid_service
 	navigation_graph_service.terrain_service = terrain_service
 	navigation_graph_service.tile_occupancy_service = tile_occupancy_service
@@ -132,7 +133,11 @@ func _load_map(map_name: String) -> void:
 	grid_service.map_origin = tile_size / 2
 	tile_occupancy_service.tile_size = tile_size
 
+	grid_service.map_size = new_map.get_node("Terrain").get_used_rect().size
+	print("Map size %s" % grid_service.map_size)
+
 	# Spawn units, buildings, walls, and roads
+	_load_patrol_points_from_map(new_map.get_node("PatrolPoints"))
 	_spawn_units_from_map(new_map.get_node("Units"))
 	_spawn_buildings_from_map(new_map.get_node("Buildings"))
 	_spawn_walls_from_map(new_map.get_node("Walls"))
@@ -144,6 +149,37 @@ func _load_map(map_name: String) -> void:
 	#building_manager.spawn_buildings_from_map(map_instance.buildings)
 	#wall_manager.spawn_walls_from_map(map_instance.walls)
 	#road_service.spawn_roads_from_map(map_instance.roads)
+
+func _load_patrol_points_from_map(patrol_tilemap: TileMapLayer) -> void:
+	var atlas_coords_to_tile_delta = {
+		Vector2i(0, 0): Vector2i(1, -1), # E
+		Vector2i(1, 0): Vector2i(-1, 1), # W
+		Vector2i(2, 0): Vector2i(-1, -1), # N
+		Vector2i(3, 0): Vector2i(1, 1), # S
+		Vector2i(4, 0): Vector2i(0, -1), # NE
+		Vector2i(5, 0): Vector2i(0, 1), # SW
+		Vector2i(6, 0): Vector2i(-1, 0), # NW
+		Vector2i(7, 0): Vector2i(0, 0), # SE
+	}
+
+	print(patrol_tilemap.get_used_cells())
+	var points := []
+
+
+	if patrol_tilemap.get_used_cells().size() == 0:
+		return
+	var tile = patrol_tilemap.get_used_cells()[0]
+	points.append(tile)
+	var next_tile = Vector2i(-1, -1)
+	while true:
+		var atlas_coords = patrol_tilemap.get_cell_atlas_coords(tile)
+		var delta = atlas_coords_to_tile_delta.get(atlas_coords)
+		next_tile = tile + delta
+		if next_tile == tile:
+			break
+		points.append(next_tile)
+		tile = next_tile
+	print("Patrol points: %s" % points)
 
 func _spawn_units_from_map(units_tilemap: TileMapLayer) -> void:
 	for tile in units_tilemap.get_used_cells():

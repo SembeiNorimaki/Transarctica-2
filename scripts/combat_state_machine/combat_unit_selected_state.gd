@@ -9,11 +9,11 @@ var preview_path: Array[Vector2i] = []
 func _ready():
 	state_machine = get_parent()
 	
-func enter(prev, params = {}):
+func enter(params = {}):
 	selected_unit = params["selected_unit"]
 	owner_node.selection_manager.select_unit(selected_unit)
 
-func exit(next, params = {}):
+func exit(params = {}):
 	print("Exiting unit selected state")
 	#parent_scene.selection_manager.clear_selection()
 
@@ -81,4 +81,4 @@ func handle_key(event: InputEventKey):
 	if event.is_action_pressed("tab"):
 		owner_node.select_next_unit()
 	elif event.is_action_pressed("a"):
-		state_machine.set_state("UnitAimingState")
+		state_machine.set_state("UnitAimingState", {"selected_unit": selected_unit})
