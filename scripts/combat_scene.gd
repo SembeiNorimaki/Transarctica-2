@@ -141,6 +141,7 @@ func _load_map(map_name: String) -> void:
 	# load new map
 	var new_map = load(map_path).instantiate()
 	map_root.add_child(new_map)
+	map_root.move_child(new_map, 0)
 
 	# Set tilesize to grid service and tile occupancy service
 	var tile_size = new_map.get_node("Terrain").tile_set.tile_size
