@@ -55,7 +55,8 @@ func spawn_unit(tile_pos, unit_type, owner_id: String) -> void:
 	units_to_tile[unit] = tile_pos
 
 	# Connect the tile_change signal
-	#unit.connect("unit_tile_changed", self._on_unit_tile_changed)
+	#unit.connect("tile_changed", self._on_unit_tile_changed)
+	#	unit.connect("orientation_changed", self._on_unit_orientation_changed)
 
 	emit_signal("unit_spawned", unit)
 
@@ -68,6 +69,11 @@ func _on_unit_tile_changed(unit: Unit, old_tile: Vector2i, new_tile: Vector2i) -
 	tile_occupancy_service.register(new_tile, unit)
 	units_to_tile[unit] = new_tile
 	emit_signal("unit_tile_changed", unit, old_tile, new_tile)
+
+# called by the unit itself
+func on_unit_orientation_changed(unit: Unit, new_orientation: String) -> void:
+	print("AAA unit orientation changed")
+	emit_signal("unit_changed_orientation", unit, new_orientation)
 
 func get_unit_tile(unit: Unit) -> Vector2i:
 	return units_to_tile.get(unit, Vector2i(-1, -1))

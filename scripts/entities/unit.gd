@@ -4,7 +4,8 @@ class_name Unit
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var sprite_selected = $SpriteSelected
 @onready var action_sm = $ActionStateMachine
-@onready var weapon: WeaponComponent = $WeaponComponent
+
+@onready var weapon_service: WeaponService
 
 #Labels
 @onready var id_label = $Labels/IDLabel
@@ -20,8 +21,11 @@ var id: String = ""
 var team_id: String = ""
 var move_speed := 80.0
 var orientation := "SE"
+var view_angle := 90.0
+var view_range := 3
 
 signal movement_finished
+
 
 func _ready() -> void:
 	pass
@@ -37,7 +41,6 @@ func set_id(id_: String) -> void:
 		id = id_
 	else:
 		push_error("Unit already has an id")
-
 
 func set_team(team_id_: String):
 	team_id = team_id_
@@ -58,6 +61,11 @@ func set_team(team_id_: String):
 func set_state(state: String, params = {}) -> void:
 	action_sm.set_state(state, params)
 	state_label.text = state
+
+func set_orientation(new_orientation: String):
+	orientation = new_orientation
+	sprite.set_animation(new_orientation)
+	unit_manager.on_unit_orientation_changed(self, new_orientation)
 
 func update_state_label(state_name: String):
 	state_label.text = name

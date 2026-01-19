@@ -3,11 +3,16 @@ class_name AimingState
 
 # Injected by CombatStateMachine
 var los_service: LOSService
+var weapon_service: WeaponService
 
 var selected_unit: Unit = null
 
+var BULLET_SCENE = preload("res://scenes/entities/projectiles/bullet.tscn")
+
 func _ready():
-	pass
+	#weapon_service = owner_node.weapon_service
+	#los_service = owner_node.los_service
+	print("CUAS ready, owner_node: %s" % owner_node)
 
 func enter(params = {}):
 	print("Enter AimingState with params %s" % params)
@@ -24,10 +29,12 @@ func _attempt_shot(tile: Vector2i):
 	var shooter_tile = shooter.current_tile
 	var target_tile = tile
 
-	if not los_service.has_los(shooter_tile, target_tile):
-		print("NO LOS")
-		return
-	shooter.weapon.shoot(target_tile)
+	print("Attempting shoot: Shooter %s, from %s to %s" % [shooter, shooter_tile, target_tile])
+
+	#if not los_service.has_los(shooter_tile, target_tile):
+	#	print("NO LOS")
+	#	return
+	owner_node.weapon_service.fire_bullet(BULLET_SCENE, shooter_tile, target_tile)
 	
 	
 func handle_click(tile: Vector2i, button_index: int):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bt6edw4t4rxak"]
+[gd_scene load_steps=12 format=3 uid="uid://bt6edw4t4rxak"]
 
 [ext_resource type="Script" uid="uid://cr4ejp4m3f5yb" path="res://scripts/entities/unit.gd" id="1_mqyo6"]
 [ext_resource type="SpriteFrames" uid="uid://cy0513d82j3rm" path="res://assets/sprites/ghostBlue.tres" id="2_hix5a"]
@@ -7,9 +7,8 @@
 [ext_resource type="Script" uid="uid://c23wgmefpnplw" path="res://scripts/unit_state_machine/unit_action_idle.gd" id="5_hix5a"]
 [ext_resource type="Script" uid="uid://cpdskvbchj4oe" path="res://scripts/unit_state_machine/unit_action_move.gd" id="6_fh57n"]
 [ext_resource type="Script" uid="uid://ghiod4tcugeu" path="res://scripts/unit_state_machine/unit_action_attack.gd" id="7_kaxgi"]
-[ext_resource type="Script" uid="uid://b5jyip32og7yp" path="res://scripts/components/hurtbox_component.gd" id="8_y8rb5"]
-[ext_resource type="Script" uid="uid://dcyyyuhbfcmoc" path="res://scripts/components/hitbox_component.gd" id="9_a54ie"]
-[ext_resource type="Script" uid="uid://dkn6tvsnh3y8x" path="res://scripts/components/weapon_component.gd" id="10_a54ie"]
+[ext_resource type="PackedScene" uid="uid://bbca3uoh27o3x" path="res://scenes/combat/components/hurtbox_component.tscn" id="8_y8rb5"]
+[ext_resource type="Script" uid="uid://884o2ey0pyu7" path="res://scripts/components/weapon_component.gd" id="10_a54ie"]
 [ext_resource type="Script" uid="uid://0ar234chl3eu" path="res://scripts/components/health_component.gd" id="10_oj84s"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fh57n"]
@@ -53,21 +52,7 @@ script = ExtResource("6_fh57n")
 [node name="AttackState" type="Node" parent="ActionStateMachine"]
 script = ExtResource("7_kaxgi")
 
-[node name="Weapon" type="Node2D" parent="."]
-
-[node name="HurtboxComponent" type="Area2D" parent="."]
-script = ExtResource("8_y8rb5")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="HurtboxComponent"]
-shape = SubResource("CircleShape2D_fh57n")
-
-[node name="HitboxComponent" type="Area2D" parent="."]
-position = Vector2(0, 1)
-script = ExtResource("9_a54ie")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="HitboxComponent"]
-position = Vector2(0, -1)
-shape = SubResource("CircleShape2D_fh57n")
+[node name="HurtboxComponent" parent="." instance=ExtResource("8_y8rb5")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_fh57n")

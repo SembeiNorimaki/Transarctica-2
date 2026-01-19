@@ -5,8 +5,10 @@ extends Node2D
 @onready var building_manager = $Managers/BuildingManager
 @onready var wall_manager = $Managers/WallManager
 @onready var turn_manager = $Managers/TurnManager
-
 @onready var selection_manager = $Managers/SelectionManager
+
+#Containers
+@onready var projectiles_container = $Containers/Projectiles
 
 # Controllers
 @onready var camera_controller = $Controllers/CameraController
@@ -20,6 +22,8 @@ extends Node2D
 @onready var navigation_graph_service = $Services/NavigationGraphService
 @onready var edge_occupancy_service = $Services/EdgeOccupancyService
 @onready var los_service = $Services/LOSService
+@onready var weapon_service = $Services/WeaponService
+@onready var exploration_service = $Services/ExplorationService
 
 # Overlays
 @onready var units_overlay = $Overlays/UnitsOverlay
@@ -32,6 +36,7 @@ extends Node2D
 
 # Map 
 @onready var map_root = $MapRoot
+@onready var exploration_layer = $MapRoot/ExplorationLayer
 
 # Input State Machine
 @onready var state_machine = $CombatStateMachine
@@ -39,7 +44,7 @@ extends Node2D
 # Labels
 @onready var state_label = $Labels/StateLabel
 @onready var turn_label = $Labels/TurnLabel
-
+@onready var mouse_label = $Labels/MouseLabel
 
 #region initialization
 func _ready() -> void:
@@ -50,12 +55,9 @@ func _ready() -> void:
 	navigation_graph_service.build_graph()
 
 	turn_manager.start_combat()
-
-func _inject_services():
-	# State machines
-	state_machine.states["AimingState"].los_service = los_service
+	exploration_layer.reveal(Vector2i(1, 1))
 	
-
+func _inject_services():
 	# Managers
 	unit_manager.tile_occupancy_service = tile_occupancy_service
 	unit_manager.grid_service = grid_service
@@ -91,7 +93,13 @@ func _inject_services():
 	navigation_graph_service.tile_occupancy_service = tile_occupancy_service
 	navigation_graph_service.edge_occupancy_service = edge_occupancy_service
 	los_service.tile_occupancy_service = tile_occupancy_service
+	
+	weapon_service.los_service = los_service
+	weapon_service.grid_service = grid_service
+	weapon_service.projectiles_container = projectiles_container
 
+	exploration_service.grid_service = grid_service
+	exploration_service.exploration_layer = exploration_layer
 
 func _register_teams():
 	turn_manager.register_team("player")
@@ -106,6 +114,7 @@ func _wire_signals():
 	unit_manager.connect("unit_tile_changed", paths_overlay.update)
 	unit_manager.connect("unit_removed", units_overlay.redraw)
 	unit_manager.connect("unit_reached_destination", _unit_reached_destination)
+	unit_manager.connect("unit_changed_orientation", _unit_changed_orientation)
 
 	building_manager.connect("building_spawned", buildings_overlay.redraw)
 	building_manager.connect("building_removed", buildings_overlay.redraw)
@@ -248,12 +257,16 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		state_machine.current_state.handle_key(event)
 
+	if event is InputEventMouseMotion:
+		update_mouse_label()
+
 func _handle_global_input(event: InputEvent) -> bool:
 	if event.is_action_pressed("e"):
 		turn_manager.finish_turn()
 		return true
 	return false
 
+#region Labels
 func update_state_label(state_name: String) -> void:
 	if state_label:
 		state_label.text = "State: %s" % state_name
@@ -262,8 +275,14 @@ func update_turn_label(turn_id: String) -> void:
 	if turn_label:
 		turn_label.text = "Turn: %s" % turn_id
 
+func update_mouse_label():
+	mouse_label.text = "Mouse: %s, tile: %s" % [round(get_local_mouse_position()), grid_service.world_to_tile(get_global_mouse_position())]
+#endregion
 func _unit_reached_destination(unit):
 	state_machine.set_state("IdleState")
+
+func _unit_changed_orientation(unit, new_orientation):
+	pass
 
 func select_next_unit():
 	var next_unit = unit_manager.get_next_unit()
@@ -276,6 +295,11 @@ func register_units_in_turn_manager():
 	for unit in unit_manager.get_enemy_units():
 		turn_manager.register_unit("enemy", unit)
 		
+func _on_bullet_requested(from, to, scene):
+	var bullet = scene.instantiate()
+	projectiles_container.add_child(bullet)
+	bullet.fire(from, to)
+	
 
 func _process(delta: float) -> void:
 	$Labels/FPSLabel.text = "FPS: %s" % Engine.get_frames_per_second()
