@@ -2,6 +2,7 @@ extends GenericState
 class_name AimingState
 
 # Injected by CombatStateMachine
+var los_service: LOSService
 
 var selected_unit: Unit = null
 
@@ -18,8 +19,21 @@ func exit(params = {}):
 func update(delta: float):
 	pass
 
+func _attempt_shot(tile: Vector2i):
+	var shooter = selected_unit
+	var shooter_tile = shooter.current_tile
+	var target_tile = tile
+
+	if not los_service.has_los(shooter_tile, target_tile):
+		print("NO LOS")
+		return
+	shooter.weapon.shoot(target_tile)
+	
+	
 func handle_click(tile: Vector2i, button_index: int):
 	print("CUAS click %s" % tile)
+	_attempt_shot(tile)
+
 
 func handle_key(event: InputEventKey):
 	print("CUAS handle key %s" % event)

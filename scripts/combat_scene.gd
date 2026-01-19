@@ -19,6 +19,7 @@ extends Node2D
 @onready var terrain_service = $Services/TerrainService
 @onready var navigation_graph_service = $Services/NavigationGraphService
 @onready var edge_occupancy_service = $Services/EdgeOccupancyService
+@onready var los_service = $Services/LOSService
 
 # Overlays
 @onready var units_overlay = $Overlays/UnitsOverlay
@@ -51,6 +52,10 @@ func _ready() -> void:
 	turn_manager.start_combat()
 
 func _inject_services():
+	# State machines
+	state_machine.states["AimingState"].los_service = los_service
+	
+
 	# Managers
 	unit_manager.tile_occupancy_service = tile_occupancy_service
 	unit_manager.grid_service = grid_service
@@ -85,6 +90,7 @@ func _inject_services():
 	navigation_graph_service.terrain_service = terrain_service
 	navigation_graph_service.tile_occupancy_service = tile_occupancy_service
 	navigation_graph_service.edge_occupancy_service = edge_occupancy_service
+	los_service.tile_occupancy_service = tile_occupancy_service
 
 
 func _register_teams():

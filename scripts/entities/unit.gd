@@ -4,6 +4,7 @@ class_name Unit
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var sprite_selected = $SpriteSelected
 @onready var action_sm = $ActionStateMachine
+@onready var weapon: WeaponComponent = $WeaponComponent
 
 #Labels
 @onready var id_label = $Labels/IDLabel
@@ -63,6 +64,9 @@ func update_state_label(state_name: String):
 
 func play_animation(name):
 	sprite.play(name)
+
+func stop_animation():
+	sprite.stop()
 
 func set_selected(selected: bool) -> void:
 	print("Selected: %s" % selected)

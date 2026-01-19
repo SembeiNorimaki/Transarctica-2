@@ -3,7 +3,9 @@ extends GenericState
 class_name UnitActionIdleState
 
 func enter(params = {}):
-	pass
+	if params.has("unit"):
+		var unit: Unit = params["unit"]
+		unit.stop_animation()
 
 func exit(params = {}):
 	pass

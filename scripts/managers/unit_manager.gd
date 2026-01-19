@@ -98,7 +98,7 @@ func _give_next_tile(unit: Unit) -> void:
 
 func _on_unit_reached_destination(unit):
 	# set the unit state to idle
-	unit.set_state("IdleState")
+	unit.set_state("IdleState", {"unit": unit})
 	emit_signal("unit_reached_destination", unit)
 	
 func on_unit_reached_tile(unit: Unit, tile: Vector2i) -> void:
