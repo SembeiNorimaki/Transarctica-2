@@ -6,12 +6,11 @@ var tile_size := Vector2(32, 16)
 var current_tile := Vector2i(-1, -1)
 
 func _process(delta: float) -> void:
-	var mouse_pos = get_viewport().get_mouse_position()
-	var world_pos = grid_service.screen_to_world(mouse_pos)
-	var tile = grid_service.world_to_tile(world_pos + Vector2(0, 8))
+	var mouse_pos = get_local_mouse_position()
+	var tile = grid_service.world_to_tile(mouse_pos)
 	if tile != current_tile:
 		current_tile = tile
-		update()
+		#update()
 
 func update():
 	_draw()

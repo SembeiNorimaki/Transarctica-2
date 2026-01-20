@@ -88,6 +88,7 @@ func _inject_services():
 	los_overlay.grid_service = grid_service
 
 	# Services
+	grid_service.camera_controller = camera_controller
 	pathfinding_service.tile_occupancy_service = tile_occupancy_service
 	pathfinding_service.terrain_service = terrain_service
 	pathfinding_service.road_service = road_service
@@ -115,8 +116,6 @@ func _register_teams():
 
 func _wire_signals():
 	print("Wiring signals")
-	camera_controller.connect("camera_moved", grid_service.update_camera_transform)
-
 	unit_manager.connect("unit_spawned", units_overlay.redraw)
 	unit_manager.connect("unit_tile_changed", units_overlay.update)
 	unit_manager.connect("unit_tile_changed", paths_overlay.update)
@@ -258,9 +257,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 	if event is InputEventMouseButton and event.pressed:
-		var world = grid_service.screen_to_world(event.position)
-		var tile = grid_service.world_to_tile(world)
-		print(event.position, world, tile)
+		var mouse_pos = get_local_mouse_position()
+		var tile = grid_service.world_to_tile(mouse_pos)
+		print("Mouse pos: %s, tile: %s" % [mouse_pos, tile])
 		state_machine.current_state.handle_click(tile, event.button_index)
 	if event is InputEventKey and event.pressed and not event.echo:
 		state_machine.current_state.handle_key(event)
@@ -284,10 +283,10 @@ func update_turn_label(turn_id: String) -> void:
 		turn_label.text = "Turn: %s" % turn_id
 
 func update_mouse_label():
-	mouse_label.text = "Mouse: %s, tile: %s" % [round(get_local_mouse_position()), grid_service.world_to_tile(get_global_mouse_position())]
+	mouse_label.text = "Mouse: %s, tile: %s" % [round(get_local_mouse_position()), grid_service.world_to_tile(get_local_mouse_position())]
 
 func update_camera_label(val):
-	camera_label.text = "Camera: %s" % val
+	camera_label.text = "Camera: Offset %s, Zoom %s" % [camera_controller.offset, camera_controller.zoom]
 
 #endregion
 func _unit_reached_destination(unit):

@@ -8,7 +8,6 @@ var los_overlay: LOSOverlay
 
 
 func bresenham_line(start: Vector2i, end: Vector2i) -> Array[Vector2i]:
-	print("Bresenham Line between %s and %s" % [start, end])
 	var tiles: Array[Vector2i] = []
 
 	var x0 = start.x
@@ -50,7 +49,7 @@ func bresenham_line(start: Vector2i, end: Vector2i) -> Array[Vector2i]:
 
 func bresenham_line_diagonals(start: Vector2i, end: Vector2i) -> Array[Vector2i]:
 	print("Bresenham Line between %s and %s" % [start, end])
-	var tiles : Array[Vector2i] = []
+	var tiles: Array[Vector2i] = []
 	var x0 = start.x
 	var y0 = start.y
 	var x1 = end.x
@@ -84,9 +83,9 @@ func has_los(start: Vector2i, end: Vector2i) -> bool:
 	print("Calculating LOS between %s and %s" % [start, end])
 	var tiles = bresenham_line(start, end)
 
-	for i in range(1, tiles.size()-1):
+	for i in range(1, tiles.size() - 1):
 		var tile1 = tiles[i]
-		var tile2 = tiles[i+1]
+		var tile2 = tiles[i + 1]
 		var is_blocked = edge_occupancy_service.is_edge_blocked(tile1, tile2)
 		if is_blocked:
 			print("LOS Blocked")

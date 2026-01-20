@@ -1,7 +1,7 @@
 extends Node2D
 class_name Bullet
 
-var speed: float = 600.0
+var speed: float = 6.0
 var damage: int = 3
 var max_distance: float = 1200.0
 var distance_travelled: float = 0.0

@@ -16,5 +16,6 @@ func fire_bullet(bullet_scene: PackedScene, from_tile: Vector2i, to_tile: Vector
 	var to_pos = grid_service.tile_to_world(to_tile)
 	print("Firing bullet from %s to %s" % [from_pos, to_pos])
 	var bullet = bullet_scene.instantiate()
+	bullet.position = from_pos
 	projectiles_container.add_child(bullet)
 	bullet.fire(from_pos, to_pos)
