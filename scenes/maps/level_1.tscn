@@ -480,8 +480,12 @@ tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAA
 
 [node name="Units" parent="." index="2"]
 position = Vector2(1, 0)
-tile_map_data = PackedByteArray("AAAGAAYAAAAAAAIAAAA=")
+tile_map_data = PackedByteArray("AAAGAAYAAAAAAAIAAAADAAUAAAAAAAMAAAA=")
+
+[node name="Right" parent="Walls" index="1"]
+tile_map_data = PackedByteArray("AAAGAAMAAAAAAAAAAAAIAAMAAAAAAAAAAAAHAAMAAAAAAAAAAAAJAAMAAAAAAAAAAAAKAAMAAAAAAAAAAAA=")
 
 [node name="Left" parent="Walls" index="2"]
 position = Vector2(2, 0)
+tile_map_data = PackedByteArray("AAAKAAMAAAABAAAAAAAKAAIAAAABAAAAAAAKAAQAAAABAAAAAAAKAAUAAAABAAAAAAA=")
 tile_set = SubResource("TileSet_oin7f")

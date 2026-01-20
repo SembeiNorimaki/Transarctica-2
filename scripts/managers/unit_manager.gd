@@ -15,6 +15,7 @@ var cycle_idx = -1
 signal unit_spawned(unit)
 signal unit_tile_changed(unit, old_tile, new_tile)
 signal unit_reached_destination(unit)
+signal unit_changed_orientation(unit, new_orientation)
 
 
 func _ready() -> void:
@@ -72,7 +73,7 @@ func _on_unit_tile_changed(unit: Unit, old_tile: Vector2i, new_tile: Vector2i) -
 
 # called by the unit itself
 func on_unit_orientation_changed(unit: Unit, new_orientation: String) -> void:
-	print("AAA unit orientation changed")
+	
 	emit_signal("unit_changed_orientation", unit, new_orientation)
 
 func get_unit_tile(unit: Unit) -> Vector2i:

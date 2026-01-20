@@ -22,7 +22,7 @@ var team_id: String = ""
 var move_speed := 80.0
 var orientation := "SE"
 var view_angle := 90.0
-var view_range := 3
+var view_range := 8
 
 signal movement_finished
 
@@ -66,6 +66,15 @@ func set_orientation(new_orientation: String):
 	orientation = new_orientation
 	sprite.set_animation(new_orientation)
 	unit_manager.on_unit_orientation_changed(self, new_orientation)
+	queue_redraw()
+	
+	
+
+func _draw():
+	var dst_tile = grid_service.ORIENTATION_VECTORS[orientation] * 4
+	var pos = grid_service.delta_tile_to_world(dst_tile)
+	draw_line(Vector2.ZERO, pos, Color.BLUE, 2)
+	queue_redraw()
 
 func update_state_label(state_name: String):
 	state_label.text = name

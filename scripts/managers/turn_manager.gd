@@ -37,7 +37,7 @@ func finish_turn():
 		turn_state_machine.set_state("PlayerTurnState")
 
 func update_state_label(state_name) -> void:
-	print("AAA", state_name)
+	pass
 
 #Initialization
 func register_team(team_id: String) -> void:

@@ -1,10 +1,46 @@
-[gd_scene load_steps=3 format=3 uid="uid://ysig1tby6uoi"]
+[gd_scene load_steps=8 format=3 uid="uid://ysig1tby6uoi"]
 
 [ext_resource type="PackedScene" uid="uid://bt6edw4t4rxak" path="res://scenes/entities/units/unit.tscn" id="1_60t8m"]
+[ext_resource type="Script" uid="uid://xboi5aqk1pxk" path="res://scripts/entities/unit_xcom_2.gd" id="2_gbknk"]
 [ext_resource type="SpriteFrames" uid="uid://coyrjsvfyxtg5" path="res://assets/tilesets/torso_frames.tres" id="2_klak8"]
+[ext_resource type="SpriteFrames" uid="uid://ebvhi7pq2ssa" path="res://assets/tilesets/legs_frames.tres" id="3_mbsxs"]
+[ext_resource type="SpriteFrames" uid="uid://b5ha7vwfg0e0p" path="res://assets/tilesets/right_arm_weapon_frames.tres" id="4_gbknk"]
+[ext_resource type="SpriteFrames" uid="uid://b512e6mogavan" path="res://assets/tilesets/left_arm_frames.tres" id="5_sq8og"]
+[ext_resource type="SpriteFrames" uid="uid://ik2saq3tsh6y" path="res://assets/tilesets/weapon_frames.tres" id="6_3u80e"]
 
 [node name="UnitXcom" instance=ExtResource("1_60t8m")]
+script = ExtResource("2_gbknk")
 
-[node name="Sprite" parent="." index="0"]
+[node name="Parts" type="Node2D" parent="." index="0"]
+position = Vector2(0, -12)
+
+[node name="Torso" type="AnimatedSprite2D" parent="Parts" index="0"]
+sprite_frames = ExtResource("2_klak8")
+animation = &"W"
+
+[node name="Legs" type="AnimatedSprite2D" parent="Parts" index="1"]
+sprite_frames = ExtResource("3_mbsxs")
+animation = &"E"
+
+[node name="RightArmWeapon" type="AnimatedSprite2D" parent="Parts" index="2"]
+sprite_frames = ExtResource("4_gbknk")
+animation = &"E"
+
+[node name="LeftArmFree" type="AnimatedSprite2D" parent="Parts" index="3"]
+sprite_frames = ExtResource("5_sq8og")
+animation = &"E"
+
+[node name="Weapon" type="AnimatedSprite2D" parent="Parts" index="4"]
+sprite_frames = ExtResource("6_3u80e")
+animation = &"E"
+
+[node name="Sprite" parent="." index="1"]
+visible = false
 sprite_frames = ExtResource("2_klak8")
 animation = &"NE"
+
+[node name="HurtboxComponent" parent="." index="5"]
+visible = false
+
+[node name="CollisionShape2D" parent="." index="6"]
+visible = false

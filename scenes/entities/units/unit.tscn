@@ -62,3 +62,5 @@ script = ExtResource("10_a54ie")
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("10_oj84s")
+
+[node name="DebugDraw" type="Node2D" parent="."]

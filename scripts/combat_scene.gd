@@ -33,6 +33,7 @@ extends Node2D
 @onready var paths_overlay = $Overlays/PathsOverlay
 @onready var mouse_hover_overlay = $Overlays/MouseHoverOverlay
 @onready var navigation_graph_overlay = $Overlays/NavigationGraphOverlay
+@onready var los_overlay = $Overlays/LOSOverlay
 
 # Map 
 @onready var map_root = $MapRoot
@@ -45,6 +46,8 @@ extends Node2D
 @onready var state_label = $Labels/StateLabel
 @onready var turn_label = $Labels/TurnLabel
 @onready var mouse_label = $Labels/MouseLabel
+@onready var camera_label = $Labels/CameraLabel
+
 
 #region initialization
 func _ready() -> void:
@@ -55,7 +58,7 @@ func _ready() -> void:
 	navigation_graph_service.build_graph()
 
 	turn_manager.start_combat()
-	exploration_layer.reveal(Vector2i(1, 1))
+	#exploration_layer.reveal([Vector2i(1, 1)])
 	
 func _inject_services():
 	# Managers
@@ -82,6 +85,7 @@ func _inject_services():
 	mouse_hover_overlay.grid_service = grid_service
 	navigation_graph_overlay.navigation_graph_service = navigation_graph_service
 	navigation_graph_overlay.grid_service = grid_service
+	los_overlay.grid_service = grid_service
 
 	# Services
 	pathfinding_service.tile_occupancy_service = tile_occupancy_service
@@ -92,7 +96,10 @@ func _inject_services():
 	navigation_graph_service.terrain_service = terrain_service
 	navigation_graph_service.tile_occupancy_service = tile_occupancy_service
 	navigation_graph_service.edge_occupancy_service = edge_occupancy_service
+	
 	los_service.tile_occupancy_service = tile_occupancy_service
+	los_service.edge_occupancy_service = edge_occupancy_service
+	los_service.los_overlay = los_overlay
 	
 	weapon_service.los_service = los_service
 	weapon_service.grid_service = grid_service
@@ -100,6 +107,7 @@ func _inject_services():
 
 	exploration_service.grid_service = grid_service
 	exploration_service.exploration_layer = exploration_layer
+	exploration_service.los_service = los_service
 
 func _register_teams():
 	turn_manager.register_team("player")
@@ -145,8 +153,7 @@ func _load_map(map_name: String) -> void:
 
 	# Set tilesize to grid service and tile occupancy service
 	var tile_size = new_map.get_node("Terrain").tile_set.tile_size
-	grid_service.tile_size = tile_size
-	grid_service.map_origin = tile_size / 2
+	grid_service.set_tile_size(tile_size)
 	tile_occupancy_service.tile_size = tile_size
 
 	grid_service.map_size = new_map.get_node("Terrain").get_used_rect().size
@@ -278,12 +285,16 @@ func update_turn_label(turn_id: String) -> void:
 
 func update_mouse_label():
 	mouse_label.text = "Mouse: %s, tile: %s" % [round(get_local_mouse_position()), grid_service.world_to_tile(get_global_mouse_position())]
+
+func update_camera_label(val):
+	camera_label.text = "Camera: %s" % val
+
 #endregion
 func _unit_reached_destination(unit):
 	state_machine.set_state("IdleState")
 
 func _unit_changed_orientation(unit, new_orientation):
-	pass
+	exploration_service._on_unit_orientation_changed(unit, new_orientation)
 
 func select_next_unit():
 	var next_unit = unit_manager.get_next_unit()
@@ -304,3 +315,4 @@ func _on_bullet_requested(from, to, scene):
 
 func _process(delta: float) -> void:
 	$Labels/FPSLabel.text = "FPS: %s" % Engine.get_frames_per_second()
+	update_camera_label(get_viewport().canvas_transform)

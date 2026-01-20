@@ -6,4 +6,3 @@
 script = ExtResource("1_3ve4v")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-anchor_mode = 0

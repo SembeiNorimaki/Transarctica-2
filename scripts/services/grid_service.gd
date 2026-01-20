@@ -4,7 +4,8 @@ class_name GridService
 
 # Injected by CombatScene
 var tile_size: Vector2i
-var map_origin: Vector2
+var tile_half_size : Vector2i
+var map_origin: Vector2  # is basically half the tile_size
 var map_size: Vector2i
 var camera_transform: Transform2D
 
@@ -24,24 +25,43 @@ func _ready() -> void:
     pass
 
 
+func set_tile_size(tile_size_ : Vector2i):
+    tile_size = tile_size_
+    tile_half_size = Vector2i(tile_size_.x / 2, tile_size_.y / 2)
+    map_origin = tile_half_size
+
 func test():
     pass
-    # print("GridService tests")
-    # print(tile_to_world(Vector2i(0, 0)))
-    # print(tile_to_world(Vector2i(1, 0)))
-    # print(tile_to_world(Vector2i(0, 1)))
-    # print(tile_to_world(Vector2i(1, 1)))
+    print("GridService tests")
+    print(tile_to_world(Vector2i(0, 0)))
+    print(tile_to_world(Vector2i(1, 0)))
+    print(tile_to_world(Vector2i(0, 1)))
+    print(tile_to_world(Vector2i(1, 1)))
 
-    # print(world_to_tile(Vector2(0, 0)))
-    # print(world_to_tile(Vector2(16, 8)))
-    # print(world_to_tile(Vector2(32, 16)))
-    # print(world_to_tile(Vector2(0, 16)))
-    # print(world_to_tile(Vector2(16, 24)))
+    print(world_to_tile(Vector2(16, 8)))
+    print(world_to_tile(Vector2(32, 16)))
+    print(world_to_tile(Vector2(0, 16)))
+    print(world_to_tile(Vector2(16, 24)))
 
+
+#this doesn't use map_origin. Useful for relative positions of tiles
+func delta_tile_to_world(delta_tile: Vector2i) -> Vector2:
+    var world_x = (delta_tile.x - delta_tile.y) * tile_half_size.x
+    var world_y = (delta_tile.x + delta_tile.y) * tile_half_size.y
+    var result = Vector2(world_x, world_y)
+    return result
+
+# Tile(0,0) -> World(16,8) 
 func tile_to_world(tile: Vector2i) -> Vector2:
-    var world_x = (tile.x - tile.y) * tile_size.x / 2
-    var world_y = (tile.x + tile.y) * tile_size.y / 2
-    return map_origin + Vector2(world_x, world_y)
+    var world_x = (tile.x - tile.y) * tile_half_size.x
+    var world_y = (tile.x + tile.y) * tile_half_size.y
+    var result = map_origin + Vector2(world_x, world_y)
+    return result
+
+
+
+
+
     
 func world_to_tile(world_pos: Vector2) -> Vector2i:
     var p = world_pos - map_origin
@@ -74,47 +94,73 @@ func get_neighbors(tile: Vector2i) -> Array[Vector2i]:
 
 func get_orientation(from_tile: Vector2i, to_tile: Vector2i) -> String:
     var delta = to_tile - from_tile
-    # Normalize to -1, 0, or 1
-    var dx = clamp(delta.x, -1, 1)
-    var dy = clamp(delta.y, -1, 1)
-    var key := Vector2i(dx, dy)
+    var dx = delta.x
+    var dy = delta.y
+    # Boundaries between cardinal and diagonal directions
+    var k = 0.4142  # tan(22.5°)
+    var ori := ""
+    if abs(dx) > abs(dy):
+        # Horizontal dominant
+        if dx > 0:
+            if dy > dx * k:
+                ori = "SE"
+            elif dy < -dx * k:
+                ori = "NE"
+            else:
+                ori = "E"
+        else:
+            if dy > -dx * k:
+                ori = "SW"
+            elif dy < dx * k:
+                ori = "NW"
+            else:
+                ori = "W"
+    else:
+        # Vertical dominant
+        if dy > 0:
+            if dx > dy * k:
+                ori = "SE"
+            elif dx < -dy * k:
+                ori = "SW"
+            else:
+                ori = "S"
+        else:
+            if dx > -dy * k:
+                ori = "NE"
+            elif dx < dy * k:
+                ori = "NW"
+            else:
+                ori = "N"
 
-    var map := {
-        Vector2i(-1, -1): "NW",
-        Vector2i(0, -1): "N",
-        Vector2i(1, -1): "NE",
-        Vector2i(-1, 0): "W",
-        Vector2i(1, 0): "E",
-        Vector2i(-1, 1): "SW",
-        Vector2i(0, 1): "S",
-        Vector2i(1, 1): "SE"
-    }
-    var result = map.get(key, "")
-    print("From tile: %s, to tile: %s, orientation: %s" % [from_tile, to_tile, result])
+    
+    print("From tile: %s, to tile: %s, orientation: %s" % [from_tile, to_tile, ori])
 
-    return result
+    return ori
 
-func get_tiles_in_vision_cone(origin: Vector2i, orientation: String, view_angle: float, view_range: int) -> Array:
-    var result = []
+func get_tiles_in_vision_cone(origin: Vector2i, orientation: String, view_angle: float, view_range: int) -> Array[Vector2i]:
+    print("get tiles in vision cone %s %s %s %s %s" % [origin, orientation, view_angle, view_range, map_size])
+    var result : Array[Vector2i] = []
     var forward = ORIENTATION_VECTORS[orientation]
     var half_angle = deg_to_rad(view_angle / 2.0)
 
     # Iterate all tiles in a square around the unit
-    for x in range(origin.x - view_range, origin.x + view_range + 1):
-        for y in range(origin.y - view_range, origin.y + view_range + 1):
+    for x in range(max(0, origin.x - view_range), min(map_size.x, origin.x + view_range + 1)):
+        for y in range(max(0, origin.y - view_range), min(map_size.y, origin.y + view_range + 1)):
+            
             var tile := Vector2i(x, y)
             # Skip origin
             if tile == origin:
                 continue
             # Range check
             var delta = tile - origin
-            if delta.length() > view_range:
+            if delta.length() > view_range:	
                 continue
             
+            
             # Angle check
-            var dir = delta.normalized()
+            var dir = Vector2(delta).normalized()
             var angle = forward.angle_to(dir)
-            if abs(angle) <= half_angle:
+            if abs(angle) <= half_angle+0.01:
                 result.append(tile)
             
             

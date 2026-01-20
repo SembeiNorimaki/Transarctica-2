@@ -10,12 +10,15 @@ var zoom_speed := 1.0
 var min_zoom := 1.0
 var max_zoom := 4.0
 
+var zoom := 1.0
+var offset := Vector2i.ZERO
+
 
 func _ready() -> void:
 	_last_transform = cam.global_transform
 	print("CameraController ready with transform %s" % cam.global_transform)
-	_apply_offset(Vector2(-200, -100))
-	_apply_zoom(3.0)
+	_apply_offset(Vector2(0, 0))
+	_apply_zoom(1.0)
 
 func _process(delta: float) -> void:
 	_handle_movement(delta)
