@@ -8,7 +8,7 @@ func _ready():
 	set_process(false)
 
 func redraw():
-	print("Redrawing walls overlay")
+	#print("Redrawing walls overlay")
 	_draw()
 	queue_redraw()
 
@@ -19,7 +19,7 @@ func _draw():
 		var walls = tile_occupancy_service.get_walls(tile)
 		if walls.is_empty():
 			continue
-		print("Drawing wall overlay at location %s" % tile)
+		#print("Drawing wall overlay at location %s" % tile)
 		var world_pos = grid_service.tile_to_world(tile)
 		var local_pos = grid_service.world_to_screen(world_pos)
 		
@@ -57,8 +57,7 @@ func _draw():
 		draw_line(p1, p2, Color.RED, 3)
 
 
-
-		# print("Drawing wall edge overlay between tiles %s and %s" % [tiles[0], tiles[1]])
+		# #print("Drawing wall edge overlay between tiles %s and %s" % [tiles[0], tiles[1]])
 		# var tile_middle = Vector2(tiles[0].x + tiles[1].x, tiles[0].y + tiles[1].y) / 2
 		
 		# var delta = tile_middle - Vector2(tiles[0].x, tiles[0].y)

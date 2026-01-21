@@ -27,21 +27,21 @@ func set_tile_size(tile_size_: Vector2i):
 
 func test():
     pass
-    print("GridService tests")
-    # print(tile_to_world(Vector2i(0, 0)))
-    # print(tile_to_world(Vector2i(1, 0)))
-    # print(tile_to_world(Vector2i(0, 1)))
-    # print(tile_to_world(Vector2i(1, 1)))
+    #print("GridService tests")
+    # #print(tile_to_world(Vector2i(0, 0)))
+    # #print(tile_to_world(Vector2i(1, 0)))
+    # #print(tile_to_world(Vector2i(0, 1)))
+    # #print(tile_to_world(Vector2i(1, 1)))
 
-    print(world_to_tile(Vector2(16, 1)))
-    print(world_to_tile(Vector2(16, 8)))
-    print(world_to_tile(Vector2(16, 14)))
-    print(world_to_tile(Vector2(3, 8)))
-    print(world_to_tile(Vector2(29, 8)))
-    print(world_to_tile(Vector2(9, 4)))
-    print(world_to_tile(Vector2(22, 4)))
-    print(world_to_tile(Vector2(8, 11)))
-    print(world_to_tile(Vector2(22, 11)))
+    #print(world_to_tile(Vector2(16, 1)))
+    #print(world_to_tile(Vector2(16, 8)))
+    #print(world_to_tile(Vector2(16, 14)))
+    #print(world_to_tile(Vector2(3, 8)))
+    #print(world_to_tile(Vector2(29, 8)))
+    #print(world_to_tile(Vector2(9, 4)))
+    #print(world_to_tile(Vector2(22, 4)))
+    #print(world_to_tile(Vector2(8, 11)))
+    #print(world_to_tile(Vector2(22, 11)))
 
 
 #this doesn't use map_origin. Useful for relative positions of tiles
@@ -75,7 +75,7 @@ func world_to_tile(world_pos: Vector2) -> Vector2i:
 # func screen_to_tile(screen_pos: Vector2) -> Vector2i:
 #     var world_pos = screen_to_world(screen_pos)
 #     var tile_pos = world_to_tile(world_pos)
-#     print("Screen pos: %s, world pos: %s, tile pos: %s" % [screen_pos, world_pos, tile_pos])
+#     #print("Screen pos: %s, world pos: %s, tile pos: %s" % [screen_pos, world_pos, tile_pos])
 #     return tile_pos
 
 # func tile_to_screen(tile_pos: Vector2i) -> Vector2:
@@ -133,12 +133,12 @@ func get_orientation(from_tile: Vector2i, to_tile: Vector2i) -> String:
                 ori = "N"
 
     
-    print("From tile: %s, to tile: %s, orientation: %s" % [from_tile, to_tile, ori])
+    #print("From tile: %s, to tile: %s, orientation: %s" % [from_tile, to_tile, ori])
 
     return ori
 
 func get_tiles_in_vision_cone(origin: Vector2i, orientation: String, view_angle: float, view_range: int) -> Array[Vector2i]:
-    print("get tiles in vision cone %s %s %s %s %s" % [origin, orientation, view_angle, view_range, map_size])
+    #print("get tiles in vision cone %s %s %s %s %s" % [origin, orientation, view_angle, view_range, map_size])
     var result: Array[Vector2i] = []
     var forward = ORIENTATION_VECTORS[orientation]
     var half_angle = deg_to_rad(view_angle / 2.0)
@@ -167,5 +167,5 @@ func get_tiles_in_vision_cone(origin: Vector2i, orientation: String, view_angle:
             
 
 # func update_camera_transform(t: Transform2D) -> void:
-#     #print("Setting camera transfor to %s" % t)
+#     ##print("Setting camera transfor to %s" % t)
 #     camera_transform = t

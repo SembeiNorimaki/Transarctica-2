@@ -48,7 +48,7 @@ func bresenham_line(start: Vector2i, end: Vector2i) -> Array[Vector2i]:
 	return tiles
 
 func bresenham_line_diagonals(start: Vector2i, end: Vector2i) -> Array[Vector2i]:
-	print("Bresenham Line between %s and %s" % [start, end])
+	#print("Bresenham Line between %s and %s" % [start, end])
 	var tiles: Array[Vector2i] = []
 	var x0 = start.x
 	var y0 = start.y
@@ -63,7 +63,7 @@ func bresenham_line_diagonals(start: Vector2i, end: Vector2i) -> Array[Vector2i]
 	
 	var idx = 0
 	while idx < 100:
-		print(Vector2i(x0, y0))
+		#print(Vector2i(x0, y0))
 		tiles.append(Vector2i(x0, y0))
 		if x0 == x1 and y0 == y1:
 			break
@@ -80,7 +80,7 @@ func bresenham_line_diagonals(start: Vector2i, end: Vector2i) -> Array[Vector2i]
 	return tiles
 
 func has_los(start: Vector2i, end: Vector2i) -> bool:
-	print("Calculating LOS between %s and %s" % [start, end])
+	#print("Calculating LOS between %s and %s" % [start, end])
 	var tiles = bresenham_line(start, end)
 
 	for i in range(1, tiles.size() - 1):
@@ -88,7 +88,7 @@ func has_los(start: Vector2i, end: Vector2i) -> bool:
 		var tile2 = tiles[i + 1]
 		var is_blocked = edge_occupancy_service.is_edge_blocked(tile1, tile2)
 		if is_blocked:
-			print("LOS Blocked")
+			#print("LOS Blocked")
 			return false
 		# If the tile is the target, LOS is valid
 		#if tile == end:

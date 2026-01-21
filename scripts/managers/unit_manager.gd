@@ -8,9 +8,12 @@ var grid_service: GridService
 var unit_paths := {} # Dict of units -> path
 var units_to_tile := {} # Dict of units -> tile_position
 
-var next_unit_id: int = 0
-var units = []
-var cycle_idx = -1
+var next_unit_id = {"Player": 0, "Enemy": 0}
+
+var teams = ["Player", "Enemy"]
+var units = {"Player": [], "Enemy": []}
+
+var cycle_idx = {"Player": - 1, "Enemy": - 1}
 
 signal unit_spawned(unit)
 signal unit_tile_changed(unit, old_tile, new_tile)
@@ -22,30 +25,22 @@ func _ready() -> void:
 	pass
 
 #region unit spawning
-func spawn_unit(tile_pos, unit_type, owner_id: String) -> void:
-	print("Spawning a %s" % unit_type)
-
-	var id = "u" + str(next_unit_id)
+func spawn_unit(tile_pos: Vector2i, unit_type_: String, team: String) -> void:
+	#print("Spawning a %s" % unit_type)
+	var id = "u%s%s" % [team[0], next_unit_id[team]] # Player unit with id=3 -> uP3
+	next_unit_id[team] += 1
+	var unit_type = UnitTypes.TYPES[unit_type_]
+	var unit = unit_type.scene.instantiate()
 	
-	
-	var unit_type_ = UnitTypes.TYPES[unit_type]
-	var unit = unit_type_.scene.instantiate()
-	
+	# Dependency injection
 	unit.grid_service = grid_service
 	unit.unit_manager = self
 
-	unit.call_deferred("initialize", id, owner_id)
-	
-	# convert tile -> world
-	var world_pos = grid_service.tile_to_world(tile_pos)
-	unit.position = world_pos
-
-	# Initialize unit data
+	unit.call_deferred("initialize", id, team)
+	unit.position = grid_service.tile_to_world(tile_pos)
 	unit.current_tile = tile_pos
 
-	units.append(unit)
-	next_unit_id += 1
-
+	units[team].append(unit)
 	# Add to scene tree
 	get_node("../../Containers/Units").add_child(unit)
 
@@ -73,7 +68,6 @@ func _on_unit_tile_changed(unit: Unit, old_tile: Vector2i, new_tile: Vector2i) -
 
 # called by the unit itself
 func on_unit_orientation_changed(unit: Unit, new_orientation: String) -> void:
-	
 	emit_signal("unit_changed_orientation", unit, new_orientation)
 
 func get_unit_tile(unit: Unit) -> Vector2i:
@@ -81,16 +75,28 @@ func get_unit_tile(unit: Unit) -> Vector2i:
 
 #endregion
 
-func get_next_unit() -> Unit:
-	if units.is_empty():
+#region Public API
+func get_next_unit_by_team(team: String) -> Unit:
+	if units[team].is_empty():
 		return null
-	cycle_idx = (cycle_idx + 1) % units.size()
-	return units[cycle_idx]
+	cycle_idx[team] = (cycle_idx[team] + 1) % units[team].size()
+	return units[team][cycle_idx[team]]
 
+func get_units_by_team(team: String) -> Array[Unit]:
+	return units.get(team, [])
+
+func get_all_units() -> Array[Unit]:
+	var all_units = []
+	for team in units:
+		all_units.append_array(units[team])
+	return all_units
+
+
+#endregion
 
 #region Movement orchestration
 func start_unit_movement(unit: Unit, path: Array[Vector2i]) -> void:
-	print("Received path %s for unit %s" % [path, unit.id])
+	#print("Received path %s for unit %s" % [path, unit.id])
 	path.pop_front() # remove first point since it's the current tile
 	unit_paths[unit] = path
 	_give_next_tile(unit)

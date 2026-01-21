@@ -17,7 +17,7 @@ func update(unit, old_tile, new_tile):
 	queue_redraw()
 
 func _draw():
-	print("Unit overlay draw")
+	#print("Unit overlay draw")
 	if grid_service == null or tile_occupancy_service == null:
 		return
 	for tile in tile_occupancy_service.get_occupied_tiles():
@@ -27,7 +27,7 @@ func _draw():
 		
 		var world_pos = grid_service.tile_to_world(tile)
 		var local_pos = world_pos
-		print(tile, world_pos, local_pos)
+		#print(tile, world_pos, local_pos)
 		var half_width = grid_service.tile_size.x / 2.0
 		var half_height = grid_service.tile_size.y / 2.0
 		

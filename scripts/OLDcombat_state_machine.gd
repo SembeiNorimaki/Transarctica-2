@@ -6,7 +6,7 @@ var current_state: Node = null
 var states: Dictionary = {}
 
 func _ready():
-	print("Combat State Machine ready")
+	#print("Combat State Machine ready")
 	parent_scene = get_parent()
 	# Discover all child states automatically
 	for child in get_children():
@@ -24,7 +24,7 @@ func init() -> void:
 		push_error("IdleState not found in CombatInputStateMachine children")
 
 func set_state(new_state: Node) -> void:
-	print("Setting state to %s" % new_state.name)
+	#print("Setting state to %s" % new_state.name)
 	if current_state:
 		current_state.exit({})
 	var prev_state = current_state

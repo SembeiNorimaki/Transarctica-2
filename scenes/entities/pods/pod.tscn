@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://da35qtnggeadu"]
+
+[ext_resource type="Script" uid="uid://cvnh3q0er8fjh" path="res://scripts/entities/pod.gd" id="1_oo037"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_oo037"]
+size = Vector2(10, 10)
+
+[node name="Pod" type="Node2D"]
+script = ExtResource("1_oo037")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_oo037")
+
+[node name="Labels" type="Node2D" parent="."]
+
+[node name="IdLabel" type="Label" parent="Labels"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Id:"

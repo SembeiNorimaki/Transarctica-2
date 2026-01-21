@@ -33,15 +33,15 @@ func highlight_tile(tile):
 			local_pos + Vector2(0, half_tile_size.y), # Bottom
 			local_pos + Vector2(-half_tile_size.x, 0) # Left
 	])
-	print("HTS", points)
+	#print("HTS", points)
 	draw_colored_polygon(points, Color.BROWN)
 
 func draw_debug_tiles(tiles: Array):
 	_tiles_to_draw = []
-	print("Draw debug tiles %s" % [tiles])
+	#print("Draw debug tiles %s" % [tiles])
 	for i in range(tiles.size()):
 		pass
 		#_tiles_to_draw.append(tiles[i])
-		#print("Tiles %s and  %s" % [tiles[i], tiles[i+1]])
+		##print("Tiles %s and  %s" % [tiles[i], tiles[i+1]])
 	_lines_to_draw.append([tiles[0], tiles[tiles.size() - 1]])
 	queue_redraw()

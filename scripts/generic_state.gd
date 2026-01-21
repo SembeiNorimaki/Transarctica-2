@@ -11,7 +11,8 @@ func set_state_machine(sm: StateMachine) -> void:
     state_machine = sm
 
 func enter(params = {}):
-    print("Generic enter")
+    #print("Generic enter")
+    pass
 
 func exit(params = {}):
     pass

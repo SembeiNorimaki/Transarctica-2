@@ -34,7 +34,7 @@ func _draw():
 		var tile = path_tiles[i]
 		var world_pos = grid_service.tile_to_world(tile)
 		var local_pos = world_pos
-		print("Drawing path at:", local_pos)
+		#print("Drawing path at:", local_pos)
 		draw_circle(local_pos, 5, Color.BLACK)
 		draw_line(prev_local_pos, local_pos, Color.RED)
 		prev_local_pos = local_pos

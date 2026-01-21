@@ -12,7 +12,7 @@ func _ready() -> void:
 	pass
 
 func spawn_road(tile_pos) -> void:
-	# print("Spawning a road at %s" % tile_pos)
+	# #print("Spawning a road at %s" % tile_pos)
 	# Register road
 	if tile_pos not in road_tiles:
 		road_tiles[tile_pos] = true
@@ -20,7 +20,7 @@ func spawn_road(tile_pos) -> void:
 	emit_signal("road_spawned", "road")
 
 func get_occupied_tiles() -> Array:
-	print("Road tiles: %s" % road_tiles.keys())
+	#print("Road tiles: %s" % road_tiles.keys())
 	return road_tiles.keys()
 
 func has_road(tile_pos) -> bool:

@@ -38,7 +38,7 @@ func _process(delta: float) -> void:
 
 # func _ready() -> void:
 # 	_last_transform = cam.global_transform
-# 	print("CameraController ready with transform %s" % cam.global_transform)
+# 	#print("CameraController ready with transform %s" % cam.global_transform)
 # 	_apply_offset(Vector2(0, 0))
 # 	_apply_zoom(1.0)
 

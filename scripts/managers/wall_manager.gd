@@ -76,7 +76,7 @@ func spawn_right_wall(tile_pos: Vector2i) -> void:
 	emit_signal("wall_spawned", wall_edge)
 
 # func spawn_wall(tile_pos, owner_id) -> void:
-#     # print("Spawning a wall at %s" % tile_pos)
+#     # #print("Spawning a wall at %s" % tile_pos)
 #     var wall = WALL_SCENE.instantiate()
 	
 #     # convert tile -> world

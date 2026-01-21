@@ -11,12 +11,12 @@ extends Unit
     "S": [torso, legs, right_arm, left_arm, weapon],
     
     "NE": [left_arm, torso, legs, weapon, right_arm],
-    "E":  [left_arm, torso, legs, weapon, right_arm],
+    "E": [left_arm, torso, legs, weapon, right_arm],
     "SE": [left_arm, torso, legs, weapon, right_arm],
     
     "SW": [right_arm, weapon, torso, legs, left_arm],
-    "W":  [right_arm, weapon, torso, legs, left_arm],
-    "NW": [right_arm, weapon, torso, legs, left_arm]	
+    "W": [right_arm, weapon, torso, legs, left_arm],
+    "NW": [right_arm, weapon, torso, legs, left_arm]
 }
 
 func set_orientation(new_orientation: String):
@@ -29,3 +29,13 @@ func set_orientation(new_orientation: String):
     unit_manager.on_unit_orientation_changed(self, new_orientation)
     queue_redraw()
 
+func play_orientation(ori: String):
+    for i in range(5):
+        var part = render_order[ori][i]
+        part.z_index = i
+
+    torso.play(ori)
+    legs.play(ori)
+    left_arm.play(ori)
+    right_arm.play(ori)
+    weapon.play(ori)

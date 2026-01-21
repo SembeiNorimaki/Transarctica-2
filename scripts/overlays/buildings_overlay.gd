@@ -4,7 +4,7 @@ var grid_service: GridService
 var tile_occupancy_service: TileOccupancyService
 
 func redraw() -> void:
-    print("Redrawing walls overlay")
+    #print("Redrawing walls overlay")
     _draw()
 
 func _draw():
@@ -14,7 +14,7 @@ func _draw():
         var buildings = tile_occupancy_service.get_buildings(tile)
         if buildings.is_empty():
             continue
-        #print("Drawing building overlay at location %s" % tile)
+        ##print("Drawing building overlay at location %s" % tile)
         var world_pos = grid_service.tile_to_world(tile)
         var local_pos = world_pos
         #var rect = Rect2(world_pos, Vector2(grid_service.tile_size.x, grid_service.tile_size.y))

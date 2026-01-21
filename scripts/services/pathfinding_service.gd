@@ -19,7 +19,7 @@ const DIRECTIONS = [
 ]
 
 func find_path(start: Vector2i, goal: Vector2i) -> Array[Vector2i]:
-	print("Pathfinding from", start, "to", goal)
+	#print("Pathfinding from", start, "to", goal)
 	if start == goal:
 		return [start]
 
@@ -40,8 +40,8 @@ func find_path(start: Vector2i, goal: Vector2i) -> Array[Vector2i]:
 			return _reconstruct_path(came_from, current)
 
 		closed[current] = true
-		print("current", navigation_graph_service.adjacency.keys())
-		print("current", current)
+		#print("current", navigation_graph_service.adjacency.keys())
+		#print("current", current)
 		for edge in navigation_graph_service.adjacency[current]:
 			var neighbor = edge.to_tile
 			
@@ -71,7 +71,7 @@ func find_path(start: Vector2i, goal: Vector2i) -> Array[Vector2i]:
 	return [] # No path found
 
 func find_path2(start: Vector2i, goal: Vector2i) -> Array[Vector2i]:
-	print("Pathfinding from", start, "to", goal)
+	#print("Pathfinding from", start, "to", goal)
 	if start == goal:
 		return [start]
 

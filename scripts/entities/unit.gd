@@ -85,12 +85,12 @@ func stop_animation():
 	sprite.stop()
 
 func set_selected(selected: bool) -> void:
-	print("Selected: %s" % selected)
+	#print("Selected: %s" % selected)
 	sprite_selected.visible = selected
 
 
 func move_to_tile(tile: Vector2i):
-	print("Unit %s instructed to move to tile %s" % [id, tile])
+	#print("Unit %s instructed to move to tile %s" % [id, tile])
 	target_tile = tile
 	set_state("MoveState", {"unit": self})
 	#set_process(true)

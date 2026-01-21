@@ -30,21 +30,21 @@ var atlas_map = {
 }
 
 var atlas_to_owner_id = {
-	Vector2i(0, 0): "player",
-	Vector2i(0, 1): "player",
-	Vector2i(0, 2): "player",
-	Vector2i(0, 3): "player",
-	Vector2i(0, 4): "player",
-	Vector2i(0, 5): "player",
-	Vector2i(0, 6): "player",
+	Vector2i(0, 0): "Player",
+	Vector2i(0, 1): "Player",
+	Vector2i(0, 2): "Player",
+	Vector2i(0, 3): "Player",
+	Vector2i(0, 4): "Player",
+	Vector2i(0, 5): "Player",
+	Vector2i(0, 6): "Player",
 	
-	Vector2i(0, 7): "enemy",
-	Vector2i(0, 8): "enemy",
-	Vector2i(0, 9): "enemy",
-	Vector2i(0, 10): "enemy",
-	Vector2i(0, 11): "enemy",
-	Vector2i(0, 12): "enemy",
-	Vector2i(0, 13): "enemy"
+	Vector2i(0, 7): "Enemy",
+	Vector2i(0, 8): "Enemy",
+	Vector2i(0, 9): "Enemy",
+	Vector2i(0, 10): "Enemy",
+	Vector2i(0, 11): "Enemy",
+	Vector2i(0, 12): "Enemy",
+	Vector2i(0, 13): "Enemy"
 	
 
 }

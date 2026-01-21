@@ -47,7 +47,7 @@ func enter(params = {}):
 	heading = orientation_to_heading[ori]
 	unit.play_animation(ori)
 
-	print("SM: Unit moving. CP: %s, TP: %s, ori: %s" % [unit.position, target_position, ori])
+	#print("SM: Unit moving. CP: %s, TP: %s, ori: %s" % [unit.position, target_position, ori])
 
 	# calculate orientation
 
@@ -58,7 +58,7 @@ func exit(params = {}):
 func update(delta: float):
 	var new_pos = unit.position.move_toward(target_position, unit.move_speed * delta)
 	if new_pos == unit.position:
-		print("Arrived")
+		#print("Arrived")
 		unit.on_arrived_to_tile(target_tile)
 		
 	else:

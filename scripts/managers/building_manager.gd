@@ -18,7 +18,7 @@ func _ready() -> void:
 	pass
 
 func spawn_building(tile_pos, building_type, owner_id) -> void:
-	print("Spawning a %s at location %s" % [building_type, tile_pos])
+	#print("Spawning a %s at location %s" % [building_type, tile_pos])
 	var building_type_ = BuildingTypes.TYPES[building_type]
 	var building = building_type_.scene.instantiate()
 	var building_footprint_ = building_type_.footprint

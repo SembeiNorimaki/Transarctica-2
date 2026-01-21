@@ -14,9 +14,9 @@ func enter(params = {}):
     owner_node.selection_manager.select_unit(selected_unit)
 
 func exit(params = {}):
-    print("Exiting unit selected state")
+    pass
+    #print("Exiting unit selected state")
     #parent_scene.selection_manager.clear_selection()
-
 func update(delta: float):
     pass
 

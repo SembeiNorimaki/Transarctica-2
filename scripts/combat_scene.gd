@@ -6,6 +6,7 @@ extends Node2D
 @onready var wall_manager = $Managers/WallManager
 @onready var turn_manager = $Managers/TurnManager
 @onready var selection_manager = $Managers/SelectionManager
+@onready var pod_manager = $Managers/PodManager
 
 #Containers
 @onready var projectiles_container = $Containers/Projectiles
@@ -71,6 +72,9 @@ func _inject_services():
 	wall_manager.grid_service = grid_service
 	turn_manager.unit_manager = unit_manager
 	turn_manager.selection_manager = selection_manager
+	turn_manager.pod_manager = pod_manager
+	pod_manager.tile_occupancy_service = tile_occupancy_service
+	pod_manager.grid_service = grid_service
 
 	# Overlays
 	units_overlay.grid_service = grid_service
@@ -111,11 +115,11 @@ func _inject_services():
 	exploration_service.los_service = los_service
 
 func _register_teams():
-	turn_manager.register_team("player")
-	turn_manager.register_team("enemy")
+	turn_manager.register_team("Player")
+	turn_manager.register_team("Enemy")
 
 func _wire_signals():
-	print("Wiring signals")
+	#print("Wiring signals")
 	unit_manager.connect("unit_spawned", units_overlay.redraw)
 	unit_manager.connect("unit_tile_changed", units_overlay.update)
 	unit_manager.connect("unit_tile_changed", paths_overlay.update)
@@ -156,14 +160,17 @@ func _load_map(map_name: String) -> void:
 	tile_occupancy_service.tile_size = tile_size
 
 	grid_service.map_size = new_map.get_node("Terrain").get_used_rect().size
-	print("Map size %s" % grid_service.map_size)
+	#print("Map size %s" % grid_service.map_size)
 
 	# Spawn units, buildings, walls, and roads
-	_load_patrol_points_from_map(new_map.get_node("PatrolPoints"))
+	
 	_spawn_units_from_map(new_map.get_node("Units"))
 	_spawn_buildings_from_map(new_map.get_node("Buildings"))
 	_spawn_walls_from_map(new_map.get_node("Walls"))
 	_spawn_roads_from_map(new_map.get_node("Roads"))
+	_spawn_pods_from_map(new_map.get_node("Pods"), new_map.get_node("PatrolPoints"))
+
+	#_load_patrol_points_from_map(new_map.get_node("PatrolPoints"), Vector2i(6, 7))
 
 
 	grid_service.test()
@@ -172,36 +179,35 @@ func _load_map(map_name: String) -> void:
 	#wall_manager.spawn_walls_from_map(map_instance.walls)
 	#road_service.spawn_roads_from_map(map_instance.roads)
 
-func _load_patrol_points_from_map(patrol_tilemap: TileMapLayer) -> void:
-	var atlas_coords_to_tile_delta = {
-		Vector2i(0, 0): Vector2i(1, -1), # E
-		Vector2i(1, 0): Vector2i(-1, 1), # W
-		Vector2i(2, 0): Vector2i(-1, -1), # N
-		Vector2i(3, 0): Vector2i(1, 1), # S
-		Vector2i(4, 0): Vector2i(0, -1), # NE
-		Vector2i(5, 0): Vector2i(0, 1), # SW
-		Vector2i(6, 0): Vector2i(-1, 0), # NW
-		Vector2i(7, 0): Vector2i(0, 0), # SE
+func _load_patrol_points_from_map(patrol_tilemap: TileMapLayer, starting_tile: Vector2i) -> Array[Vector2i]:
+	var atlas_coords_to_tile_delta: Dictionary[Vector2i, Vector2i] = {
+		Vector2i(0, 0): Vector2i(1, -1), # NE
+		Vector2i(1, 0): Vector2i(-1, 1), # SW
+		Vector2i(2, 0): Vector2i(-1, -1), # NW
+		Vector2i(3, 0): Vector2i(1, 1), # SE
+		Vector2i(4, 0): Vector2i(0, -1), # N
+		Vector2i(5, 0): Vector2i(0, 1), # S
+		Vector2i(6, 0): Vector2i(-1, 0), # W
+		Vector2i(7, 0): Vector2i(1, 0), # E
 	}
 
-	print(patrol_tilemap.get_used_cells())
-	var points := []
-
-
-	if patrol_tilemap.get_used_cells().size() == 0:
-		return
-	var tile = patrol_tilemap.get_used_cells()[0]
-	points.append(tile)
+	#print(patrol_tilemap.get_used_cells())
+	var points: Array[Vector2i] = [starting_tile]
+	var tile: Vector2i = starting_tile
 	var next_tile = Vector2i(-1, -1)
-	while true:
+	var idx = 0
+	while idx < 100:
 		var atlas_coords = patrol_tilemap.get_cell_atlas_coords(tile)
-		var delta = atlas_coords_to_tile_delta.get(atlas_coords)
+		var delta: Vector2i = atlas_coords_to_tile_delta.get(atlas_coords)
+		print("Tile: %s, Atlas coords: %s, Delta: %s" % [tile, atlas_coords, delta])
 		next_tile = tile + delta
-		if next_tile == tile:
-			break
 		points.append(next_tile)
 		tile = next_tile
+		if next_tile == starting_tile:
+			break
+		idx += 1
 	print("Patrol points: %s" % points)
+	return points
 
 func _spawn_units_from_map(units_tilemap: TileMapLayer) -> void:
 	for tile in units_tilemap.get_used_cells():
@@ -209,11 +215,27 @@ func _spawn_units_from_map(units_tilemap: TileMapLayer) -> void:
 		var unit_type = UnitTypes.get_unit_type_from_atlas_coords(atlas_coords)
 		var owner_id = UnitTypes.get_owner_id_from_atlas_coords(atlas_coords)
 
-		print("***Spawning unit %s of owner %s at tile %s" % [unit_type, owner_id, tile])
+		#print("***Spawning unit %s of owner %s at tile %s" % [unit_type, owner_id, tile])
 		unit_manager.spawn_unit(tile, unit_type, owner_id)
 
 		# Remove the placeholder tile
 		units_tilemap.erase_cell(tile)
+
+func _spawn_pods_from_map(pods_tilemap: TileMapLayer, patrol_tilemap: TileMapLayer) -> void:
+	for tile in pods_tilemap.get_used_cells():
+		#print("***Spawning pod at tile %s" % [tile])
+		var atlas_coords = patrol_tilemap.get_cell_atlas_coords(tile)
+		if atlas_coords.y != 0: # only atlascords.y == 0 are valid pod locations
+			continue
+
+		# load the patrol route for this pod:
+		var patrol_route = _load_patrol_points_from_map(patrol_tilemap, tile)
+
+		pod_manager.spawn_pod(tile, patrol_route)
+
+		# Remove the placeholder tile
+		pods_tilemap.erase_cell(tile)
+
 
 func _spawn_buildings_from_map(buildings_tilemap: TileMapLayer) -> void:
 	for tile in buildings_tilemap.get_used_cells():
@@ -259,7 +281,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		var mouse_pos = get_local_mouse_position()
 		var tile = grid_service.world_to_tile(mouse_pos)
-		print("Mouse pos: %s, tile: %s" % [mouse_pos, tile])
+		#print("Mouse pos: %s, tile: %s" % [mouse_pos, tile])
 		state_machine.current_state.handle_click(tile, event.button_index)
 	if event is InputEventKey and event.pressed and not event.echo:
 		state_machine.current_state.handle_key(event)
@@ -288,6 +310,12 @@ func update_mouse_label():
 func update_camera_label(val):
 	camera_label.text = "Camera: Offset %s, Zoom %s" % [camera_controller.offset, camera_controller.zoom]
 
+
+func update_labels():
+	#State Machines:
+	state_label.text = "Combat: %s   Turn: %s" % [state_machine.current_state.name, turn_manager.turn_state_machine.current_state.name]
+	
+
 #endregion
 func _unit_reached_destination(unit):
 	state_machine.set_state("IdleState")
@@ -296,7 +324,7 @@ func _unit_changed_orientation(unit, new_orientation):
 	exploration_service._on_unit_orientation_changed(unit, new_orientation)
 
 func select_next_unit():
-	var next_unit = unit_manager.get_next_unit()
+	var next_unit = unit_manager.get_next_unit_by_team("Player")
 	if next_unit:
 		state_machine.set_state("UnitSelectedState", {"selected_unit": next_unit})
 
@@ -315,3 +343,4 @@ func _on_bullet_requested(from, to, scene):
 func _process(delta: float) -> void:
 	$Labels/FPSLabel.text = "FPS: %s" % Engine.get_frames_per_second()
 	update_camera_label(get_viewport().canvas_transform)
+	update_labels()

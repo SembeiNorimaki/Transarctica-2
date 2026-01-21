@@ -63,8 +63,8 @@ func _build_nodes():
 			node.elevation = terrain_service.get_elevation(tile)
 			
 			nodes[tile] = node
-	print("Nodes", nodes.keys())
-	#print("Number of nodes: %s" % nodes.size())
+	#print("Nodes", nodes.keys())
+	##print("Number of nodes: %s" % nodes.size())
 
 func _build_edges():
 	for tile in nodes.keys():
@@ -79,7 +79,7 @@ func _build_edges():
 			if not nodes[neighbor].walkable:
 				continue
 			if edge_occupancy_service.is_edge_blocked(tile, neighbor):
-				print("Edge is blocked: %s -> %s" % [tile, neighbor])
+				#print("Edge is blocked: %s -> %s" % [tile, neighbor])
 				continue
 
 			var edge = EdgeData.new()
@@ -93,7 +93,7 @@ func _build_edges():
 			# Optional: keep global edge dict for debugging
 			edges[_edge_key(tile, neighbor)] = edge
 	
-	#print("Number of edges: %s" % edges.size())
+	##print("Number of edges: %s" % edges.size())
 
 func _edge_key(a: Vector2i, b: Vector2i) -> String:
 	return str(a) + "_" + str(b)
