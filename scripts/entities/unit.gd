@@ -60,7 +60,7 @@ func set_team(team_id_: String):
 
 func set_state(state: String, params = {}) -> void:
 	action_sm.set_state(state, params)
-	state_label.text = state
+	update_state_label(state)
 
 func set_orientation(new_orientation: String):
 	orientation = new_orientation

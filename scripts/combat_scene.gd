@@ -169,6 +169,7 @@ func _load_map(map_name: String) -> void:
 	_spawn_walls_from_map(new_map.get_node("Walls"))
 	_spawn_roads_from_map(new_map.get_node("Roads"))
 	_spawn_pods_from_map(new_map.get_node("Pods"), new_map.get_node("PatrolPoints"))
+	_assign_units_to_pods(new_map.get_node("Pods"), tile_occupancy_service)
 
 	#_load_patrol_points_from_map(new_map.get_node("PatrolPoints"), Vector2i(6, 7))
 
@@ -199,7 +200,7 @@ func _load_patrol_points_from_map(patrol_tilemap: TileMapLayer, starting_tile: V
 	while idx < 100:
 		var atlas_coords = patrol_tilemap.get_cell_atlas_coords(tile)
 		var delta: Vector2i = atlas_coords_to_tile_delta.get(atlas_coords)
-		print("Tile: %s, Atlas coords: %s, Delta: %s" % [tile, atlas_coords, delta])
+		#print("Tile: %s, Atlas coords: %s, Delta: %s" % [tile, atlas_coords, delta])
 		next_tile = tile + delta
 		points.append(next_tile)
 		tile = next_tile
@@ -208,6 +209,18 @@ func _load_patrol_points_from_map(patrol_tilemap: TileMapLayer, starting_tile: V
 		idx += 1
 	print("Patrol points: %s" % points)
 	return points
+
+# Must be called after loading units from map
+func _assign_units_to_pods(pods_tilemap: TileMapLayer, tile_occupancy_service: TileOccupancyService):
+	for tile in pods_tilemap.get_used_cells():
+		var atlas_coords = pods_tilemap.get_cell_atlas_coords(tile)
+		if atlas_coords.y != 1: # only atlascords.y == 1 are valid unit assignations
+			continue
+		var pod_id = "p%s" % atlas_coords.x
+		var units: Array[Unit] = tile_occupancy_service.get_units(tile)
+		pod_manager.add_units_to_pod(pod_id, units)
+		print("Assigning unit %s to pod %s" % [units[0].id, pod_id])
+	
 
 func _spawn_units_from_map(units_tilemap: TileMapLayer) -> void:
 	for tile in units_tilemap.get_used_cells():
@@ -223,20 +236,20 @@ func _spawn_units_from_map(units_tilemap: TileMapLayer) -> void:
 
 func _spawn_pods_from_map(pods_tilemap: TileMapLayer, patrol_tilemap: TileMapLayer) -> void:
 	for tile in pods_tilemap.get_used_cells():
-		#print("***Spawning pod at tile %s" % [tile])
-		var atlas_coords = patrol_tilemap.get_cell_atlas_coords(tile)
+		var atlas_coords = pods_tilemap.get_cell_atlas_coords(tile)
 		if atlas_coords.y != 0: # only atlascords.y == 0 are valid pod locations
 			continue
 
 		# load the patrol route for this pod:
 		var patrol_route = _load_patrol_points_from_map(patrol_tilemap, tile)
 
-		pod_manager.spawn_pod(tile, patrol_route)
+		var id = "p%s" % atlas_coords.x
+		pod_manager.spawn_pod(id, tile, patrol_route)
 
 		# Remove the placeholder tile
 		pods_tilemap.erase_cell(tile)
 
-
+	
 func _spawn_buildings_from_map(buildings_tilemap: TileMapLayer) -> void:
 	for tile in buildings_tilemap.get_used_cells():
 		var atlas_coords = buildings_tilemap.get_cell_atlas_coords(tile)

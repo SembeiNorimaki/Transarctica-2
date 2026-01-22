@@ -8,16 +8,15 @@ var grid_service: GridService
 var pods_to_tile := {} # Dict of pods -> tile_position
 
 var pods: Array[Pod] = []
-var next_pod_id: int = 0
+var pods_by_id := {}
 
 var cycle_idx = -1
 signal pod_spawned(pod)
 
 const POD_SCENE = preload("res://scenes/entities/pods/pod.tscn")
 
-func spawn_pod(tile_pos: Vector2i, patrol_route: Array[Vector2i]) -> void:
-	var id = "p%s" % [next_pod_id]
-	next_pod_id += 1
+func spawn_pod(id: String, tile_pos: Vector2i, patrol_route: Array[Vector2i]) -> void:
+	print("Spawning pod %s at tile %s" % [id, tile_pos])
 	var pod: Pod = POD_SCENE.instantiate()
 
 	# Dependency injection
@@ -30,6 +29,7 @@ func spawn_pod(tile_pos: Vector2i, patrol_route: Array[Vector2i]) -> void:
 	pod.patrol_route = patrol_route
 
 	pods.append(pod)
+	pods_by_id[id] = pod
 	# Add to scene tree
 	get_node("../../Containers/Pods").add_child(pod)
 
@@ -41,6 +41,10 @@ func spawn_pod(tile_pos: Vector2i, patrol_route: Array[Vector2i]) -> void:
 
 	emit_signal("pod_spawned", pod)
 
+func add_units_to_pod(pod_id: String, units: Array[Unit]):
+	var pod = pods_by_id[pod_id]
+	for unit in units:
+		pod.units.append(unit)
 
 #region Public API
 

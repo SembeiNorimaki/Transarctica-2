@@ -32,8 +32,8 @@ func unregister(tile: Vector2i, entity: Object) -> void:
 func get_entities(tile: Vector2i) -> Array:
     return _occupied_tiles.get(tile, [])
 
-func get_units(tile: Vector2i) -> Array:
-    var units = []
+func get_units(tile: Vector2i) -> Array[Unit]:
+    var units: Array[Unit] = []
     for entity in get_entities(tile):
         if entity is Unit:
             units.append(entity)
