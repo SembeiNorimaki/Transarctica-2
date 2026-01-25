@@ -7,10 +7,12 @@ var terrain_service: TerrainService
 var tile_occupancy_service: TileOccupancyService # whether a tile is occupied by a unit, building or wall
 var edge_occupancy_service: EdgeOccupancyService
 
-
 var nodes := {} # Dictionary: tile(Vector2i) -> NodeData
+var nodes2x2 := {} # Dictionary: anchor(Vector2i) -> NodeData
 var edges := {} # Dictionary: (tileA, tileB) -> EdgeData
+var edges2x2 := {} # Dictionary: (anchorA, anchorB) -> EdgeData
 var adjacency := {} # Dictionary: tile(Vector2i) -> Array[EdgeData]
+var adjacency2x2 := {} # Dictionary: anchor(Vector2i) -> Array[EdgeData]
 
 # Internal edge obstacles
 var blocked_edges := {} # Dictionary: key -> bool
@@ -66,6 +68,40 @@ func _build_nodes():
 	#print("Nodes", nodes.keys())
 	##print("Number of nodes: %s" % nodes.size())
 
+
+func is_walkable_2x2(anchor: Vector2i) -> bool:
+	var footprint = [
+		anchor,
+		anchor + Vector2i(1, 0),
+		anchor + Vector2i(0, 1),
+		anchor + Vector2i(1, 1)
+	]
+	for tile in footprint:
+		if not grid_service.is_inside_map(tile):
+			return false
+		if tile_occupancy_service.is_occupied_static(tile):
+			return false
+	return true
+
+func build_nodes_2x2():
+	var map_size = grid_service.map_size
+	for x in range(map_size.x):
+		for y in range(map_size.y):
+			var anchor = Vector2i(x, y)
+			
+			if not is_walkable_2x2(anchor):
+				continue
+				
+			# create node
+			var node = NodeData.new()
+			node.tile = anchor
+			node.walkable = true
+			node.terrain_cost = terrain_service.get_cost(anchor)
+			node.elevation = terrain_service.get_elevation(anchor)
+			
+			nodes2x2[anchor] = node
+			
+
 func _build_edges():
 	for tile in nodes.keys():
 		if not nodes[tile].walkable:
@@ -94,6 +130,32 @@ func _build_edges():
 			edges[_edge_key(tile, neighbor)] = edge
 	
 	##print("Number of edges: %s" % edges.size())
+
+func build_edges_2x2():
+	for anchor in nodes2x2.keys():
+		# anchor is guaranteed to be walkable 2x2
+		adjacency2x2[anchor] = []
+
+		for neighbor in grid_service.get_neighbors(anchor):
+			if not nodes2x2.has(neighbor):
+				continue
+			
+			# Check edge blocking
+			if edge_occupancy_service.is_edge_blocked(anchor, neighbor):
+				continue
+
+			#Build edge
+			var edge = EdgeData.new()
+			edge.from_tile = anchor
+			edge.to_tile = neighbor
+			edge.cost = nodes2x2[neighbor].terrain_cost
+
+			#store in adjacency list
+			adjacency2x2[anchor].append(edge)
+
+			# Optional: keep global edge dict for debugging
+			edges2x2[_edge_key(anchor, neighbor)] = edge
+
 
 func _edge_key(a: Vector2i, b: Vector2i) -> String:
 	return str(a) + "_" + str(b)

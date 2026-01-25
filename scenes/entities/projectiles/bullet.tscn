@@ -1,10 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://cem662p2y1jo"]
+[gd_scene load_steps=5 format=3 uid="uid://cem662p2y1jo"]
 
 [ext_resource type="PackedScene" uid="uid://pwy5r02s2oks" path="res://scenes/combat/components/hitbox_component.tscn" id="1_lhort"]
 [ext_resource type="Script" uid="uid://xlrpb4vfjqpv" path="res://scripts/entities/bullet.gd" id="1_t3lan"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_t3lan"]
 size = Vector2(5, 5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t3lan"]
+radius = 3.0
 
 [node name="Bullet" type="Node2D"]
 script = ExtResource("1_t3lan")
@@ -13,3 +16,6 @@ script = ExtResource("1_t3lan")
 texture = SubResource("PlaceholderTexture2D_t3lan")
 
 [node name="HitboxComponent" parent="." instance=ExtResource("1_lhort")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+shape = SubResource("CircleShape2D_t3lan")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ysig1tby6uoi"]
+[gd_scene load_steps=9 format=3 uid="uid://ysig1tby6uoi"]
 
 [ext_resource type="PackedScene" uid="uid://bt6edw4t4rxak" path="res://scenes/entities/units/unit.tscn" id="1_60t8m"]
 [ext_resource type="Script" uid="uid://xboi5aqk1pxk" path="res://scripts/entities/unit_xcom_2.gd" id="2_gbknk"]
@@ -8,6 +8,9 @@
 [ext_resource type="SpriteFrames" uid="uid://b512e6mogavan" path="res://assets/tilesets/left_arm_frames.tres" id="5_sq8og"]
 [ext_resource type="SpriteFrames" uid="uid://ik2saq3tsh6y" path="res://assets/tilesets/weapon_frames.tres" id="6_3u80e"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_gbknk"]
+radius = 14.0
+
 [node name="UnitXcom" instance=ExtResource("1_60t8m")]
 script = ExtResource("2_gbknk")
 
@@ -16,11 +19,11 @@ position = Vector2(0, -12)
 
 [node name="Torso" type="AnimatedSprite2D" parent="Parts" index="0"]
 sprite_frames = ExtResource("2_klak8")
-animation = &"W"
+animation = &"NW"
 
 [node name="Legs" type="AnimatedSprite2D" parent="Parts" index="1"]
 sprite_frames = ExtResource("3_mbsxs")
-animation = &"E"
+animation = &"NW"
 
 [node name="RightArmWeapon" type="AnimatedSprite2D" parent="Parts" index="2"]
 sprite_frames = ExtResource("4_gbknk")
@@ -42,5 +45,12 @@ animation = &"NE"
 [node name="HurtboxComponent" parent="." index="5"]
 visible = false
 
-[node name="CollisionShape2D" parent="." index="6"]
-visible = false
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="HurtboxComponent" index="0"]
+position = Vector2(0, -12)
+scale = Vector2(0.5, 1)
+shape = SubResource("CircleShape2D_gbknk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="9"]
+position = Vector2(0, -12)
+scale = Vector2(0.5, 1)
+shape = SubResource("CircleShape2D_gbknk")

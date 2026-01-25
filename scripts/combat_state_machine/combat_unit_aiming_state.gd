@@ -35,7 +35,7 @@ func _attempt_shot(tile: Vector2i):
 	#if not los_service.has_los(shooter_tile, target_tile):
 	#	#print("NO LOS")
 	#	return
-	owner_node.weapon_service.fire_bullet(BULLET_SCENE, shooter_tile, target_tile)
+	owner_node.weapon_service.fire_bullet(BULLET_SCENE, shooter_tile, target_tile, shooter)
 	
 	
 func handle_click(tile: Vector2i, button_index: int):

@@ -8,8 +8,19 @@ var health_component: HealthComponent
 
 func _ready():
     health_component = get_parent().get_node("HealthComponent")
+    health_component.connect("died", Callable(self, "_on_died"))
 
 func take_damage(amount: int):
-    health -= amount
-    if health <= 0:
-        emit_signal("died")
+    print("Taking damage: %s" % amount)
+    health_component.take_damage(amount)
+
+    # health = max(health - amount, 0)
+    # if health <= 0:
+    #     monitoring = false
+    #     monitorable = false
+    #     emit_signal("died")
+
+func _on_died():
+    monitoring = false
+    monitorable = false
+    emit_signal("died")
