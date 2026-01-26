@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://clrxlqblyhtyd"
-path="res://.godot/imported/FOREST.PNG-6ab767e61c7900c9382b212f70bbd0b7.ctex"
+uid="uid://2e3jda5yrkqc"
+path="res://.godot/imported/trn_barracks_tr.png-82c3b63745ebb765059544bb24c6cc53.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tilesets/FOREST.PNG"
-dest_files=["res://.godot/imported/FOREST.PNG-6ab767e61c7900c9382b212f70bbd0b7.ctex"]
+source_file="res://assets/sprites/wagons/trn_barracks_tr.png"
+dest_files=["res://.godot/imported/trn_barracks_tr.png-82c3b63745ebb765059544bb24c6cc53.ctex"]
 
 [params]
 

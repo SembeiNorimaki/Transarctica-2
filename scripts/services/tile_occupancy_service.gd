@@ -1,3 +1,16 @@
+"""
+Tile Occupancy Service
+
+This service is responsible for managing the occupancy of tiles on the map.
+It keeps track of which tiles are occupied by which entities and provides
+methods to query and update the occupancy of tiles.
+
+_occupied_tiles : Dictionary of  Tile (Vector2i) -> Array[Entity]
+
+
+"""
+
+
 extends Node
 
 class_name TileOccupancyService
@@ -9,8 +22,16 @@ var _occupied_tiles := {}
 func _ready() -> void:
     pass
 
-func get_occupied_tiles() -> Dictionary:
-    return _occupied_tiles
+
+func register_footprint(anchor: Vector2i, offsets: Array[Vector2i], entity: Object) -> void:
+    for offset in offsets:
+        var tile = anchor + offset
+        register(tile, entity)
+
+func unregister_footprint(anchor: Vector2i, offsets: Array[Vector2i], entity: Object) -> void:
+    for offset in offsets:
+        var tile = anchor + offset
+        unregister(tile, entity)
 
 func register(tile: Vector2i, entity: Object) -> void:
     var list = _occupied_tiles.get(tile)
@@ -29,6 +50,9 @@ func unregister(tile: Vector2i, entity: Object) -> void:
 
 
 #region QUERIES
+func get_occupied_tiles() -> Dictionary:
+    return _occupied_tiles
+
 func get_entities(tile: Vector2i) -> Array:
     return _occupied_tiles.get(tile, [])
 
@@ -62,7 +86,7 @@ func get_roads(tile: Vector2i) -> Array:
 
 func is_occupied(tile: Vector2i) -> bool:
     return _occupied_tiles.has(tile)
-    
+
 func is_occupied_static(tile: Vector2i) -> bool:
     if _occupied_tiles.has(tile):
         for entity in _occupied_tiles[tile]:
@@ -70,6 +94,12 @@ func is_occupied_static(tile: Vector2i) -> bool:
                 return true
     return false
 
+func is_footprint_free(anchor: Vector2i, offsets: Array[Vector2i]) -> bool:
+    for offset in offsets:
+        var tile = anchor + offset
+        if is_occupied(tile):
+            return false
+    return true
 
 func is_blocked(tile: Vector2i) -> bool:
     return is_occupied(tile)

@@ -7,6 +7,7 @@ extends Node2D
 @onready var turn_manager = $Managers/TurnManager
 @onready var selection_manager = $Managers/SelectionManager
 @onready var pod_manager = $Managers/PodManager
+@onready var train_manager = $Managers/TrainManager
 
 #Containers
 @onready var projectiles_container = $Containers/Projectiles
@@ -75,6 +76,8 @@ func _inject_services():
 	turn_manager.pod_manager = pod_manager
 	pod_manager.tile_occupancy_service = tile_occupancy_service
 	pod_manager.grid_service = grid_service
+	train_manager.tile_occupancy_service = tile_occupancy_service
+	train_manager.grid_service = grid_service
 
 	# Overlays
 	units_overlay.grid_service = grid_service
@@ -171,6 +174,8 @@ func _load_map(map_name: String) -> void:
 	_spawn_pods_from_map(new_map.get_node("Pods"), new_map.get_node("PatrolPoints"))
 	_assign_units_to_pods(new_map.get_node("Pods"), tile_occupancy_service)
 
+	_spawn_train(Vector2i(6, 7))
+
 	#_load_patrol_points_from_map(new_map.get_node("PatrolPoints"), Vector2i(6, 7))
 
 
@@ -222,14 +227,18 @@ func _assign_units_to_pods(pods_tilemap: TileMapLayer, tile_occupancy_service: T
 		print("Assigning unit %s to pod %s" % [units[0].id, pod_id])
 	
 
+func _spawn_train(initial_tile: Vector2i):
+	train_manager.spawn_train(initial_tile)
+
+
 func _spawn_units_from_map(units_tilemap: TileMapLayer) -> void:
 	for tile in units_tilemap.get_used_cells():
 		var atlas_coords = units_tilemap.get_cell_atlas_coords(tile)
-		var unit_type = UnitTypes.get_unit_type_from_atlas_coords(atlas_coords)
+		var source_id = units_tilemap.get_cell_source_id(tile)
+		var unit_type = UnitTypes.get_unit_type_from_atlas_coords(source_id, atlas_coords)
 		var owner_id = UnitTypes.get_owner_id_from_atlas_coords(atlas_coords)
-
 		#print("***Spawning unit %s of owner %s at tile %s" % [unit_type, owner_id, tile])
-		unit_manager.spawn_unit(tile, unit_type, owner_id)
+		unit_manager.spawn_unit(tile, unit_type)
 
 		# Remove the placeholder tile
 		units_tilemap.erase_cell(tile)

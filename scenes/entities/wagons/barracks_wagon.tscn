@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://cjgydihpg50rd"]
+
+[ext_resource type="PackedScene" uid="uid://db0akj2cdwfl3" path="res://scenes/entities/units/vehicle_unit.tscn" id="1_taca5"]
+[ext_resource type="Texture2D" uid="uid://2e3jda5yrkqc" path="res://assets/sprites/wagons/trn_barracks_tr.png" id="2_yj3fu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lfta7"]
+atlas = ExtResource("2_yj3fu")
+region = Rect2(0, 0, 128, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_evdhc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lfta7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="BarracksWagon" instance=ExtResource("1_taca5")]
+
+[node name="Sprite" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_evdhc")
+animation = &"default"

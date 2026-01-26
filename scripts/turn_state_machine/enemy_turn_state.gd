@@ -4,11 +4,14 @@ class_name EnemyTurnState
 
 func enter(params = {}):
     print("Enter enemy turn state %s" % owner_node.pod_manager)
-    var pods = owner_node.pod_manager.get_all_pods()
-    
-    for i in range(pods.size()):
-        print("Pod %s: %s" % [i, pods[i].patrol_route])
+    await _run_pods()
+    state_machine.change_state("PlayerTurnState")
 
+func _run_pods():
+    var pods = owner_node.pod_manager.get_all_pods()
+    for pod in pods:
+        pod.take_turn()
+        await pod.turn_finished
 # extends GenericState
 # class_name EnemyTurnState
 

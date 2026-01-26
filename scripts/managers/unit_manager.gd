@@ -25,12 +25,16 @@ func _ready() -> void:
 	pass
 
 #region unit spawning
-func spawn_unit(tile_pos: Vector2i, unit_type_: String, team: String) -> void:
-	#print("Spawning a %s" % unit_type)
+func spawn_unit(tile_pos: Vector2i, unit_type_: String) -> void:
+	var unit_info = UnitTypes.TYPES[unit_type_]
+	var team = unit_info.team
+	var footprint = unit_info.footprint
+
+	print("Spawning a %s" % unit_type_)
 	var id = "u%s%s" % [team[0], next_unit_id[team]] # Player unit with id=3 -> uP3
 	next_unit_id[team] += 1
-	var unit_type = UnitTypes.TYPES[unit_type_]
-	var unit = unit_type.scene.instantiate()
+	
+	var unit = unit_info.scene.instantiate()
 	
 	# Dependency injection
 	unit.grid_service = grid_service
@@ -45,7 +49,8 @@ func spawn_unit(tile_pos: Vector2i, unit_type_: String, team: String) -> void:
 	get_node("../../Containers/Units").add_child(unit)
 
 	# Register in occupancy
-	tile_occupancy_service.register(tile_pos, unit)
+	for offset in UnitTypes.FOOTPRINTS[footprint]:
+		tile_occupancy_service.register(tile_pos + offset, unit)
 
 	# Register in units_to_tile
 	units_to_tile[unit] = tile_pos

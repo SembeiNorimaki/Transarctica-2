@@ -70,10 +70,11 @@ func set_orientation(new_orientation: String):
 	
 	
 func _draw():
-	var dst_tile = grid_service.ORIENTATION_VECTORS[orientation] * 4
-	var pos = grid_service.tile_delta_to_world_delta(dst_tile)
-	draw_line(Vector2.ZERO, pos, Color.BLUE, 2)
-	queue_redraw()
+	print("Grid service %s for unit %s %s" % [grid_service, id, self])
+	#var dst_tile = grid_service.ORIENTATION_VECTORS[orientation] * 4
+	#var pos = grid_service.tile_delta_to_world_delta(dst_tile)
+	#draw_line(Vector2.ZERO, pos, Color.BLUE, 2)
+	#queue_redraw()
 
 func update_state_label(state_name: String):
 	state_label.text = name

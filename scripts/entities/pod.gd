@@ -15,7 +15,13 @@ var id: String
 @onready var action_sm = $PodStateMachine
 
 signal movement_finished
+signal turn_finished
 
+
+func take_turn():
+	print("Pod %s taking turn" % id)
+	emit_signal("turn_finished")
+	
 func set_state(state: String, params = {}) -> void:
 	action_sm.set_state(state, params)
 	state_label.text = state

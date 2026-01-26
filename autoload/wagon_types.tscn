@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d1bc371v5cajw"]
+
+[ext_resource type="Script" uid="uid://dpnr6iwi2dwad" path="res://scripts/entities/wagon_types.gd" id="1_3fu6t"]
+
+[node name="WagonTypes" type="Node"]
+script = ExtResource("1_3fu6t")
