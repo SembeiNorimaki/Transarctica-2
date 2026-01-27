@@ -70,9 +70,9 @@ func _edge_to_screen_points(edge: Edge) -> Array[Vector2i]:
 	var dir = (b_screen - a_screen).normalized()
 	
 	# Perpendicular for thickness
-	var perp = Vector2(-dir.y, dir.x)
+	var perp = Vector2(-dir.y * 4, dir.x)
 
-	var p1 = mid + perp * 6
-	var p2 = mid - perp * 6
+	var p1 = mid + perp * 4
+	var p2 = mid - perp * 4
 
 	return [p1, p2]
