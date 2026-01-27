@@ -22,13 +22,17 @@ tile_map_data = PackedByteArray("AAAFAAoAAAAAAAAAAAAFAAkAAAAAAAAAAAAFAAgAAAAAAAA
 
 [node name="Units" parent="." index="2"]
 position = Vector2(1, 0)
-tile_map_data = PackedByteArray("AAAGAAYAAQABAAAAAAAHAAgAAQABAAAAAAAFAAgAAQABAAAAAAAJAAIAAQABAAAAAAALAAIAAQABAAAAAAADAAIAAAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAGAAYAAQABAAEAAAAHAAgAAQABAAEAAAAFAAgAAQABAAEAAAAJAAIAAQABAAEAAAALAAIAAQABAAEAAAADAAIAAQAAAAEAAAA=")
 
 [node name="Pods" parent="." index="4"]
 tile_map_data = PackedByteArray("AAAGAAcAAQAAAAAAAAAKAAIAAQABAAAAAAAGAAYAAQAAAAEAAAAFAAgAAQAAAAEAAAAHAAgAAQAAAAEAAAAJAAIAAQABAAEAAAALAAIAAQABAAEAAAA=")
 
+[node name="Right" parent="Walls" index="1"]
+tile_map_data = PackedByteArray("AAAEAAQAAAAAAAAAAAAFAAQAAAAAAAAAAAAGAAQAAAAAAAAAAAA=")
+
 [node name="Left" parent="Walls" index="2"]
 position = Vector2(2, 0)
+tile_map_data = PackedByteArray("AAAJAAQAAAABAAAAAAAJAAMAAAABAAAAAAA=")
 tile_set = SubResource("TileSet_oin7f")
 
 [node name="PatrolPoints" parent="." index="6"]

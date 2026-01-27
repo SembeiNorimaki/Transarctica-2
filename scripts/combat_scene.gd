@@ -174,7 +174,7 @@ func _load_map(map_name: String) -> void:
 	_spawn_pods_from_map(new_map.get_node("Pods"), new_map.get_node("PatrolPoints"))
 	_assign_units_to_pods(new_map.get_node("Pods"), tile_occupancy_service)
 
-	_spawn_train(Vector2i(6, 7))
+	#_spawn_train(Vector2i(6, 7))
 
 	#_load_patrol_points_from_map(new_map.get_node("PatrolPoints"), Vector2i(6, 7))
 

@@ -6,6 +6,13 @@ class_name WeaponService
 @onready var grid_service: GridService
 @onready var projectiles_container: Node2D
 
+# This system should:
+#     spawns bullets
+#     plays muzzle flash
+#     plays sound
+#     applies recoil
+#     handles projectile movement
+
 
 func _ready():
 	pass

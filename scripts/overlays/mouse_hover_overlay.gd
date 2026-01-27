@@ -10,7 +10,7 @@ func _process(delta: float) -> void:
 	var tile = grid_service.world_to_tile(mouse_pos)
 	if tile != current_tile:
 		current_tile = tile
-		#update()
+		update()
 
 func update():
 	_draw()

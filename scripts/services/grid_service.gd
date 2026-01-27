@@ -164,8 +164,6 @@ func get_tiles_in_vision_cone(origin: Vector2i, orientation: String, view_angle:
             
             
     return result
-            
 
-# func update_camera_transform(t: Transform2D) -> void:
-#     ##print("Setting camera transfor to %s" % t)
-#     camera_transform = t
+func is_inside_map(tile: Vector2i) -> bool:
+    return tile.x >= 0 and tile.x < map_size.x and tile.y >= 0 and tile.y < map_size.y

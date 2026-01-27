@@ -29,7 +29,7 @@ func find_path(start: Vector2i, goal: Vector2i) -> Array[Vector2i]:
 
 	var came_from := {}
 	var g_score := {start: 0}
-	var f_score := {start: heuristic(start, goal)}
+	var f_score := {start: _heuristic(start, goal)}
 
 	var closed := {}
 
@@ -40,8 +40,7 @@ func find_path(start: Vector2i, goal: Vector2i) -> Array[Vector2i]:
 			return _reconstruct_path(came_from, current)
 
 		closed[current] = true
-		#print("current", navigation_graph_service.adjacency.keys())
-		#print("current", current)
+
 		for edge in navigation_graph_service.adjacency[current]:
 			var neighbor = edge.to_tile
 			
@@ -65,12 +64,13 @@ func find_path(start: Vector2i, goal: Vector2i) -> Array[Vector2i]:
 			if tentative_g < g_score.get(neighbor, INF):
 				came_from[neighbor] = current
 				g_score[neighbor] = tentative_g
-				f_score[neighbor] = tentative_g + heuristic(neighbor, goal)
+				f_score[neighbor] = tentative_g + _heuristic(neighbor, goal)
 				_push_open(open_set, neighbor, f_score[neighbor])
 
 	return [] # No path found
 
-func find_path2(start: Vector2i, goal: Vector2i) -> Array[Vector2i]:
+# This is the old pathfinding function, it doesn't use the navigation graph but queries the tile_occupancy_service directly
+func find_path_OLD(start: Vector2i, goal: Vector2i) -> Array[Vector2i]:
 	#print("Pathfinding from", start, "to", goal)
 	if start == goal:
 		return [start]
@@ -81,7 +81,7 @@ func find_path2(start: Vector2i, goal: Vector2i) -> Array[Vector2i]:
 
 	var came_from := {}
 	var g_score := {start: 0}
-	var f_score := {start: heuristic(start, goal)}
+	var f_score := {start: _heuristic(start, goal)}
 
 	var closed := {}
 
@@ -117,7 +117,7 @@ func find_path2(start: Vector2i, goal: Vector2i) -> Array[Vector2i]:
 			if tentative_g < g_score.get(neighbor, INF):
 				came_from[neighbor] = current
 				g_score[neighbor] = tentative_g
-				f_score[neighbor] = tentative_g + heuristic(neighbor, goal)
+				f_score[neighbor] = tentative_g + _heuristic(neighbor, goal)
 				_push_open(open_set, neighbor, f_score[neighbor])
 
 	return [] # No path found
@@ -132,7 +132,7 @@ func _pop_open(open_set: Array) -> Vector2i:
 	return open_set.pop_front().tile
 
 # --- A* helpers ---
-func heuristic(a: Vector2i, b: Vector2i) -> int:
+func _heuristic(a: Vector2i, b: Vector2i) -> int:
 	# Manhattan distance for grid movement
 	return abs(a.x - b.x) + abs(a.y - b.y)
 

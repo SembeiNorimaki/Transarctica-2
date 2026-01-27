@@ -11,7 +11,7 @@ func _ready():
     health_component.connect("died", Callable(self, "_on_died"))
 
 func take_damage(amount: int):
-    print("Taking damage: %s" % amount)
+    #print("HurtboxComponent take_damage %s" % amount)
     health_component.take_damage(amount)
 
     # health = max(health - amount, 0)
