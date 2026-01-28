@@ -116,6 +116,7 @@ func _inject_services():
 	exploration_service.grid_service = grid_service
 	exploration_service.exploration_layer = exploration_layer
 	exploration_service.los_service = los_service
+	exploration_service.unit_manager = unit_manager
 
 func _register_teams():
 	turn_manager.register_team("Player")

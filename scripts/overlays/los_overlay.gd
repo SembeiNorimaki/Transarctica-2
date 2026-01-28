@@ -17,7 +17,7 @@ func _draw():
 	for line_ in _lines_to_draw:
 		var pos1 = grid_service.tile_to_world(line_[0])
 		var pos2 = grid_service.tile_to_world(line_[1])
-		draw_line(pos1, pos2, Color.BLACK)
+		#draw_line(pos1, pos2, Color.BLACK)
 
 func draw_debug_line():
 	pass

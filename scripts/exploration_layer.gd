@@ -30,6 +30,12 @@ func reveal(visible_tiles: Array[Vector2i]):
 	print("Explored size: ", explored.size())
 	print("Currently visible size: ", currently_visible.size())
 
+func is_tile_visible(tile: Vector2i) -> bool:
+	return currently_visible.has(tile)
+
+func is_tile_explored(tile: Vector2i) -> bool:
+	return explored.has(tile)
+
 func _update_tiles():
 	for cell in get_used_cells():
 		var is_explored_: bool = explored.get(cell, false)

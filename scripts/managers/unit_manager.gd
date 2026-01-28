@@ -87,7 +87,7 @@ func get_next_unit_by_team(team: String) -> Unit:
 	cycle_idx[team] = (cycle_idx[team] + 1) % units[team].size()
 	return units[team][cycle_idx[team]]
 
-func get_units_by_team(team: String) -> Array[Unit]:
+func get_units_by_team(team: String) -> Array:
 	return units.get(team, [])
 
 func get_all_units() -> Array[Unit]:
