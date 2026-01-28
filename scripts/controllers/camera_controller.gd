@@ -14,27 +14,44 @@ var zoom: float = 3.0
 var offset := Vector2.ZERO
 
 func _ready() -> void:
-    cam.zoom = Vector2(zoom, zoom)
-    cam.global_position = offset
+	cam.zoom = Vector2(zoom, zoom)
+	cam.global_position = offset
 
 func _unhandled_input(event):
-    if event is InputEventMouseButton and event.pressed:
-        if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-            zoom += ZOOM_SPEED
-            cam.zoom = Vector2(zoom, zoom)
-        elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-            zoom -= ZOOM_SPEED
-            cam.zoom = Vector2(zoom, zoom)
-        
-func _process(delta: float) -> void:
-    var input := Vector2.ZERO
-    input.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
-    input.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
+	if event is InputEventMouseButton and event.pressed:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			#zoom += ZOOM_SPEED
+			#cam.zoom = Vector2(zoom, zoom)
+			_zoom_at_screenpos(1, event.position)
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			#zoom -= ZOOM_SPEED
+			#cam.zoom = Vector2(zoom, zoom)
+			_zoom_at_screenpos(-1, event.position)
 
-    if input != Vector2.ZERO:
-        input = input.normalized()
-        offset += input * move_speed * delta
-        cam.global_position = offset
+func _zoom_at_screenpos(direction: int, screen_pos: Vector2):
+	# 1. Convert screen → world BEFORE zoom
+	var world_before = cam.get_canvas_transform().affine_inverse() * screen_pos
+
+	# 2. Apply zoom
+	zoom = clamp(zoom + direction * ZOOM_SPEED, MIN_ZOOM, MAX_ZOOM)
+	cam.zoom = Vector2(zoom, zoom)
+
+	# 3. Convert screen → world AFTER zoom
+	var world_after = cam.get_canvas_transform().affine_inverse() * screen_pos
+
+	# 4. Move camera so the point under the mouse stays fixed
+	cam.position += world_before - world_after
+
+
+func _process(delta: float) -> void:
+	var input := Vector2.ZERO
+	input.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
+	input.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
+
+	if input != Vector2.ZERO:
+		input = input.normalized()
+		offset += input * move_speed * delta
+		cam.global_position = offset
 
 # func _ready() -> void:
 # 	_last_transform = cam.global_transform
@@ -44,10 +61,10 @@ func _process(delta: float) -> void:
 
 # func _process(delta: float) -> void:
 # 	_handle_movement(delta)
-    
+	
 
 # 	# Emit signal if camera moved
-    
+	
 
 # func _apply_offset(offset: Vector2) -> void:
 # 	cam.global_position += offset
@@ -64,7 +81,7 @@ func _process(delta: float) -> void:
 # 			_handle_zoom(1)
 # 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 # 			_handle_zoom(-1)
-            
+			
 # func _handle_movement(delta: float) -> void:
 # 	var input := Vector2.ZERO
 
