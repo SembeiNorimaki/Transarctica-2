@@ -1,4 +1,7 @@
-var atlas2 = {
+const FRAME_W = 32
+const FRAME_H = 40
+
+const atlas2 = {
     "torso": {
         "idle": {
             "N": [Vector2i(0, 2)],
@@ -44,7 +47,6 @@ var atlas2 = {
         }
 
     },
-    
     "left_arm": {
         "idle": {
             "N": [Vector2i(0, 15)],

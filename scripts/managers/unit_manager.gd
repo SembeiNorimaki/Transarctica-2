@@ -36,6 +36,8 @@ func spawn_unit(tile_pos: Vector2i, unit_type_: String) -> void:
 	
 	var unit = unit_info.scene.instantiate()
 	
+	unit.call_deferred("set_soldier_type", "Dagon")
+
 	# Dependency injection
 	unit.grid_service = grid_service
 	unit.unit_manager = self
