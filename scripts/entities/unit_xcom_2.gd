@@ -21,23 +21,32 @@ extends Unit
 
 
 func set_soldier_type(id: String):
+	print("Setting soldier type to %s" % id)
 	var frames_dict = SoldierAtlasLoader.get_soldier_type(id)
-	torso.frames = frames_dict["torso"]
-	legs.frames = frames_dict["legs"]
-	left_arm.frames = frames_dict["left_arm"]
-	right_arm.frames = frames_dict["right_arm"]
+	torso.sprite_frames = frames_dict["torso"]
+	legs.sprite_frames = frames_dict["legs"]
+	left_arm.sprite_frames = frames_dict["left_arm"]
+	right_arm.sprite_frames = frames_dict["right_arm"]
+
+	print("Torso: %s" % torso.sprite_frames.get_animation_names())
+	print("Legs: %s" % legs.sprite_frames.get_animation_names())
+	print("Left arm: %s" % left_arm.sprite_frames.get_animation_names())
+	print("Right arm: %s" % right_arm.sprite_frames.get_animation_names())
 
 func set_orientation(new_orientation: String):
 	orientation = new_orientation
-	torso.set_animation(new_orientation)
-	legs.set_animation(new_orientation)
-	left_arm.set_animation(new_orientation)
-	right_arm.set_animation(new_orientation)
-	weapon.set_animation(new_orientation)
+	var animation_name = "%s_%s" % [get_current_action(), new_orientation]
+	print("Orientation changed to %s, new animation_name: %s" % [new_orientation, animation_name])
+	torso.set_animation(animation_name)
+	legs.set_animation(animation_name)
+	left_arm.set_animation(animation_name)
+	right_arm.set_animation(animation_name)
+	weapon.set_animation(animation_name)
 	unit_manager.on_unit_orientation_changed(self, new_orientation)
 	queue_redraw()
 
 func play_orientation(ori: String):
+	print("Play orientation %s" % ori)
 	for i in range(5):
 		var part = render_order[ori][i]
 		part.z_index = i
