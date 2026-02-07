@@ -10,7 +10,7 @@ const ZOOM_SPEED := 1.0
 const MIN_ZOOM := 1.0
 const MAX_ZOOM := 4.0
 
-var zoom: float = 3.0
+@export var zoom: float = 1.0
 var offset := Vector2.ZERO
 
 func _ready() -> void:

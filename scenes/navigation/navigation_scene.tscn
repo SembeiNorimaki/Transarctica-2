@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3 uid="uid://cks6neywtnnld"]
+
+[ext_resource type="PackedScene" uid="uid://cm3taqyltqkqe" path="res://scenes/maps/world_1.tscn" id="1_dwqgp"]
+[ext_resource type="Script" uid="uid://bqgvrnvopjmy1" path="res://scripts/navigation_scene.gd" id="1_w5hjg"]
+[ext_resource type="PackedScene" uid="uid://did4013cgu15i" path="res://scenes/entities/units/navigation_train.tscn" id="2_5upms"]
+[ext_resource type="Script" uid="uid://0ss8oruyrctq" path="res://scripts/services/grid_service.gd" id="3_wnopi"]
+[ext_resource type="Script" uid="uid://b3m21ey262gd6" path="res://scripts/services/tile_occupancy_service.gd" id="5_c4wbs"]
+[ext_resource type="Script" uid="uid://dypjkdxlm02ur" path="res://scripts/services/rail_service.gd" id="6_8qk8c"]
+[ext_resource type="PackedScene" uid="uid://ch1611f2p6brv" path="res://scenes/combat/controllers/camera_controller.tscn" id="6_tyxpn"]
+
+[node name="NavigationScene" type="Node2D"]
+script = ExtResource("1_w5hjg")
+
+[node name="MapRoot" type="Node2D" parent="."]
+
+[node name="World1" parent="MapRoot" instance=ExtResource("1_dwqgp")]
+
+[node name="ExplorationLayer" type="TileMapLayer" parent="MapRoot"]
+
+[node name="Containers" type="Node2D" parent="."]
+
+[node name="Trains" type="Node2D" parent="Containers"]
+
+[node name="PlayerTrain" parent="Containers/Trains" instance=ExtResource("2_5upms")]
+position = Vector2(0, -1)
+
+[node name="Services" type="Node" parent="."]
+
+[node name="GridService" type="Node" parent="Services"]
+script = ExtResource("3_wnopi")
+
+[node name="TileOccupancyService" type="Node" parent="Services"]
+script = ExtResource("5_c4wbs")
+
+[node name="RailService" type="Node" parent="Services"]
+script = ExtResource("6_8qk8c")
+
+[node name="Managers" type="Node" parent="."]
+
+[node name="Node" type="Node" parent="Managers"]
+
+[node name="Controllers" type="Node" parent="."]
+
+[node name="CameraController" parent="Controllers" instance=ExtResource("6_tyxpn")]
