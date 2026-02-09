@@ -1,5 +1,8 @@
 extends Node2D
 
+# Overlays
+@onready var rails_overlay = $Overlays/RailsOverlay
+
 # Services
 @onready var grid_service = $Services/GridService
 @onready var rail_service = $Services/RailService
@@ -29,6 +32,11 @@ func _ready() -> void:
     _load_map("world_1")
 
 func _inject_services():
+    # Overlays
+    rails_overlay.grid_service = grid_service
+    rails_overlay.rail_service = rail_service
+
+    # Services
     player_train.grid_service = grid_service
     rail_service.rails_tilemap = $MapRoot/World1/Rails
 
@@ -45,6 +53,8 @@ func _build_rails_from_map(rails_tilemap: TileMapLayer) -> void:
         var source_id = rails_tilemap.get_cell_source_id(tile)
         var rail_name = ATLAS_TO_RAILNAME[atlas_coords]
         rail_service.spawn_rail(tile, rail_name)
+    
+    #rails_overlay.update()
 
 
 func _on_player_train_tile_changed(from_tile: Vector2i, to_tile: Vector2i) -> void:
