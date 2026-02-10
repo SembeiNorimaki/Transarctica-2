@@ -27,8 +27,8 @@ var turn_request := 0 # -1 = left, +1 = right, 0 = none
 signal tile_changed(old_tile: Vector2i, new_tile: Vector2i)
 
 func _ready() -> void:
-	position = Vector2(64, 96)
-	current_tile = Vector2i(1, 1)
+	position = Vector2(64 * 4, 96 * 2)
+	current_tile = Vector2i(4, 2)
 
 func _process(delta):
 	var tile = grid_service.world_to_tile(position)
