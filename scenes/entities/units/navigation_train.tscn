@@ -1,113 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://did4013cgu15i"]
+[gd_scene load_steps=4 format=3 uid="uid://did4013cgu15i"]
 
 [ext_resource type="Script" uid="uid://dnew8tq4r0jld" path="res://scripts/entities/navigation_train.gd" id="1_743fu"]
-[ext_resource type="Texture2D" uid="uid://10gp2u0s07vv" path="res://assets/sprites/locomotive/0.png" id="1_eo58k"]
-[ext_resource type="Texture2D" uid="uid://d2qg2dggkrlb4" path="res://assets/sprites/locomotive/270.png" id="2_743fu"]
-[ext_resource type="Texture2D" uid="uid://d1jphw81jhq7v" path="res://assets/sprites/locomotive/315.png" id="3_ahdti"]
-[ext_resource type="Texture2D" uid="uid://2lrlfuhfh4oj" path="res://assets/sprites/locomotive/225.png" id="4_pk1rd"]
-[ext_resource type="Texture2D" uid="uid://cxf64inhxe76p" path="res://assets/sprites/locomotive/90.png" id="5_qfdhm"]
-[ext_resource type="Texture2D" uid="uid://b1571cjbqnrho" path="res://assets/sprites/locomotive/45.png" id="6_o40hm"]
-[ext_resource type="Texture2D" uid="uid://u3s3b7354how" path="res://assets/sprites/locomotive/135.png" id="7_84iop"]
-[ext_resource type="Texture2D" uid="uid://clyppmchte0ix" path="res://assets/sprites/locomotive/180.png" id="8_8xglv"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xoufm"]
-atlas = ExtResource("1_eo58k")
-region = Rect2(0, 0, 56, 42)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_canr8"]
-atlas = ExtResource("2_743fu")
-region = Rect2(0, 0, 56, 43)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7iiqy"]
-atlas = ExtResource("3_ahdti")
-region = Rect2(0, 0, 78, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_r56fe"]
-atlas = ExtResource("4_pk1rd")
-region = Rect2(0, 0, 32, 54)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7equ0"]
-atlas = ExtResource("5_qfdhm")
-region = Rect2(0, 0, 51, 42)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4vsec"]
-atlas = ExtResource("6_o40hm")
-region = Rect2(0, 0, 32, 55)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ken7d"]
-atlas = ExtResource("7_84iop")
-region = Rect2(0, 0, 73, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_a3s6y"]
-atlas = ExtResource("8_8xglv")
-region = Rect2(0, 0, 51, 43)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_41a3k"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xoufm")
-}],
-"loop": true,
-"name": &"E",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_canr8")
-}],
-"loop": true,
-"name": &"N",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7iiqy")
-}],
-"loop": true,
-"name": &"NE",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_r56fe")
-}],
-"loop": true,
-"name": &"NW",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7equ0")
-}],
-"loop": true,
-"name": &"S",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4vsec")
-}],
-"loop": true,
-"name": &"SE",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ken7d")
-}],
-"loop": true,
-"name": &"SW",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_a3s6y")
-}],
-"loop": true,
-"name": &"W",
-"speed": 5.0
-}]
+[ext_resource type="SpriteFrames" uid="uid://ctyubkho1hfut" path="res://assets/sprites/navigation_train.tres" id="2_y3scl"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_743fu"]
 size = Vector2(5, 5)
@@ -116,7 +10,7 @@ size = Vector2(5, 5)
 script = ExtResource("1_743fu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_41a3k")
+sprite_frames = ExtResource("2_y3scl")
 animation = &"E"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

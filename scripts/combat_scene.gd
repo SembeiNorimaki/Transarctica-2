@@ -179,8 +179,6 @@ func _load_map(map_name: String) -> void:
 
 	#_load_patrol_points_from_map(new_map.get_node("PatrolPoints"), Vector2i(6, 7))
 
-
-	grid_service.test()
 	
 	#building_manager.spawn_buildings_from_map(map_instance.buildings)
 	#wall_manager.spawn_walls_from_map(map_instance.walls)

@@ -30,18 +30,8 @@ func _rebuild_edges_for_tile(tile: Vector2i, rail_name: String) -> void:
 	edges[tile] = []
 	var letters = rail_name.split("") # eg: ["N", "S"]
 
-	#Active connection is always the first two letters
-	var active_a = letters[0]
-	var active_b = letters[1]
-
-	# Build active edges
-	_add_edge(tile, active_a)
-	_add_edge(tile, active_b)
-
-	# If there is a junction, add it too
-	if letters.size() == 3:
-		var junction = letters[2]
-		_add_edge(tile, junction)
+	for letter in letters:
+		_add_edge(tile, letter)
 
 func _add_edge(tile: Vector2i, dir_letter: String) -> void:
 	var neighbor = tile + DIRS[dir_letter]

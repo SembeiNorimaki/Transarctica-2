@@ -1,0 +1,109 @@
+[gd_resource type="SpriteFrames" load_steps=17 format=3 uid="uid://ctyubkho1hfut"]
+
+[ext_resource type="Texture2D" uid="uid://10gp2u0s07vv" path="res://assets/sprites/locomotive/0.png" id="1_hgccg"]
+[ext_resource type="Texture2D" uid="uid://d2qg2dggkrlb4" path="res://assets/sprites/locomotive/270.png" id="2_rhe03"]
+[ext_resource type="Texture2D" uid="uid://d1jphw81jhq7v" path="res://assets/sprites/locomotive/315.png" id="3_e18bf"]
+[ext_resource type="Texture2D" uid="uid://2lrlfuhfh4oj" path="res://assets/sprites/locomotive/225.png" id="4_juhvq"]
+[ext_resource type="Texture2D" uid="uid://cxf64inhxe76p" path="res://assets/sprites/locomotive/90.png" id="5_towqu"]
+[ext_resource type="Texture2D" uid="uid://b1571cjbqnrho" path="res://assets/sprites/locomotive/45.png" id="6_3f6gx"]
+[ext_resource type="Texture2D" uid="uid://u3s3b7354how" path="res://assets/sprites/locomotive/135.png" id="7_yqj4u"]
+[ext_resource type="Texture2D" uid="uid://clyppmchte0ix" path="res://assets/sprites/locomotive/180.png" id="8_unbhs"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xoufm"]
+atlas = ExtResource("1_hgccg")
+region = Rect2(0, 0, 56, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_canr8"]
+atlas = ExtResource("2_rhe03")
+region = Rect2(0, 0, 56, 43)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7iiqy"]
+atlas = ExtResource("3_e18bf")
+region = Rect2(0, 0, 78, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r56fe"]
+atlas = ExtResource("4_juhvq")
+region = Rect2(0, 0, 32, 54)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7equ0"]
+atlas = ExtResource("5_towqu")
+region = Rect2(0, 0, 51, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4vsec"]
+atlas = ExtResource("6_3f6gx")
+region = Rect2(0, 0, 32, 55)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ken7d"]
+atlas = ExtResource("7_yqj4u")
+region = Rect2(0, 0, 73, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a3s6y"]
+atlas = ExtResource("8_unbhs")
+region = Rect2(0, 0, 51, 43)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xoufm")
+}],
+"loop": true,
+"name": &"E",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_canr8")
+}],
+"loop": true,
+"name": &"N",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7iiqy")
+}],
+"loop": true,
+"name": &"NE",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r56fe")
+}],
+"loop": true,
+"name": &"NW",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7equ0")
+}],
+"loop": true,
+"name": &"S",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4vsec")
+}],
+"loop": true,
+"name": &"SE",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ken7d")
+}],
+"loop": true,
+"name": &"SW",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a3s6y")
+}],
+"loop": true,
+"name": &"W",
+"speed": 5.0
+}]

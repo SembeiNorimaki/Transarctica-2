@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cks6neywtnnld"]
+[gd_scene load_steps=11 format=3 uid="uid://cks6neywtnnld"]
 
 [ext_resource type="PackedScene" uid="uid://cm3taqyltqkqe" path="res://scenes/maps/world_1.tscn" id="1_dwqgp"]
 [ext_resource type="Script" uid="uid://bqgvrnvopjmy1" path="res://scripts/navigation_scene.gd" id="1_w5hjg"]
@@ -7,7 +7,13 @@
 [ext_resource type="Script" uid="uid://b3m21ey262gd6" path="res://scripts/services/tile_occupancy_service.gd" id="5_c4wbs"]
 [ext_resource type="Script" uid="uid://dypjkdxlm02ur" path="res://scripts/services/rail_service.gd" id="6_8qk8c"]
 [ext_resource type="PackedScene" uid="uid://ch1611f2p6brv" path="res://scenes/combat/controllers/camera_controller.tscn" id="6_tyxpn"]
+[ext_resource type="Script" uid="uid://d4e8t4fptt104" path="res://scripts/managers/train_manager.gd" id="7_tljxq"]
 [ext_resource type="Script" uid="uid://devn7uqx1hl7x" path="res://scripts/overlays/rails_overlay.gd" id="8_e7sg2"]
+
+[sub_resource type="TileSet" id="TileSet_e7sg2"]
+tile_shape = 1
+tile_layout = 5
+tile_size = Vector2i(128, 64)
 
 [node name="NavigationScene" type="Node2D"]
 script = ExtResource("1_w5hjg")
@@ -17,6 +23,7 @@ script = ExtResource("1_w5hjg")
 [node name="World1" parent="MapRoot" instance=ExtResource("1_dwqgp")]
 
 [node name="ExplorationLayer" type="TileMapLayer" parent="MapRoot"]
+tile_set = SubResource("TileSet_e7sg2")
 
 [node name="Containers" type="Node2D" parent="."]
 
@@ -38,7 +45,8 @@ script = ExtResource("6_8qk8c")
 
 [node name="Managers" type="Node" parent="."]
 
-[node name="Node" type="Node" parent="Managers"]
+[node name="TrainManager" type="Node" parent="Managers"]
+script = ExtResource("7_tljxq")
 
 [node name="Controllers" type="Node" parent="."]
 

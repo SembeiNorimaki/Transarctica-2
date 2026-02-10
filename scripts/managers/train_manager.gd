@@ -1,31 +1,37 @@
 extends Node
 class_name TrainManager
 
-#Injected by CombatScene
-var tile_occupancy_service: TileOccupancyService
+#Injected by NavigationScene
+var rail_service: RailService
 var grid_service: GridService
 
-var next_wagon_id = {"Player": 0, "Enemy": 0}
-var wagons := {"Player": [], "Enemy": []}
+var next_train_id = {"Player": 0, "Enemy": 0}
+var teams = ["Player", "Enemy"]
+var trains := {"Player": [], "Enemy": []}
 
-func spawn_train(tile_pos: Vector2i):
-	var example_train = ["locomotive", "barracks", "cannon"]
-	for wagon_type_ in example_train:
-		var wagon_info = WagonTypes.TYPES[wagon_type_]
-		var team = wagon_info.team
-		print("Spawning a %s" % wagon_type_)
-		var id = "w%s%s" % [team[0], next_wagon_id[team]] # Player wagon with id=3 -> wP3
-		next_wagon_id[team] += 1
+var TRAIN_SCENE = preload("res://scenes/entities/units/navigation_train.tscn")
 
-		var wagon = wagon_info.scene.instantiate()
-		
-		# Dependecy injectiopn
-		wagon.wagon_manager = self
+signal train_spawned(train)
+signal train_tile_changed(train, old_tile, new_tile)
+signal train_reached_destination(train)
 
-		#wagon.call_defered("initialize", id, team)
-		wagon.position = grid_service.tile_to_world(tile_pos)
-		wagon.current_tile = tile_pos
+func _ready() -> void:
+    pass
 
-		wagons[team].append(wagon)
-		# Add to scene tree
-		get_node("../../Containers/Wagons").add_child(wagon)
+func spawn_train(tile_pos: Vector2i, orientation: String, team: String):
+    print("Spawning a train at tile %s with orientation %s" % [tile_pos, orientation])
+    var id = "t%s%s" % [team[0], next_train_id[team]]
+    next_train_id[team] += 1
+    
+    var train = TRAIN_SCENE.instantiate()
+
+    # Dependency injection
+
+    train.position = grid_service.tile_to_world(tile_pos)
+    train.current_tile = tile_pos
+
+    trains[team].append(train)
+    # Add to scene tree
+    get_node("../../Containers/Trains").add_child(train)
+
+    emit_signal("train_spawned", train)

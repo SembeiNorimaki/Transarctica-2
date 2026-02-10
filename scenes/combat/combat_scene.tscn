@@ -14,7 +14,7 @@
 [ext_resource type="Script" uid="uid://d2oce6gqr1km1" path="res://scripts/overlays/units_overlay.gd" id="10_3c7v3"]
 [ext_resource type="Script" uid="uid://0ss8oruyrctq" path="res://scripts/services/grid_service.gd" id="10_rui7j"]
 [ext_resource type="Script" uid="uid://b3m21ey262gd6" path="res://scripts/services/tile_occupancy_service.gd" id="11_1ny26"]
-[ext_resource type="Script" uid="uid://b4n3jemmv6dbn" path="res://scripts/managers/train_manager.gd" id="11_5cjt0"]
+[ext_resource type="Script" uid="uid://b4n3jemmv6dbn" path="res://scripts/managers/wagon_manager.gd" id="11_5cjt0"]
 [ext_resource type="Script" uid="uid://bjmpeorfb3bal" path="res://scripts/overlays/buildings_overlay.gd" id="11_etgvb"]
 [ext_resource type="Script" uid="uid://bq2b3d3l2wv0e" path="res://scripts/services/terrain_service.gd" id="11_rui7j"]
 [ext_resource type="Script" uid="uid://ja6lxsbuuwp6" path="res://scripts/services/road_service.gd" id="11_wpptk"]

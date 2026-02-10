@@ -1,5 +1,8 @@
 extends Node2D
 
+# Managers
+@onready var train_manager = $Managers/TrainManager
+
 # Overlays
 @onready var rails_overlay = $Overlays/RailsOverlay
 
@@ -19,10 +22,22 @@ const ATLAS_TO_RAILNAME = {
     Vector2i(1, 0): "NS",
     Vector2i(2, 0): "NW",
     Vector2i(3, 0): "",
+    
     Vector2i(0, 1): "SE",
     Vector2i(1, 1): "NE",
     Vector2i(2, 1): "SW",
-    Vector2i(3, 1): ""
+    Vector2i(3, 1): "",
+
+    Vector2i(0, 6): "",
+    Vector2i(1, 6): "",
+    Vector2i(2, 6): "",
+    Vector2i(3, 6): "N",
+
+    Vector2i(0, 7): "W",
+    Vector2i(1, 7): "E",
+    Vector2i(2, 7): "S",
+    Vector2i(3, 7): "",
+
 }
 
 func _ready() -> void:
@@ -44,8 +59,36 @@ func _wire_signals():
     player_train.tile_changed.connect(_on_player_train_tile_changed)
 
 func _load_map(map_name: String) -> void:
-    var rails_tilemap = map_root.get_node("World1").get_node("Rails")
-    _build_rails_from_map(rails_tilemap)
+    var map_path = "res://scenes/maps/%s.tscn" % map_name
+    if not ResourceLoader.exists(map_path):
+        push_error("Map not found for map: %s at path: %s" % [map_name, map_path])
+    # remove existing map
+    if get_node("MapRoot").get_child_count() > 0:
+        var existing_map = get_node("MapRoot").get_child(0)
+        map_root.remove_child(existing_map)
+        existing_map.free()
+    # load new map
+    var new_map = load(map_path).instantiate()
+    map_root.add_child(new_map)
+    map_root.move_child(new_map, 0)
+
+    # Set tilesize to grid service and tile occupancy service
+    var tile_size = new_map.get_node("Terrain").tile_set.tile_size
+    grid_service.set_tile_size(tile_size)
+    grid_service.map_size = new_map.get_node("Terrain").get_used_rect().size
+    
+    _build_rails_from_map(new_map.get_node("Rails"))
+    _spawn_trains_from_map(new_map.get_node("Trains"))
+
+func _spawn_trains_from_map(trains_tilemap: TileMapLayer) -> void:
+    for tile in trains_tilemap.get_used_cells():
+        var atlas_coords = trains_tilemap.get_cell_atlas_coords(tile)
+        var source_id = trains_tilemap.get_cell_source_id(tile)
+
+        train_manager.spawn_train(tile)
+
+        # Remove the placeholder tile
+        trains_tilemap.erase_cell(tile)
 
 func _build_rails_from_map(rails_tilemap: TileMapLayer) -> void:
     for tile in rails_tilemap.get_used_cells():
