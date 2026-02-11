@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://did4013cgu15i"]
+[gd_scene load_steps=5 format=3 uid="uid://did4013cgu15i"]
 
 [ext_resource type="Script" uid="uid://dnew8tq4r0jld" path="res://scripts/entities/navigation_train.gd" id="1_743fu"]
 [ext_resource type="SpriteFrames" uid="uid://ctyubkho1hfut" path="res://assets/sprites/navigation_train.tres" id="2_y3scl"]
+[ext_resource type="PackedScene" uid="uid://dtxrg38hrli2n" path="res://scenes/combat/state_machines/action_state_machine.tscn" id="3_njqyl"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_743fu"]
 size = Vector2(5, 5)
@@ -15,3 +16,17 @@ animation = &"E"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("PlaceholderTexture2D_743fu")
+
+[node name="Labels" type="Node2D" parent="."]
+
+[node name="IDLabel" type="Label" parent="Labels"]
+offset_top = 22.0
+offset_right = 40.0
+offset_bottom = 45.0
+text = "ID: "
+
+[node name="ActionStateLabel" type="Label" parent="Labels"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="ActionStateMachine" parent="." instance=ExtResource("3_njqyl")]

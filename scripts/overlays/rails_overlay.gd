@@ -24,7 +24,7 @@ func _draw():
 	for tile in rail_service.edges:
 		var edges = rail_service.edges[tile]
 		for edge in edges:
-			print("Tile: %s : %s <-> %s" % [tile, edge.a, edge.b])
+			#print("Tile: %s : %s <-> %s" % [tile, edge.a, edge.b])
 			var a = edge.a
 			var b = edge.b
 			var a_off = OFFSETS[a]
@@ -32,7 +32,7 @@ func _draw():
 			var world_pos = grid_service.tile_to_world(tile)
 			var a_pos = world_pos + a_off
 			var b_pos = world_pos + b_off
-			print("World pos: %s, A pos: %s, B pos: %s" % [world_pos, a_pos, b_pos])
+			#print("World pos: %s, A pos: %s, B pos: %s" % [world_pos, a_pos, b_pos])
 			draw_line(a_pos, b_pos, Color.RED, 2)
 			
 		# for edge in edges:

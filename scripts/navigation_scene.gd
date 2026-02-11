@@ -67,16 +67,20 @@ func _ready() -> void:
 	_load_map("world_1")
 
 func _inject_services():
+	# Managers
+	train_manager.grid_service = grid_service
+	train_manager.rail_service = rail_service
 	# Overlays
 	rails_overlay.grid_service = grid_service
 	rails_overlay.rail_service = rail_service
 
 	# Services
-	player_train.grid_service = grid_service
+	#player_train.grid_service = grid_service
 	rail_service.rails_tilemap = $MapRoot/World1/Rails
 
 func _wire_signals():
-	player_train.tile_changed.connect(_on_player_train_tile_changed)
+	#player_train.tile_changed.connect(_on_player_train_tile_changed)
+	pass
 
 func _load_map(map_name: String) -> void:
 	var map_path = "res://scenes/maps/%s.tscn" % map_name
@@ -104,8 +108,9 @@ func _spawn_trains_from_map(trains_tilemap: TileMapLayer) -> void:
 	for tile in trains_tilemap.get_used_cells():
 		var atlas_coords = trains_tilemap.get_cell_atlas_coords(tile)
 		var source_id = trains_tilemap.get_cell_source_id(tile)
-
-		#train_manager.spawn_train(tile)
+		var orientation = "E"
+		var team = "Player"
+		train_manager.spawn_train(tile, orientation, team)
 
 		# Remove the placeholder tile
 		trains_tilemap.erase_cell(tile)
@@ -121,4 +126,5 @@ func _build_rails_from_map(rails_tilemap: TileMapLayer) -> void:
 
 
 func _on_player_train_tile_changed(from_tile: Vector2i, to_tile: Vector2i) -> void:
-	rail_service.build_rail(to_tile)
+	pass
+	#rail_service.build_rail(to_tile)

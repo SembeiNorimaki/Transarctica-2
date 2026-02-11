@@ -1,8 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://cks6neywtnnld"]
+[gd_scene load_steps=10 format=3 uid="uid://cks6neywtnnld"]
 
 [ext_resource type="PackedScene" uid="uid://cm3taqyltqkqe" path="res://scenes/maps/world_1.tscn" id="1_dwqgp"]
 [ext_resource type="Script" uid="uid://bqgvrnvopjmy1" path="res://scripts/navigation_scene.gd" id="1_w5hjg"]
-[ext_resource type="PackedScene" uid="uid://did4013cgu15i" path="res://scenes/entities/units/navigation_train.tscn" id="2_5upms"]
 [ext_resource type="Script" uid="uid://0ss8oruyrctq" path="res://scripts/services/grid_service.gd" id="3_wnopi"]
 [ext_resource type="Script" uid="uid://b3m21ey262gd6" path="res://scripts/services/tile_occupancy_service.gd" id="5_c4wbs"]
 [ext_resource type="Script" uid="uid://dypjkdxlm02ur" path="res://scripts/services/rail_service.gd" id="6_8qk8c"]
@@ -28,9 +27,6 @@ tile_set = SubResource("TileSet_e7sg2")
 [node name="Containers" type="Node2D" parent="."]
 
 [node name="Trains" type="Node2D" parent="Containers"]
-
-[node name="PlayerTrain" parent="Containers/Trains" instance=ExtResource("2_5upms")]
-position = Vector2(0, -1)
 
 [node name="Services" type="Node" parent="."]
 

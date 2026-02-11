@@ -10,7 +10,7 @@ class_name Unit
 
 #Labels
 @onready var id_label = $Labels/IDLabel
-@onready var state_label = $Labels/StateLabel
+@onready var state_label = $Labels/ActionStateLabel
 
 var grid_service: GridService
 var unit_manager: UnitManager
@@ -37,7 +37,7 @@ func _ready() -> void:
 	#set_process(false)
 
 func initialize(id_: String, team_id_: String) -> void:
-	id = id_
+	set_id(id_)
 	id_label.text = id
 	set_team(team_id_)
 

@@ -4,7 +4,7 @@ class_name CameraController
 signal camera_moved(global_transform: Transform2D)
 
 @onready var cam = $Camera2D
-var move_speed = 50.0
+var move_speed = 500.0
 var _last_transform: Transform2D
 const ZOOM_SPEED := 1.0
 const MIN_ZOOM := 1.0
