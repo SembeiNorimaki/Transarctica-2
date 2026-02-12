@@ -1,4 +1,5 @@
 extends Node2D
+class_name CombatScene
 
 # Managers
 @onready var unit_manager = $Managers/UnitManager
@@ -7,7 +8,7 @@ extends Node2D
 @onready var turn_manager = $Managers/TurnManager
 @onready var selection_manager = $Managers/SelectionManager
 @onready var pod_manager = $Managers/PodManager
-@onready var train_manager = $Managers/TrainManager
+@onready var horizontal_train_manager = $Managers/HorizontalTrainManager
 
 #Containers
 @onready var projectiles_container = $Containers/Projectiles
@@ -76,8 +77,8 @@ func _inject_services():
 	turn_manager.pod_manager = pod_manager
 	pod_manager.tile_occupancy_service = tile_occupancy_service
 	pod_manager.grid_service = grid_service
-	train_manager.tile_occupancy_service = tile_occupancy_service
-	train_manager.grid_service = grid_service
+	horizontal_train_manager.tile_occupancy_service = tile_occupancy_service
+	horizontal_train_manager.grid_service = grid_service
 
 	# Overlays
 	units_overlay.grid_service = grid_service
@@ -211,6 +212,7 @@ func _load_patrol_points_from_map(patrol_tilemap: TileMapLayer, starting_tile: V
 		if next_tile == starting_tile:
 			break
 		idx += 1
+
 	print("Patrol points: %s" % points)
 	return points
 
@@ -223,11 +225,11 @@ func _assign_units_to_pods(pods_tilemap: TileMapLayer, tile_occupancy_service: T
 		var pod_id = "p%s" % atlas_coords.x
 		var units: Array[Unit] = tile_occupancy_service.get_units(tile)
 		pod_manager.add_units_to_pod(pod_id, units)
-		print("Assigning unit %s to pod %s" % [units[0].id, pod_id])
+		# print("Assigning unit %s to pod %s" % [units[0].id, pod_id])
 	
 
 func _spawn_train(initial_tile: Vector2i):
-	train_manager.spawn_train(initial_tile)
+	horizontal_train_manager.spawn_train(initial_tile)
 
 
 func _spawn_units_from_map(units_tilemap: TileMapLayer) -> void:

@@ -33,7 +33,7 @@ func load_soldier_type(id: String, atlas: Texture2D):
 		_build_frames(parts[part], atlas, part)
 
 	cache[id] = parts
-	print("cache: %s" % cache)
+	# print("cache: %s" % cache)
 	return parts
 
 func _build_frames(frames: SpriteFrames, atlas: Texture2D, part: String):

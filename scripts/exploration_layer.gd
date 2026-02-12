@@ -26,9 +26,9 @@ func reveal(visible_tiles: Array[Vector2i]):
 	# update tilemap
 	_update_tiles()
 	queue_redraw()
-	print("Visible tiles: ", visible_tiles.size())
-	print("Explored size: ", explored.size())
-	print("Currently visible size: ", currently_visible.size())
+	# print("Visible tiles: ", visible_tiles.size())
+	# print("Explored size: ", explored.size())
+	# print("Currently visible size: ", currently_visible.size())
 
 func is_tile_visible(tile: Vector2i) -> bool:
 	return currently_visible.has(tile)

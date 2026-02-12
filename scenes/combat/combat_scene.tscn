@@ -12,9 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://0m4i4uv2gkbt" path="res://scenes/combat/managers/selection_manager.tscn" id="7_ycbfl"]
 [ext_resource type="Script" uid="uid://b7fw1hlb05kp2" path="res://scripts/managers/pod_manager.gd" id="10_0wpcq"]
 [ext_resource type="Script" uid="uid://d2oce6gqr1km1" path="res://scripts/overlays/units_overlay.gd" id="10_3c7v3"]
-[ext_resource type="Script" uid="uid://0ss8oruyrctq" path="res://scripts/services/grid_service.gd" id="10_rui7j"]
-[ext_resource type="Script" uid="uid://b3m21ey262gd6" path="res://scripts/services/tile_occupancy_service.gd" id="11_1ny26"]
-[ext_resource type="Script" uid="uid://b4n3jemmv6dbn" path="res://scripts/managers/wagon_manager.gd" id="11_5cjt0"]
+[ext_resource type="Script" uid="uid://bcbpyk7esb2xi" path="res://scripts/managers/horizontal_train_manager.gd" id="11_5cjt0"]
 [ext_resource type="Script" uid="uid://bjmpeorfb3bal" path="res://scripts/overlays/buildings_overlay.gd" id="11_etgvb"]
 [ext_resource type="Script" uid="uid://bq2b3d3l2wv0e" path="res://scripts/services/terrain_service.gd" id="11_rui7j"]
 [ext_resource type="Script" uid="uid://ja6lxsbuuwp6" path="res://scripts/services/road_service.gd" id="11_wpptk"]
@@ -23,7 +21,9 @@
 [ext_resource type="Script" uid="uid://cw1txxugdjt33" path="res://scripts/services/navigation_graph_service.gd" id="13_4f2bx"]
 [ext_resource type="Script" uid="uid://cik144jwb0o5k" path="res://scripts/overlays/roads_overlay.gd" id="13_eq4tg"]
 [ext_resource type="Script" uid="uid://d2ktl7ghvdn82" path="res://scripts/services/edge_occupancy_service.gd" id="14_0gh8j"]
+[ext_resource type="PackedScene" uid="uid://cbxffx4parq4x" path="res://scenes/combat/services/grid_service.tscn" id="15_5cjt0"]
 [ext_resource type="Script" uid="uid://f5sk7dbtjeks" path="res://scripts/overlays/paths_overlay.gd" id="15_b5i4r"]
+[ext_resource type="PackedScene" uid="uid://w8jrafekm730" path="res://scenes/combat/services/tile_occupancy_service.tscn" id="16_4fugr"]
 [ext_resource type="Script" uid="uid://dxr5vptb6cbh" path="res://scripts/services/los_service.gd" id="16_cv4ch"]
 [ext_resource type="Script" uid="uid://dlyrmrlwsmr6x" path="res://scripts/services/weapon_service.gd" id="17_0wpcq"]
 [ext_resource type="Script" uid="uid://bi4ij63uyiyhm" path="res://scripts/overlays/mouse_hover_overlay.gd" id="18_be03f"]
@@ -73,7 +73,7 @@ script = ExtResource("3_rbxsu")
 [node name="PodManager" type="Node" parent="Managers"]
 script = ExtResource("10_0wpcq")
 
-[node name="TrainManager" type="Node" parent="Managers"]
+[node name="HorizontalTrainManager" type="Node" parent="Managers"]
 script = ExtResource("11_5cjt0")
 
 [node name="Controllers" type="Node" parent="."]
@@ -88,11 +88,9 @@ script = ExtResource("11_wpptk")
 [node name="TerrainService" type="Node" parent="Services"]
 script = ExtResource("11_rui7j")
 
-[node name="GridService" type="Node" parent="Services"]
-script = ExtResource("10_rui7j")
+[node name="GridService" parent="Services" instance=ExtResource("15_5cjt0")]
 
-[node name="TileOccupancyService" type="Node" parent="Services"]
-script = ExtResource("11_1ny26")
+[node name="TileOccupancyService" parent="Services" instance=ExtResource("16_4fugr")]
 
 [node name="PathfindingService" type="Node" parent="Services"]
 script = ExtResource("12_wpptk")
@@ -185,3 +183,7 @@ offset_top = 81.0
 offset_right = 40.0
 offset_bottom = 104.0
 text = "Camera:"
+
+[node name="TurnLabel" type="Label" parent="Labels"]
+offset_right = 40.0
+offset_bottom = 23.0

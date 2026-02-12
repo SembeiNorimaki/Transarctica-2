@@ -16,7 +16,7 @@ var offset := Vector2.ZERO
 func _ready() -> void:
 	cam.zoom = Vector2(zoom, zoom)
 	cam.global_position = offset
-	cam.global_position = Vector2(1000, 800)
+	#cam.global_position = Vector2(1000, 800)
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton and event.pressed:

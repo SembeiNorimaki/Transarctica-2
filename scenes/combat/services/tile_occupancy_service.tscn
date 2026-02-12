@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://w8jrafekm730"]
+
+[ext_resource type="Script" uid="uid://b3m21ey262gd6" path="res://scripts/services/tile_occupancy_service.gd" id="1_ea3cl"]
+
+[node name="TileOccupancyService" type="Node"]
+script = ExtResource("1_ea3cl")

@@ -51,7 +51,7 @@ func handle_click(tile: Vector2i, button_index: int):
 		
 		# case 1: clicked on a tile with a different unit -> select it
 		if units.size() > 0 and units[0] != selected_unit:
-			 state_machine.set_state("UnitSelectedState", units[0])
+			state_machine.set_state("UnitSelectedState", units[0])
 		# case 2: Clicked on a tile without units
 		elif units.size() == 0:
 			# Clicked on the same tile -> confirm path

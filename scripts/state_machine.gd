@@ -9,11 +9,11 @@ var id: String
 func _ready():
 	owner_node = get_parent()
 	id = owner_node.name
-	print("Initializing state machine %s" % id)
+	# print("Initializing state machine %s" % id)
 	# Discover all child states automatically
 	for child in get_children():
 		if child is GenericState:
-			print("Child state found: %s" % child.name)
+			# print("Child state found: %s" % child.name)
 			states[child.name] = child
 			child.set_owner_node(owner_node)
 			child.set_state_machine(self)
@@ -32,8 +32,8 @@ func _process(delta: float) -> void:
 	current_state.update(delta)
 	
 func set_state(new_state_str: String, params = {}) -> void:
-	##print("Setting state to %s" % new_state_str)
-	##print("Available states: %s" % states)
+	#print("Setting state to %s" % new_state_str)
+	#print("Available states: %s" % states)
 	var new_state = states[new_state_str]
 	
 	if current_state:
