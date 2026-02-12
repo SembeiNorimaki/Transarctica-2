@@ -2,9 +2,11 @@ extends Node2D
 
 # Managers
 @onready var train_manager = $Managers/TrainManager
+@onready var cities_manager = $Managers/CitiesManager
 
 # Overlays
 @onready var rails_overlay = $Overlays/RailsOverlay
+@onready var cities_overlay = $Overlays/CitiesOverlay
 
 # Services
 @onready var grid_service = $Services/GridService
@@ -51,11 +53,11 @@ const ATLAS_TO_RAILNAME = {
 	Vector2i(0, 6): "SWE",
 	Vector2i(1, 6): "WEN",
 	Vector2i(2, 6): "WES",
-	Vector2i(3, 6): "N",
+	Vector2i(3, 6): "NX",
 
-	Vector2i(0, 7): "W",
-	Vector2i(1, 7): "E",
-	Vector2i(2, 7): "S",
+	Vector2i(0, 7): "WX",
+	Vector2i(1, 7): "EX",
+	Vector2i(2, 7): "SX",
 	Vector2i(3, 7): "",
 
 }
@@ -70,9 +72,13 @@ func _inject_services():
 	# Managers
 	train_manager.grid_service = grid_service
 	train_manager.rail_service = rail_service
+	train_manager.cities_manager = cities_manager
+	
 	# Overlays
 	rails_overlay.grid_service = grid_service
 	rails_overlay.rail_service = rail_service
+	cities_overlay.grid_service = grid_service
+	cities_overlay.cities_manager = cities_manager
 
 	# Services
 	#player_train.grid_service = grid_service
@@ -101,8 +107,13 @@ func _load_map(map_name: String) -> void:
 	grid_service.set_tile_size(tile_size)
 	grid_service.map_size = new_map.get_node("Terrain").get_used_rect().size
 	
+	_spawn_cities_from_map(new_map.get_node("Cities"))
 	_build_rails_from_map(new_map.get_node("Rails"))
 	_spawn_trains_from_map(new_map.get_node("Trains"))
+
+func _spawn_cities_from_map(cities_tilemap: TileMapLayer) -> void:
+	for tile in cities_tilemap.get_used_cells():
+		cities_manager.spawn_city(tile)
 
 func _spawn_trains_from_map(trains_tilemap: TileMapLayer) -> void:
 	for tile in trains_tilemap.get_used_cells():

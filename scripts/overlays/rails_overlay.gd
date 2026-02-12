@@ -8,7 +8,8 @@ const OFFSETS = {
 	"N": Vector2(32, -16),
 	"E": Vector2(32, 16),
 	"S": Vector2(-32, 16),
-	"W": Vector2(-32, -16)
+	"W": Vector2(-32, -16),
+	"X": Vector2(0, 0)
 }
 
 func _ready():

@@ -28,16 +28,20 @@ const RAIL_TO_ORI = {
 	"NW": "SW",
 	"NE": "SE",
 	"NS": "S",
+	"NX": "S",
 
 	"WN": "NE",
 	"WE": "E",
+	"WX": "E",
 	"WS": "SE",
 
 	"EN": "WN",
 	"EW": "W",
+	"EX": "W",
 	"ES": "WS",
 
 	"SN": "N",
+	"SX": "N",
 	"SW": "NW",
 	"SE": "NE"
 }

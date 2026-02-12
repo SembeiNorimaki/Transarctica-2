@@ -29,4 +29,16 @@ text = "ID: "
 offset_right = 40.0
 offset_bottom = 23.0
 
+[node name="GearLabel" type="Label" parent="Labels"]
+offset_top = 57.0
+offset_right = 40.0
+offset_bottom = 80.0
+text = "Gear"
+
+[node name="SpeedLabel" type="Label" parent="Labels"]
+offset_top = 78.0
+offset_right = 40.0
+offset_bottom = 101.0
+text = "Speed"
+
 [node name="ActionStateMachine" parent="." instance=ExtResource("3_njqyl")]

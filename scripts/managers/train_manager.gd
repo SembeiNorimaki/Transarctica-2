@@ -4,6 +4,7 @@ class_name TrainManager
 #Injected by NavigationScene
 var rail_service: RailService
 var grid_service: GridService
+var cities_manager: CitiesManager
 
 var next_train_id = {"Player": 0, "Enemy": 0}
 var teams = ["Player", "Enemy"]
@@ -58,4 +59,11 @@ func _on_train_tile_changed(train: NavigationTrain, old_tile: Vector2i, new_tile
 func on_train_reached_tile(train: NavigationTrain, tile: Vector2i) -> void:
 	_on_train_tile_changed(train, train.current_tile, tile)
 	train.current_tile = tile
+	_check_tile_events(train, tile)
 	#_give_next_tile(unit)
+
+func _check_tile_events(train: NavigationTrain, tile: Vector2i) -> void:
+	if cities_manager.is_entry_tile(tile):
+		var city = cities_manager.get_city_by_entry_tile(tile)
+		print("Train reached city %s" % city.name)
+		train.inmediate_stop()
