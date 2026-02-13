@@ -37,7 +37,7 @@ func spawn_unit(tile_pos: Vector2i, unit_type_: String) -> void:
 	var unit = unit_info.scene.instantiate()
 	
 	unit.call_deferred("set_soldier_type", "Dagon")
-	unit.call_deferred("set_weapon_type", "M60")
+	unit.call_deferred("set_weapon_type", "AK47")
 
 	# Dependency injection
 	unit.grid_service = grid_service
@@ -108,6 +108,7 @@ func start_unit_movement(unit: Unit, path: Array[Vector2i]) -> void:
 	path.pop_front() # remove first point since it's the current tile
 	unit_paths[unit] = path
 	_give_next_tile(unit)
+	unit.set_state("MoveState", {"unit": unit})
 
 func _give_next_tile(unit: Unit) -> void:
 	var path = unit_paths[unit]

@@ -8,6 +8,8 @@ var weapon_service: WeaponService
 
 var selected_unit: Unit = null
 
+var prev_mouse_tile := Vector2i(-1, -1)
+
 var BULLET_SCENE = preload("res://scenes/entities/projectiles/bullet.tscn")
 
 func _ready():
@@ -25,8 +27,13 @@ func exit(params = {}):
 
 func update(delta: float):
 	var mouse_tile = owner_node.grid_service.world_to_tile(owner_node.get_global_mouse_position())
-	var mouse_world_position = owner_node.grid_service.tile_to_world(mouse_tile)
-	owner_node.aim_cursor.global_position = mouse_world_position
+	if mouse_tile != prev_mouse_tile:
+		prev_mouse_tile = mouse_tile
+		var mouse_world_position = owner_node.grid_service.tile_to_world(mouse_tile)
+		owner_node.aim_cursor.global_position = mouse_world_position
+		var has_los = owner_node.los_service.has_los(selected_unit.current_tile, mouse_tile)
+		print(has_los)
+		
 
 func _attempt_shot(tile: Vector2i):
 	var shooter = selected_unit

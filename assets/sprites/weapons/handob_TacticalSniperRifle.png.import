@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://clrxlqblyhtyd"
-path="res://.godot/imported/forest.png-eb5180539fd4a314897732bf066b6400.ctex"
+uid="uid://clwaqk8i5mv8r"
+path="res://.godot/imported/handob_TacticalSniperRifle.png-ebf11678fcb1cbb84fa6a5d8c39cb22c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tilesets/forest.png"
-dest_files=["res://.godot/imported/forest.png-eb5180539fd4a314897732bf066b6400.ctex"]
+source_file="res://assets/sprites/weapons/handob_TacticalSniperRifle.png"
+dest_files=["res://.godot/imported/handob_TacticalSniperRifle.png-ebf11678fcb1cbb84fa6a5d8c39cb22c.ctex"]
 
 [params]
 

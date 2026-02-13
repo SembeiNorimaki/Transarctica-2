@@ -34,6 +34,7 @@ var target_tile = Vector2i.ZERO
 
 # params should contain injected scenes and parameters needed by the node
 func enter(params = {}):
+	print("UnitSM enters move state")
 	unit = params["unit"]
 	var current_tile: Vector2i = unit.current_tile
 	target_tile = unit.target_tile
@@ -45,7 +46,8 @@ func enter(params = {}):
 	var ori = delta_to_orientation[delta]
 
 	heading = orientation_to_heading[ori]
-	unit.play_animation(ori)
+
+	unit.play_animation("move_%s" % ori)
 
 	#print("SM: Unit moving. CP: %s, TP: %s, ori: %s" % [unit.position, target_position, ori])
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d1aolj58dadpm"
-path="res://.godot/imported/handob_M60.png-e165499f8f1c792dbeb08fcf58b6f16b.ctex"
+uid="uid://5iifveqa4pjn"
+path="res://.godot/imported/handob_SniperRifle.png-359646e91c46163ad4acfc754e8f9190.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/handob_M60.png"
-dest_files=["res://.godot/imported/handob_M60.png-e165499f8f1c792dbeb08fcf58b6f16b.ctex"]
+source_file="res://assets/sprites/weapons/handob_SniperRifle.png"
+dest_files=["res://.godot/imported/handob_SniperRifle.png-359646e91c46163ad4acfc754e8f9190.ctex"]
 
 [params]
 

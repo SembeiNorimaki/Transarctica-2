@@ -6,7 +6,7 @@ var tile_occupancy_service: TileOccupancyService
 var edge_occupancy_service: EdgeOccupancyService
 var los_overlay: LOSOverlay
 
-
+# computes the bresenham line between two tiles with no diagonals
 func bresenham_line(start: Vector2i, end: Vector2i) -> Array[Vector2i]:
 	var tiles: Array[Vector2i] = []
 
@@ -44,9 +44,10 @@ func bresenham_line(start: Vector2i, end: Vector2i) -> Array[Vector2i]:
 
 		tiles.append(Vector2i(x, y))
 
-	los_overlay.draw_debug_tiles(tiles)
+	#los_overlay.draw_debug_tiles(tiles)
 	return tiles
 
+# computes the bresenham line between two tiles with diagonals
 func bresenham_line_diagonals(start: Vector2i, end: Vector2i) -> Array[Vector2i]:
 	#print("Bresenham Line between %s and %s" % [start, end])
 	var tiles: Array[Vector2i] = []
@@ -89,6 +90,7 @@ func has_los(start: Vector2i, end: Vector2i) -> bool:
 		var is_blocked = edge_occupancy_service.is_edge_blocked(tile1, tile2)
 		if is_blocked:
 			#print("LOS Blocked")
+			los_overlay.draw_los_line(start, end, Color.RED)
 			return false
 		# If the tile is the target, LOS is valid
 		#if tile == end:
@@ -97,4 +99,15 @@ func has_los(start: Vector2i, end: Vector2i) -> bool:
 		# If any tile in between is statically blocked, LOS fails
 		#if tile_occupancy_service.is_occupied_static(tile):
 		#	return false
+	los_overlay.draw_los_line(start, end, Color.GREEN)
 	return true
+
+
+# func get_block_pos(start: Vector2i, end: Vector2i) -> Array[Vector2i]:
+# 	var tiles = bresenham_line(start, end)
+# 	for i in range(1, tiles.size() - 1):
+# 		var tile1 = tiles[i]
+# 		var tile2 = tiles[i + 1]
+# 		var is_blocked = edge_occupancy_service.is_edge_blocked(tile1, tile2)
+# 		if is_blocked:
+# 			pass

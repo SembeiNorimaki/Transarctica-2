@@ -23,8 +23,21 @@ func _load_soldiers():
 	load_soldier_type("Dagon", dagon_atlas)
 
 func _load_weapons():
-	var m60_atlas := load("res://assets/sprites/handob_M60.png")
+	var m60_atlas := load("res://assets/sprites/weapons/handob_M60.png")
+	var ak47_atlas := load("res://assets/sprites/weapons/handob_AK47.png")
+	var laucher_atlas := load("res://assets/sprites/weapons/handob_AdvancedLauncher.png")
+	var assaultrifle_atlas := load("res://assets/sprites/weapons/handob_AssaultRifle.png")
+	var magnum_atlas := load("res://assets/sprites/weapons/handob_Magnum.png")
+	var sniperrifle_atlas := load("res://assets/sprites/weapons/handob_SniperRifle.png")
+	var tacticalsniperrifle_atlas := load("res://assets/sprites/weapons/handob_TacticalSniperRifle.png")
+
 	load_weapon_type("M60", m60_atlas)
+	load_weapon_type("AK47", ak47_atlas)
+	load_weapon_type("AdvancedLauncher", laucher_atlas)
+	load_weapon_type("AssaultRifle", assaultrifle_atlas)
+	load_weapon_type("Magnum", magnum_atlas)
+	load_weapon_type("SniperRifle", sniperrifle_atlas)
+	load_weapon_type("TacticalSniperRifle", tacticalsniperrifle_atlas)
 	
 func load_weapon_type(id: String, atlas: Texture2D):
 	if weapon_cache.has(id):

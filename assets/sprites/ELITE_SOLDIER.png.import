@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://clrxlqblyhtyd"
-path="res://.godot/imported/forest.png-eb5180539fd4a314897732bf066b6400.ctex"
+uid="uid://crslkp64dp6yl"
+path="res://.godot/imported/ELITE_SOLDIER.png-ea0dc78d699597e13c3ca0a8c6e7d381.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tilesets/forest.png"
-dest_files=["res://.godot/imported/forest.png-eb5180539fd4a314897732bf066b6400.ctex"]
+source_file="res://assets/sprites/ELITE_SOLDIER.png"
+dest_files=["res://.godot/imported/ELITE_SOLDIER.png-ea0dc78d699597e13c3ca0a8c6e7d381.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://clrxlqblyhtyd"
-path="res://.godot/imported/forest.png-eb5180539fd4a314897732bf066b6400.ctex"
+uid="uid://enfq67r5fcpv"
+path="res://.godot/imported/handob_AdvancedLauncher.png-235e9d21d9b03372735eeda4b2c65faa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tilesets/forest.png"
-dest_files=["res://.godot/imported/forest.png-eb5180539fd4a314897732bf066b6400.ctex"]
+source_file="res://assets/sprites/weapons/handob_AdvancedLauncher.png"
+dest_files=["res://.godot/imported/handob_AdvancedLauncher.png-235e9d21d9b03372735eeda4b2c65faa.ctex"]
 
 [params]
 

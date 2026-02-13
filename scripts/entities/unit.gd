@@ -101,8 +101,8 @@ func _draw():
 func update_state_label(state_name: String):
 	state_label.text = name
 
-func play_animation(name):
-	sprite.play(name)
+# func play_animation(name):
+# 	sprite.play(name)
 
 func stop_animation():
 	sprite.stop()
@@ -119,7 +119,7 @@ func move_to_tile(tile: Vector2i):
 	var delta = target_tile - current_tile
 	var new_ori = grid_service.get_orientation(current_tile, target_tile)
 	set_orientation(new_ori)
-	set_state("MoveState", {"unit": self})
+	#set_state("MoveState", {"unit": self})
 	#
 	#set_process(true)
 

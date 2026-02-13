@@ -17,7 +17,7 @@ func _draw():
 	for line_ in _lines_to_draw:
 		var pos1 = grid_service.tile_to_world(line_[0])
 		var pos2 = grid_service.tile_to_world(line_[1])
-		#draw_line(pos1, pos2, Color.BLACK)
+		draw_line(pos1, pos2, line_[2])
 
 func draw_debug_line():
 	pass
@@ -43,5 +43,10 @@ func draw_debug_tiles(tiles: Array):
 		pass
 		#_tiles_to_draw.append(tiles[i])
 		##print("Tiles %s and  %s" % [tiles[i], tiles[i+1]])
-	_lines_to_draw.append([tiles[0], tiles[tiles.size() - 1]])
+	#_lines_to_draw.append([tiles[0], tiles[tiles.size() - 1], Color.BLACK])
+	queue_redraw()
+
+func draw_los_line(start: Vector2i, end: Vector2i, color: Color):
+	_lines_to_draw = []
+	_lines_to_draw.append([start, end, color])
 	queue_redraw()

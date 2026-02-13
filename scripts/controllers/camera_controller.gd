@@ -8,7 +8,7 @@ var move_speed = 500.0
 var _last_transform: Transform2D
 const ZOOM_SPEED := 1.0
 const MIN_ZOOM := 1.0
-const MAX_ZOOM := 4.0
+const MAX_ZOOM := 6.0
 
 @export var zoom: float = 3.0
 var offset := Vector2.ZERO

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://clrxlqblyhtyd"
-path="res://.godot/imported/forest.png-eb5180539fd4a314897732bf066b6400.ctex"
+uid="uid://byq0dvnumgsf0"
+path="res://.godot/imported/ZSRR_RED_OPS_MALE.png-ea1f6b79011a3a7c879753b4e94052d3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tilesets/forest.png"
-dest_files=["res://.godot/imported/forest.png-eb5180539fd4a314897732bf066b6400.ctex"]
+source_file="res://assets/sprites/ZSRR_RED_OPS_MALE.png"
+dest_files=["res://.godot/imported/ZSRR_RED_OPS_MALE.png-ea1f6b79011a3a7c879753b4e94052d3.ctex"]
 
 [params]
 
