@@ -5,7 +5,7 @@ var cities = {} # EntryTile -> {name, city_tile}
 
 func spawn_city(tile: Vector2i) -> void:
     var city_name = "City_%s_%s" % [tile.x, tile.y]
-    print("CityManager: Spawn %s" % city_name)
+    # print("CityManager: Spawn %s" % city_name)
     var entry_tile = _compute_entry_tile(tile)
     cities[entry_tile] = {"name": city_name, "city_tile": tile}
 

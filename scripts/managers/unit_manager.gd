@@ -30,13 +30,14 @@ func spawn_unit(tile_pos: Vector2i, unit_type_: String) -> void:
 	var team = unit_info.team
 	var footprint = unit_info.footprint
 
-	print("Spawning a %s" % unit_type_)
+	#print("Spawning a %s" % unit_type_)
 	var id = "u%s%s" % [team[0], next_unit_id[team]] # Player unit with id=3 -> uP3
 	next_unit_id[team] += 1
 	
 	var unit = unit_info.scene.instantiate()
 	
 	unit.call_deferred("set_soldier_type", "Dagon")
+	unit.call_deferred("set_weapon_type", "M60")
 
 	# Dependency injection
 	unit.grid_service = grid_service

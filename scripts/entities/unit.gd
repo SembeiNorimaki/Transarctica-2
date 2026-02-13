@@ -61,7 +61,7 @@ func get_current_action():
 
 
 func _on_health_changed(current: int, max: int):
-	print("Unit _on_health_changed %s %s" % [current, max])
+	#print("Unit _on_health_changed %s %s" % [current, max])
 	health_bar.visible = current < max # hide health bar when at full health
 	health_bar.update_health(current, max)
 
@@ -84,7 +84,7 @@ func set_state(state: String, params = {}) -> void:
 	update_state_label(state)
 
 func set_orientation(new_orientation: String):
-	print("Unit: Setting orientation to %s" % new_orientation)
+	#print("Unit: Setting orientation to %s" % new_orientation)
 	orientation = new_orientation
 	sprite.set_animation(new_orientation)
 	unit_manager.on_unit_orientation_changed(self, new_orientation)
@@ -92,12 +92,12 @@ func set_orientation(new_orientation: String):
 	
 	
 func _draw():
-	print("Grid service %s for unit %s %s" % [grid_service, id, self])
+	pass
+	#print("Grid service %s for unit %s %s" % [grid_service, id, self])
 	#var dst_tile = grid_service.ORIENTATION_VECTORS[orientation] * 4
 	#var pos = grid_service.tile_delta_to_world_delta(dst_tile)
 	#draw_line(Vector2.ZERO, pos, Color.BLUE, 2)
 	#queue_redraw()
-
 func update_state_label(state_name: String):
 	state_label.text = name
 
@@ -115,7 +115,12 @@ func set_selected(selected: bool) -> void:
 func move_to_tile(tile: Vector2i):
 	#print("Unit %s instructed to move to tile %s" % [id, tile])
 	target_tile = tile
+	# calculate new orientation
+	var delta = target_tile - current_tile
+	var new_ori = grid_service.get_orientation(current_tile, target_tile)
+	set_orientation(new_ori)
 	set_state("MoveState", {"unit": self})
+	#
 	#set_process(true)
 
 func on_arrived_to_tile(tile: Vector2i):

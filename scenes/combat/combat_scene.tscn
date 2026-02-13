@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=4 uid="uid://c68jhe1kv0a2s"]
+[gd_scene load_steps=36 format=4 uid="uid://c68jhe1kv0a2s"]
 
 [ext_resource type="Script" uid="uid://c0ko7vg1yfs6e" path="res://scripts/combat_scene.gd" id="1_jecyb"]
 [ext_resource type="PackedScene" uid="uid://crkg3fnf4hnfd" path="res://scenes/combat/managers/unit_manager.tscn" id="2_n81vl"]
@@ -32,6 +32,7 @@
 [ext_resource type="Script" uid="uid://cv48uaopsxrky" path="res://scripts/overlays/los_overlay.gd" id="24_kuabr"]
 [ext_resource type="PackedScene" uid="uid://bfkx5ppuk4u66" path="res://scenes/combat/state_machines/combat_state_machine.tscn" id="29_kuabr"]
 [ext_resource type="Script" uid="uid://bhnf0bbk74olp" path="res://scripts/overlays/pods_overlay.gd" id="30_5cjt0"]
+[ext_resource type="Texture2D" uid="uid://c8eb6b045eh7f" path="res://assets/sprites/cursors/cursor_07_0.png" id="33_4fugr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rkdki"]
 texture = ExtResource("3_4fugr")
@@ -148,7 +149,6 @@ script = ExtResource("15_b5i4r")
 script = ExtResource("18_be03f")
 
 [node name="NavigationGraphOverlay" type="Node2D" parent="Overlays"]
-visible = false
 script = ExtResource("20_x34vi")
 
 [node name="LOSOverlay" type="Node2D" parent="Overlays"]
@@ -187,3 +187,8 @@ text = "Camera:"
 [node name="TurnLabel" type="Label" parent="Labels"]
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="AimCursor" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -14)
+texture = ExtResource("33_4fugr")

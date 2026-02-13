@@ -42,6 +42,12 @@ visible = false
 sprite_frames = ExtResource("2_klak8")
 animation = &"NE"
 
+[node name="IDLabel" parent="Labels" index="0"]
+visible = true
+
+[node name="ActionStateLabel" parent="Labels" index="1"]
+visible = true
+
 [node name="HurtboxComponent" parent="." index="5"]
 visible = false
 

@@ -16,7 +16,7 @@ signal pod_spawned(pod)
 const POD_SCENE = preload("res://scenes/entities/pods/pod.tscn")
 
 func spawn_pod(id: String, tile_pos: Vector2i, patrol_route: Array[Vector2i]) -> void:
-	print("Spawning pod %s at tile %s" % [id, tile_pos])
+	#print("Spawning pod %s at tile %s" % [id, tile_pos])
 	var pod: Pod = POD_SCENE.instantiate()
 
 	# Dependency injection

@@ -14,7 +14,7 @@ func _ready() -> void:
     position = offset
 
 func update_health(current_: int, max_: float):
-    print("HealthBar update_health %s %s" % [current_, max_])
+    #print("HealthBar update_health %s %s" % [current_, max_])
     var ratio = float(current_) / float(max_)
     fill.size.x = lerp(fill.size.x, width * ratio, 0.2) # smooth animation
     fill.visible = ratio > 0

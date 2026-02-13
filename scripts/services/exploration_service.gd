@@ -12,7 +12,7 @@ func reveal_from_unit():
 	pass
 
 func _on_unit_orientation_changed(unit: Unit, new_orientation: String) -> void:
-	print("Unit %s orientation changed to %s" % [unit.id, new_orientation])
+	#print("Unit %s orientation changed to %s" % [unit.id, new_orientation])
 	var cone_tiles: Array[Vector2i] = grid_service.get_tiles_in_vision_cone(unit.current_tile, new_orientation, unit.view_angle, unit.view_range)
 	var visible_tiles = get_visible_tiles(unit.current_tile, cone_tiles)
 	exploration_layer.reveal(visible_tiles)
@@ -20,13 +20,13 @@ func _on_unit_orientation_changed(unit: Unit, new_orientation: String) -> void:
 
 func _update_units_visibility(selected_unit: Unit) -> void:
 	var all_units = unit_manager.get_units_by_team("Player")
-	print("Updating visibility for %s units" % all_units.size())
+	#print("Updating visibility for %s units" % all_units.size())
 	for unit in all_units:
 		if unit == selected_unit: # Don't update the selected unit
 			continue
 		var tile = unit.current_tile
 		var is_visible = exploration_layer.is_tile_visible(tile)
-		print("Unit %s is visible: %s" % [unit.id, is_visible])
+		#print("Unit %s is visible: %s" % [unit.id, is_visible])
 		unit.visible = is_visible
 
 # Given all tiles in a cone and an origin, compute those ones that are visible, so they have LOS

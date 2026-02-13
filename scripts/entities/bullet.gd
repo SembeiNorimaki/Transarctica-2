@@ -38,7 +38,7 @@ func _physics_process(delta: float):
 func _on_hitbox_hit(hurtbox: HurtboxComponent):
 	# Ignore self-hits
 	if hurtbox.get_parent() == shooter:
-		print("Ignoring self hit")
+		#print("Ignoring self hit")
 		return
 	
 	#Ignore if already hit something valid

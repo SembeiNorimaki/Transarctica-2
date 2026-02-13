@@ -16,12 +16,12 @@ func _ready():
 	set_process(false)
 
 func update():
-	print("Updating rails overlay")
+	#print("Updating rails overlay")
 	_draw()
 	queue_redraw()
 
 func _draw():
-	print("Drawing rails overlay")
+	#print("Drawing rails overlay")
 	for tile in rail_service.edges:
 		var edges = rail_service.edges[tile]
 		for edge in edges:

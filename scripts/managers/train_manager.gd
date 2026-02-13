@@ -21,7 +21,7 @@ func _ready() -> void:
 
 #region train spawning
 func spawn_train(tile_pos: Vector2i, orientation: String, team: String):
-	print("Spawning a train at tile %s with orientation %s" % [tile_pos, orientation])
+	#print("Spawning a train at tile %s with orientation %s" % [tile_pos, orientation])
 	var id = "t%s%s" % [team[0], next_train_id[team]]
 	next_train_id[team] += 1
 	
@@ -44,7 +44,7 @@ func spawn_train(tile_pos: Vector2i, orientation: String, team: String):
 #region Tile Tracking
 func _on_train_tile_changed(train: NavigationTrain, old_tile: Vector2i, new_tile: Vector2i):
 	#Here we need to check with the rail_service what will be the next orientation for the train
-	print("Train manager: Train changed from tile %s to tile %s" % [old_tile, new_tile])
+	#print("Train manager: Train changed from tile %s to tile %s" % [old_tile, new_tile])
 	var delta = new_tile - old_tile
 	var new_ori = rail_service.calculate_new_orientation(new_tile, delta)
 	#print("New ori: %s" % new_ori)
@@ -65,5 +65,5 @@ func on_train_reached_tile(train: NavigationTrain, tile: Vector2i) -> void:
 func _check_tile_events(train: NavigationTrain, tile: Vector2i) -> void:
 	if cities_manager.is_entry_tile(tile):
 		var city = cities_manager.get_city_by_entry_tile(tile)
-		print("Train reached city %s" % city.name)
+		#print("Train reached city %s" % city.name)
 		train.inmediate_stop()

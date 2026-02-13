@@ -20,6 +20,17 @@ var ORIENTATION_VECTORS := {
     "NW": Vector2(-1, -1).normalized()
 }
 
+var DELTA_TO_ORI = {
+    Vector2i(1, 0): "E",
+    Vector2i(-1, 0): "W",
+    Vector2i(0, 1): "S",
+    Vector2i(0, -1): "N",
+    Vector2i(1, 1): "SE",
+    Vector2i(-1, 1): "SW",
+    Vector2i(1, -1): "NE",
+    Vector2i(-1, -1): "NW"
+}
+
 func set_tile_size(tile_size_: Vector2i):
     tile_size = tile_size_
     tile_half_size = Vector2i(tile_size_.x / 2, tile_size_.y / 2)
@@ -52,7 +63,7 @@ func tile_delta_to_world_delta(delta_tile: Vector2i) -> Vector2:
     )
 
 # Tile(0,0) -> World(16,8) 
-func tile_to_world(tile: Vector2i) -> Vector2:
+func tile_to_world(tile: Vector2) -> Vector2:
     return map_origin + Vector2(
         (tile.x - tile.y) * tile_half_size.x,
         (tile.x + tile.y) * tile_half_size.y

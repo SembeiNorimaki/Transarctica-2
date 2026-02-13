@@ -19,7 +19,7 @@ signal turn_finished
 
 
 func take_turn():
-	print("Pod %s taking turn" % id)
+	#print("Pod %s taking turn" % id)
 	emit_signal("turn_finished")
 	
 func set_state(state: String, params = {}) -> void:
@@ -27,7 +27,7 @@ func set_state(state: String, params = {}) -> void:
 	state_label.text = state
 
 func move_to_tile(tile: Vector2i):
-	print("Pod %s instructed to move to tile %s" % [id, tile])
+	#print("Pod %s instructed to move to tile %s" % [id, tile])
 	target_tile = tile
 	set_state("MoveState", {"pod": self})
 

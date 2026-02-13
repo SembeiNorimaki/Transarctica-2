@@ -3,4 +3,5 @@ class_name PodIdleState
 
 
 func enter(params = {}):
-    print("Enter pod idle state")
+    # print("Enter pod idle state")
+    pass

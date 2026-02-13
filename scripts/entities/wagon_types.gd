@@ -6,15 +6,18 @@ const FOOTPRINTS = {
 const TYPES = {
 	"locomotive": {
 		"scene": preload("res://scenes/entities/wagons/locomotive_wagon.tscn"),
-		"team": "Player"
+		"team": "Player",
+		"size": Vector2i(256, 66)
 	},
 	"barracks": {
 		"scene": preload("res://scenes/entities/wagons/barracks_wagon.tscn"),
-		"team": "Player"
+		"team": "Player",
+		"size": Vector2i(128, 48)
 	},
 	"cannon": {
 		"scene": preload("res://scenes/entities/wagons/cannon_wagon.tscn"),
-		"team": "Player"
+		"team": "Player",
+		"size": Vector2i(128, 58)
 	}
 }
 

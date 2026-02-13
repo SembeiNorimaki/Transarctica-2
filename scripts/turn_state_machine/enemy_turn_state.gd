@@ -3,7 +3,7 @@ class_name EnemyTurnState
 
 
 func enter(params = {}):
-    print("Enter enemy turn state %s" % owner_node.pod_manager)
+    # print("Enter enemy turn state %s" % owner_node.pod_manager)
     await _run_pods()
     state_machine.change_state("PlayerTurnState")
 

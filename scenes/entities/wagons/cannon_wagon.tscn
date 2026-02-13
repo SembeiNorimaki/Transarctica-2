@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://ctpye88p6h7pk"]
+[gd_scene load_steps=6 format=3 uid="uid://ctpye88p6h7pk"]
 
 [ext_resource type="PackedScene" uid="uid://db0akj2cdwfl3" path="res://scenes/entities/units/vehicle_unit.tscn" id="1_csui4"]
 [ext_resource type="Texture2D" uid="uid://cg7e52vm3g2ja" path="res://assets/sprites/wagons/trn_cannon_tr.png" id="2_kio7n"]
@@ -18,8 +18,15 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_kio7n"]
+size = Vector2(5, 5)
+
 [node name="CannonWagon" instance=ExtResource("1_csui4")]
 
 [node name="Sprite" parent="." index="0"]
+position = Vector2(0, -29)
 sprite_frames = SubResource("SpriteFrames_2421q")
 animation = &"default"
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="9"]
+texture = SubResource("PlaceholderTexture2D_kio7n")

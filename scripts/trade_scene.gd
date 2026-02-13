@@ -30,9 +30,10 @@ func _inject_services():
 
 #region Map Loading
 func _load_map(map_name: String) -> void:
-	_spawn_train(Vector2i(3, 0))
+	grid_service.set_tile_size(Vector2i(128, 64))
+	_spawn_train(Vector2(15, 2.5))
 
-func _spawn_train(initial_tile: Vector2i):
+func _spawn_train(initial_tile: Vector2):
 	horizontal_train_manager.spawn_train(initial_tile)
 
 #endregion

@@ -3,4 +3,5 @@ class_name PodPatrollingState
 
 
 func enter(params = {}):
-    print("Enter pod patrolling state")
+    # print("Enter pod patrolling state")
+    pass

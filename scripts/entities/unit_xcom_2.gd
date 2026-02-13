@@ -20,8 +20,13 @@ extends Unit
 }
 
 
+func set_weapon_type(id: String):
+	var frames_dict = SoldierAtlasLoader.get_weapon_type(id)
+	weapon.sprite_frames = frames_dict["weapon"]
+	print("Weapon: %s" % weapon.sprite_frames.get_animation_names())
+
 func set_soldier_type(id: String):
-	print("Setting soldier type to %s" % id)
+	#print("Setting soldier type to %s" % id)
 	var frames_dict = SoldierAtlasLoader.get_soldier_type(id)
 	torso.sprite_frames = frames_dict["torso"]
 	legs.sprite_frames = frames_dict["legs"]
@@ -45,14 +50,28 @@ func set_orientation(new_orientation: String):
 	unit_manager.on_unit_orientation_changed(self, new_orientation)
 	queue_redraw()
 
-func play_orientation(ori: String):
+func play_orientation(animation_name: String):
+	# get the last character
+	var ori = animation_name[-1]
 	print("Play orientation %s" % ori)
 	for i in range(5):
 		var part = render_order[ori][i]
 		part.z_index = i
 
-	torso.play(ori)
-	legs.play(ori)
-	left_arm.play(ori)
-	right_arm.play(ori)
-	weapon.play(ori)
+	torso.play(animation_name)
+	legs.play(animation_name)
+	left_arm.play(animation_name)
+	right_arm.play(animation_name)
+	weapon.play(animation_name)
+
+func move_to_tile(tile: Vector2i):
+	#print("Unit %s instructed to move to tile %s" % [id, tile])
+	target_tile = tile
+	# calculate new orientation
+	var delta = target_tile - current_tile
+	var new_ori = grid_service.get_orientation(current_tile, target_tile)
+	set_orientation(new_ori)
+	set_state("MoveState", {"unit": self})
+	play_orientation("MoveState_%s" % new_ori)
+	#
+	#set_process(true)

@@ -51,6 +51,8 @@ class_name CombatScene
 @onready var mouse_label = $Labels/MouseLabel
 @onready var camera_label = $Labels/CameraLabel
 
+# Cursor
+@onready var aim_cursor = $AimCursor
 
 #region initialization
 func _ready() -> void:
@@ -213,7 +215,7 @@ func _load_patrol_points_from_map(patrol_tilemap: TileMapLayer, starting_tile: V
 			break
 		idx += 1
 
-	print("Patrol points: %s" % points)
+	#print("Patrol points: %s" % points)
 	return points
 
 # Must be called after loading units from map
@@ -367,3 +369,10 @@ func _process(delta: float) -> void:
 	$Labels/FPSLabel.text = "FPS: %s" % Engine.get_frames_per_second()
 	update_camera_label(get_viewport().canvas_transform)
 	update_labels()
+
+
+func set_cursor(cursor_name: String) -> void:
+	if cursor_name == "aim":
+		aim_cursor.visible = true
+	else:
+		aim_cursor.visible = false

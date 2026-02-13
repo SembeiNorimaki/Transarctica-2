@@ -5,6 +5,7 @@ class_name AimingState
 var los_service: LOSService
 var weapon_service: WeaponService
 
+
 var selected_unit: Unit = null
 
 var BULLET_SCENE = preload("res://scenes/entities/projectiles/bullet.tscn")
@@ -15,14 +16,17 @@ func _ready():
 	#print("CUAS ready, owner_node: %s" % owner_node)
 	pass
 func enter(params = {}):
-	#print("Enter AimingState with params %s" % params)
+	print("Enter AimingState with params %s" % params)
 	selected_unit = params["selected_unit"]
+	owner_node.set_cursor("aim")
 
 func exit(params = {}):
 	pass
 
 func update(delta: float):
-	pass
+	var mouse_tile = owner_node.grid_service.world_to_tile(owner_node.get_global_mouse_position())
+	var mouse_world_position = owner_node.grid_service.tile_to_world(mouse_tile)
+	owner_node.aim_cursor.global_position = mouse_world_position
 
 func _attempt_shot(tile: Vector2i):
 	var shooter = selected_unit

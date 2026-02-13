@@ -26,5 +26,5 @@ func fire_bullet(bullet_scene: PackedScene, from_tile: Vector2i, to_tile: Vector
 	bullet.position = from_pos
 	bullet.shooter = shooter
 	projectiles_container.add_child(bullet)
-	print("Firing bullet from %s to %s" % [from_pos, to_pos])
+	#print("Firing bullet from %s to %s" % [from_pos, to_pos])
 	bullet.fire(from_pos, to_pos)
