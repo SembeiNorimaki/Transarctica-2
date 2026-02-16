@@ -126,5 +126,5 @@ func handle_click(tile: Vector2i, button_index: int):
 func handle_key(event: InputEventKey):
 	if event.is_action_pressed("tab"):
 		owner_node.select_next_unit()
-	elif event.is_action_pressed("a"):
+	elif event.is_action_pressed("q"):
 		state_machine.set_state("UnitAimingState", {"selected_unit": selected_unit})

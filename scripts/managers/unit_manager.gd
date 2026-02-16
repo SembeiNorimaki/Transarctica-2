@@ -128,3 +128,22 @@ func on_unit_reached_tile(unit: Unit, tile: Vector2i) -> void:
 	unit.current_tile = tile
 	_give_next_tile(unit)
 #endregion
+
+
+#region WASD unit movement and aiming
+# This functions are used to move the selected unit with WASD and aim with the right mouse button
+func on_move_vector_changed(vec: Vector2i):
+	print("UM on move vector changed: %s" % vec)
+	if vec == Vector2i.ZERO:
+		return
+	var selected_unit = units["Player"][next_unit_id["Player"] - 1]
+
+	start_unit_movement(selected_unit, [selected_unit.current_tile, selected_unit.current_tile + vec])
+
+func on_aim_pressed():
+	print("UM on aim pressed")
+
+func on_aim_released():
+	print("UM on aim released")
+
+#endregion

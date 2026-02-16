@@ -54,6 +54,9 @@ class_name CombatScene
 # Cursor
 @onready var aim_cursor = $AimCursor
 
+# UI
+@onready var ui_wasd = $UI_WASD
+
 #region initialization
 func _ready() -> void:
 	_inject_services()
@@ -139,6 +142,10 @@ func _wire_signals():
 
 	wall_manager.connect("wall_spawned", walls_overlay.redraw)
 	wall_manager.connect("wall_removed", walls_overlay.redraw)
+
+	ui_wasd.connect("move_vector_changed", unit_manager.on_move_vector_changed)
+	ui_wasd.connect("aim_pressed", unit_manager.on_aim_pressed)
+	ui_wasd.connect("aim_released", unit_manager.on_aim_released)
 
 #endregion
 

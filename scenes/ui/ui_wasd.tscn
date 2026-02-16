@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dc1hk0xj7hhpu"]
+
+[ext_resource type="Script" uid="uid://dyk0jhweyh0ci" path="res://scripts/ui/ui_wasd.gd" id="1_pwgvw"]
+
+[node name="UI_WASD" type="Node"]
+script = ExtResource("1_pwgvw")

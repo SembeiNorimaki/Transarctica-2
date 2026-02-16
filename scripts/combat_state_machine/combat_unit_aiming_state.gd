@@ -17,9 +17,11 @@ func _ready():
 	#los_service = owner_node.los_service
 	#print("CUAS ready, owner_node: %s" % owner_node)
 	pass
+
 func enter(params = {}):
 	print("Enter AimingState with params %s" % params)
 	selected_unit = params["selected_unit"]
+
 	owner_node.set_cursor("aim")
 
 func exit(params = {}):
