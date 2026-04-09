@@ -26,20 +26,23 @@ var is_animation_playing := false
 func set_weapon_type(id: String):
 	var frames_dict = SoldierAtlasLoader.get_weapon_type(id)
 	weapon.sprite_frames = frames_dict["weapon"]
-	print("Weapon: %s" % weapon.sprite_frames.get_animation_names())
+	#print("Weapon: %s" % weapon.sprite_frames.get_animation_names())
 
 func set_soldier_type(id: String):
-	#print("Setting soldier type to %s" % id)
+	print("Setting soldier type to %s" % id)
 	var frames_dict = SoldierAtlasLoader.get_soldier_type(id)
 	torso.sprite_frames = frames_dict["torso"]
 	legs.sprite_frames = frames_dict["legs"]
 	left_arm.sprite_frames = frames_dict["left_arm"]
 	right_arm.sprite_frames = frames_dict["right_arm"]
 
-	print("Torso: %s" % torso.sprite_frames.get_animation_names())
-	print("Legs: %s" % legs.sprite_frames.get_animation_names())
-	print("Left arm: %s" % left_arm.sprite_frames.get_animation_names())
-	print("Right arm: %s" % right_arm.sprite_frames.get_animation_names())
+	var animation_name = "%s_%s" % ["IdleState", orientation]
+	play_animation(animation_name)
+
+	#print("Torso: %s" % torso.sprite_frames.get_animation_names())
+	#print("Legs: %s" % legs.sprite_frames.get_animation_names())
+	#print("Left arm: %s" % left_arm.sprite_frames.get_animation_names())
+	#print("Right arm: %s" % right_arm.sprite_frames.get_animation_names())
 
 # Set orientation calls play animation
 func set_orientation(new_orientation: String):
@@ -70,7 +73,7 @@ func play_animation(animation_name: String):
 	weapon.play(animation_name)
 
 func move_to_tile(tile: Vector2i):
-	#print("Unit %s instructed to move to tile %s" % [id, tile])
+	print("Unit %s instructed to move to tile %s" % [id, tile])
 	target_tile = tile
 	# calculate new orientation
 	var delta = target_tile - current_tile

@@ -10,6 +10,7 @@ func _ready():
 	state_machine = get_parent()
 	
 func enter(params = {}):
+	print("Enter CombatUnitSelectedState with params %s" % params)
 	selected_unit = params["selected_unit"]
 	owner_node.selection_manager.select_unit(selected_unit)
 
@@ -23,6 +24,7 @@ func update(delta: float):
 func _confirm_move():
 	# Order the unit to move
 	var unit_manager = owner_node.unit_manager
+	print("Confirm path ", preview_path)
 	unit_manager.start_unit_movement(selected_unit, preview_path)
 
 	# Clear preview
@@ -51,7 +53,7 @@ func handle_click(tile: Vector2i, button_index: int):
 		
 		# case 1: clicked on a tile with a different unit -> select it
 		if units.size() > 0 and units[0] != selected_unit:
-			state_machine.set_state("UnitSelectedState", units[0])
+			state_machine.set_state("UnitSelectedState", {"selected_unit": units[0]})
 		# case 2: Clicked on a tile without units
 		elif units.size() == 0:
 			# Clicked on the same tile -> confirm path

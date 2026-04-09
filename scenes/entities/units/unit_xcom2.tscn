@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ysig1tby6uoi"]
+[gd_scene format=3 uid="uid://ysig1tby6uoi"]
 
 [ext_resource type="PackedScene" uid="uid://bt6edw4t4rxak" path="res://scenes/entities/units/unit.tscn" id="1_60t8m"]
 [ext_resource type="Script" uid="uid://xboi5aqk1pxk" path="res://scripts/entities/unit_xcom_2.gd" id="2_gbknk"]
@@ -11,46 +11,59 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_gbknk"]
 radius = 14.0
 
-[node name="UnitXcom" instance=ExtResource("1_60t8m")]
+[node name="UnitXcom" unique_id=182245208 instance=ExtResource("1_60t8m")]
 script = ExtResource("2_gbknk")
 
-[node name="Parts" type="Node2D" parent="." index="0"]
+[node name="Parts" type="Node2D" parent="." index="0" unique_id=1514518540]
 position = Vector2(0, -12)
 
-[node name="Torso" type="AnimatedSprite2D" parent="Parts" index="0"]
+[node name="Torso" type="AnimatedSprite2D" parent="Parts" index="0" unique_id=1163083422]
 sprite_frames = ExtResource("2_klak8")
-animation = &"NW"
+animation = &"SE"
 
-[node name="Legs" type="AnimatedSprite2D" parent="Parts" index="1"]
+[node name="Legs" type="AnimatedSprite2D" parent="Parts" index="1" unique_id=2131048930]
 sprite_frames = ExtResource("3_mbsxs")
-animation = &"NW"
+animation = &"SE"
+frame = 2
 
-[node name="RightArmWeapon" type="AnimatedSprite2D" parent="Parts" index="2"]
+[node name="RightArmWeapon" type="AnimatedSprite2D" parent="Parts" index="2" unique_id=1417567557]
 sprite_frames = ExtResource("4_gbknk")
-animation = &"E"
+animation = &"SE"
 
-[node name="LeftArmFree" type="AnimatedSprite2D" parent="Parts" index="3"]
+[node name="LeftArmFree" type="AnimatedSprite2D" parent="Parts" index="3" unique_id=552180504]
 sprite_frames = ExtResource("5_sq8og")
-animation = &"E"
+animation = &"SE"
 
-[node name="Weapon" type="AnimatedSprite2D" parent="Parts" index="4"]
+[node name="Weapon" type="AnimatedSprite2D" parent="Parts" index="4" unique_id=584707992]
 sprite_frames = ExtResource("6_3u80e")
-animation = &"E"
+animation = &"NE"
 
 [node name="Sprite" parent="." index="1"]
 visible = false
 sprite_frames = ExtResource("2_klak8")
 animation = &"NE"
 
+[node name="IDLabel" parent="Labels" index="0"]
+offset_top = -3.0
+offset_bottom = 20.0
+
+[node name="ActionStateLabel" parent="Labels" index="1"]
+offset_top = 12.0
+offset_bottom = 35.0
+
 [node name="HurtboxComponent" parent="." index="5"]
 visible = false
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="HurtboxComponent" index="0"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="HurtboxComponent" index="0" unique_id=1702055916]
 position = Vector2(0, -12)
 scale = Vector2(0.5, 1)
 shape = SubResource("CircleShape2D_gbknk")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="9"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="9" unique_id=38583749]
+visible = false
 position = Vector2(0, -12)
 scale = Vector2(0.5, 1)
 shape = SubResource("CircleShape2D_gbknk")
+
+[node name="HealthBar" parent="." index="10"]
+visible = false

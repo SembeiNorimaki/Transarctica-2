@@ -1,6 +1,6 @@
-[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://b3xyt5p8pqsj3"]
+[gd_resource type="TileSet" format=3 uid="uid://b3xyt5p8pqsj3"]
 
-[ext_resource type="Texture2D" uid="uid://c1dffv1m3p4bn" path="res://assets/sprites/units_placeholder.png" id="2_ovkht"]
+[ext_resource type="Texture2D" uid="uid://r6l75ilfuplg" path="res://assets/sprites/units_xcom_placeholder.png" id="2_ovkht"]
 [ext_resource type="Texture2D" uid="uid://m1wm4e3qdt1n" path="res://assets/sprites/unitsFH_placeholder.png" id="2_p1ufp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n4gvy"]
@@ -25,17 +25,33 @@ texture_region_size = Vector2i(70, 54)
 texture = ExtResource("2_ovkht")
 texture_region_size = Vector2i(32, 40)
 0:0/0 = 0
-0:0/0/texture_origin = Vector2i(0, 7)
+0:0/0/texture_origin = Vector2i(0, 12)
 1:0/0 = 0
-1:0/0/texture_origin = Vector2i(0, 7)
+1:0/0/texture_origin = Vector2i(0, 12)
+2:0/0 = 0
+2:0/0/texture_origin = Vector2i(0, 12)
+3:0/0 = 0
+3:0/0/texture_origin = Vector2i(0, 12)
+4:0/0 = 0
+4:0/0/texture_origin = Vector2i(0, 12)
+5:0/0 = 0
+5:0/0/texture_origin = Vector2i(0, 12)
 0:1/0 = 0
-0:1/0/texture_origin = Vector2i(0, 7)
+0:1/0/texture_origin = Vector2i(0, 12)
 1:1/0 = 0
-1:1/0/texture_origin = Vector2i(0, 7)
+1:1/0/texture_origin = Vector2i(0, 12)
+2:1/0 = 0
+2:1/0/texture_origin = Vector2i(0, 12)
+3:1/0 = 0
+3:1/0/texture_origin = Vector2i(0, 12)
+4:1/0 = 0
+4:1/0/texture_origin = Vector2i(0, 12)
+5:1/0 = 0
+5:1/0/texture_origin = Vector2i(0, 12)
 
 [resource]
 tile_shape = 1
 tile_layout = 5
 tile_size = Vector2i(32, 16)
-sources/1 = SubResource("TileSetAtlasSource_p1ufp")
 sources/0 = SubResource("TileSetAtlasSource_n4gvy")
+sources/2 = SubResource("TileSetAtlasSource_p1ufp")

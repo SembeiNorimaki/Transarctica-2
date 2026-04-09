@@ -17,10 +17,13 @@ func get_weapon_type(id: String):
 	return weapon_cache[id]
 
 func _load_soldiers():
-	var tritanium_atlas := load("res://assets/sprites/HEAVY_TRITANIUM_SUIT.png")
-	var dagon_atlas := load("res://assets/sprites/DISCIPLE_OF_DAGON.png")
-	load_soldier_type("HeavyTritaniumSuit", tritanium_atlas)
-	load_soldier_type("Dagon", dagon_atlas)
+	load_soldier_type("elite_soldier", load("res://assets/sprites/ELITE_SOLDIER.png"))
+	load_soldier_type("liquidator", load("res://assets/sprites/EXALT_LIQUIDATOR.png"))
+	load_soldier_type("pioneer", load("res://assets/sprites/ZSRR_PIONEER.png"))
+	load_soldier_type("redops", load("res://assets/sprites/ZSRR_RED_OPS_MALE.png"))
+	load_soldier_type("swat", load("res://assets/sprites/SWAT.png"))
+	load_soldier_type("mercenary", load("res://assets/sprites/SYNDICATE_MERC_CAPTAIN.png"))
+	
 
 func _load_weapons():
 	var m60_atlas := load("res://assets/sprites/weapons/handob_M60.png")

@@ -25,18 +25,18 @@ func _ready() -> void:
 	pass
 
 #region unit spawning
-func spawn_unit(tile_pos: Vector2i, unit_type_: String) -> void:
-	var unit_info = UnitTypes.TYPES[unit_type_]
-	var team = unit_info.team
+func spawn_unit(tile_pos: Vector2i, unit_type_: String, owner_id: String) -> void:
+	var unit_info = UnitTypes.TYPES["unit_xcom"]
+	var team = owner_id
 	var footprint = unit_info.footprint
 
-	#print("Spawning a %s" % unit_type_)
+	print("Spawning a %s belonging to %s to tile %s" % [unit_type_, owner_id, tile_pos])
 	var id = "u%s%s" % [team[0], next_unit_id[team]] # Player unit with id=3 -> uP3
 	next_unit_id[team] += 1
 	
 	var unit = unit_info.scene.instantiate()
 	
-	unit.call_deferred("set_soldier_type", "Dagon")
+	unit.call_deferred("set_soldier_type", unit_type_)
 	unit.call_deferred("set_weapon_type", "AK47")
 
 	# Dependency injection
@@ -119,8 +119,10 @@ func _give_next_tile(unit: Unit) -> void:
 		unit.move_to_tile(next_tile)
 
 func _on_unit_reached_destination(unit):
+	print("Unit reached destination")
 	# set the unit state to idle
 	unit.set_state("IdleState", {"unit": unit})
+	unit.play_animation("IdleState_%s" % unit.orientation)
 	emit_signal("unit_reached_destination", unit)
 	
 func on_unit_reached_tile(unit: Unit, tile: Vector2i) -> void:

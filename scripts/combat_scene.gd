@@ -179,11 +179,11 @@ func _load_map(map_name: String) -> void:
 	# Spawn units, buildings, walls, and roads
 	
 	_spawn_units_from_map(new_map.get_node("Units"))
-	_spawn_buildings_from_map(new_map.get_node("Buildings"))
+	#_spawn_buildings_from_map(new_map.get_node("Buildings"))
 	_spawn_walls_from_map(new_map.get_node("Walls"))
-	_spawn_roads_from_map(new_map.get_node("Roads"))
-	_spawn_pods_from_map(new_map.get_node("Pods"), new_map.get_node("PatrolPoints"))
-	_assign_units_to_pods(new_map.get_node("Pods"), tile_occupancy_service)
+	#_spawn_roads_from_map(new_map.get_node("Roads"))
+	#_spawn_pods_from_map(new_map.get_node("Pods"), new_map.get_node("PatrolPoints"))
+	#_assign_units_to_pods(new_map.get_node("Pods"), tile_occupancy_service)
 
 	#_spawn_train(Vector2i(6, 7))
 
@@ -245,10 +245,9 @@ func _spawn_units_from_map(units_tilemap: TileMapLayer) -> void:
 	for tile in units_tilemap.get_used_cells():
 		var atlas_coords = units_tilemap.get_cell_atlas_coords(tile)
 		var source_id = units_tilemap.get_cell_source_id(tile)
-		var unit_type = UnitTypes.get_unit_type_from_atlas_coords(source_id, atlas_coords)
+		var unit_type = UnitTypes.get_unit_type_from_atlas_coords(atlas_coords)
 		var owner_id = UnitTypes.get_owner_id_from_atlas_coords(atlas_coords)
-		#print("***Spawning unit %s of owner %s at tile %s" % [unit_type, owner_id, tile])
-		unit_manager.spawn_unit(tile, unit_type)
+		unit_manager.spawn_unit(tile, unit_type, owner_id)
 
 		# Remove the placeholder tile
 		units_tilemap.erase_cell(tile)
@@ -350,7 +349,7 @@ func update_labels():
 
 #endregion
 func _unit_reached_destination(unit):
-	state_machine.set_state("IdleState")
+	state_machine.set_state("UnitSelectedState", {"selected_unit": unit})
 
 func _unit_changed_orientation(unit, new_orientation):
 	exploration_service._on_unit_orientation_changed(unit, new_orientation)

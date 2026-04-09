@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bt6edw4t4rxak"]
+[gd_scene format=3 uid="uid://bt6edw4t4rxak"]
 
 [ext_resource type="Script" uid="uid://cr4ejp4m3f5yb" path="res://scripts/entities/unit.gd" id="1_mqyo6"]
 [ext_resource type="SpriteFrames" uid="uid://cy0513d82j3rm" path="res://assets/sprites/ghostBlue.tres" id="2_hix5a"]
@@ -9,55 +9,61 @@
 [ext_resource type="Script" uid="uid://884o2ey0pyu7" path="res://scripts/components/weapon_component.gd" id="10_a54ie"]
 [ext_resource type="Script" uid="uid://0ar234chl3eu" path="res://scripts/components/health_component.gd" id="10_oj84s"]
 
-[node name="Unit" type="Node2D"]
+[node name="Unit" type="Node2D" unique_id=504117717]
 script = ExtResource("1_mqyo6")
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1438979658]
 sprite_frames = ExtResource("2_hix5a")
 animation = &"E"
 
-[node name="SpriteSelected" type="Sprite2D" parent="."]
+[node name="SpriteSelected" type="Sprite2D" parent="." unique_id=1896770018]
 visible = false
 position = Vector2(0, -3)
 texture = ExtResource("3_ak0lx")
 
-[node name="Labels" type="Node2D" parent="."]
+[node name="Labels" type="Node2D" parent="." unique_id=502842313]
 
-[node name="IDLabel" type="Label" parent="Labels"]
-offset_top = 13.0
+[node name="IDLabel" type="Label" parent="Labels" unique_id=1163521324]
+offset_top = 10.0
 offset_right = 40.0
-offset_bottom = 36.0
+offset_bottom = 33.0
 text = "Id"
 
-[node name="ActionStateLabel" type="Label" parent="Labels"]
-offset_top = 28.0
+[node name="ActionStateLabel" type="Label" parent="Labels" unique_id=1648967523]
+offset_top = 25.0
 offset_right = 40.0
-offset_bottom = 51.0
+offset_bottom = 48.0
 text = "State"
 
-[node name="ActionStateMachine" parent="." instance=ExtResource("4_hix5a")]
+[node name="OwnerLabel" type="Label" parent="Labels" unique_id=1674598644]
+offset_top = 38.0
+offset_right = 52.0
+offset_bottom = 61.0
+text = "Owner"
 
-[node name="HurtboxComponent" parent="." instance=ExtResource("8_y8rb5")]
+[node name="ActionStateMachine" parent="." unique_id=117593771 instance=ExtResource("4_hix5a")]
 
-[node name="WeaponComponent" type="Node2D" parent="."]
+[node name="HurtboxComponent" parent="." unique_id=796483801 instance=ExtResource("8_y8rb5")]
+
+[node name="WeaponComponent" type="Node2D" parent="." unique_id=254933775]
 script = ExtResource("10_a54ie")
 
-[node name="HealthComponent" type="Node" parent="."]
+[node name="HealthComponent" type="Node" parent="." unique_id=2017550980]
 script = ExtResource("10_oj84s")
 
-[node name="DebugDraw" type="Node2D" parent="."]
+[node name="DebugDraw" type="Node2D" parent="." unique_id=892141176]
 
-[node name="HealthBar" type="Node2D" parent="."]
+[node name="HealthBar" type="Node2D" parent="." unique_id=1327598114]
 script = ExtResource("8_fh57n")
 
-[node name="Background" type="ColorRect" parent="HealthBar"]
+[node name="Background" type="ColorRect" parent="HealthBar" unique_id=713174861]
 offset_left = -16.0
 offset_top = -32.0
 offset_right = 16.0
 offset_bottom = -28.0
 color = Color(1, 0, 0, 1)
 
-[node name="Fill" type="ColorRect" parent="HealthBar"]
+[node name="Fill" type="ColorRect" parent="HealthBar" unique_id=1396436741]
 offset_left = -16.0
 offset_top = -32.0
 offset_right = 16.0

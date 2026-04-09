@@ -5,15 +5,15 @@ class_name UnitActionMoveState
 var unit: Unit = null
 
 var delta_to_orientation = {
-	Vector2i(1, 0): "SE",
-	Vector2i(-1, 0): "NW",
-	Vector2i(0, 1): "SW",
-	Vector2i(0, -1): "NE",
+	Vector2i(1, 0): "E",
+	Vector2i(-1, 0): "W",
+	Vector2i(0, 1): "S",
+	Vector2i(0, -1): "N",
 
-	Vector2i(1, 1): "S",
-	Vector2i(-1, 1): "W",
-	Vector2i(1, -1): "E",
-	Vector2i(-1, -1): "N",
+	Vector2i(1, 1): "SE",
+	Vector2i(-1, 1): "NW",
+	Vector2i(1, -1): "NE",
+	Vector2i(-1, -1): "SW",
 }
 
 var orientation_to_heading = {
@@ -47,7 +47,7 @@ func enter(params = {}):
 
 	heading = orientation_to_heading[ori]
 
-	unit.play_animation("move_%s" % ori)
+	unit.play_animation("MoveState_%s" % ori)
 
 	#print("SM: Unit moving. CP: %s, TP: %s, ori: %s" % [unit.position, target_position, ori])
 
@@ -58,10 +58,12 @@ func exit(params = {}):
 	pass
 
 func update(delta: float):
+	var grid_service: GridService = unit.grid_service
+	target_position = grid_service.tile_to_world(unit.target_tile)
 	var new_pos = unit.position.move_toward(target_position, unit.move_speed * delta)
 	if new_pos == unit.position:
 		#print("Arrived")
-		unit.on_arrived_to_tile(target_tile)
+		unit.on_arrived_to_tile(unit.target_tile)
 		
 	else:
 		unit.position = new_pos

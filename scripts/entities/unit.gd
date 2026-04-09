@@ -11,6 +11,7 @@ class_name Unit
 #Labels
 @onready var id_label = $Labels/IDLabel
 @onready var state_label = $Labels/ActionStateLabel
+@onready var owner_label = $Labels/OwnerLabel
 
 var grid_service: GridService
 var unit_manager: UnitManager
@@ -49,6 +50,7 @@ func set_id(id_: String) -> void:
 
 func set_team(team_id_: String):
 	team_id = team_id_
+	owner_label.text = team_id_
 	if team_id == "enemy":
 		sprite.modulate = Color.RED
 
@@ -98,8 +100,9 @@ func _draw():
 	#var pos = grid_service.tile_delta_to_world_delta(dst_tile)
 	#draw_line(Vector2.ZERO, pos, Color.BLUE, 2)
 	#queue_redraw()
+
 func update_state_label(state_name: String):
-	state_label.text = name
+	state_label.text = state_name
 
 # func play_animation(name):
 # 	sprite.play(name)
@@ -113,7 +116,7 @@ func set_selected(selected: bool) -> void:
 
 
 func move_to_tile(tile: Vector2i):
-	#print("Unit %s instructed to move to tile %s" % [id, tile])
+	print("Unit %s instructed to move to tile %s" % [id, tile])
 	target_tile = tile
 	# calculate new orientation
 	var delta = target_tile - current_tile
@@ -124,6 +127,7 @@ func move_to_tile(tile: Vector2i):
 	#set_process(true)
 
 func on_arrived_to_tile(tile: Vector2i):
+	print("Unit %s arrived to tile %s" % [id, tile])
 	unit_manager.on_unit_reached_tile(self, tile)
 
 func on_movement_finished() -> void:
