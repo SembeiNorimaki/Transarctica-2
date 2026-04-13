@@ -21,7 +21,7 @@ var target_tile = Vector2i(-1, -1)
 
 var id: String = ""
 var team_id: String = ""
-var move_speed := 80.0
+var move_speed := 20.0
 var orientation := "SE"
 var view_angle := 90.0
 var view_range := 12
@@ -69,6 +69,7 @@ func _on_health_changed(current: int, max: int):
 
 func _on_died():
 	health_bar.visible = false
+	set_state("DeadState", {"unit": self})
 
 
 #func _process(delta: float) -> void:
@@ -92,7 +93,9 @@ func set_orientation(new_orientation: String):
 	unit_manager.on_unit_orientation_changed(self, new_orientation)
 	queue_redraw()
 	
-	
+func apply_damage(amount: int):
+	health_component.take_damage(amount)
+
 func _draw():
 	pass
 	#print("Grid service %s for unit %s %s" % [grid_service, id, self])

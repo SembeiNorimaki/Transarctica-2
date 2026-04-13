@@ -81,7 +81,8 @@ func load_soldier_type(id: String, atlas: Texture2D):
 		"legs": SpriteFrames.new(),
 		"torso": SpriteFrames.new(),
 		"left_arm": SpriteFrames.new(),
-		"right_arm": SpriteFrames.new()
+		"right_arm": SpriteFrames.new(),
+		"dead_part": SpriteFrames.new()
 	}
 
 	for part in parts.keys():
@@ -100,6 +101,7 @@ func _build_frames(frames: SpriteFrames, atlas: Texture2D, part: String):
 			var animation_name := "%s_%s" % [action, dir]
 			frames.add_animation(animation_name)
 			frames.set_animation_speed(animation_name, 8)
+			
 
 			for tile in layout[action][dir]:
 				var start = Vector2i(tile.x * UNIT_ATLAS_LAYOUT.FRAME_W, tile.y * UNIT_ATLAS_LAYOUT.FRAME_H)
@@ -111,3 +113,5 @@ func _build_frames(frames: SpriteFrames, atlas: Texture2D, part: String):
 				subtex.atlas = atlas
 				subtex.region = region
 				frames.add_frame(animation_name, subtex)
+
+	frames.set_animation_loop("DeadState_default", false)

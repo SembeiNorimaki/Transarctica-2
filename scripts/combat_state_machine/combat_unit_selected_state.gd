@@ -13,6 +13,7 @@ func enter(params = {}):
 	print("Enter CombatUnitSelectedState with params %s" % params)
 	selected_unit = params["selected_unit"]
 	owner_node.selection_manager.select_unit(selected_unit)
+	owner_node.camera_controller.center_at_tile(selected_unit.current_tile)
 
 func exit(params = {}):
 	pass
@@ -52,7 +53,7 @@ func handle_click(tile: Vector2i, button_index: int):
 		var units: Array = owner_node.tile_occupancy_service.get_units(tile)
 		
 		# case 1: clicked on a tile with a different unit -> select it
-		if units.size() > 0 and units[0] != selected_unit:
+		if units.size() > 0 and units[0] != selected_unit and units[0].team_id == "Player":
 			state_machine.set_state("UnitSelectedState", {"selected_unit": units[0]})
 		# case 2: Clicked on a tile without units
 		elif units.size() == 0:
@@ -65,7 +66,10 @@ func handle_click(tile: Vector2i, button_index: int):
 			var pathfinder = owner_node.pathfinding_service
 			var unit_manager = owner_node.unit_manager
 			var unit_tile = unit_manager.get_unit_tile(selected_unit)
-			var path = pathfinder.find_path(unit_tile, tile)
+			var path_and_cost = pathfinder.find_path(unit_tile, tile)
+			var path = path_and_cost[0]
+			var path_cost = path_and_cost[1]
+
 
 			if path.is_empty():
 				# clear stuff
@@ -80,7 +84,7 @@ func handle_click(tile: Vector2i, button_index: int):
 			preview_path = path
 			
 			# draw path overlay
-			owner_node.paths_overlay.show_path(path)
+			owner_node.paths_overlay.show_path(path, path_cost)
 			
 
 	# if button_index == MOUSE_BUTTON_LEFT:
@@ -129,4 +133,5 @@ func handle_key(event: InputEventKey):
 	if event.is_action_pressed("tab"):
 		owner_node.select_next_unit()
 	elif event.is_action_pressed("q"):
+		print("Action pressed q")
 		state_machine.set_state("UnitAimingState", {"selected_unit": selected_unit})

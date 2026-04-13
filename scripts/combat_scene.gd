@@ -9,6 +9,7 @@ class_name CombatScene
 @onready var selection_manager = $Managers/SelectionManager
 @onready var pod_manager = $Managers/PodManager
 @onready var horizontal_train_manager = $Managers/HorizontalTrainManager
+@onready var unit_ai_manager = $Managers/UnitAIManager
 
 #Containers
 @onready var projectiles_container = $Containers/Projectiles
@@ -55,7 +56,7 @@ class_name CombatScene
 @onready var aim_cursor = $AimCursor
 
 # UI
-@onready var ui_wasd = $UI_WASD
+#@onready var ui_wasd = $UI_WASD
 
 #region initialization
 func _ready() -> void:
@@ -64,9 +65,8 @@ func _ready() -> void:
 	call_deferred("_wire_signals")
 	_load_map("level_1")
 	navigation_graph_service.build_graph()
-
+	exploration_service.recalculate()
 	turn_manager.start_combat()
-	#exploration_layer.reveal([Vector2i(1, 1)])
 	
 func _inject_services():
 	# Managers
@@ -78,12 +78,14 @@ func _inject_services():
 	wall_manager.edge_occupancy_service = edge_occupancy_service
 	wall_manager.grid_service = grid_service
 	turn_manager.unit_manager = unit_manager
+	turn_manager.unit_ai_manager = unit_ai_manager
 	turn_manager.selection_manager = selection_manager
 	turn_manager.pod_manager = pod_manager
 	pod_manager.tile_occupancy_service = tile_occupancy_service
 	pod_manager.grid_service = grid_service
 	horizontal_train_manager.tile_occupancy_service = tile_occupancy_service
 	horizontal_train_manager.grid_service = grid_service
+	unit_ai_manager.unit_manager = unit_manager
 
 	# Overlays
 	units_overlay.grid_service = grid_service
@@ -124,6 +126,8 @@ func _inject_services():
 	exploration_service.los_service = los_service
 	exploration_service.unit_manager = unit_manager
 
+	camera_controller.grid_service = grid_service
+
 func _register_teams():
 	turn_manager.register_team("Player")
 	turn_manager.register_team("Enemy")
@@ -136,6 +140,8 @@ func _wire_signals():
 	unit_manager.connect("unit_removed", units_overlay.redraw)
 	unit_manager.connect("unit_reached_destination", _unit_reached_destination)
 	unit_manager.connect("unit_changed_orientation", _unit_changed_orientation)
+	unit_manager.connect("unit_changed_tile", _unit_changed_tile)
+
 
 	building_manager.connect("building_spawned", buildings_overlay.redraw)
 	building_manager.connect("building_removed", buildings_overlay.redraw)
@@ -143,9 +149,9 @@ func _wire_signals():
 	wall_manager.connect("wall_spawned", walls_overlay.redraw)
 	wall_manager.connect("wall_removed", walls_overlay.redraw)
 
-	ui_wasd.connect("move_vector_changed", unit_manager.on_move_vector_changed)
-	ui_wasd.connect("aim_pressed", unit_manager.on_aim_pressed)
-	ui_wasd.connect("aim_released", unit_manager.on_aim_released)
+	# ui_wasd.connect("move_vector_changed", unit_manager.on_move_vector_changed)
+	# ui_wasd.connect("aim_pressed", unit_manager.on_aim_pressed)
+	# ui_wasd.connect("aim_released", unit_manager.on_aim_released)
 
 #endregion
 
@@ -179,7 +185,7 @@ func _load_map(map_name: String) -> void:
 	# Spawn units, buildings, walls, and roads
 	
 	_spawn_units_from_map(new_map.get_node("Units"))
-	#_spawn_buildings_from_map(new_map.get_node("Buildings"))
+	_spawn_buildings_from_map(new_map.get_node("Buildings"))
 	_spawn_walls_from_map(new_map.get_node("Walls"))
 	#_spawn_roads_from_map(new_map.get_node("Roads"))
 	#_spawn_pods_from_map(new_map.get_node("Pods"), new_map.get_node("PatrolPoints"))
@@ -348,11 +354,20 @@ func update_labels():
 	
 
 #endregion
+
+
+#region unit signal handling
+
 func _unit_reached_destination(unit):
 	state_machine.set_state("UnitSelectedState", {"selected_unit": unit})
 
 func _unit_changed_orientation(unit, new_orientation):
-	exploration_service._on_unit_orientation_changed(unit, new_orientation)
+	exploration_service.on_unit_orientation_changed(unit, new_orientation)
+
+func _unit_changed_tile(unit, new_tile):
+	exploration_service.on_unit_tile_changed(unit, new_tile)
+
+#endregion
 
 func select_next_unit():
 	var next_unit = unit_manager.get_next_unit_by_team("Player")
@@ -369,7 +384,15 @@ func _on_bullet_requested(from, to, scene):
 	var bullet = scene.instantiate()
 	projectiles_container.add_child(bullet)
 	bullet.fire(from, to)
-	
+
+func on_bullet_hit(position):
+	#convert position to tile
+	var tile_ = grid_service.world_to_tile(position)
+	print("Combat scene on bullet hit ", position, "  ", tile_)
+	var units_ = tile_occupancy_service.get_units(tile_)
+	print("Units found in tile: ", units_)
+	if units_.size() > 0:
+		unit_manager.apply_damage_to_unit(units_[0], 10)
 
 func _process(delta: float) -> void:
 	$Labels/FPSLabel.text = "FPS: %s" % Engine.get_frames_per_second()

@@ -100,7 +100,7 @@ func get_neighbors(tile: Vector2i) -> Array[Vector2i]:
                 continue
             neighbors.append(tile + Vector2i(x, y))
 
-        neighbors = [tile + Vector2i(1, 0), tile + Vector2i(-1, 0), tile + Vector2i(0, 1), tile + Vector2i(0, -1)]
+        #neighbors = [tile + Vector2i(1, 0), tile + Vector2i(-1, 0), tile + Vector2i(0, 1), tile + Vector2i(0, -1)]
     return neighbors
 
 func get_orientation(from_tile: Vector2i, to_tile: Vector2i) -> String:

@@ -10,7 +10,7 @@ func _ready():
 func redraw():
 	_draw()
 	
-func show_path(path: Array[Vector2i]):
+func show_path(path: Array[Vector2i], path_cost: Array[float]):
 	path_tiles = path
 	_draw()
 	queue_redraw()

@@ -7,6 +7,38 @@
 [ext_resource type="SpriteFrames" uid="uid://b5ha7vwfg0e0p" path="res://assets/tilesets/right_arm_weapon_frames.tres" id="4_gbknk"]
 [ext_resource type="SpriteFrames" uid="uid://b512e6mogavan" path="res://assets/tilesets/left_arm_frames.tres" id="5_sq8og"]
 [ext_resource type="SpriteFrames" uid="uid://ik2saq3tsh6y" path="res://assets/tilesets/weapon_frames.tres" id="6_3u80e"]
+[ext_resource type="Texture2D" uid="uid://womom5hau1fx" path="res://assets/sprites/HEAVY_TRITANIUM_SUIT.png" id="8_rtqf3"]
+[ext_resource type="Script" uid="uid://h78yljbvsli2" path="res://scripts/components/ap_component.gd" id="8_sq8og"]
+[ext_resource type="Script" uid="uid://bblkydhrde6rt" path="res://scripts/ai/unit_ai.gd" id="9_3u80e"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g41uj"]
+atlas = ExtResource("8_rtqf3")
+region = Rect2(256, 640, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iexex"]
+atlas = ExtResource("8_rtqf3")
+region = Rect2(288, 640, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m6ai4"]
+atlas = ExtResource("8_rtqf3")
+region = Rect2(320, 640, 32, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tqpfg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g41uj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iexex")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m6ai4")
+}],
+"loop": false,
+"name": &"default2",
+"speed": 5.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gbknk"]
 radius = 14.0
@@ -19,12 +51,11 @@ position = Vector2(0, -12)
 
 [node name="Torso" type="AnimatedSprite2D" parent="Parts" index="0" unique_id=1163083422]
 sprite_frames = ExtResource("2_klak8")
-animation = &"SE"
+animation = &"dead"
 
 [node name="Legs" type="AnimatedSprite2D" parent="Parts" index="1" unique_id=2131048930]
 sprite_frames = ExtResource("3_mbsxs")
 animation = &"SE"
-frame = 2
 
 [node name="RightArmWeapon" type="AnimatedSprite2D" parent="Parts" index="2" unique_id=1417567557]
 sprite_frames = ExtResource("4_gbknk")
@@ -36,28 +67,38 @@ animation = &"SE"
 
 [node name="Weapon" type="AnimatedSprite2D" parent="Parts" index="4" unique_id=584707992]
 sprite_frames = ExtResource("6_3u80e")
-animation = &"NE"
+animation = &"NW"
 
-[node name="Sprite" parent="." index="1"]
+[node name="Dead" type="AnimatedSprite2D" parent="Parts" index="5" unique_id=801993673]
 visible = false
-sprite_frames = ExtResource("2_klak8")
-animation = &"NE"
+sprite_frames = SubResource("SpriteFrames_tqpfg")
+animation = &"default2"
 
-[node name="IDLabel" parent="Labels" index="0"]
+[node name="Sprite" parent="." index="1" unique_id=1438979658]
+visible = false
+position = Vector2(0, -12)
+sprite_frames = ExtResource("2_klak8")
+animation = &"dead"
+
+[node name="IDLabel" parent="Labels" parent_id_path=PackedInt32Array(502842313) index="0" unique_id=1163521324]
 offset_top = -3.0
 offset_bottom = 20.0
 
-[node name="ActionStateLabel" parent="Labels" index="1"]
-offset_top = 12.0
-offset_bottom = 35.0
+[node name="ActionStateLabel" parent="Labels" parent_id_path=PackedInt32Array(502842313) index="1" unique_id=1648967523]
+offset_top = 13.0
+offset_bottom = 36.0
 
-[node name="HurtboxComponent" parent="." index="5"]
-visible = false
+[node name="OwnerLabel" parent="Labels" parent_id_path=PackedInt32Array(502842313) index="2" unique_id=1674598644]
+offset_left = -1.0
+offset_top = 28.0
+offset_right = 51.0
+offset_bottom = 51.0
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="HurtboxComponent" index="0" unique_id=1702055916]
-position = Vector2(0, -12)
-scale = Vector2(0.5, 1)
-shape = SubResource("CircleShape2D_gbknk")
+[node name="ApLabel" type="Label" parent="Labels" parent_id_path=PackedInt32Array(502842313) index="3" unique_id=539751935]
+offset_top = 43.0
+offset_right = 40.0
+offset_bottom = 66.0
+text = "AP"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="9" unique_id=38583749]
 visible = false
@@ -65,5 +106,8 @@ position = Vector2(0, -12)
 scale = Vector2(0.5, 1)
 shape = SubResource("CircleShape2D_gbknk")
 
-[node name="HealthBar" parent="." index="10"]
-visible = false
+[node name="ApComponent" type="Node" parent="." index="10" unique_id=501589489]
+script = ExtResource("8_sq8og")
+
+[node name="UnitAI" type="Node" parent="." index="11" unique_id=583279830]
+script = ExtResource("9_3u80e")

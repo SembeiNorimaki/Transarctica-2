@@ -11,9 +11,9 @@ var delta_to_orientation = {
 	Vector2i(0, -1): "N",
 
 	Vector2i(1, 1): "SE",
-	Vector2i(-1, 1): "NW",
+	Vector2i(-1, -1): "NW",
 	Vector2i(1, -1): "NE",
-	Vector2i(-1, -1): "SW",
+	Vector2i(-1, 1): "SW",
 }
 
 var orientation_to_heading = {
@@ -47,7 +47,7 @@ func enter(params = {}):
 
 	heading = orientation_to_heading[ori]
 
-	unit.play_animation("MoveState_%s" % ori)
+	unit.play_animation("MoveState", ori)
 
 	#print("SM: Unit moving. CP: %s, TP: %s, ori: %s" % [unit.position, target_position, ori])
 

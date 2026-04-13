@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://bjmpeorfb3bal" path="res://scripts/overlays/buildings_overlay.gd" id="11_etgvb"]
 [ext_resource type="Script" uid="uid://bq2b3d3l2wv0e" path="res://scripts/services/terrain_service.gd" id="11_rui7j"]
 [ext_resource type="Script" uid="uid://ja6lxsbuuwp6" path="res://scripts/services/road_service.gd" id="11_wpptk"]
+[ext_resource type="Script" uid="uid://gyamlb1t2bjg" path="res://scripts/managers/unit_ai_manager.gd" id="12_codwp"]
 [ext_resource type="Script" uid="uid://dl0vi3dty8ifv" path="res://scripts/overlays/walls_overlay.gd" id="12_gai5b"]
 [ext_resource type="Script" uid="uid://cc3jvcdr0an6x" path="res://scripts/services/pathfinding_service.gd" id="12_wpptk"]
 [ext_resource type="Script" uid="uid://cw1txxugdjt33" path="res://scripts/services/navigation_graph_service.gd" id="13_4f2bx"]
@@ -33,7 +34,8 @@
 [ext_resource type="PackedScene" uid="uid://bfkx5ppuk4u66" path="res://scenes/combat/state_machines/combat_state_machine.tscn" id="29_kuabr"]
 [ext_resource type="Script" uid="uid://bhnf0bbk74olp" path="res://scripts/overlays/pods_overlay.gd" id="30_5cjt0"]
 [ext_resource type="Texture2D" uid="uid://c8eb6b045eh7f" path="res://assets/sprites/cursors/cursor_07_0.png" id="33_4fugr"]
-[ext_resource type="PackedScene" uid="uid://dc1hk0xj7hhpu" path="res://scenes/ui/ui_wasd.tscn" id="34_rkdki"]
+[ext_resource type="PackedScene" uid="uid://djse4j3famfio" path="res://scenes/entities/wagons/locomotive_wagon.tscn" id="35_lx37x"]
+[ext_resource type="PackedScene" uid="uid://cjgydihpg50rd" path="res://scenes/entities/wagons/barracks_wagon.tscn" id="36_3ctjh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rkdki"]
 texture = ExtResource("3_4fugr")
@@ -77,6 +79,9 @@ script = ExtResource("10_0wpcq")
 
 [node name="HorizontalTrainManager" type="Node" parent="Managers" unique_id=250359814]
 script = ExtResource("11_5cjt0")
+
+[node name="UnitAIManager" type="Node" parent="Managers" unique_id=686020517]
+script = ExtResource("12_codwp")
 
 [node name="Controllers" type="Node" parent="." unique_id=2045951238]
 
@@ -194,4 +199,8 @@ offset_bottom = 23.0
 texture = ExtResource("33_4fugr")
 offset = Vector2(0, -13)
 
-[node name="UI_WASD" parent="." unique_id=1754640623 instance=ExtResource("34_rkdki")]
+[node name="LocomotiveWagon" parent="." unique_id=459786045 instance=ExtResource("35_lx37x")]
+position = Vector2(220, 151)
+
+[node name="BarracksWagon" parent="." unique_id=1834765432 instance=ExtResource("36_3ctjh")]
+position = Vector2(25, 151)

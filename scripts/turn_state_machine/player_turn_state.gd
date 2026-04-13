@@ -7,8 +7,8 @@ class_name PlayerTurnState
 # func _ready():
 # 	pass
 
-# func enter(params = {}):
-# 	#print("Enter combat unit moving state with params %s", params)
+func enter(params = {}):
+    print("Enter player turn state %s" % owner_node.pod_manager)
 # 	selected_unit = params["selected_unit"]
 # 	#parent_scene.selection_manager.select_unit(selected_unit)
 

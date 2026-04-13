@@ -21,6 +21,7 @@ func _ready():
 func enter(params = {}):
 	print("Enter AimingState with params %s" % params)
 	selected_unit = params["selected_unit"]
+	selected_unit.set_state("AimState", {"unit": selected_unit})
 
 	owner_node.set_cursor("aim")
 
@@ -52,8 +53,17 @@ func _attempt_shot(tile: Vector2i):
 	
 	
 func handle_click(tile: Vector2i, button_index: int):
-	#print("CUAS click %s" % tile)
-	_attempt_shot(tile)
+	#_attempt_shot(tile)
+	
+	# Right click:
+	#    Rotate unit so it looks in this direction
+	if button_index == MOUSE_BUTTON_RIGHT:
+		var new_orientation = owner_node.grid_service.get_orientation(selected_unit.current_tile, tile)
+		selected_unit.set_orientation(new_orientation)
+	elif button_index == MOUSE_BUTTON_LEFT:
+		_attempt_shot(tile)
+
+
 
 
 func handle_key(event: InputEventKey):

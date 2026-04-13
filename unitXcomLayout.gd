@@ -22,10 +22,30 @@ const atlas2 = {
             "SW": [Vector2i(5, 2)],
             "W": [Vector2i(6, 2)],
             "NW": [Vector2i(7, 2)]
-        }
+        },
+        "AimState": {
+            "N": [Vector2i(0, 2)],
+            "NE": [Vector2i(1, 2)],
+            "E": [Vector2i(2, 2)],
+            "SE": [Vector2i(3, 2)],
+            "S": [Vector2i(4, 2)],
+            "SW": [Vector2i(5, 2)],
+            "W": [Vector2i(6, 2)],
+            "NW": [Vector2i(7, 2)]
+        },
     },
     "legs": {
         "IdleState": {
+            "N": [Vector2i(0, 1)],
+            "NE": [Vector2i(1, 1)],
+            "E": [Vector2i(2, 1)],
+            "SE": [Vector2i(3, 1)],
+            "S": [Vector2i(4, 1)],
+            "SW": [Vector2i(5, 1)],
+            "W": [Vector2i(6, 1)],
+            "NW": [Vector2i(7, 1)]
+        },
+        "AimState": {
             "N": [Vector2i(0, 1)],
             "NE": [Vector2i(1, 1)],
             "E": [Vector2i(2, 1)],
@@ -77,6 +97,16 @@ const atlas2 = {
             "SW": [Vector2i(5, 15)],
             "W": [Vector2i(6, 15)],
             "NW": [Vector2i(7, 15)]
+        },
+        "AimState": {
+            "N": [Vector2i(0, 15)],
+            "NE": [Vector2i(1, 15)],
+            "E": [Vector2i(2, 15)],
+            "SE": [Vector2i(3, 15)],
+            "S": [Vector2i(4, 15)],
+            "SW": [Vector2i(5, 15)],
+            "W": [Vector2i(6, 15)],
+            "NW": [Vector2i(7, 15)]
         }
     },
     "right_arm": {
@@ -100,7 +130,7 @@ const atlas2 = {
             "W": [Vector2i(14, 15)],
             "NW": [Vector2i(15, 15)]
         },
-        "Shoot": {
+        "AimState": {
             "N": [Vector2i(0, 16)],
             "NE": [Vector2i(1, 16)],
             "E": [Vector2i(2, 16)],
@@ -111,6 +141,11 @@ const atlas2 = {
             "NW": [Vector2i(7, 16)]
         }
     },
+    "dead_part": {
+        "DeadState": {
+            "default": [Vector2i(8, 16), Vector2i(9, 16), Vector2i(10, 16)]
+        }
+    }
 }
 
 var atlas = {

@@ -16,7 +16,7 @@ var units = {"Player": [], "Enemy": []}
 var cycle_idx = {"Player": - 1, "Enemy": - 1}
 
 signal unit_spawned(unit)
-signal unit_tile_changed(unit, old_tile, new_tile)
+signal unit_changed_tile(unit, new_tile)
 signal unit_reached_destination(unit)
 signal unit_changed_orientation(unit, new_orientation)
 
@@ -37,7 +37,8 @@ func spawn_unit(tile_pos: Vector2i, unit_type_: String, owner_id: String) -> voi
 	var unit = unit_info.scene.instantiate()
 	
 	unit.call_deferred("set_soldier_type", unit_type_)
-	unit.call_deferred("set_weapon_type", "AK47")
+	unit.call_deferred("set_weapon_type", "TacticalSniperRifle")
+	#unit.call_deferred("set_weapon_type", "AK47")
 
 	# Dependency injection
 	unit.grid_service = grid_service
@@ -74,9 +75,7 @@ func _on_unit_tile_changed(unit: Unit, old_tile: Vector2i, new_tile: Vector2i) -
 	units_to_tile[unit] = new_tile
 	emit_signal("unit_tile_changed", unit, old_tile, new_tile)
 
-# called by the unit itself
-func on_unit_orientation_changed(unit: Unit, new_orientation: String) -> void:
-	emit_signal("unit_changed_orientation", unit, new_orientation)
+
 
 func get_unit_tile(unit: Unit) -> Vector2i:
 	return units_to_tile.get(unit, Vector2i(-1, -1))
@@ -99,6 +98,8 @@ func get_all_units() -> Array[Unit]:
 		all_units.append_array(units[team])
 	return all_units
 
+func apply_damage_to_unit(unit: Unit, amount: int):
+	unit.apply_damage(amount)
 
 #endregion
 
@@ -122,13 +123,20 @@ func _on_unit_reached_destination(unit):
 	print("Unit reached destination")
 	# set the unit state to idle
 	unit.set_state("IdleState", {"unit": unit})
-	unit.play_animation("IdleState_%s" % unit.orientation)
+	unit.play_animation("IdleState", unit.orientation)
 	emit_signal("unit_reached_destination", unit)
 	
 func on_unit_reached_tile(unit: Unit, tile: Vector2i) -> void:
 	_on_unit_tile_changed(unit, unit.current_tile, tile)
 	unit.current_tile = tile
 	_give_next_tile(unit)
+	emit_signal("unit_changed_tile", unit, tile)
+
+# called by the unit itself
+func on_unit_orientation_changed(unit: Unit, new_orientation: String) -> void:
+	emit_signal("unit_changed_orientation", unit, new_orientation)
+
+
 #endregion
 
 

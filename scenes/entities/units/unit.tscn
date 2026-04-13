@@ -5,7 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://b8gf8vdcesbiw" path="res://assets/sprites/active-unit-selection.png" id="3_ak0lx"]
 [ext_resource type="PackedScene" uid="uid://dtxrg38hrli2n" path="res://scenes/combat/state_machines/action_state_machine.tscn" id="4_hix5a"]
 [ext_resource type="Script" uid="uid://c867c7wpga0fd" path="res://scripts/components/health_bar.gd" id="8_fh57n"]
-[ext_resource type="PackedScene" uid="uid://bbca3uoh27o3x" path="res://scenes/combat/components/hurtbox_component.tscn" id="8_y8rb5"]
 [ext_resource type="Script" uid="uid://884o2ey0pyu7" path="res://scripts/components/weapon_component.gd" id="10_a54ie"]
 [ext_resource type="Script" uid="uid://0ar234chl3eu" path="res://scripts/components/health_component.gd" id="10_oj84s"]
 
@@ -14,7 +13,7 @@ script = ExtResource("1_mqyo6")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1438979658]
 sprite_frames = ExtResource("2_hix5a")
-animation = &"E"
+animation = &"S"
 
 [node name="SpriteSelected" type="Sprite2D" parent="." unique_id=1896770018]
 visible = false
@@ -43,8 +42,6 @@ text = "Owner"
 
 [node name="ActionStateMachine" parent="." unique_id=117593771 instance=ExtResource("4_hix5a")]
 
-[node name="HurtboxComponent" parent="." unique_id=796483801 instance=ExtResource("8_y8rb5")]
-
 [node name="WeaponComponent" type="Node2D" parent="." unique_id=254933775]
 script = ExtResource("10_a54ie")
 
@@ -69,3 +66,11 @@ offset_top = -32.0
 offset_right = 16.0
 offset_bottom = -28.0
 color = Color(0, 1, 0, 1)
+
+[node name="Value" type="Label" parent="HealthBar" unique_id=118522576]
+offset_left = 17.0
+offset_top = -34.0
+offset_right = 57.0
+offset_bottom = -11.0
+scale = Vector2(0.3, 0.3)
+text = "50"

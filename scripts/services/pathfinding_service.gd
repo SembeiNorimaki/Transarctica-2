@@ -18,7 +18,7 @@ const DIRECTIONS = [
 	Vector2i(0, 1) # S
 ]
 
-func find_path(start: Vector2i, goal: Vector2i) -> Array[Vector2i]:
+func find_path(start: Vector2i, goal: Vector2i) -> Array:
 	#print("Pathfinding from", start, "to", goal)
 	if start == goal:
 		return [start]
@@ -70,7 +70,7 @@ func find_path(start: Vector2i, goal: Vector2i) -> Array[Vector2i]:
 	return [] # No path found
 
 # This is the old pathfinding function, it doesn't use the navigation graph but queries the tile_occupancy_service directly
-func find_path_OLD(start: Vector2i, goal: Vector2i) -> Array[Vector2i]:
+func find_path_OLD(start: Vector2i, goal: Vector2i) -> Array:
 	#print("Pathfinding from", start, "to", goal)
 	if start == goal:
 		return [start]
@@ -136,9 +136,11 @@ func _heuristic(a: Vector2i, b: Vector2i) -> int:
 	# Manhattan distance for grid movement
 	return abs(a.x - b.x) + abs(a.y - b.y)
 
-func _reconstruct_path(came_from: Dictionary, current: Vector2i) -> Array[Vector2i]:
+func _reconstruct_path(came_from: Dictionary, current: Vector2i) -> Array:
 	var path: Array[Vector2i] = [current]
+	var cost: Array[float] = [terrain_service.get_cost(current)]
 	while came_from.has(current):
 		current = came_from[current]
 		path.push_front(current)
-	return path
+		cost.push_front(terrain_service.get_cost(current))
+	return [path, cost]

@@ -44,7 +44,7 @@ func bresenham_line(start: Vector2i, end: Vector2i) -> Array[Vector2i]:
 
 		tiles.append(Vector2i(x, y))
 
-	#los_overlay.draw_debug_tiles(tiles)
+	los_overlay.draw_debug_tiles(tiles)
 	return tiles
 
 # computes the bresenham line between two tiles with diagonals
@@ -84,7 +84,7 @@ func has_los(start: Vector2i, end: Vector2i) -> bool:
 	#print("Calculating LOS between %s and %s" % [start, end])
 	var tiles = bresenham_line(start, end)
 
-	for i in range(1, tiles.size() - 1):
+	for i in range(0, tiles.size() - 1):
 		var tile1 = tiles[i]
 		var tile2 = tiles[i + 1]
 		var is_blocked = edge_occupancy_service.is_edge_blocked(tile1, tile2)

@@ -9,6 +9,7 @@ signal unit_finished(unit)
 #Injected dependencies
 var unit_manager: UnitManager
 var pod_manager : PodManager
+var unit_ai_manager : UnitAIManager
 var selection_manager: SelectionManager
 
 @onready var turn_state_machine: StateMachine = $TurnStateMachine
