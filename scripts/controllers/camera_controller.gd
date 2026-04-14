@@ -35,6 +35,10 @@ func center_at_tile(tile : Vector2i):
 	var screen_pos = grid_service.tile_to_world(tile)
 	cam.position = screen_pos
 
+func set_zoom(val: float):
+	zoom = val
+	cam.zoom = Vector2(zoom, zoom)
+
 func _zoom_at_screenpos(direction: int, screen_pos: Vector2):
 	# 1. Convert screen → world BEFORE zoom
 	var world_before = cam.get_canvas_transform().affine_inverse() * screen_pos

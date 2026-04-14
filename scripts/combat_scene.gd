@@ -393,7 +393,10 @@ func on_bullet_hit(position):
 	var entities_ = tile_occupancy_service.get_entities(tile_)
 	print("Entities found in tile: ", entities_)
 	if entities_.size() > 0:
-		unit_manager.apply_damage_to_unit(entities_[0], 10)
+		if entities_[0] is Unit:
+			unit_manager.apply_damage_to_unit(entities_[0], 10)
+		else:
+			wall_manager.apply_damage_to_wall(entities_[0], 10)
 
 func _process(delta: float) -> void:
 	$Labels/FPSLabel.text = "FPS: %s" % Engine.get_frames_per_second()

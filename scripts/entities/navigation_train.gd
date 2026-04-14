@@ -173,3 +173,4 @@ func get_direction_vector() -> Vector2:
 		"NW": return Vector2(0, -1)
 		_:
 			return Vector2.ZERO
+	

@@ -80,21 +80,24 @@ position = Vector2(0, -12)
 sprite_frames = ExtResource("2_klak8")
 animation = &"dead"
 
-[node name="IDLabel" parent="Labels" parent_id_path=PackedInt32Array(502842313) index="0" unique_id=1163521324]
+[node name="Labels" parent="." index="3" unique_id=502842313]
+visible = false
+
+[node name="IDLabel" parent="Labels" index="0" unique_id=1163521324]
 offset_top = -3.0
 offset_bottom = 20.0
 
-[node name="ActionStateLabel" parent="Labels" parent_id_path=PackedInt32Array(502842313) index="1" unique_id=1648967523]
+[node name="ActionStateLabel" parent="Labels" index="1" unique_id=1648967523]
 offset_top = 13.0
 offset_bottom = 36.0
 
-[node name="OwnerLabel" parent="Labels" parent_id_path=PackedInt32Array(502842313) index="2" unique_id=1674598644]
+[node name="OwnerLabel" parent="Labels" index="2" unique_id=1674598644]
 offset_left = -1.0
 offset_top = 28.0
 offset_right = 51.0
 offset_bottom = 51.0
 
-[node name="ApLabel" type="Label" parent="Labels" parent_id_path=PackedInt32Array(502842313) index="3" unique_id=539751935]
+[node name="ApLabel" type="Label" parent="Labels" index="3" unique_id=539751935]
 offset_top = 43.0
 offset_right = 40.0
 offset_bottom = 66.0

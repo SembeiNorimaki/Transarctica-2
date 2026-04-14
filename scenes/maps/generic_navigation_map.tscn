@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://dxot3aouof2ut"]
+[gd_scene format=3 uid="uid://dxot3aouof2ut"]
 
 [ext_resource type="Texture2D" uid="uid://c0i0maahajxgn" path="res://assets/tilesets/terrain130_104.png" id="1_hctaa"]
 [ext_resource type="Texture2D" uid="uid://diy8syh348frt" path="res://assets/tilesets/tracks_128_64.png" id="2_75oc5"]
 [ext_resource type="Texture2D" uid="uid://b5yofneb3a8lh" path="res://assets/tilesets/Village.png" id="3_ivt2f"]
 [ext_resource type="Texture2D" uid="uid://dyxyoqppy2kw8" path="res://assets/tilesets/VillageSmall.png" id="4_r0yyr"]
 [ext_resource type="Texture2D" uid="uid://mck5yqp0dby6" path="res://assets/sprites/trains_placeholder.png" id="5_r0yyr"]
+[ext_resource type="Texture2D" uid="uid://8usms5hi33xi" path="res://assets/tilesets/Buildings_120x86.png" id="5_vi62s"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ivt2f"]
 texture = ExtResource("1_hctaa")
@@ -88,12 +89,27 @@ texture = ExtResource("4_r0yyr")
 texture_region_size = Vector2i(347, 189)
 0:0/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ejpk2"]
+texture = ExtResource("5_vi62s")
+texture_region_size = Vector2i(120, 86)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+2:1/0 = 0
+1:1/0 = 0
+0:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+0:3/0 = 0
+
 [sub_resource type="TileSet" id="TileSet_30kp2"]
 tile_shape = 1
 tile_layout = 5
 tile_size = Vector2i(128, 64)
 sources/0 = SubResource("TileSetAtlasSource_vi62s")
 sources/1 = SubResource("TileSetAtlasSource_uqwmi")
+sources/2 = SubResource("TileSetAtlasSource_ejpk2")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_30kp2"]
 texture = ExtResource("5_r0yyr")
@@ -107,16 +123,16 @@ tile_layout = 5
 tile_size = Vector2i(128, 64)
 sources/0 = SubResource("TileSetAtlasSource_30kp2")
 
-[node name="GenericNavigationMap" type="Node2D"]
+[node name="GenericNavigationMap" type="Node2D" unique_id=1195897361]
 
-[node name="Terrain" type="TileMapLayer" parent="."]
+[node name="Terrain" type="TileMapLayer" parent="." unique_id=831286021]
 tile_set = SubResource("TileSet_0sofo")
 
-[node name="Rails" type="TileMapLayer" parent="."]
+[node name="Rails" type="TileMapLayer" parent="." unique_id=867218948]
 tile_set = SubResource("TileSet_vi62s")
 
-[node name="Cities" type="TileMapLayer" parent="."]
+[node name="Cities" type="TileMapLayer" parent="." unique_id=1711305477]
 tile_set = SubResource("TileSet_30kp2")
 
-[node name="Trains" type="TileMapLayer" parent="."]
+[node name="Trains" type="TileMapLayer" parent="." unique_id=142093996]
 tile_set = SubResource("TileSet_ivt2f")

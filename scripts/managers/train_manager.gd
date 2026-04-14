@@ -65,5 +65,5 @@ func on_train_reached_tile(train: NavigationTrain, tile: Vector2i) -> void:
 func _check_tile_events(train: NavigationTrain, tile: Vector2i) -> void:
 	if cities_manager.is_entry_tile(tile):
 		var city = cities_manager.get_city_by_entry_tile(tile)
-		#print("Train reached city %s" % city.name)
+		print("Train reached city %s" % city.name)
 		train.inmediate_stop()

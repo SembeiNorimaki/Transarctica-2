@@ -32,7 +32,12 @@ func spawn_full_wall(tile_pos: Vector2i) -> void:
 	# Register in occupancy
 	# Register in occupancy
 	
+	# Register in occupancy
 	tile_occupancy_service.register(tile_pos, wall)
+	edge_occupancy_service.register(tile_pos, tile_pos + Vector2i(0, -1))
+	edge_occupancy_service.register(tile_pos, tile_pos + Vector2i(0, 1))
+	edge_occupancy_service.register(tile_pos, tile_pos + Vector2i(-1, 0))
+	edge_occupancy_service.register(tile_pos, tile_pos + Vector2i(1, 0))
 	
 
 	# Register in walls_to_tile
@@ -77,6 +82,14 @@ func spawn_right_wall(tile_pos: Vector2i) -> void:
 	# Register in walls_to_tile
 	#walls_to_tile[wall] = tile_pos
 	emit_signal("wall_spawned", wall_edge)
+
+
+func apply_damage_to_wall(wall: Wall, amount: int):
+	wall.apply_damage(amount)
+
+func apply_damage_to_wall_edge(wall_edge: WallEdge, amount: int):
+	wall_edge.apply_damage(amount)
+
 
 # func spawn_wall(tile_pos, owner_id) -> void:
 #     # #print("Spawning a wall at %s" % tile_pos)

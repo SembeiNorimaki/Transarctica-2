@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cyik5o370gh8s" path="res://scripts/entities/wall.gd" id="1_ylooh"]
 [ext_resource type="Texture2D" uid="uid://coekvdlx482ny" path="res://assets/tilesets/URBAN.PNG" id="2_u0bys"]
 [ext_resource type="Script" uid="uid://c867c7wpga0fd" path="res://scripts/components/health_bar.gd" id="3_q32q0"]
+[ext_resource type="PackedScene" uid="uid://b6oluegp0dk6m" path="res://scenes/combat/components/health_component.tscn" id="4_uk4y8"]
 
 [node name="Wall" type="Node2D" unique_id=2129869029]
 script = ExtResource("1_ylooh")
@@ -39,3 +40,5 @@ offset_right = 57.0
 offset_bottom = -11.0
 scale = Vector2(0.3, 0.3)
 text = "50"
+
+[node name="HealthComponent" parent="." unique_id=1467030158 instance=ExtResource("4_uk4y8")]

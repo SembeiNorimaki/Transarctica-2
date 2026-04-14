@@ -12,6 +12,8 @@ extends Node2D
 @onready var grid_service = $Services/GridService
 @onready var rail_service = $Services/RailService
 
+#Controllers
+@onready var camera_controller = $Controllers/CameraController
 # Map 
 @onready var map_root = $MapRoot
 @onready var exploration_layer = $MapRoot/ExplorationLayer
@@ -68,6 +70,9 @@ func _ready() -> void:
 	_wire_signals()
 	_load_map("world_1")
 
+	camera_controller.center_at_tile(Vector2i(15,5))
+	camera_controller.set_zoom(1.0)
+
 func _inject_services():
 	# Managers
 	train_manager.grid_service = grid_service
@@ -83,6 +88,9 @@ func _inject_services():
 	# Services
 	#player_train.grid_service = grid_service
 	rail_service.rails_tilemap = $MapRoot/World1/Rails
+
+	# Controllers
+	camera_controller.grid_service = grid_service
 
 func _wire_signals():
 	#player_train.tile_changed.connect(_on_player_train_tile_changed)
@@ -110,6 +118,11 @@ func _load_map(map_name: String) -> void:
 	_spawn_cities_from_map(new_map.get_node("Cities"))
 	_build_rails_from_map(new_map.get_node("Rails"))
 	_spawn_trains_from_map(new_map.get_node("Trains"))
+
+	
+
+	
+
 
 func _spawn_cities_from_map(cities_tilemap: TileMapLayer) -> void:
 	for tile in cities_tilemap.get_used_cells():
