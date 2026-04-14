@@ -47,7 +47,7 @@ func _on_train_tile_changed(train: NavigationTrain, old_tile: Vector2i, new_tile
 	#print("Train manager: Train changed from tile %s to tile %s" % [old_tile, new_tile])
 	var delta = new_tile - old_tile
 	var new_ori = rail_service.calculate_new_orientation(new_tile, delta)
-	#print("New ori: %s" % new_ori)
+	print("New ori: %s" % new_ori)
 	train.set_orientation(new_ori)
 	
 #endregion

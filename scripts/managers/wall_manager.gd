@@ -30,7 +30,10 @@ func spawn_full_wall(tile_pos: Vector2i) -> void:
 	get_node("../../Containers/Walls").add_child(wall)
 
 	# Register in occupancy
-	edge_occupancy_service.register(tile_pos, tile_pos + Vector2i(-1, 0))
+	# Register in occupancy
+	
+	tile_occupancy_service.register(tile_pos, wall)
+	
 
 	# Register in walls_to_tile
 	#walls_to_tile[wall] = tile_pos

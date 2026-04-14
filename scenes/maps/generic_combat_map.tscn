@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c4ootr6722cxr"]
+[gd_scene format=3 uid="uid://c4ootr6722cxr"]
 
 [ext_resource type="TileSet" uid="uid://dq6wq7mdob237" path="res://scenes/maps/terrain.tres" id="1_6jll5"]
 [ext_resource type="TileSet" uid="uid://b3xyt5p8pqsj3" path="res://scenes/maps/units.tres" id="2_4bwdg"]
@@ -45,11 +45,20 @@ texture_region_size = Vector2i(32, 40)
 4:0/0 = 0
 4:0/0/texture_origin = Vector2i(0, 12)
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xtedm"]
+texture = ExtResource("7_mp2ox")
+texture_region_size = Vector2i(32, 40)
+2:5/0 = 0
+2:5/0/texture_origin = Vector2i(0, 12)
+4:5/0 = 0
+4:5/0/texture_origin = Vector2i(0, 12)
+
 [sub_resource type="TileSet" id="TileSet_6bhn3"]
 tile_shape = 1
 tile_layout = 5
 tile_size = Vector2i(32, 16)
 sources/0 = SubResource("TileSetAtlasSource_6s13l")
+sources/1 = SubResource("TileSetAtlasSource_xtedm")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_40dtt"]
 texture = ExtResource("7_mp2ox")
@@ -101,35 +110,35 @@ terrain_set_0/terrain_0/name = "Terrain 0"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_6bhn3")
 
-[node name="GenericCombatMap" type="Node2D"]
+[node name="GenericCombatMap" type="Node2D" unique_id=1245494973]
 
-[node name="Terrain" type="TileMapLayer" parent="."]
+[node name="Terrain" type="TileMapLayer" parent="." unique_id=363157254]
 tile_set = ExtResource("1_6jll5")
 
-[node name="Roads" type="TileMapLayer" parent="."]
+[node name="Roads" type="TileMapLayer" parent="." unique_id=1640125394]
 tile_set = ExtResource("5_73fdq")
 
-[node name="Units" type="TileMapLayer" parent="."]
+[node name="Units" type="TileMapLayer" parent="." unique_id=119340618]
 tile_set = ExtResource("2_4bwdg")
 
-[node name="Buildings" type="TileMapLayer" parent="."]
+[node name="Buildings" type="TileMapLayer" parent="." unique_id=997492745]
 tile_set = ExtResource("3_4bwdg")
 
-[node name="Pods" type="TileMapLayer" parent="."]
+[node name="Pods" type="TileMapLayer" parent="." unique_id=153022531]
 tile_set = SubResource("TileSet_mp2ox")
 
-[node name="Walls" type="Node2D" parent="."]
+[node name="Walls" type="Node2D" parent="." unique_id=1842706946]
 
-[node name="Full" type="TileMapLayer" parent="Walls"]
+[node name="Full" type="TileMapLayer" parent="Walls" unique_id=119010474]
 tile_set = SubResource("TileSet_6bhn3")
 
-[node name="Right" type="TileMapLayer" parent="Walls"]
+[node name="Right" type="TileMapLayer" parent="Walls" unique_id=1484547573]
 y_sort_enabled = true
 tile_set = ExtResource("6_4735l")
 
-[node name="Left" type="TileMapLayer" parent="Walls"]
+[node name="Left" type="TileMapLayer" parent="Walls" unique_id=638782247]
 y_sort_enabled = true
 tile_set = SubResource("TileSet_44sdu")
 
-[node name="PatrolPoints" type="TileMapLayer" parent="."]
+[node name="PatrolPoints" type="TileMapLayer" parent="." unique_id=1822908890]
 tile_set = SubResource("TileSet_vmw88")

@@ -24,7 +24,7 @@ func _draw():
 	if grid_service == null or tile_occupancy_service == null:
 		return
 
-	_draw_tile_walls()
+	#_draw_tile_walls()
 	_draw_edge_walls()
 
 func _draw_tile_walls():

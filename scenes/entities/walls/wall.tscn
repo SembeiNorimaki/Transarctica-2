@@ -1,11 +1,41 @@
-[gd_scene load_steps=3 format=3 uid="uid://bi3jy3gh5rmgd"]
+[gd_scene format=3 uid="uid://bi3jy3gh5rmgd"]
 
 [ext_resource type="Script" uid="uid://cyik5o370gh8s" path="res://scripts/entities/wall.gd" id="1_ylooh"]
-[ext_resource type="Texture2D" uid="uid://cx0svah2ihker" path="res://assets/tilesets/walls.png" id="2_u0bys"]
+[ext_resource type="Texture2D" uid="uid://coekvdlx482ny" path="res://assets/tilesets/URBAN.PNG" id="2_u0bys"]
+[ext_resource type="Script" uid="uid://c867c7wpga0fd" path="res://scripts/components/health_bar.gd" id="3_q32q0"]
 
-[node name="Wall" type="Node2D"]
+[node name="Wall" type="Node2D" unique_id=2129869029]
 script = ExtResource("1_ylooh")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=293537560]
+position = Vector2(0, -12)
 texture = ExtResource("2_u0bys")
-hframes = 16
+hframes = 8
+vframes = 15
+frame = 42
+
+[node name="HealthBar" type="Node2D" parent="." unique_id=500628561]
+position = Vector2(0, -12)
+script = ExtResource("3_q32q0")
+
+[node name="Background" type="ColorRect" parent="HealthBar" unique_id=710698878]
+offset_left = -16.0
+offset_top = -32.0
+offset_right = 16.0
+offset_bottom = -28.0
+color = Color(1, 0, 0, 1)
+
+[node name="Fill" type="ColorRect" parent="HealthBar" unique_id=402957256]
+offset_left = -16.0
+offset_top = -32.0
+offset_right = 16.0
+offset_bottom = -28.0
+color = Color(0, 1, 0, 1)
+
+[node name="Value" type="Label" parent="HealthBar" unique_id=1211130979]
+offset_left = 17.0
+offset_top = -34.0
+offset_right = 57.0
+offset_bottom = -11.0
+scale = Vector2(0.3, 0.3)
+text = "50"

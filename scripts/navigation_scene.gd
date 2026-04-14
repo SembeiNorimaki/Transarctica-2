@@ -137,5 +137,6 @@ func _build_rails_from_map(rails_tilemap: TileMapLayer) -> void:
 
 
 func _on_player_train_tile_changed(from_tile: Vector2i, to_tile: Vector2i) -> void:
+	print("Train changed tile")
 	pass
 	#rail_service.build_rail(to_tile)

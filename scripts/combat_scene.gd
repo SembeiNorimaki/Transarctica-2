@@ -284,6 +284,7 @@ func _spawn_buildings_from_map(buildings_tilemap: TileMapLayer) -> void:
 		# Remove the placeholder tile
 		buildings_tilemap.erase_cell(tile)
 
+
 func _spawn_walls_from_map(walls_container: Node2D) -> void:
 	# Walls are divided in 3 tilesets: Full, Left & Right
 	var full_tilemap: TileMapLayer = walls_container.get_node("Full")
@@ -389,10 +390,10 @@ func on_bullet_hit(position):
 	#convert position to tile
 	var tile_ = grid_service.world_to_tile(position)
 	print("Combat scene on bullet hit ", position, "  ", tile_)
-	var units_ = tile_occupancy_service.get_units(tile_)
-	print("Units found in tile: ", units_)
-	if units_.size() > 0:
-		unit_manager.apply_damage_to_unit(units_[0], 10)
+	var entities_ = tile_occupancy_service.get_entities(tile_)
+	print("Entities found in tile: ", entities_)
+	if entities_.size() > 0:
+		unit_manager.apply_damage_to_unit(entities_[0], 10)
 
 func _process(delta: float) -> void:
 	$Labels/FPSLabel.text = "FPS: %s" % Engine.get_frames_per_second()
