@@ -67,7 +67,6 @@ script = ExtResource("7_7ires")
 [node name="Overlays" type="Node2D" parent="." unique_id=1386397876]
 
 [node name="RailsOverlay" type="Node2D" parent="Overlays" unique_id=380620923]
-visible = false
 script = ExtResource("8_e7sg2")
 
 [node name="CitiesOverlay" type="Node2D" parent="Overlays" unique_id=424921584]

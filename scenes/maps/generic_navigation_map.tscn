@@ -4,8 +4,14 @@
 [ext_resource type="Texture2D" uid="uid://diy8syh348frt" path="res://assets/tilesets/tracks_128_64.png" id="2_75oc5"]
 [ext_resource type="Texture2D" uid="uid://b5yofneb3a8lh" path="res://assets/tilesets/Village.png" id="3_ivt2f"]
 [ext_resource type="Texture2D" uid="uid://dyxyoqppy2kw8" path="res://assets/tilesets/VillageSmall.png" id="4_r0yyr"]
+[ext_resource type="Texture2D" uid="uid://bt3rq0hdselon" path="res://assets/tilesets/industries/Farm_nav.png" id="5_pxm0i"]
 [ext_resource type="Texture2D" uid="uid://mck5yqp0dby6" path="res://assets/sprites/trains_placeholder.png" id="5_r0yyr"]
-[ext_resource type="Texture2D" uid="uid://8usms5hi33xi" path="res://assets/tilesets/Buildings_120x86.png" id="5_vi62s"]
+[ext_resource type="Texture2D" uid="uid://d34t5b544o2el" path="res://assets/tilesets/industries/BrickFactory_nav.png" id="5_vi62s"]
+[ext_resource type="Texture2D" uid="uid://dvcba42rxqn1b" path="res://assets/tilesets/industries/Chemical_nav.png" id="6_uqwmi"]
+[ext_resource type="Texture2D" uid="uid://b4lqp1ecgy2cd" path="res://assets/tilesets/industries/ClayMine_nav.png" id="7_30kp2"]
+[ext_resource type="Texture2D" uid="uid://d4chygp75mc8m" path="res://assets/tilesets/industries/CoalMine_nav.png" id="8_ejpk2"]
+[ext_resource type="Texture2D" uid="uid://c7s2m75aihq" path="res://assets/tilesets/industries/Container_nav.png" id="9_6kaog"]
+[ext_resource type="Texture2D" uid="uid://cofdsxmqbywes" path="res://assets/tilesets/industries/Copper_nav.png" id="10_btgn0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ivt2f"]
 texture = ExtResource("1_hctaa")
@@ -89,19 +95,45 @@ texture = ExtResource("4_r0yyr")
 texture_region_size = Vector2i(347, 189)
 0:0/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gbma4"]
+texture = ExtResource("5_pxm0i")
+texture_region_size = Vector2i(385, 204)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 3)
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ejpk2"]
 texture = ExtResource("5_vi62s")
-texture_region_size = Vector2i(120, 86)
+texture_region_size = Vector2i(386, 193)
 0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-2:1/0 = 0
-1:1/0 = 0
-0:1/0 = 0
-0:2/0 = 0
-1:2/0 = 0
-2:2/0 = 0
-0:3/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6kaog"]
+texture = ExtResource("6_uqwmi")
+texture_region_size = Vector2i(386, 261)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 34)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_btgn0"]
+texture = ExtResource("7_30kp2")
+texture_region_size = Vector2i(386, 234)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 20)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pxm0i"]
+texture = ExtResource("8_ejpk2")
+texture_region_size = Vector2i(318, 141)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 6)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j5so1"]
+texture = ExtResource("9_6kaog")
+texture_region_size = Vector2i(384, 258)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 31)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8x7cq"]
+texture = ExtResource("10_btgn0")
+texture_region_size = Vector2i(385, 201)
+0:0/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_30kp2"]
 tile_shape = 1
@@ -109,7 +141,13 @@ tile_layout = 5
 tile_size = Vector2i(128, 64)
 sources/0 = SubResource("TileSetAtlasSource_vi62s")
 sources/1 = SubResource("TileSetAtlasSource_uqwmi")
-sources/2 = SubResource("TileSetAtlasSource_ejpk2")
+sources/4 = SubResource("TileSetAtlasSource_ejpk2")
+sources/5 = SubResource("TileSetAtlasSource_6kaog")
+sources/6 = SubResource("TileSetAtlasSource_btgn0")
+sources/7 = SubResource("TileSetAtlasSource_pxm0i")
+sources/8 = SubResource("TileSetAtlasSource_j5so1")
+sources/9 = SubResource("TileSetAtlasSource_8x7cq")
+sources/10 = SubResource("TileSetAtlasSource_gbma4")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_30kp2"]
 texture = ExtResource("5_r0yyr")
@@ -126,6 +164,14 @@ sources/0 = SubResource("TileSetAtlasSource_30kp2")
 [node name="GenericNavigationMap" type="Node2D" unique_id=1195897361]
 
 [node name="Terrain" type="TileMapLayer" parent="." unique_id=831286021]
+tile_set = SubResource("TileSet_0sofo")
+
+[node name="Terrain+1" type="TileMapLayer" parent="." unique_id=527008799]
+position = Vector2(0, -16)
+tile_set = SubResource("TileSet_0sofo")
+
+[node name="Terrain-1" type="TileMapLayer" parent="." unique_id=49720303]
+position = Vector2(0, 16)
 tile_set = SubResource("TileSet_0sofo")
 
 [node name="Rails" type="TileMapLayer" parent="." unique_id=867218948]
