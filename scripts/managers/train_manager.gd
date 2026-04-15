@@ -6,11 +6,41 @@ var rail_service: RailService
 var grid_service: GridService
 var cities_manager: CitiesManager
 
+var exploration_layer
+
 var next_train_id = {"Player": 0, "Enemy": 0}
 var teams = ["Player", "Enemy"]
 var trains := {"Player": [], "Enemy": []}
 
 var TRAIN_SCENE = preload("res://scenes/entities/units/navigation_train.tscn")
+
+var train_vision_offsets = [
+	Vector2i(-2, -2),
+	Vector2i(-2, -1),
+	Vector2i(-2, 0),
+	Vector2i(-2, 1),
+	Vector2i(-2, 2),
+	Vector2i(-1, -2),
+	Vector2i(-1, -1),
+	Vector2i(-1, 0),
+	Vector2i(-1, 1),
+	Vector2i(-1, 2),
+	Vector2i(0, -2),
+	Vector2i(0, -1),
+	Vector2i(0, 0),
+	Vector2i(0, 1),
+	Vector2i(0, 2),
+	Vector2i(1, -2),
+	Vector2i(1, -1),
+	Vector2i(1, 0),
+	Vector2i(1, 1),
+	Vector2i(1, 2),
+	Vector2i(2, -2),
+	Vector2i(2, -1),
+	Vector2i(2, 0),
+	Vector2i(2, 1),
+	Vector2i(2, 2)
+]
 
 signal train_spawned(train)
 signal train_tile_changed(train, old_tile, new_tile)
@@ -49,6 +79,11 @@ func _on_train_tile_changed(train: NavigationTrain, old_tile: Vector2i, new_tile
 	var new_ori = rail_service.calculate_new_orientation(new_tile, delta)
 	print("New ori: %s" % new_ori)
 	train.set_orientation(new_ori)
+
+	var vision_tiles : Array[Vector2i] = []
+	for offset in train_vision_offsets:
+		vision_tiles.append(new_tile + offset)
+	exploration_layer.reveal(vision_tiles)
 	
 #endregion
 

@@ -185,6 +185,9 @@ func calculate_new_orientation(tile: Vector2i, delta: Vector2i):
 	# We enter tile (1,1) from W
 	# We need to know if this tile has an edge connecting W to somewhere
 	var exit_edge = null
+	print("Calculating new orientation. Available edges:")
+	for edge in edges[tile]:
+		print(" %s, %s " % [edge.a, edge.b])
 	for edge in edges[tile]:
 		if edge.a == entry_edge:
 			exit_edge = edge.b
@@ -201,11 +204,21 @@ func calculate_new_orientation(tile: Vector2i, delta: Vector2i):
 
 
 func change_junction(tile: Vector2i) -> void:
-	var tile_name = rails[tile]
-	if junction_changes.has(tile_name):
-		var new_tilename = junction_changes[tile_name]
+	var rail_name = rails[tile]
+	if junction_changes.has(rail_name):
+		var new_tilename = junction_changes[rail_name]
+		
 		rails[tile] = new_tilename
-		print("changing junction from %s to %s" % [tile_name, new_tilename])
+		var letters = rail_name.split("")
+		var a = letters[0]
+		var b = letters[1]
+		var c = letters[2]
+		edges[tile] = []
+		edges[tile].append(RailEdge.new(a, b, 1))
+		edges[tile].append(RailEdge.new(a, c, 1))
+		edges[tile].append(RailEdge.new(b, c, 1))
+
+		print("changing junction from %s to %s" % [rail_name, new_tilename])
 		var new_atlas_coords = RAILNAME_TO_ATLAS[new_tilename]
 		rails_tilemap.set_cell(tile, 0, new_atlas_coords)
 

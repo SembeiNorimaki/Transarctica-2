@@ -37,6 +37,7 @@ func _inject_services():
 	train_manager.grid_service = grid_service
 	train_manager.rail_service = rail_service
 	train_manager.cities_manager = cities_manager
+	train_manager.exploration_layer = exploration_layer
 	cities_manager.rail_service = rail_service
 	
 	# Overlays

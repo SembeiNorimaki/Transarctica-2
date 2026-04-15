@@ -55,7 +55,7 @@ const atlas2 = {
             "W": [Vector2i(6, 1)],
             "NW": [Vector2i(7, 1)]
         },
-        "Crouch": {
+        "CrouchState": {
             "N": [Vector2i(8, 1)],
             "NE": [Vector2i(9, 1)],
             "E": [Vector2i(10, 1)],

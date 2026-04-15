@@ -11,6 +11,10 @@ func _ready() -> void: pass
 func reveal_from_unit():
 	pass
 
+
+func reveal_tiles(tiles: Array[Vector2i]):
+	exploration_layer.reveal(tiles)
+
 # recalculates the viewed tiles for all player units
 func recalculate():
 	var unit_list = unit_manager.get_units_by_team("Player")

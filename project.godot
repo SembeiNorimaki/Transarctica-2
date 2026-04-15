@@ -25,6 +25,7 @@ UnitTypes="*res://autoload/unit_types.tscn"
 BuildingTypes="*res://autoload/building_types.tscn"
 WagonTypes="*res://autoload/wagon_types.tscn"
 SoldierAtlasLoader="*res://autoload/soldier_atlas_loader.gd"
+WallTypes="*uid://c2owq8l7km3os"
 
 [input]
 

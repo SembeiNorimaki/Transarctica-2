@@ -47,7 +47,11 @@ var weapon_aiming_offsets = {
 
 var current_animation := ""
 var is_animation_playing := false
+var is_crouching := false
 
+
+func toggle_crouch():
+	is_crouching = not is_crouching
 
 func set_weapon_type(id: String):
 	var frames_dict = SoldierAtlasLoader.get_weapon_type(id)
@@ -102,7 +106,10 @@ func play_animation(state_: String, orientation_ : String):
 	is_animation_playing = true
 
 	torso.play(animation_name)
-	legs.play(animation_name)
+	if is_crouching:
+		legs.play("CrouchState_" + orientation_)
+	else:
+		legs.play(animation_name)
 	left_arm.play(animation_name)
 	right_arm.play(animation_name)
 	if state_ == "AimState":
