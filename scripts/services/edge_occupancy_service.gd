@@ -18,8 +18,14 @@ func register(tile_a: Vector2i, tile_b: Vector2i, edge_type_: int = Edge.EdgeTyp
 func unregister(tile_a: Vector2i, tile_b: Vector2i) -> void:
 	_edges.erase(_edge_key(tile_a, tile_b))
 
-func is_edge_blocked(tile_a: Vector2i, tile_b: Vector2i) -> bool:
-	return _edges.has(_edge_key(tile_a, tile_b))
+func is_edge_walk_blocked(tile_a: Vector2i, tile_b: Vector2i) -> bool:
+	var edge_key = _edge_key(tile_a, tile_b)
+	return _edges.has(edge_key) and _edges[edge_key].blocks_movement
+
+func is_edge_view_blocked(tile_a: Vector2i, tile_b: Vector2i) -> bool:
+	var edge_key = _edge_key(tile_a, tile_b)
+	return _edges.has(edge_key) and _edges[edge_key].blocks_vision
+
 
 func get_edge(tile_a: Vector2i, tile_b: Vector2i) -> Edge:
 	return _edges.get(_edge_key(tile_a, tile_b), null)

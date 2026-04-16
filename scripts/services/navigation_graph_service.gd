@@ -66,7 +66,7 @@ func is_walkable_2x2(anchor: Vector2i) -> bool:
 # 	blocked_edges.erase(_edge_key(a, b))
 # 	_update_edge(a, b)
 
-# func is_edge_blocked(a: Vector2i, b: Vector2i) -> bool:
+# func is_edge_walk_blocked(a: Vector2i, b: Vector2i) -> bool:
 # 	return blocked_edges.has(_edge_key(a, b))
 # #endregion
 
@@ -118,7 +118,7 @@ func _build_edges():
 				continue
 			if not nodes[neighbor].walkable:
 				continue
-			if edge_occupancy_service.is_edge_blocked(tile, neighbor):
+			if edge_occupancy_service.is_edge_walk_blocked(tile, neighbor):
 				continue
 
 			var edge = edge_occupancy_service.get_edge(tile, neighbor)
@@ -150,7 +150,7 @@ func _build_edges_2x2():
 				continue
 			
 			# Check edge blocking
-			if edge_occupancy_service.is_edge_blocked(anchor, neighbor):
+			if edge_occupancy_service.is_edge_walk_blocked(anchor, neighbor):
 				continue
 
 			var edge = edge_occupancy_service.get_edge(anchor, neighbor)
@@ -176,5 +176,5 @@ func _edge_key(a: Vector2i, b: Vector2i) -> String:
 func _update_edge(a: Vector2i, b: Vector2i):
 	var key = _edge_key(a, b)
 	if edges.has(key):
-		edges[key].walkable = edge_occupancy_service.is_edge_blocked(a, b)
+		edges[key].walkable = edge_occupancy_service.is_edge_walk_blocked(a, b)
 #endregion

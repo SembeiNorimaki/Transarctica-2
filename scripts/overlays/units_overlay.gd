@@ -17,7 +17,7 @@ func update(unit, old_tile, new_tile):
 	queue_redraw()
 
 func _draw():
-	#print("Unit overlay draw")
+	print("Unit overlay draw")
 	if grid_service == null or tile_occupancy_service == null:
 		return
 	for tile in tile_occupancy_service.get_occupied_tiles():

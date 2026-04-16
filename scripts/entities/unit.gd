@@ -12,6 +12,7 @@ class_name Unit
 @onready var id_label = $Labels/IDLabel
 @onready var state_label = $Labels/ActionStateLabel
 @onready var owner_label = $Labels/OwnerLabel
+@onready var tile_label = $Labels/TileLabel
 
 var grid_service: GridService
 var unit_manager: UnitManager
@@ -106,6 +107,9 @@ func _draw():
 
 func update_state_label(state_name: String):
 	state_label.text = state_name
+
+func update_tile_label():
+	tile_label.text = str(current_tile)
 
 # func play_animation(name):
 # 	sprite.play(name)

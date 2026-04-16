@@ -43,6 +43,17 @@ const ORIENTATIONS = [
     "NW"
 ]
 
+const OPPOSITE_ORIENTATION = {
+	"N" : "S",
+	"NE": "SW",
+	"E" : "W",
+	"SE": "NW",
+	"S" : "N",
+	"SW": "NE",
+	"W" : "E",
+	"NW": "SE"
+}
+
 
 signal tile_changed(old_tile: Vector2i, new_tile: Vector2i)
 
@@ -94,6 +105,7 @@ func inmediate_stop():
 	update_speed_label()
 
 func _process(delta):
+	_handle_reverse_direction()
 	_handle_gear_toggle()
 	_update_speed(delta)
 	_move_train(delta)
@@ -104,6 +116,11 @@ func _process(delta):
 	#     turn_request = 1
 	# elif Input.is_action_just_pressed("ui_left"):
 	#     turn_request = -1
+
+func _handle_reverse_direction():
+	if Input.is_action_just_pressed("shift"):
+		if move_speed == 0:
+			set_orientation(OPPOSITE_ORIENTATION[orientation])
 
 func _handle_gear_toggle():
 	if Input.is_action_just_pressed("ctrl"):

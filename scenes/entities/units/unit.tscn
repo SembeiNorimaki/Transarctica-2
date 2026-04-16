@@ -40,6 +40,12 @@ offset_right = 52.0
 offset_bottom = 61.0
 text = "Owner"
 
+[node name="TileLabel" type="Label" parent="Labels" unique_id=1448974160]
+offset_top = 53.0
+offset_right = 40.0
+offset_bottom = 76.0
+text = "Tile"
+
 [node name="ActionStateMachine" parent="." unique_id=117593771 instance=ExtResource("4_hix5a")]
 
 [node name="WeaponComponent" type="Node2D" parent="." unique_id=254933775]

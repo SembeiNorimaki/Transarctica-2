@@ -292,17 +292,20 @@ func _spawn_walls_from_map(walls_container: Node2D) -> void:
 	var right_tilemap: TileMapLayer = walls_container.get_node("Right")
 
 	for tile in full_tilemap.get_used_cells():
-		wall_manager.spawn_full_wall(tile)
+		var atlas_coords = full_tilemap.get_cell_atlas_coords(tile)
+		wall_manager.spawn_full_wall(tile, atlas_coords)
 		# Remove the placeholder tile
 		full_tilemap.erase_cell(tile)
 
 	for tile in left_tilemap.get_used_cells():
-		wall_manager.spawn_left_wall(tile)
+		var atlas_coords = left_tilemap.get_cell_atlas_coords(tile)
+		wall_manager.spawn_left_wall(tile, atlas_coords)
 		# Remove the placeholder tile
 		left_tilemap.erase_cell(tile)
 
 	for tile in right_tilemap.get_used_cells():
-		wall_manager.spawn_right_wall(tile)
+		var atlas_coords = right_tilemap.get_cell_atlas_coords(tile)
+		wall_manager.spawn_right_wall(tile, atlas_coords)
 		# Remove the placeholder tile
 		right_tilemap.erase_cell(tile)
 

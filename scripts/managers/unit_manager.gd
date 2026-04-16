@@ -16,7 +16,7 @@ var units = {"Player": [], "Enemy": []}
 var cycle_idx = {"Player": - 1, "Enemy": - 1}
 
 signal unit_spawned(unit)
-signal unit_changed_tile(unit, new_tile)
+signal unit_tile_changed(unit, old_tile, new_tile)
 signal unit_reached_destination(unit)
 signal unit_changed_orientation(unit, new_orientation)
 
@@ -73,6 +73,7 @@ func _on_unit_tile_changed(unit: Unit, old_tile: Vector2i, new_tile: Vector2i) -
 	tile_occupancy_service.unregister(old_tile, unit)
 	tile_occupancy_service.register(new_tile, unit)
 	units_to_tile[unit] = new_tile
+	print("emmiting signal unit_tile_changed")
 	emit_signal("unit_tile_changed", unit, old_tile, new_tile)
 
 
@@ -129,6 +130,7 @@ func _on_unit_reached_destination(unit):
 func on_unit_reached_tile(unit: Unit, tile: Vector2i) -> void:
 	_on_unit_tile_changed(unit, unit.current_tile, tile)
 	unit.current_tile = tile
+	unit.update_tile_label()
 	_give_next_tile(unit)
 	emit_signal("unit_changed_tile", unit, tile)
 

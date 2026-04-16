@@ -87,7 +87,7 @@ func has_los(start: Vector2i, end: Vector2i) -> bool:
 	for i in range(0, tiles.size() - 1):
 		var tile1 = tiles[i]
 		var tile2 = tiles[i + 1]
-		var is_blocked = edge_occupancy_service.is_edge_blocked(tile1, tile2)
+		var is_blocked = edge_occupancy_service.is_edge_view_blocked(tile1, tile2)
 		if is_blocked:
 			#print("LOS Blocked")
 			los_overlay.draw_los_line(start, end, Color.RED)
@@ -108,6 +108,6 @@ func has_los(start: Vector2i, end: Vector2i) -> bool:
 # 	for i in range(1, tiles.size() - 1):
 # 		var tile1 = tiles[i]
 # 		var tile2 = tiles[i + 1]
-# 		var is_blocked = edge_occupancy_service.is_edge_blocked(tile1, tile2)
+# 		var is_blocked = edge_occupancy_service.is_edge_view_blocked(tile1, tile2)
 # 		if is_blocked:
 # 			pass
