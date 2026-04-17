@@ -21,6 +21,9 @@ func _ready() -> void:
 	_inject_services()
 	_load_map("level_1")
 
+func initialize(city_data):
+	print("Trade scene initialize with data: ", city_data)
+
 func _inject_services():
 	# Managers
 	horizontal_train_manager.tile_occupancy_service = tile_occupancy_service
@@ -31,7 +34,7 @@ func _inject_services():
 #region Map Loading
 func _load_map(map_name: String) -> void:
 	grid_service.set_tile_size(Vector2i(128, 64))
-	_spawn_train(Vector2(15, 2.5))
+	_spawn_train(Vector2(0, 24))
 
 func _spawn_train(initial_tile: Vector2):
 	horizontal_train_manager.spawn_train(initial_tile)

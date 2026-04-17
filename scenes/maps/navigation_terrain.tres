@@ -1,0 +1,34 @@
+[gd_resource type="TileSet" format=3 uid="uid://3i2n8hh1jn5c"]
+
+[ext_resource type="Texture2D" uid="uid://c0i0maahajxgn" path="res://assets/tilesets/terrain130_104.png" id="1_sl7mr"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ivt2f"]
+texture = ExtResource("1_sl7mr")
+texture_region_size = Vector2i(130, 104)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+5:1/0 = 0
+4:1/0 = 0
+3:1/0 = 0
+2:1/0 = 0
+1:1/0 = 0
+0:1/0 = 0
+0:2/0 = 0
+5:2/0 = 0
+5:3/0 = 0
+5:4/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+5:5/0 = 0
+
+[resource]
+tile_shape = 1
+tile_layout = 5
+tile_size = Vector2i(128, 64)
+sources/0 = SubResource("TileSetAtlasSource_ivt2f")

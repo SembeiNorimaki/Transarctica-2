@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://l2ixgo1287ln"]
+
+[ext_resource type="Script" uid="uid://bi3molwdowj0s" path="res://scripts/managers/scene_manager.gd" id="1_r5jaw"]
+
+[node name="SceneManager" type="Node" unique_id=1681606061]
+script = ExtResource("1_r5jaw")

@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="FallenHavenIII"
-run/main_scene="uid://c68jhe1kv0a2s"
+run/main_scene="uid://bwjc36mf4nddw"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -26,6 +26,8 @@ BuildingTypes="*res://autoload/building_types.tscn"
 WagonTypes="*res://autoload/wagon_types.tscn"
 SoldierAtlasLoader="*res://autoload/soldier_atlas_loader.gd"
 WallTypes="*uid://c2owq8l7km3os"
+SceneManager="*uid://l2ixgo1287ln"
+GameState="*uid://ccrkd2eqch3c3"
 
 [input]
 

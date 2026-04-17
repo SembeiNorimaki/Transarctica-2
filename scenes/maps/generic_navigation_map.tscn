@@ -1,184 +1,28 @@
 [gd_scene format=3 uid="uid://dxot3aouof2ut"]
 
-[ext_resource type="Texture2D" uid="uid://c0i0maahajxgn" path="res://assets/tilesets/terrain130_104.png" id="1_hctaa"]
-[ext_resource type="Texture2D" uid="uid://diy8syh348frt" path="res://assets/tilesets/tracks_128_64.png" id="2_75oc5"]
-[ext_resource type="Texture2D" uid="uid://b5yofneb3a8lh" path="res://assets/tilesets/Village.png" id="3_ivt2f"]
-[ext_resource type="Texture2D" uid="uid://dyxyoqppy2kw8" path="res://assets/tilesets/VillageSmall.png" id="4_r0yyr"]
-[ext_resource type="Texture2D" uid="uid://bt3rq0hdselon" path="res://assets/tilesets/industries/Farm_nav.png" id="5_pxm0i"]
-[ext_resource type="Texture2D" uid="uid://mck5yqp0dby6" path="res://assets/sprites/trains_placeholder.png" id="5_r0yyr"]
-[ext_resource type="Texture2D" uid="uid://d34t5b544o2el" path="res://assets/tilesets/industries/BrickFactory_nav.png" id="5_vi62s"]
-[ext_resource type="Texture2D" uid="uid://dvcba42rxqn1b" path="res://assets/tilesets/industries/Chemical_nav.png" id="6_uqwmi"]
-[ext_resource type="Texture2D" uid="uid://b4lqp1ecgy2cd" path="res://assets/tilesets/industries/ClayMine_nav.png" id="7_30kp2"]
-[ext_resource type="Texture2D" uid="uid://d4chygp75mc8m" path="res://assets/tilesets/industries/CoalMine_nav.png" id="8_ejpk2"]
-[ext_resource type="Texture2D" uid="uid://c7s2m75aihq" path="res://assets/tilesets/industries/Container_nav.png" id="9_6kaog"]
-[ext_resource type="Texture2D" uid="uid://cofdsxmqbywes" path="res://assets/tilesets/industries/Copper_nav.png" id="10_btgn0"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ivt2f"]
-texture = ExtResource("1_hctaa")
-texture_region_size = Vector2i(130, 104)
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-4:0/0 = 0
-5:0/0 = 0
-5:1/0 = 0
-4:1/0 = 0
-3:1/0 = 0
-2:1/0 = 0
-1:1/0 = 0
-0:1/0 = 0
-0:2/0 = 0
-5:2/0 = 0
-5:3/0 = 0
-5:4/0 = 0
-0:6/0 = 0
-1:6/0 = 0
-2:6/0 = 0
-3:6/0 = 0
-5:5/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_0sofo"]
-tile_shape = 1
-tile_layout = 5
-tile_size = Vector2i(128, 64)
-sources/0 = SubResource("TileSetAtlasSource_ivt2f")
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r0yyr"]
-texture = ExtResource("2_75oc5")
-texture_region_size = Vector2i(128, 64)
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-2:1/0 = 0
-3:1/0 = 0
-0:2/0 = 0
-1:2/0 = 0
-2:2/0 = 0
-3:2/0 = 0
-0:3/0 = 0
-1:3/0 = 0
-2:3/0 = 0
-3:3/0 = 0
-0:4/0 = 0
-1:4/0 = 0
-2:4/0 = 0
-3:4/0 = 0
-0:5/0 = 0
-1:5/0 = 0
-2:5/0 = 0
-3:5/0 = 0
-0:6/0 = 0
-1:6/0 = 0
-2:6/0 = 0
-3:6/0 = 0
-0:7/0 = 0
-1:7/0 = 0
-2:7/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_vi62s"]
-tile_shape = 1
-tile_layout = 5
-tile_size = Vector2i(128, 64)
-sources/0 = SubResource("TileSetAtlasSource_r0yyr")
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vi62s"]
-texture = ExtResource("3_ivt2f")
-texture_region_size = Vector2i(694, 377)
-0:0/0 = 0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uqwmi"]
-texture = ExtResource("4_r0yyr")
-texture_region_size = Vector2i(347, 189)
-0:0/0 = 0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gbma4"]
-texture = ExtResource("5_pxm0i")
-texture_region_size = Vector2i(385, 204)
-0:0/0 = 0
-0:0/0/texture_origin = Vector2i(0, 3)
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ejpk2"]
-texture = ExtResource("5_vi62s")
-texture_region_size = Vector2i(386, 193)
-0:0/0 = 0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6kaog"]
-texture = ExtResource("6_uqwmi")
-texture_region_size = Vector2i(386, 261)
-0:0/0 = 0
-0:0/0/texture_origin = Vector2i(0, 34)
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_btgn0"]
-texture = ExtResource("7_30kp2")
-texture_region_size = Vector2i(386, 234)
-0:0/0 = 0
-0:0/0/texture_origin = Vector2i(0, 20)
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pxm0i"]
-texture = ExtResource("8_ejpk2")
-texture_region_size = Vector2i(318, 141)
-0:0/0 = 0
-0:0/0/texture_origin = Vector2i(0, 6)
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j5so1"]
-texture = ExtResource("9_6kaog")
-texture_region_size = Vector2i(384, 258)
-0:0/0 = 0
-0:0/0/texture_origin = Vector2i(0, 31)
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8x7cq"]
-texture = ExtResource("10_btgn0")
-texture_region_size = Vector2i(385, 201)
-0:0/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_30kp2"]
-tile_shape = 1
-tile_layout = 5
-tile_size = Vector2i(128, 64)
-sources/0 = SubResource("TileSetAtlasSource_vi62s")
-sources/1 = SubResource("TileSetAtlasSource_uqwmi")
-sources/4 = SubResource("TileSetAtlasSource_ejpk2")
-sources/5 = SubResource("TileSetAtlasSource_6kaog")
-sources/6 = SubResource("TileSetAtlasSource_btgn0")
-sources/7 = SubResource("TileSetAtlasSource_pxm0i")
-sources/8 = SubResource("TileSetAtlasSource_j5so1")
-sources/9 = SubResource("TileSetAtlasSource_8x7cq")
-sources/10 = SubResource("TileSetAtlasSource_gbma4")
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_30kp2"]
-texture = ExtResource("5_r0yyr")
-texture_region_size = Vector2i(56, 42)
-0:0/0 = 0
-1:0/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_ivt2f"]
-tile_shape = 1
-tile_layout = 5
-tile_size = Vector2i(128, 64)
-sources/0 = SubResource("TileSetAtlasSource_30kp2")
+[ext_resource type="TileSet" uid="uid://3i2n8hh1jn5c" path="res://scenes/maps/navigation_terrain.tres" id="1_pxm0i"]
+[ext_resource type="TileSet" uid="uid://cl4eqvpcy7aig" path="res://scenes/maps/rails.tres" id="2_pxm0i"]
+[ext_resource type="TileSet" uid="uid://di4xrktsbdfmf" path="res://scenes/maps/cities.tres" id="3_ivt2f"]
+[ext_resource type="TileSet" uid="uid://do2omj1xex6mr" path="res://scenes/maps/trains.tres" id="4_r0yyr"]
 
 [node name="GenericNavigationMap" type="Node2D" unique_id=1195897361]
 
 [node name="Terrain" type="TileMapLayer" parent="." unique_id=831286021]
-tile_set = SubResource("TileSet_0sofo")
+tile_set = ExtResource("1_pxm0i")
 
 [node name="Terrain+1" type="TileMapLayer" parent="." unique_id=527008799]
 position = Vector2(0, -16)
-tile_set = SubResource("TileSet_0sofo")
+tile_set = ExtResource("1_pxm0i")
 
 [node name="Terrain-1" type="TileMapLayer" parent="." unique_id=49720303]
 position = Vector2(0, 16)
-tile_set = SubResource("TileSet_0sofo")
+tile_set = ExtResource("1_pxm0i")
 
 [node name="Rails" type="TileMapLayer" parent="." unique_id=867218948]
-tile_set = SubResource("TileSet_vi62s")
+tile_set = ExtResource("2_pxm0i")
 
 [node name="Cities" type="TileMapLayer" parent="." unique_id=1711305477]
-tile_set = SubResource("TileSet_30kp2")
+tile_set = ExtResource("3_ivt2f")
 
 [node name="Trains" type="TileMapLayer" parent="." unique_id=142093996]
-tile_set = SubResource("TileSet_ivt2f")
+tile_set = ExtResource("4_r0yyr")

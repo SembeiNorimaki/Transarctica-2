@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://d05onkd2mr1h4"]
+
+[ext_resource type="TileSet" uid="uid://3i2n8hh1jn5c" path="res://scenes/maps/navigation_terrain.tres" id="1_r7ae1"]
+[ext_resource type="TileSet" uid="uid://cl4eqvpcy7aig" path="res://scenes/maps/rails.tres" id="2_1bc6c"]
+[ext_resource type="TileSet" uid="uid://di4xrktsbdfmf" path="res://scenes/maps/cities.tres" id="3_j7s4g"]
+
+[sub_resource type="TileSet" id="TileSet_1bc6c"]
+
+[node name="GenericTradeMap" type="Node2D" unique_id=1011338494]
+
+[node name="Terrain" type="TileMapLayer" parent="." unique_id=1460233366]
+tile_set = ExtResource("1_r7ae1")
+
+[node name="Rails" type="TileMapLayer" parent="." unique_id=709758041]
+tile_set = ExtResource("2_1bc6c")
+
+[node name="Resources" type="TileMapLayer" parent="." unique_id=704818475]
+tile_set = SubResource("TileSet_1bc6c")
+
+[node name="Cities" type="TileMapLayer" parent="." unique_id=1489576424]
+tile_set = ExtResource("3_j7s4g")

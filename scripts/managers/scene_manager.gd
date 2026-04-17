@@ -1,7 +1,8 @@
 extends Node
-class_name SceneManager
 
-@onready var navigation_scene = $NavigationScene
+
+@onready var navigation_scene = get_tree().get_root().get_node("MainScene/NavigationScene")
+var city_scene
 
 func _ready() -> void:
 	pass
@@ -17,7 +18,7 @@ func enter_city(city_data):
 	navigation_scene.set_physics_process(false)
 
 	# Load and instantiate the city scene
-	var CITY_SCENE_CLASS = load("res://scenes/city_scene.tscn")
+	var CITY_SCENE_CLASS = load("res://scenes/trade/trade_scene.tscn")
 	city_scene = CITY_SCENE_CLASS.instantiate()
 
 	# Pass city data to the cisty scene
@@ -35,4 +36,3 @@ func leave_city():
 	navigation_scene.visible = true
 	navigation_scene.set_process(true)
 	navigation_scene.set_physics_process(true)
-

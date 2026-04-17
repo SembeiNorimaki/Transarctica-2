@@ -45,6 +45,7 @@ var train_vision_offsets = [
 signal train_spawned(train)
 signal train_tile_changed(train, old_tile, new_tile)
 signal train_reached_destination(train)
+signal train_reached_city(city_name)
 
 func _ready() -> void:
 	pass
@@ -102,3 +103,4 @@ func _check_tile_events(train: NavigationTrain, tile: Vector2i) -> void:
 		var city = cities_manager.get_city_by_entry_tile(tile)
 		print("Train reached city %s" % city.name)
 		train.inmediate_stop()
+		emit_signal("train_reached_city", city.name)

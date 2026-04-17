@@ -26,7 +26,7 @@ extends Node2D
 func _ready() -> void:
 	grid_service.set_tile_size(Vector2i(128, 64))
 	_inject_services()
-	_wire_signals()
+	call_deferred("_wire_signals")
 	_load_map("world_1")
 
 	camera_controller.center_at_tile(Vector2i(15,5))
@@ -55,6 +55,8 @@ func _inject_services():
 
 func _wire_signals():
 	#player_train.tile_changed.connect(_on_player_train_tile_changed)
+	
+	train_manager.train_reached_city.connect(_on_train_reached_city)
 	pass
 
 func _load_map(map_name: String) -> void:
@@ -127,3 +129,7 @@ func _on_player_train_tile_changed(from_tile: Vector2i, to_tile: Vector2i) -> vo
 	print("Train changed tile")
 	pass
 	#rail_service.build_rail(to_tile)
+
+func _on_train_reached_city(city_name: String):
+	print("Nav Scene: Train reached city %s" % city_name)
+	SceneManager.enter_city({})
