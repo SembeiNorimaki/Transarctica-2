@@ -1,8 +1,22 @@
 {
     "Barcelona": {
+        "Location": [
+            13,
+            3
+        ],
         "Resources": {
             "Fish": 2,
             "Caviar": 3
+        }
+    },
+    "Madrid": {
+        "Location": [
+            20,
+            5
+        ],
+        "Resources": {
+            "Fish": 3,
+            "Caviar": 4
         }
     }
 }

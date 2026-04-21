@@ -81,7 +81,7 @@ func _on_train_tile_changed(train: NavigationTrain, old_tile: Vector2i, new_tile
 	print("New ori: %s" % new_ori)
 	train.set_orientation(new_ori)
 
-	var vision_tiles : Array[Vector2i] = []
+	var vision_tiles: Array[Vector2i] = []
 	for offset in train_vision_offsets:
 		vision_tiles.append(new_tile + offset)
 	exploration_layer.reveal(vision_tiles)

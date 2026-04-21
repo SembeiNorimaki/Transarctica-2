@@ -2,9 +2,11 @@ extends Node
 
 var state := {
     "cities": {},
-    "inductries": {},
+    "industries": {},
     "train": {}
 }
+
+var cities_by_location = {}
 
 func _ready() -> void:
     print("Game state Ready")
@@ -13,6 +15,10 @@ func _ready() -> void:
 func load_initial_cities():
     var file = FileAccess.open("res://scripts/data/cities.json", FileAccess.READ)
     var cities_data = JSON.parse_string(file.get_as_text())
+    for city_name in cities_data.keys():
+        var city_location_array = cities_data[city_name]["Location"]
+        cities_by_location[str(city_location_array[0]) + "," + str(city_location_array[1])] = city_name
+    print("cities_by_location: ", cities_by_location)
     state["cities"] = cities_data
     print("state:", state)
 

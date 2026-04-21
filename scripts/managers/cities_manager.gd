@@ -7,7 +7,8 @@ var rail_service: RailService
 var cities = {} # EntryTile -> {name, city_tile}
 
 func spawn_city(tile: Vector2i) -> void:
-	var city_name = "City_%s_%s" % [tile.x, tile.y]
+	#var city_name = "City_%s_%s" % [tile.x, tile.y]
+	var city_name = GameState.cities_by_location[str(tile.x) + "," + str(tile.y)]
 	# print("CityManager: Spawn %s" % city_name)
 	var entry_tile = _compute_entry_tile(tile)
 	cities[entry_tile] = {"name": city_name, "city_tile": tile}
