@@ -59,9 +59,9 @@ func set_weapon_type(id: String):
 	#print("Weapon: %s" % weapon.sprite_frames.get_animation_names())
 
 func set_soldier_type(id: String):
-	print("Setting soldier type to %s" % id)
+	#print("Setting soldier type to %s" % id)
 	var frames_dict = SoldierAtlasLoader.get_soldier_type(id)
-	print("FramesDict:", frames_dict["dead_part"])
+	#print("FramesDict:", frames_dict["dead_part"])
 	torso.sprite_frames = frames_dict["torso"]
 	legs.sprite_frames = frames_dict["legs"]
 	left_arm.sprite_frames = frames_dict["left_arm"]
@@ -101,7 +101,7 @@ func play_animation(state_: String, orientation_ : String):
 	if is_animation_playing and animation_name == current_animation: # If we are already playing the animation do nothing
 		return
 	
-	print("Play animation %s" % animation_name)
+	#print("Play animation %s" % animation_name)
 	current_animation = animation_name
 	is_animation_playing = true
 

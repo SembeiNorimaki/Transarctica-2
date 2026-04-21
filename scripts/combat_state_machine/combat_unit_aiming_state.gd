@@ -26,7 +26,9 @@ func enter(params = {}):
 	owner_node.set_cursor("aim")
 
 func exit(params = {}):
-	pass
+	print("Exiting combat unit aiming state")
+	owner_node.set_cursor("")
+
 
 func update(delta: float):
 	var mouse_tile = owner_node.grid_service.world_to_tile(owner_node.get_global_mouse_position())
@@ -70,3 +72,6 @@ func handle_key(event: InputEventKey):
 	#print("CUAS handle key %s" % event)
 	if event.is_action_pressed("tab"):
 		owner_node.select_next_unit()
+	elif event.is_action_pressed("q"):
+		print("Action pressed q")
+		state_machine.set_state("UnitSelectedState", {"selected_unit": selected_unit})

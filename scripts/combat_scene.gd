@@ -10,6 +10,8 @@ class_name CombatScene
 @onready var pod_manager = $Managers/PodManager
 @onready var horizontal_train_manager = $Managers/HorizontalTrainManager
 @onready var unit_ai_manager = $Managers/UnitAIManager
+@onready var pod_ai_manager = $Managers/PodAIManager
+
 
 #Containers
 @onready var projectiles_container = $Containers/Projectiles
@@ -79,6 +81,7 @@ func _inject_services():
 	wall_manager.grid_service = grid_service
 	turn_manager.unit_manager = unit_manager
 	turn_manager.unit_ai_manager = unit_ai_manager
+	turn_manager.pod_ai_manager = pod_ai_manager
 	turn_manager.selection_manager = selection_manager
 	turn_manager.pod_manager = pod_manager
 	pod_manager.tile_occupancy_service = tile_occupancy_service
@@ -86,6 +89,9 @@ func _inject_services():
 	horizontal_train_manager.tile_occupancy_service = tile_occupancy_service
 	horizontal_train_manager.grid_service = grid_service
 	unit_ai_manager.unit_manager = unit_manager
+	pod_ai_manager.pod_manager = pod_manager
+	pod_ai_manager.unit_manager = unit_manager
+	
 
 	# Overlays
 	units_overlay.grid_service = grid_service
@@ -188,10 +194,10 @@ func _load_map(map_name: String) -> void:
 	_spawn_buildings_from_map(new_map.get_node("Buildings"))
 	_spawn_walls_from_map(new_map.get_node("Walls"))
 	#_spawn_roads_from_map(new_map.get_node("Roads"))
-	#_spawn_pods_from_map(new_map.get_node("Pods"), new_map.get_node("PatrolPoints"))
-	#_assign_units_to_pods(new_map.get_node("Pods"), tile_occupancy_service)
+	_spawn_pods_from_map(new_map.get_node("Pods"), new_map.get_node("PatrolPoints"))
+	_assign_units_to_pods(new_map.get_node("Pods"), tile_occupancy_service)
 
-	_spawn_train(Vector2i(6, 7))
+	#_spawn_train(Vector2i(6, 7))
 
 	#_load_patrol_points_from_map(new_map.get_node("PatrolPoints"), Vector2i(6, 7))
 
@@ -233,13 +239,22 @@ func _load_patrol_points_from_map(patrol_tilemap: TileMapLayer, starting_tile: V
 
 # Must be called after loading units from map
 func _assign_units_to_pods(pods_tilemap: TileMapLayer, tile_occupancy_service: TileOccupancyService):
+	print("Assign units to pods:")
 	for tile in pods_tilemap.get_used_cells():
+		#print("  Rile %s" % tile)
 		var atlas_coords = pods_tilemap.get_cell_atlas_coords(tile)
-		if atlas_coords.y != 1: # only atlascords.y == 1 are valid unit assignations
-			continue
+		#if atlas_coords.y != 1: # only atlascords.y == 1 are valid unit assignations
+		#	continue
 		var pod_id = "p%s" % atlas_coords.x
+		var pod_tile = pod_manager.get_pod_tile(pod_manager.pods_by_id[pod_id])
+		# only one unit can be in a tile, so although it returns an array, only units[0] is used
 		var units: Array[Unit] = tile_occupancy_service.get_units(tile)
-		pod_manager.add_units_to_pod(pod_id, units)
+		print("Units0: ", units[0])
+		print("Units[0].CT: ", units[0].current_tile)
+		print("PodTile: ", pod_tile)
+
+		var unit_formation_offset = units[0].current_tile - pod_tile
+		pod_manager.add_unit_to_pod(pod_id, units[0], unit_formation_offset)
 		# print("Assigning unit %s to pod %s" % [units[0].id, pod_id])
 	
 
@@ -271,7 +286,7 @@ func _spawn_pods_from_map(pods_tilemap: TileMapLayer, patrol_tilemap: TileMapLay
 		pod_manager.spawn_pod(id, tile, patrol_route)
 
 		# Remove the placeholder tile
-		pods_tilemap.erase_cell(tile)
+		#pods_tilemap.erase_cell(tile)
 
 	
 func _spawn_buildings_from_map(buildings_tilemap: TileMapLayer) -> void:
@@ -410,5 +425,5 @@ func _process(delta: float) -> void:
 func set_cursor(cursor_name: String) -> void:
 	if cursor_name == "aim":
 		aim_cursor.visible = true
-	else:
+	elif cursor_name == "":
 		aim_cursor.visible = false

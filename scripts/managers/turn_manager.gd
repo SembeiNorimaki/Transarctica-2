@@ -10,6 +10,7 @@ signal unit_finished(unit)
 var unit_manager: UnitManager
 var pod_manager : PodManager
 var unit_ai_manager : UnitAIManager
+var pod_ai_manager: PodAIManager
 var selection_manager: SelectionManager
 
 @onready var turn_state_machine: StateMachine = $TurnStateMachine

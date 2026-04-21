@@ -13,10 +13,24 @@ var id: String
 @onready var id_label: Label = $Labels/IDLabel
 @onready var state_label: Label = $Labels/StateLabel
 @onready var action_sm = $PodStateMachine
+@onready var units_label = $Labels/UnitsLabel
 
 signal movement_finished
 signal turn_finished
 
+func initialize(id_: String):
+	print("Initializing pod with id %s" % id_)
+	id = id_
+	id_label.text = id
+	units_label.text = "nUnits: " + str(units.size())
+
+
+func add_unit(unit_: Unit):
+	print("Adding unit %s to pod %s" % [str(unit_.id), str(id)])
+	units.append(unit_)
+
+func get_all_units() -> Array[Unit]:
+	return units
 
 func take_turn():
 	#print("Pod %s taking turn" % id)

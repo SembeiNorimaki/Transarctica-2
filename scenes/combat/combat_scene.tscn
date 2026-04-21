@@ -20,6 +20,7 @@
 [ext_resource type="Script" uid="uid://dl0vi3dty8ifv" path="res://scripts/overlays/walls_overlay.gd" id="12_gai5b"]
 [ext_resource type="Script" uid="uid://cc3jvcdr0an6x" path="res://scripts/services/pathfinding_service.gd" id="12_wpptk"]
 [ext_resource type="Script" uid="uid://cw1txxugdjt33" path="res://scripts/services/navigation_graph_service.gd" id="13_4f2bx"]
+[ext_resource type="Script" uid="uid://0sri8bsel1k5" path="res://scripts/managers/pod_ai_manager.gd" id="13_codwp"]
 [ext_resource type="Script" uid="uid://cik144jwb0o5k" path="res://scripts/overlays/roads_overlay.gd" id="13_eq4tg"]
 [ext_resource type="Script" uid="uid://d2ktl7ghvdn82" path="res://scripts/services/edge_occupancy_service.gd" id="14_0gh8j"]
 [ext_resource type="PackedScene" uid="uid://cbxffx4parq4x" path="res://scenes/combat/services/grid_service.tscn" id="15_5cjt0"]
@@ -81,6 +82,9 @@ script = ExtResource("11_5cjt0")
 
 [node name="UnitAIManager" type="Node" parent="Managers" unique_id=686020517]
 script = ExtResource("12_codwp")
+
+[node name="PodAIManager" type="Node" parent="Managers" unique_id=1335145418]
+script = ExtResource("13_codwp")
 
 [node name="Controllers" type="Node" parent="." unique_id=2045951238]
 

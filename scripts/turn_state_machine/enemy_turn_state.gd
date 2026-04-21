@@ -4,9 +4,14 @@ class_name EnemyTurnState
 
 func enter(params = {}):
 	print("Enter enemy turn state %s, %s" % [owner_node.pod_manager, owner_node.unit_ai_manager])
-	await _run_units()
+	#await _run_units()
+	await _run_pods()
 	state_machine.set_state("PlayerTurnState")
 
+
+func _run_pods():
+	var pod_ai_manager = owner_node.pod_ai_manager
+	pod_ai_manager.execute_turn()
 
 func _run_units():
 	var unit_ai_manager = owner_node.unit_ai_manager
@@ -14,11 +19,13 @@ func _run_units():
 	
 	# pass
 
-func _run_pods():
-	var pods = owner_node.pod_manager.get_all_pods()
-	for pod in pods:
-		pod.take_turn()
-		await pod.turn_finished	
+#func _run_pods():
+#	var pods = owner_node.pod_manager.get_all_pods()
+#	for pod in pods:
+#		pod.take_turn()
+#		await pod.turn_finished	
+
+
 # extends GenericState
 # class_name EnemyTurnState
 
