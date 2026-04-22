@@ -4,9 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://bgpgjpn51h2sq" path="res://scenes/maps/trade_city.tscn" id="2_5bvxj"]
 [ext_resource type="Script" uid="uid://bcbpyk7esb2xi" path="res://scripts/managers/horizontal_train_manager.gd" id="2_lqoqv"]
 [ext_resource type="PackedScene" uid="uid://w8jrafekm730" path="res://scenes/combat/services/tile_occupancy_service.tscn" id="4_5wwvl"]
+[ext_resource type="Script" uid="uid://drh4p3hpvaq2r" path="res://scripts/managers/resource_manager.gd" id="4_jgagy"]
 [ext_resource type="PackedScene" uid="uid://ch1611f2p6brv" path="res://scenes/combat/controllers/camera_controller.tscn" id="4_w8xmn"]
 [ext_resource type="PackedScene" uid="uid://cbxffx4parq4x" path="res://scenes/combat/services/grid_service.tscn" id="5_5bvxj"]
 [ext_resource type="Texture2D" uid="uid://d31vinx3rf3y6" path="res://assets/sprites/resourcesx2/caviar.png" id="7_pm8jp"]
+[ext_resource type="Script" uid="uid://cghyum27gjwpp" path="res://scripts/services/trade_service.gd" id="8_kdl80"]
 
 [node name="TradeScene" type="Control" unique_id=889321148]
 layout_mode = 3
@@ -22,6 +24,9 @@ script = ExtResource("1_lye88")
 [node name="HorizontalTrainManager" type="Node" parent="Managers" unique_id=897089733]
 script = ExtResource("2_lqoqv")
 
+[node name="ResourceManager" type="Node" parent="Managers" unique_id=2142732697]
+script = ExtResource("4_jgagy")
+
 [node name="Controllers" type="Node" parent="." unique_id=1615972046]
 
 [node name="CameraController" parent="Controllers" unique_id=1356061936 instance=ExtResource("4_w8xmn")]
@@ -33,15 +38,21 @@ zoom = 1.0
 
 [node name="GridService" parent="Services" unique_id=585875741 instance=ExtResource("5_5bvxj")]
 
+[node name="TradeService" type="Node" parent="Services" unique_id=1339069214]
+script = ExtResource("8_kdl80")
+
 [node name="Containers" type="Node2D" parent="." unique_id=1494143937]
 
 [node name="Wagons" type="Node2D" parent="Containers" unique_id=942685259]
+
+[node name="Resources" type="Node2D" parent="Containers" unique_id=352074794]
 
 [node name="Overlays" type="Node2D" parent="." unique_id=1044972962]
 
 [node name="Labels" type="CanvasLayer" parent="." unique_id=745862705]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2004829315]
+visible = false
 
 [node name="Container" type="Control" parent="CanvasLayer" unique_id=1732891527]
 custom_minimum_size = Vector2(200, 0)

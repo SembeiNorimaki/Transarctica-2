@@ -18,6 +18,11 @@ const TYPES = {
 		"scene": preload("res://scenes/entities/wagons/cannon_wagon.tscn"),
 		"team": "Player",
 		"size": Vector2i(128, 58)
+	},
+	"merchandise": {
+		"scene": preload("res://scenes/entities/wagons/merchandise_wagon.tscn"),
+		"team": "Player",
+		"size": Vector2i(128, 46)
 	}
 }
 

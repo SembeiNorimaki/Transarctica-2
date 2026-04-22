@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://cvwgmc8ynoyew"]
+
+[ext_resource type="PackedScene" uid="uid://db0akj2cdwfl3" path="res://scenes/entities/units/vehicle_unit.tscn" id="1_a2q0p"]
+[ext_resource type="Texture2D" uid="uid://d1wihq5v4ewt3" path="res://assets/sprites/wagons/trn_merchandise_tr.png" id="2_27g53"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x62dw"]
+atlas = ExtResource("2_27g53")
+region = Rect2(0, 0, 128, 46)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_t5sks"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x62dw")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="MerchandiseWagon" unique_id=1872506765 instance=ExtResource("1_a2q0p")]
+
+[node name="Sprite" parent="." index="0" unique_id=1438979658]
+position = Vector2(0, -23)
+sprite_frames = SubResource("SpriteFrames_t5sks")
+animation = &"default"

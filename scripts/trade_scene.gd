@@ -51,8 +51,10 @@ var atlas_coords_to_resource_name = {
 
 # Managers
 @onready var horizontal_train_manager = $Managers/HorizontalTrainManager
+@onready var resource_manager = $Managers/ResourceManager
 
 # Containers
+@onready var resources_container = $Containers/Resources
 
 # Controllers
 
@@ -67,26 +69,34 @@ var atlas_coords_to_resource_name = {
 # Map 
 @onready var map_root = $MapRoot
 
+var city_data = {
+	"resources": {
+		"caviar": 2,
+		"alcohol": 5
+	}
+}
+var resource_spawn_tiles = [Vector2i(0, 0), Vector2i(0, 1)]
+
+
 #region initialization
 func _ready() -> void:
 	_inject_services()
 	_load_map("level_1")
 	initialize({})
 
-func initialize(city_data):
-	city_data = {
-		"resources": {
-			"caviar": 2,
-			"alcohol": 5
-		}
-	}
-	var resource_tiles = [Vector2i(0, 0), Vector2i(0, 1)]
+func initialize(city_data_):
+	
+
+	#city_data = city_data_
+	return
+
+	
 	var resource_tileset = map_root.get_node("TradeCity").get_node("Resources")
 	
 	var idx = 0
 	for resource_name in city_data["resources"].keys():
 		var qty = city_data["resources"][resource_name]
-		var tile = resource_tiles[idx]
+		var tile = resource_spawn_tiles[idx]
 		for i in range(qty):
 			resource_tileset.set_cell(tile, 0, resource_name_to_atlas_coords[resource_name])
 			tile += Vector2i(1, 0)
@@ -98,15 +108,41 @@ func _inject_services():
 	# Managers
 	horizontal_train_manager.tile_occupancy_service = tile_occupancy_service
 	horizontal_train_manager.grid_service = grid_service
+	resource_manager.grid_service = grid_service
+	resource_manager.tile_occupancy_service = tile_occupancy_service
 	
 #endregion
 
 #region Map Loading
 func _load_map(map_name: String) -> void:
 	grid_service.set_tile_size(Vector2i(128, 64))
-	_spawn_train(Vector2(5, 4))
+	_spawn_train(Vector2(5, 3))
+	_spawn_resources()
+
+
+func _spawn_resources():
+	var idx = 0
+	for resource_name in city_data["resources"].keys():
+		var qty = city_data["resources"][resource_name]
+		var tile = resource_spawn_tiles[idx]
+
+		resource_manager.spawn_resource(tile, resource_name, qty)
+		idx += 1
+
+
 
 func _spawn_train(initial_tile: Vector2):
 	horizontal_train_manager.spawn_train(initial_tile)
 
 #endregion
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		var mouse_pos = get_local_mouse_position()
+		var tile = grid_service.world_to_tile(mouse_pos)
+		_handle_click(tile, event.button_index)
+	
+func _handle_click(tile, button_index):
+	print("Clicked tile %s" % tile)
+
+	# check if the tile has a reasource
