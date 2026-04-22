@@ -70,6 +70,14 @@ func get_buildings(tile: Vector2i) -> Array:
             buildings.append(entity)
     return buildings
 
+func get_resources(tile: Vector2i) -> Array:
+    var resources = []
+    for entity in get_entities(tile):
+        if entity is Resource: # This doesnt work. I should rename to TradeResource
+            resources.append(entity)
+    return resources
+
+
 func get_walls(tile: Vector2i) -> Array:
     var walls = []
     for entity in get_entities(tile):
