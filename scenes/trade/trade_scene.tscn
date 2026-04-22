@@ -6,8 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://w8jrafekm730" path="res://scenes/combat/services/tile_occupancy_service.tscn" id="4_5wwvl"]
 [ext_resource type="PackedScene" uid="uid://ch1611f2p6brv" path="res://scenes/combat/controllers/camera_controller.tscn" id="4_w8xmn"]
 [ext_resource type="PackedScene" uid="uid://cbxffx4parq4x" path="res://scenes/combat/services/grid_service.tscn" id="5_5bvxj"]
+[ext_resource type="Texture2D" uid="uid://d31vinx3rf3y6" path="res://assets/sprites/resourcesx2/caviar.png" id="7_pm8jp"]
 
-[node name="TradeScene" type="Node2D" unique_id=1167611303]
+[node name="TradeScene" type="Control" unique_id=889321148]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_lye88")
 
 [node name="MapRoot" type="Node2D" parent="." unique_id=1260627640]
@@ -22,6 +25,7 @@ script = ExtResource("2_lqoqv")
 [node name="Controllers" type="Node" parent="." unique_id=1615972046]
 
 [node name="CameraController" parent="Controllers" unique_id=1356061936 instance=ExtResource("4_w8xmn")]
+zoom = 1.0
 
 [node name="Services" type="Node" parent="." unique_id=1529111468]
 
@@ -36,3 +40,59 @@ script = ExtResource("2_lqoqv")
 [node name="Overlays" type="Node2D" parent="." unique_id=1044972962]
 
 [node name="Labels" type="CanvasLayer" parent="." unique_id=745862705]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2004829315]
+
+[node name="Container" type="Control" parent="CanvasLayer" unique_id=1732891527]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 3
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Container" unique_id=1578045956]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0.19607843)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Container" unique_id=1359298791]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Container/VBoxContainer" unique_id=253978083]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("7_pm8jp")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Container/VBoxContainer" unique_id=1817948980]
+layout_mode = 2
+text = "Caviar"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/Container/VBoxContainer" unique_id=894272306]
+layout_mode = 2
+text = "Available to buy:"
+
+[node name="Label3" type="Label" parent="CanvasLayer/Container/VBoxContainer" unique_id=1391604513]
+layout_mode = 2
+text = "Price per unit:"
+
+[node name="Label4" type="Label" parent="CanvasLayer/Container/VBoxContainer" unique_id=709167470]
+layout_mode = 2
+text = "Free space in train:"
+
+[node name="HSlider" type="HSlider" parent="CanvasLayer/Container/VBoxContainer" unique_id=1100868985]
+layout_mode = 2

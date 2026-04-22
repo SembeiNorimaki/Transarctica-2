@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://vwnq6stsag6m"]
+
+[ext_resource type="Texture2D" uid="uid://2f34a7cpeqkk" path="res://assets/sprites/resources_120x46.png" id="1_lpi6i"]
+
+[node name="Resource" type="Node2D" unique_id=225144462]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=938393875]
+texture = ExtResource("1_lpi6i")
+hframes = 3
+vframes = 7
+
+[node name="Label" type="Label" parent="." unique_id=1477252243]
+offset_left = 26.0
+offset_top = 15.0
+offset_right = 66.0
+offset_bottom = 38.0
+text = "10"

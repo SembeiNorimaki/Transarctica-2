@@ -10,10 +10,11 @@ const ZOOM_SPEED := 1.0
 const MIN_ZOOM := 1.0
 const MAX_ZOOM := 6.0
 
-@onready var grid_service : GridService
+@onready var grid_service: GridService
 
 @export var zoom: float = 2.0
-var offset := Vector2.ZERO
+@export var offset := Vector2.ZERO
+#var offset := Vector2.ZERO
 
 func _ready() -> void:
 	cam.zoom = Vector2(zoom, zoom)
@@ -31,7 +32,7 @@ func _unhandled_input(event):
 			#cam.zoom = Vector2(zoom, zoom)
 			_zoom_at_screenpos(-1, event.position)
 
-func center_at_tile(tile : Vector2i):
+func center_at_tile(tile: Vector2i):
 	var screen_pos = grid_service.tile_to_world(tile)
 	cam.position = screen_pos
 
