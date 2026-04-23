@@ -39,6 +39,7 @@ var city_data = {
 #region initialization
 func _ready() -> void:
 	_inject_services()
+	_connect_signals()
 	_load_map("level_1")
 	call_deferred("initialize", {})
 
@@ -67,12 +68,17 @@ func _inject_services():
 	# Managers
 	horizontal_train_manager.tile_occupancy_service = tile_occupancy_service
 	horizontal_train_manager.grid_service = grid_service
+	horizontal_train_manager.train_resource_container = train_resource_container
 	resource_manager.grid_service = grid_service
 	resource_manager.tile_occupancy_service = tile_occupancy_service
 
 	# Controllers
 	camera_controller.grid_service = grid_service
-	
+
+func _connect_signals():
+	train_resource_container.wagon_resource_type_changed.connect(horizontal_train_manager._on_wagon_resource_type_changed)
+	train_resource_container.wagon_resource_amount_changed.connect(horizontal_train_manager._on_wagon_resource_amount_changed)
+
 #endregion
 
 #region Map Loading
@@ -136,4 +142,4 @@ func _on_button_pressed() -> void:
 	print("buying 1 unit of %s" % resource_info.resource_name)
 	var successful = trade_service.buy(city_resource_container, train_resource_container, resource_info.resource_name, 1)
 	if successful:
-		trade_menu.update_resource(resource_info.resource_name, resource_info.available-1, resource_info.price, resource_info.train_space-1)
+		trade_menu.update_resource(resource_info.resource_name, resource_info.available - 1, resource_info.price, resource_info.train_space - 1)

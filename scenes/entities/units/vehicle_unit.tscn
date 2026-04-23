@@ -2,8 +2,55 @@
 
 [ext_resource type="PackedScene" uid="uid://bt6edw4t4rxak" path="res://scenes/entities/units/unit.tscn" id="1_d1f82"]
 [ext_resource type="Script" uid="uid://cnlxebbiohl85" path="res://scripts/entities/vehicle_unit.gd" id="2_jruv6"]
+[ext_resource type="Texture2D" uid="uid://d1wihq5v4ewt3" path="res://assets/sprites/wagons/trn_merchandise_tr.png" id="3_m2paw"]
+[ext_resource type="Texture2D" uid="uid://2f34a7cpeqkk" path="res://assets/sprites/resources_120x46.png" id="4_8fxyf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8fxyf"]
+atlas = ExtResource("3_m2paw")
+region = Rect2(0, 0, 128, 46)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_by8v2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8fxyf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="VehicleUnit" unique_id=558077121 instance=ExtResource("1_d1f82")]
 script = ExtResource("2_jruv6")
 
+[node name="Sprite" parent="." index="0" unique_id=1438979658]
+position = Vector2(0, -23)
+sprite_frames = SubResource("SpriteFrames_by8v2")
+animation = &"default"
+
+[node name="IDLabel" parent="Labels" parent_id_path=PackedInt32Array(502842313) index="0" unique_id=1163521324]
+visible = false
+
+[node name="ActionStateLabel" parent="Labels" parent_id_path=PackedInt32Array(502842313) index="1" unique_id=1648967523]
+visible = false
+
+[node name="OwnerLabel" parent="Labels" parent_id_path=PackedInt32Array(502842313) index="2" unique_id=1674598644]
+visible = false
+
+[node name="TileLabel" parent="Labels" parent_id_path=PackedInt32Array(502842313) index="3" unique_id=1448974160]
+visible = false
+
+[node name="QtyLabel" type="Label" parent="Labels" parent_id_path=PackedInt32Array(502842313) index="4" unique_id=396271073]
+offset_left = 13.0
+offset_top = 1.0
+offset_right = 56.0
+offset_bottom = 24.0
+text = "0 / 50"
+
 [node name="Storage" type="Sprite2D" parent="." index="8" unique_id=1707743921]
+visible = false
+position = Vector2(-26, 13)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_8fxyf")
+hframes = 3
+vframes = 7
