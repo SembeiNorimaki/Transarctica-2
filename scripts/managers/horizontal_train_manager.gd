@@ -28,7 +28,7 @@ var available_storage = {
 
 
 func spawn_train(tile_pos: Vector2):
-    var example_train = ["locomotive", "barracks", "cannon", "merchandise"]
+    var example_train = ["locomotive", "tender", "gondola", "barracks", "cannon", "merchandise"]
     var wagon_position = grid_service.tile_to_world(tile_pos)
     #print(tile_pos, "  ", grid_service.tile_to_world(tile_pos), " ", grid_service)
 

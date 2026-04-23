@@ -23,6 +23,21 @@ const TYPES = {
 		"scene": preload("res://scenes/entities/wagons/merchandise_wagon.tscn"),
 		"team": "Player",
 		"size": Vector2i(128, 46)
+	},
+	"tender": {
+		"scene": preload("res://scenes/entities/wagons/tender_wagon.tscn"),
+		"team": "Player",
+		"size": Vector2i(128, 45)
+	},
+	"gondola": {
+		"scene": preload("res://scenes/entities/wagons/gondola_wagon.tscn"),
+		"team": "Player",
+		"size": Vector2i(178, 57)
+	},
+	"xxx": {
+		"scene": preload("res://scenes/entities/wagons/merchandise_wagon.tscn"),
+		"team": "Player",
+		"size": Vector2i(128, 46)
 	}
 }
 

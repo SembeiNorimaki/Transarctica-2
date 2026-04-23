@@ -61,6 +61,7 @@ script = ExtResource("10_w35w6")
 [node name="Labels" type="CanvasLayer" parent="." unique_id=745862705]
 
 [node name="TradeMenu" type="CanvasLayer" parent="." unique_id=2004829315]
+visible = false
 script = ExtResource("11_w35w6")
 
 [node name="Container" type="Control" parent="TradeMenu" unique_id=1732891527]
@@ -121,3 +122,5 @@ text = "Buy 1"
 [node name="Button2" type="Button" parent="TradeMenu/Container/VBoxContainer" unique_id=227339199]
 layout_mode = 2
 text = "Buy 10"
+
+[connection signal="pressed" from="TradeMenu/Container/VBoxContainer/Button" to="." method="_on_button_pressed"]

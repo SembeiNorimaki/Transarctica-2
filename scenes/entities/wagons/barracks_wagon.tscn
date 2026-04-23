@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://db0akj2cdwfl3" path="res://scenes/entities/units/vehicle_unit.tscn" id="1_taca5"]
 [ext_resource type="Texture2D" uid="uid://2e3jda5yrkqc" path="res://assets/sprites/wagons/trn_barracks_tr.png" id="2_yj3fu"]
+[ext_resource type="Texture2D" uid="uid://r6l75ilfuplg" path="res://assets/sprites/units_xcom_placeholder.png" id="3_yj3fu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lfta7"]
 atlas = ExtResource("2_yj3fu")
@@ -28,5 +29,27 @@ position = Vector2(0, -24)
 sprite_frames = SubResource("SpriteFrames_evdhc")
 animation = &"default"
 
+[node name="IDLabel" parent="Labels" parent_id_path=PackedInt32Array(502842313) index="0" unique_id=1163521324]
+offset_left = 22.0
+offset_right = 62.0
+
+[node name="ActionStateLabel" parent="Labels" parent_id_path=PackedInt32Array(502842313) index="1" unique_id=1648967523]
+offset_left = 22.0
+offset_right = 62.0
+
+[node name="OwnerLabel" parent="Labels" parent_id_path=PackedInt32Array(502842313) index="2" unique_id=1674598644]
+offset_left = 21.0
+offset_right = 73.0
+
+[node name="TileLabel" parent="Labels" parent_id_path=PackedInt32Array(502842313) index="3" unique_id=1448974160]
+offset_left = 22.0
+offset_right = 62.0
+
 [node name="Sprite2D" type="Sprite2D" parent="." index="8" unique_id=1221729852]
 texture = SubResource("PlaceholderTexture2D_taca5")
+
+[node name="Storage" parent="." index="9" unique_id=1707743921]
+position = Vector2(-16, 17)
+texture = ExtResource("3_yj3fu")
+hframes = 20
+vframes = 2

@@ -12,6 +12,7 @@ tile_map_data = PackedByteArray("AAAAADEAAAACAAAAAAABADAAAAACAAAAAAACAC8AAAACAAA
 
 [node name="Cities" parent="." index="3" unique_id=1489576424]
 scale = Vector2(2, 2)
+tile_map_data = PackedByteArray("AAAJAAoABQAAAAAAAAA=")
 
 [node name="TrafficLight" parent="." index="4" unique_id=221369765]
-tile_map_data = PackedByteArray("AAABAAEAAAAAAAAAAAACAAAAAAABAAAAAAA=")
+tile_map_data = PackedByteArray("AAABAAEAAAAAAAAAAAACAAAAAAABAAAAAAAbABMAAAAAAAAAAAA=")

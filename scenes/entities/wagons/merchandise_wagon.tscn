@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://db0akj2cdwfl3" path="res://scenes/entities/units/vehicle_unit.tscn" id="1_a2q0p"]
 [ext_resource type="Texture2D" uid="uid://d1wihq5v4ewt3" path="res://assets/sprites/wagons/trn_merchandise_tr.png" id="2_27g53"]
+[ext_resource type="Texture2D" uid="uid://2f34a7cpeqkk" path="res://assets/sprites/resources_120x46.png" id="3_x62dw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x62dw"]
 atlas = ExtResource("2_27g53")
@@ -24,3 +25,34 @@ animations = [{
 position = Vector2(0, -23)
 sprite_frames = SubResource("SpriteFrames_t5sks")
 animation = &"default"
+
+[node name="IDLabel" parent="Labels" parent_id_path=PackedInt32Array(502842313) index="0" unique_id=1163521324]
+offset_left = 36.0
+offset_top = 2.0
+offset_right = 76.0
+offset_bottom = 25.0
+
+[node name="ActionStateLabel" parent="Labels" parent_id_path=PackedInt32Array(502842313) index="1" unique_id=1648967523]
+offset_left = 36.0
+offset_top = 17.0
+offset_right = 76.0
+offset_bottom = 40.0
+
+[node name="OwnerLabel" parent="Labels" parent_id_path=PackedInt32Array(502842313) index="2" unique_id=1674598644]
+offset_left = 36.0
+offset_top = 30.0
+offset_right = 88.0
+offset_bottom = 53.0
+
+[node name="TileLabel" parent="Labels" parent_id_path=PackedInt32Array(502842313) index="3" unique_id=1448974160]
+offset_left = 36.0
+offset_top = 45.0
+offset_right = 76.0
+offset_bottom = 68.0
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="8" unique_id=1028820886]
+position = Vector2(0, 15)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_x62dw")
+hframes = 3
+vframes = 7

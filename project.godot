@@ -29,6 +29,11 @@ WallTypes="*uid://c2owq8l7km3os"
 SceneManager="*uid://l2ixgo1287ln"
 GameState="*uid://ccrkd2eqch3c3"
 
+[display]
+
+window/size/viewport_width=1300
+window/size/viewport_height=800
+
 [input]
 
 tab={

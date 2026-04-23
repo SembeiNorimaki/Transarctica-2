@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://6ia7p2rdahel"]
+
+[ext_resource type="PackedScene" uid="uid://db0akj2cdwfl3" path="res://scenes/entities/units/vehicle_unit.tscn" id="1_5wiou"]
+[ext_resource type="Texture2D" uid="uid://bwq6byg3incp8" path="res://assets/sprites/wagons/trn_tender_tr.png" id="2_fidne"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_11r6t"]
+atlas = ExtResource("2_fidne")
+region = Rect2(0, 0, 128, 45)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sl434"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_11r6t")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="TenderWagon" unique_id=1564526788 instance=ExtResource("1_5wiou")]
+
+[node name="Sprite" parent="." index="0" unique_id=1438979658]
+position = Vector2(0, -23)
+sprite_frames = SubResource("SpriteFrames_sl434")
+animation = &"default"

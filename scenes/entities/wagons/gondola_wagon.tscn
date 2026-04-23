@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://c1gfccfiur7r7"]
+
+[ext_resource type="PackedScene" uid="uid://db0akj2cdwfl3" path="res://scenes/entities/units/vehicle_unit.tscn" id="1_gajbl"]
+[ext_resource type="Texture2D" uid="uid://bi4tvn6uoeqvg" path="res://assets/sprites/wagons/600_zi4.png" id="2_amojp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pk2v6"]
+atlas = ExtResource("2_amojp")
+region = Rect2(0, 0, 178, 57)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_algri"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pk2v6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="GondolaWagon" unique_id=1701434508 instance=ExtResource("1_gajbl")]
+
+[node name="Sprite" parent="." index="0" unique_id=1438979658]
+position = Vector2(0, -29)
+sprite_frames = SubResource("SpriteFrames_algri")
+animation = &"default"

@@ -21,38 +21,42 @@ var grid_service: GridService
 #     "caviar": 198
 # }
 
-var resource_spawn_tiles = [Vector2i(0, 0), Vector2i(0, 1)]
+var resource_spawn_tiles = [Vector2i(23, 18), Vector2i(23, 19), Vector2i(23, 20)]
 var idx = 0
 var RESOURCE_SCENE = preload("res://scenes/entities/resources/resource.tscn")
 
 func _ready() -> void:
-    pass
+	pass
 
 #region resource spawning
 func spawn_resource(resource_name_: String, qty_: int) -> void:
-    var resource = RESOURCE_SCENE.instantiate()
-    
-    resource.call_deferred("set_type", resource_name_)
-    resource.call_deferred("set_qty", qty_)
-    
-    var tile = resource_spawn_tiles[idx]
-    var screen_pos = grid_service.tile_to_world(tile)
-    resource.position = screen_pos
-    idx += 1
-        
+	var resource = RESOURCE_SCENE.instantiate()
+	
+	resource.call_deferred("set_type", resource_name_)
+	resource.call_deferred("set_qty", qty_)
+	
+	var tile = resource_spawn_tiles[idx]
+	var screen_pos = grid_service.tile_to_world(tile)
+	resource.position = screen_pos
+	idx += 1
+		
 
-    # Dependency injection
+	# Dependency injection
 
-    # Add to scene tree
-    get_node("../../Containers/Resources").add_child(resource)
+	# Add to scene tree
+	get_node("../../Containers/Resources").add_child(resource)
 
-    # Register in occupancy
-    print("Resgistering resource %s to tile %s" % [resource_name_, tile])
-    tile_occupancy_service.register(tile, resource)
+	# Register in occupancy
+	print("Resgistering resource %s to tile %s" % [resource_name_, tile])
+	tile_occupancy_service.register(tile, resource)
 
 #endregion
 
+func update_resource_qty(resource, qty):
+	resource.set_qty(qty)
+
+
 func get_resource_in_tile(tile: Vector2i):
-    var resources = tile_occupancy_service.get_entities(tile)
-    if resources.size() == 1:
-        return resources[0]
+	var resources = tile_occupancy_service.get_entities(tile)
+	if resources.size() == 1:
+		return resources[0]

@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var qty_label = $QtyLabel
 @onready var sprite2D = $Sprite2D
-
+var resource_name: String = ""
 
 var resource_name_to_frame = {
 	"alcohol":    0,
@@ -56,6 +56,7 @@ func _ready() -> void:
 
 func set_type(type_: String):
 	print("Setting resource type to %s" % type_)
+	resource_name = type_
 	sprite2D.frame = resource_name_to_frame[type_]
 
 func set_qty(qty_: int):

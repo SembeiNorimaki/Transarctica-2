@@ -12,6 +12,7 @@ class_name TradeScene
 
 
 # Controllers
+@onready var camera_controller = $Controllers/CameraController
 
 # Services
 @onready var tile_occupancy_service = $Services/TileOccupancyService
@@ -39,9 +40,10 @@ var city_data = {
 func _ready() -> void:
 	_inject_services()
 	_load_map("level_1")
-	initialize({})
+	call_deferred("initialize", {})
 
 func initialize(city_data_):
+	camera_controller.center_at_tile(Vector2i(20, 20))
 	#city_data = city_data_
 	#initialize_resources(city_data_)
 	return
@@ -67,13 +69,16 @@ func _inject_services():
 	horizontal_train_manager.grid_service = grid_service
 	resource_manager.grid_service = grid_service
 	resource_manager.tile_occupancy_service = tile_occupancy_service
+
+	# Controllers
+	camera_controller.grid_service = grid_service
 	
 #endregion
 
 #region Map Loading
 func _load_map(map_name: String) -> void:
 	grid_service.set_tile_size(Vector2i(128, 64))
-	_spawn_train(Vector2(5, 3))
+	_spawn_train(Vector2(27, 22))
 	_spawn_resources()
 
 
@@ -81,8 +86,15 @@ func _spawn_resources():
 	var idx = 0
 	for resource_name in city_data["resources"].keys():
 		var qty = city_data["resources"][resource_name]
+		var buy_price = 1
+		var sell_price = 1
+		var max_capacity = 200
 		resource_manager.spawn_resource(resource_name, qty)
-		city_resource_container.add_resource_amount(resource_name, qty)
+		city_resource_container.initialize_resource(resource_name, qty, buy_price, sell_price, max_capacity)
+		
+		# this should not be here but in the train initialization, only here for testing
+		train_resource_container.initialize_resource(resource_name, 0, 100)
+		
 		idx += 1
 	print("Finished spawning resources")
 	print(city_resource_container.get_all_info())
@@ -105,13 +117,23 @@ func _handle_click(tile, button_index):
 	# check if the tile has a reasource
 	var resource = resource_manager.get_resource_in_tile(tile)
 	if resource:
-		print("Clicked a resource %s" % resource)
+		var resource_name = resource.resource_name
+		print("Clicked a resource %s" % resource_name)
+		var qty = city_resource_container.get_available_qty(resource_name)
 		trade_menu.initialize({
-			"name": "caviar",
-			"available": 3,
+			"name": resource_name,
+			"available": qty,
 			"price": 4,
 			"train_space": 10,
 		})
 		trade_menu.visible = true
 	else:
 		trade_menu.visible = false
+
+
+func _on_button_pressed() -> void:
+	var resource_info = trade_menu.get_info()
+	print("buying 1 unit of %s" % resource_info.resource_name)
+	var successful = trade_service.buy(city_resource_container, train_resource_container, resource_info.resource_name, 1)
+	if successful:
+		trade_menu.update_resource(resource_info.resource_name, resource_info.available-1, resource_info.price, resource_info.train_space-1)
