@@ -31,8 +31,8 @@ GameState="*uid://ccrkd2eqch3c3"
 
 [display]
 
-window/size/viewport_width=1920
-window/size/viewport_height=900
+window/size/viewport_width=1200
+window/size/viewport_height=600
 
 [input]
 

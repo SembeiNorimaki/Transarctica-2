@@ -20,6 +20,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8fxyf"]
+size = Vector2(127, 46)
+
 [node name="VehicleUnit" unique_id=558077121 instance=ExtResource("1_d1f82")]
 script = ExtResource("2_jruv6")
 
@@ -54,3 +57,12 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("4_8fxyf")
 hframes = 3
 vframes = 7
+
+[node name="Area2D" type="Area2D" parent="." index="9" unique_id=2119175665]
+input_pickable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0" unique_id=485760501]
+position = Vector2(0, -23)
+shape = SubResource("RectangleShape2D_8fxyf")
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]

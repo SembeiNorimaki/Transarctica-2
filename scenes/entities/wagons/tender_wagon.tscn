@@ -21,6 +21,4 @@ animations = [{
 [node name="TenderWagon" unique_id=1564526788 instance=ExtResource("1_5wiou")]
 
 [node name="Sprite" parent="." index="0" unique_id=1438979658]
-position = Vector2(0, -23)
 sprite_frames = SubResource("SpriteFrames_sl434")
-animation = &"default"

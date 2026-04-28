@@ -54,6 +54,16 @@ func _on_wagon_resource_amount_changed(wagon_index: int, resource: String, qty: 
 	print("Wagon %d now holds: %d %s" % [wagon_index, qty, resource])
 	wagons["Player"][wagon_index].set_resource_qty(qty)
 
+
+func check_wagon_click(mouse_pos) -> bool:
+	for wagon in wagons.Player:
+		var result = wagon.check_click(mouse_pos)
+		if result:
+			return true
+	return false
+		
+
+
 # # resouce management (probably should be moved to a dedicated service)
 # func add_resource_amount(resource_name_: String, qty_: int):
 #     if resources.has(resource_name_):

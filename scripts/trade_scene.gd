@@ -114,10 +114,21 @@ func _spawn_train(initial_tile: Vector2):
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		var mouse_pos = get_local_mouse_position()
-		var tile = grid_service.world_to_tile(mouse_pos)
-		_handle_click(tile, event.button_index)
+		# check if we clicked a wagon
+		if horizontal_train_manager.check_wagon_click(get_global_mouse_position()):
+			print("Clicked wagon")
+			trade_menu.initialize({
+				"name": "caviar",
+				"available": 50,
+				"price": 4,
+				"train_space": 10,
+			})
+			trade_menu.visible = true
+		else:
+			var tile = grid_service.world_to_tile(mouse_pos)
+			_handle_tile_click(tile, event.button_index)
 	
-func _handle_click(tile, button_index):
+func _handle_tile_click(tile, button_index):
 	print("Clicked tile %s" % tile)
 
 	# check if the tile has a reasource
