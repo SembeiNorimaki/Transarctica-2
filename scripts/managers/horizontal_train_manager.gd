@@ -54,13 +54,20 @@ func _on_wagon_resource_amount_changed(wagon_index: int, resource: String, qty: 
 	print("Wagon %d now holds: %d %s" % [wagon_index, qty, resource])
 	wagons["Player"][wagon_index].set_resource_qty(qty)
 
+func _on_train_money_changed(money: int):
+	# display money in the locomotive label
+	wagons.Player[0].set_money(money)
 
-func check_wagon_click(mouse_pos) -> bool:
+
+# checks if any of the wagons in the train is clicked, returns the id of the clicked wagon or -1
+func check_wagon_click(mouse_pos) -> int:
+	var id = 0
 	for wagon in wagons.Player:
 		var result = wagon.check_click(mouse_pos)
 		if result:
-			return true
-	return false
+			return id
+		id += 1
+	return -1
 		
 
 

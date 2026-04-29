@@ -20,7 +20,7 @@ class_name TradeScene
 @onready var trade_service = $Services/TradeService
 
 @onready var trade_menu = $TradeMenu
-
+@onready var traffic_light = $Containers/TrafficLight
 # Overlays
 
 # Labels
@@ -78,6 +78,8 @@ func _inject_services():
 func _connect_signals():
 	train_resource_container.wagon_resource_type_changed.connect(horizontal_train_manager._on_wagon_resource_type_changed)
 	train_resource_container.wagon_resource_amount_changed.connect(horizontal_train_manager._on_wagon_resource_amount_changed)
+	city_resource_container.city_resource_amount_changed.connect(_on_city_resource_amount_changed)
+	train_resource_container.train_money_changed.connect(_on_train_money_changed)
 
 #endregion
 
@@ -114,20 +116,42 @@ func _spawn_train(initial_tile: Vector2):
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		var mouse_pos = get_local_mouse_position()
-		# check if we clicked a wagon
-		if horizontal_train_manager.check_wagon_click(get_global_mouse_position()):
-			print("Clicked wagon")
-			trade_menu.initialize({
-				"name": "caviar",
-				"available": 50,
-				"price": 4,
-				"train_space": 10,
-			})
-			trade_menu.visible = true
-		else:
-			var tile = grid_service.world_to_tile(mouse_pos)
-			_handle_tile_click(tile, event.button_index)
-	
+		
+		var clicked_traffic_light : bool = traffic_light.check_click(mouse_pos)
+		if clicked_traffic_light:
+			_handle_traffic_light_click()
+			return
+		
+		var clicked_wagon_id = horizontal_train_manager.check_wagon_click(mouse_pos)
+		if clicked_wagon_id != -1:
+			_handle_wagon_click(clicked_wagon_id)
+			return
+		
+		var tile = grid_service.world_to_tile(mouse_pos)
+		_handle_tile_click(tile, event.button_index)
+
+func _handle_traffic_light_click():
+	print("Traffic light clicked")
+	traffic_light.toggle()
+
+func _handle_wagon_click(wagon_id):
+	var wagon_resource = train_resource_container.get_wagon_current_resource(wagon_id)
+	# if the wagon is empty, do not open the menu
+	if wagon_resource == "":
+		trade_menu.visible = false
+		return
+
+	var qty = train_resource_container.get_wagon_resource_qty(wagon_id)
+	print("Clicked wagon %s wich contains %s amounts of %s" % [wagon_id, qty, wagon_resource])
+
+	trade_menu.initialize({
+		"name": wagon_resource,
+		"available": qty,
+		"price": 4,
+		"train_space": 10,
+	})
+	trade_menu.visible = true
+
 func _handle_tile_click(tile, button_index):
 	print("Clicked tile %s" % tile)
 
@@ -154,3 +178,11 @@ func _on_button_pressed() -> void:
 	var successful = trade_service.buy(city_resource_container, train_resource_container, resource_info.resource_name, 1)
 	if successful:
 		trade_menu.update_resource(resource_info.resource_name, resource_info.available - 1, resource_info.price, resource_info.train_space - 1)
+
+
+func _on_city_resource_amount_changed(resource: String, qty: int):
+	resource_manager.update_resource_qty(resource, qty)
+
+func _on_train_money_changed(money: int):
+	horizontal_train_manager._on_train_money_changed(money)
+	

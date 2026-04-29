@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://db0akj2cdwfl3" path="res://scenes/entities/units/vehicle_unit.tscn" id="1_a2q0p"]
 [ext_resource type="Texture2D" uid="uid://d1wihq5v4ewt3" path="res://assets/sprites/wagons/trn_merchandise_tr.png" id="2_27g53"]
+[ext_resource type="Script" uid="uid://buyaoxi0vgkpt" path="res://scripts/entities/merchandise_wagon.gd" id="2_x62dw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x62dw"]
 atlas = ExtResource("2_27g53")
@@ -19,6 +20,7 @@ animations = [{
 }]
 
 [node name="MerchandiseWagon" unique_id=1872506765 instance=ExtResource("1_a2q0p")]
+script = ExtResource("2_x62dw")
 
 [node name="Sprite" parent="." index="0" unique_id=1438979658]
 sprite_frames = SubResource("SpriteFrames_t5sks")

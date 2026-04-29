@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://djse4j3famfio"]
+[gd_scene format=3 uid="uid://djse4j3famfio"]
 
 [ext_resource type="PackedScene" uid="uid://db0akj2cdwfl3" path="res://scenes/entities/units/vehicle_unit.tscn" id="1_aiifv"]
+[ext_resource type="Script" uid="uid://dcsp6jjlhkshf" path="res://scripts/entities/locomotive_wagon.gd" id="2_egxqs"]
 [ext_resource type="Texture2D" uid="uid://dpn7rws27vnto" path="res://assets/sprites/wagons/trn_locomotive_tr.png" id="2_r8gkn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_egxqs"]
@@ -21,12 +22,12 @@ animations = [{
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_r8gkn"]
 size = Vector2(5, 5)
 
-[node name="LocomotiveWagon" instance=ExtResource("1_aiifv")]
+[node name="LocomotiveWagon" unique_id=116594143 instance=ExtResource("1_aiifv")]
+script = ExtResource("2_egxqs")
 
-[node name="Sprite" parent="." index="0"]
+[node name="Sprite" parent="." index="0" unique_id=1438979658]
 position = Vector2(0, -33)
 sprite_frames = SubResource("SpriteFrames_yu8bj")
-animation = &"default"
 
-[node name="Sprite2D" type="Sprite2D" parent="." index="9"]
+[node name="Sprite2D" type="Sprite2D" parent="." index="9" unique_id=229028858]
 texture = SubResource("PlaceholderTexture2D_r8gkn")

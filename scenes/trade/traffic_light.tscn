@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://b3efv4oicsfhv"]
+
+[ext_resource type="Script" uid="uid://cwtwu17toj74d" path="res://scripts/components/traffic_light.gd" id="1_4k75m"]
+[ext_resource type="Texture2D" uid="uid://cv6aud7ei3qni" path="res://assets/sprites/traffic_light.png" id="1_27ndm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4k75m"]
+atlas = ExtResource("1_27ndm")
+
+[node name="TrafficLight" type="Node2D" unique_id=808951903]
+script = ExtResource("1_4k75m")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1981340622]
+texture = SubResource("AtlasTexture_4k75m")
+hframes = 2
+frame = 1

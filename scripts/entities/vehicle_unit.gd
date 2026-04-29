@@ -10,15 +10,32 @@ var wagon_manager: HorizontalTrainManager
 
 var sprite_half_size = Vector2i(50, 25)
 
-func set_resource_type(resource: String):
-	if resource == null:
-		storage.visible = false
-	else:
-		storage.visible = true
-		storage.frame = 3
 
-func set_resource_qty(qty: int):
-	qty_label.text = str(qty)
+var resource_name_to_frame = {
+	"alcohol":    0,
+	"antiques":   1,
+	"missiles":   2,
+	"bricks":     3,
+	"caviar":     4,
+	"oil":     	  5,
+	"earth": 	  6,
+	"coal": 	  7,
+	"plants": 	  8,
+	"copper": 	  9,
+	"dung": 	  10,
+	"rails": 	  11,
+	"fish": 	  12,
+	"rods": 	  13,
+	"salt": 	  14,
+	"furs": 	  15,
+	"gasoline":   16,
+	"inspection": 17,
+	"gray":       18,
+	"meat":       19,
+	"wood":       20
+}
+
+
 
 
 func check_click(mouse_pos) -> bool:

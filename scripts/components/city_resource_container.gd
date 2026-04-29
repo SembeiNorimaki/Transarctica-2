@@ -10,6 +10,8 @@ class_name CityResourceContainer
 
 var resources := {}
 
+signal city_resource_amount_changed(resource: String, qty: int)
+
 func initialize_resource(resource, qty, buy_price, sell_price, max_capacity):
     resources[resource] = {
         "qty": qty, 
@@ -46,12 +48,14 @@ func add_resource_amount(resource: String, qty: int) -> bool:
     if not resources.has(resource):
         return false
     print("Adding %s units of %s to city" % [qty, resource])
-    resources[resource]["qty"] += qty
+    resources[resource].qty += qty
+    emit_signal("city_resource_amount_changed", resource, resources[resource].qty)
     return true
 
 func remove_resource_amount(resource: String, qty: int) -> bool:
     if not resources.has(resource):
         return false
     print("Removing %s units of %s from city" % [qty, resource])
-    resources[resource]["qty"] -= qty
+    resources[resource].qty -= qty
+    emit_signal("city_resource_amount_changed", resource, resources[resource].qty)
     return true

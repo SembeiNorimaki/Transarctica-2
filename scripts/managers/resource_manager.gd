@@ -25,6 +25,8 @@ var resource_spawn_tiles = [Vector2i(23, 18), Vector2i(23, 19), Vector2i(23, 20)
 var idx = 0
 var RESOURCE_SCENE = preload("res://scenes/entities/resources/resource.tscn")
 
+var resources = {}
+
 func _ready() -> void:
 	pass
 
@@ -50,10 +52,13 @@ func spawn_resource(resource_name_: String, qty_: int) -> void:
 	print("Resgistering resource %s to tile %s" % [resource_name_, tile])
 	tile_occupancy_service.register(tile, resource)
 
+	resources[resource_name_] = resource
+
 #endregion
 
-func update_resource_qty(resource, qty):
-	resource.set_qty(qty)
+func update_resource_qty(resource_name: String, qty_: int):
+	var resource = resources[resource_name]
+	resource.set_qty(qty_)
 
 
 func get_resource_in_tile(tile: Vector2i):
