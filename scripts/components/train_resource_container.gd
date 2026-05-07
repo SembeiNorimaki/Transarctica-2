@@ -17,35 +17,36 @@ signal wagon_resource_amount_changed(wagon_index: int, resource: String, qty: in
 signal train_money_changed(money: int)
 
 const RESOURCE_WAGON_TYPE := {
-	"caviar": "merchandise",
-	"alcohol": "merchandise",
-	"wood": "merchandise",
-	"iron": "merchandise",
-	"coal": "tender",
-	"oil": "tanker",
-	"water": "tanker"
+	"caviar": "MerchandiseWagon",
+	"alcohol": "MerchandiseWagon",
+	"wood": "MerchandiseWagon",
+	"iron": "MerchandiseWagon",
+	"coal": "TenderWagon",
+	"oil": "TankerWagon",
+	"water": "TankerWagon"
 }
 
 const WAGON_CAPACITIES := {
-	"locomotive": 0,
-	"tender": 60,
-	"merchandise": 2,
-	"gondola": 50,
-	"barracks": 0,
-	"cannon": 0,
-	"tanker": 80
+	"LocomotiveWagon": 0,
+	"TenderWagon": 60,
+	"MerchandiseWagon": 2,
+	"GondolaWagon": 50,
+	"BarracksWagon": 0,
+	"CannonWagon": 0,
+	"TankerWagon": 80
 }
 
-func add_wagon(wagon_type: String) -> void:
-	wagons.append(create_wagon(wagon_type))
+func add_wagon(wagon_type: String, cargo: String = "", qty: int = 0) -> void:
+	print("Adding wagon %s with %s units of %s" % [wagon_type, qty, cargo])
+	wagons.append(create_wagon(wagon_type, cargo, qty))
 
-func create_wagon(wagon_type: String) -> Dictionary:
+
+func create_wagon(wagon_type: String, cargo: String, qty: int) -> Dictionary:
 	return {
 		"wagon_type": wagon_type,
 		"max_capacity": WAGON_CAPACITIES[wagon_type],
-		"resources": {},
-		"qty": 0,
-		"current_type": ""
+		"qty": qty,
+		"resource_name": cargo
 	}
 	
 
@@ -72,7 +73,7 @@ func get_wagon_capacity(idx: int) -> int:
 	return wagons[idx].max_capacity
 
 func get_wagon_current_resource(idx: int) -> String:
-	return wagons[idx].current_type
+	return wagons[idx].resource_name
 
 func get_wagon_resource_qty(idx: int) -> int:
 	return wagons[idx].qty
@@ -126,7 +127,7 @@ func remove_money(amount: int):
 func get_available_qty(resource: String) -> int:
 	var total := 0
 	for wagon in wagons:
-		total += wagon.resources.get(resource, 0)
+		total += wagon.qty
 	return total
 
 func get_storage_capacity(resource: String) -> int:
@@ -145,15 +146,13 @@ func get_storage_capacity(resource: String) -> int:
 		print("correct wagon type found: %s" % wagon.wagon_type)
 		
 		# Wagon must be empty or already storing this resource
-		if wagon.current_type != "" and wagon.current_type != resource:
+		if wagon.resource_name != "" and wagon.resource_name != resource:
 			continue
 
 		print("wagon empty or already storing %s" % resource)
 
 		# compute free space
-		var used := 0
-		for qty in wagon.resources.values():
-			used += qty
+		var used = wagon.qty
 
 		total += wagon.max_capacity - used
 
@@ -177,7 +176,7 @@ func add_resource_amount(resource: String, qty: int) -> void:
 			continue
 		
 		# skip wagons storing a different resource
-		if wagon.current_type != "" and wagon.current_type != resource:
+		if wagon.resource_name != "" and wagon.resource_name != resource:
 			i += 1
 			continue
 
@@ -188,9 +187,9 @@ func add_resource_amount(resource: String, qty: int) -> void:
 			continue
 
 		# if wagon is empty, set its type to the current resource
-		if wagon.current_type == "":
+		if wagon.resource_name == "":
 			print("Refurbishing wagon %d to store %s" % [i, resource])
-			wagon.current_type = resource
+			wagon.resource_name = resource
 			emit_signal("wagon_resource_type_changed", i, resource)
 		
 		var to_add = min(remaining, free_space)
@@ -220,7 +219,7 @@ func remove_resource_amount(resource: String, qty: int) -> void:
 		# If wagon becomes empty, unlock it
 		if wagon.qty <= 0:
 			wagon.qty = 0
-			wagon.current_type = ""
+			wagon.resource_name = ""
 			print("Wagon %d is now empty" % i)
 			emit_signal("wagon_resource_type_changed", i, null)
 		i += 1

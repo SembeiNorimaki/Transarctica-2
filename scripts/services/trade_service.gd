@@ -1,10 +1,38 @@
 extends Node
 class_name TradeService
 
+var city: CityResourceContainer = null
+var train: TrainResourceContainer = null
 
-func buy(city: CityResourceContainer, train: TrainResourceContainer, resource: String, qty: int) -> bool:
+var resource_name: String = ""
+var transaction_type: String = ""
+var qty: int = 0
+var price: int = 0
+
+func set_transaction_data(resource_name_: String, transaction_type_: String, qty_: int, price_: int):
+	resource_name = resource_name_
+	transaction_type = transaction_type_
+	qty = qty_
+	price = price_
+
+func execute_transaction(buttonIdx: int):
+	if buttonIdx == 1:
+		qty = 1
+	elif buttonIdx == 2:
+		qty = 10
+	print("Executing transaction %s of %s units of %s" % [transaction_type, qty, resource_name])
+	if transaction_type == "buy":
+		buy(resource_name, qty)
+	elif transaction_type == "sell":
+		sell(resource_name, qty)
+
+func set_context(city_container: CityResourceContainer, train_container: TrainResourceContainer):
+	city = city_container
+	train = train_container
+
+func buy(resource: String, qty: int) -> bool:
 	# 1: Price lookup
-	var price_per_unit = city.get_buy_price(resource)
+	var price_per_unit = price
 	var total_cost = price_per_unit * qty
 
 	# 2: City must have enough resources
@@ -28,9 +56,9 @@ func buy(city: CityResourceContainer, train: TrainResourceContainer, resource: S
 	train.add_resource_amount(resource, qty)
 	return true
 
-func sell(city: CityResourceContainer, train: TrainResourceContainer, resource: String, qty: int) -> bool:
+func sell(resource: String, qty: int) -> bool:
 	# 1. Price lookup
-	var price_per_unit = city.get_sell_price(resource)
+	var price_per_unit = price
 	var total_gain = price_per_unit * qty
 
 	# 2. Train must have enough resources
@@ -49,51 +77,3 @@ func sell(city: CityResourceContainer, train: TrainResourceContainer, resource: 
 	city.add_resource_amount(resource, qty)
 
 	return true
-
-
-	
-	
-
-# func transfer(from: IResourceContainer, to: IResourceContainer, resource_name: String, qty: int) -> bool:
-#     if qty > from.get_available_qty(resource_name):
-#         print("Error: source does not have enough")
-#         return false
-
-#     if qty > to.get_storage_capacity(resource_name):
-#         print("Error: destination lacks capacity")
-#         return false
-
-#     from.remove_resource_amount(resource_name, qty)
-#     to.add_resource_amount(resource_name, qty)
-#     return true
-
-
-# func buy_resource(resource_name_: String, qty_: int) -> bool:
-# 	var avail_qty = resource_manager.get_available_qty(resource_name_)
-# 	if qty_ > avail_qty:
-# 		print("Error, attempted to buy more resources than city available amount")
-# 		return false
-	
-# 	var storage_capacity = horizontal_train_manager.get_storage_capacity(resource_name_)
-# 	if qty_ > storage_capacity:
-# 		print("Error, attempted to buy more resources than train storage capacity")
-# 		return false
-	
-# 	resource_manager.remove_resource_amount(resource_name_, qty_)
-# 	horizontal_train_manager.add_resource_amount(resource_name_, qty_)
-# 	return true
-
-# func sell_resource(resource_name_: String, qty_: int):
-# 	var avail_qty = horizontal_train_manager.get_available_qty(resource_name_)
-# 	if qty_ > avail_qty:
-# 		print("Error, attempted to sell more resources than train available amount")
-# 		return false
-	
-# 	var storage_capacity = resource_manager.get_storage_capacity(resource_name_)
-# 	if qty_ > storage_capacity:
-# 		print("Error, attempted to sell more resources than city storage capacity")
-# 		return false
-	
-# 	horizontal_train_manager.remove_resource_amount(resource_name_, qty_)
-# 	resource_manager.add_resource_amount(resource_name_, qty_)
-# 	return true

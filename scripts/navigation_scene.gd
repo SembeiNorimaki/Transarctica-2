@@ -14,6 +14,7 @@ extends Node2D
 
 #Controllers
 @onready var camera_controller = $Controllers/CameraController
+
 # Map 
 @onready var map_root = $MapRoot
 @onready var exploration_layer = $MapRoot/ExplorationLayer
@@ -21,6 +22,9 @@ extends Node2D
 #Entities
 @onready var player_train = $Containers/Trains/PlayerTrain
 
+# Containers
+@onready var trains_container = $Containers/Trains
+@onready var city_labels_container = $Containers/CityLabels
 
 
 func _ready() -> void:
@@ -29,7 +33,7 @@ func _ready() -> void:
 	call_deferred("_wire_signals")
 	_load_map("world_1")
 
-	camera_controller.center_at_tile(Vector2i(15,5))
+	camera_controller.center_at_tile(Vector2i(15, 5))
 	camera_controller.set_zoom(1.0)
 
 func _inject_services():
@@ -39,7 +43,9 @@ func _inject_services():
 	train_manager.cities_manager = cities_manager
 	train_manager.exploration_layer = exploration_layer
 	cities_manager.rail_service = rail_service
-	
+	cities_manager.city_labels_container = city_labels_container
+	cities_manager.grid_service = grid_service
+
 	# Overlays
 	rails_overlay.grid_service = grid_service
 	rails_overlay.rail_service = rail_service
@@ -55,7 +61,6 @@ func _inject_services():
 
 func _wire_signals():
 	#player_train.tile_changed.connect(_on_player_train_tile_changed)
-	
 	train_manager.train_reached_city.connect(_on_train_reached_city)
 	pass
 
@@ -81,17 +86,15 @@ func _load_map(map_name: String) -> void:
 	rail_service.rails_tilemap = $MapRoot/World1/Rails
 	
 	_build_rails_from_map(new_map.get_node("Rails"))
-	_spawn_cities_from_map(new_map.get_node("Cities"))	
+	_spawn_cities_from_map(new_map.get_node("CitiesIds"))
 	_spawn_trains_from_map(new_map.get_node("Trains"))
 
 	
-
-	
-
-
-func _spawn_cities_from_map(cities_tilemap: TileMapLayer) -> void:
-	for tile in cities_tilemap.get_used_cells():
-		cities_manager.spawn_city(tile)
+func _spawn_cities_from_map(cities_ids_tilemap: TileMapLayer) -> void:
+	for tile in cities_ids_tilemap.get_used_cells():
+		var atlas_coords = cities_ids_tilemap.get_cell_atlas_coords(tile)
+		var city_id = atlas_coords.y * 10 + atlas_coords.x
+		cities_manager.spawn_city(city_id, tile)
 
 func _spawn_trains_from_map(trains_tilemap: TileMapLayer) -> void:
 	for tile in trains_tilemap.get_used_cells():
@@ -132,4 +135,9 @@ func _on_player_train_tile_changed(from_tile: Vector2i, to_tile: Vector2i) -> vo
 
 func _on_train_reached_city(city_name: String):
 	print("Nav Scene: Train reached city %s" % city_name)
-	SceneManager.enter_city({})
+	SceneManager.enter_city(city_name)
+
+func recenter_player_train():
+	train_manager.recenter_player_train()
+func reverse_player_train_direction():
+	train_manager.reverse_player_train_direction()

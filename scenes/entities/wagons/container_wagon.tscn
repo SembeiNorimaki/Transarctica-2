@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://cyow5w5tmddyy"]
+
+[ext_resource type="PackedScene" uid="uid://db0akj2cdwfl3" path="res://scenes/entities/units/vehicle_unit.tscn" id="1_4pf2h"]
+[ext_resource type="Script" uid="uid://dpf6lr80vqops" path="res://scripts/entities/container_wagon.gd" id="2_5imnr"]
+[ext_resource type="Texture2D" uid="uid://ced2dvs6dy137" path="res://assets/sprites/wagons/13387_zi4.png" id="2_kvi6l"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5imnr"]
+atlas = ExtResource("2_kvi6l")
+region = Rect2(0, 0, 299, 33)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tkgjq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5imnr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="ContainerWagon" unique_id=558077121 instance=ExtResource("1_4pf2h")]
+script = ExtResource("2_5imnr")
+
+[node name="Sprite" parent="." index="0" unique_id=1438979658]
+sprite_frames = SubResource("SpriteFrames_tkgjq")

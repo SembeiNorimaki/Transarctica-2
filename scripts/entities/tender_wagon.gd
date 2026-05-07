@@ -1,0 +1,13 @@
+extends VehicleUnit
+class_name TenderWagon
+
+var wagon_type: String
+
+func _ready() -> void:
+	sprite_half_size = Vector2i(128, 45)
+	wagon_type = "TenderWagon"
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass

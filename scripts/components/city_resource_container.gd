@@ -14,14 +14,18 @@ signal city_resource_amount_changed(resource: String, qty: int)
 
 func initialize_resource(resource, qty, buy_price, sell_price, max_capacity):
     resources[resource] = {
-        "qty": qty, 
-        "buy_price": buy_price, 
-        "sell_price": sell_price, 
+        "resource_name": resource,
+        "qty": qty,
+        "buy_price": buy_price,
+        "sell_price": sell_price,
         "max_capacity": max_capacity
     }
 
 func get_all_info() -> Dictionary:
     return resources
+
+func get_resource_info(resource: String) -> Dictionary:
+    return resources[resource]
 
 func get_available_qty(resource: String) -> int:
     if not resources.has(resource):
@@ -36,7 +40,7 @@ func get_buy_price(resource: String) -> int:
 func get_sell_price(resource: String) -> int:
     if not resources.has(resource):
         return 0
-    return resources[resource].get("sell_price", 0)    
+    return resources[resource].get("sell_price", 0)
 
 func get_storage_capacity(resource: String) -> int:
     if not resources.has(resource):

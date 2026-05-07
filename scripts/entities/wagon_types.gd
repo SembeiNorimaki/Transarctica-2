@@ -4,37 +4,37 @@ const FOOTPRINTS = {
 }
 
 const TYPES = {
-	"locomotive": {
+	"LocomotiveWagon": {
 		"scene": preload("res://scenes/entities/wagons/locomotive_wagon.tscn"),
 		"team": "Player",
 		"size": Vector2i(256, 66)
 	},
-	"barracks": {
+	"BarracksWagon": {
 		"scene": preload("res://scenes/entities/wagons/barracks_wagon.tscn"),
 		"team": "Player",
 		"size": Vector2i(128, 48)
 	},
-	"cannon": {
+	"CannonWagon": {
 		"scene": preload("res://scenes/entities/wagons/cannon_wagon.tscn"),
 		"team": "Player",
 		"size": Vector2i(128, 58)
 	},
-	"merchandise": {
+	"MerchandiseWagon": {
 		"scene": preload("res://scenes/entities/wagons/merchandise_wagon.tscn"),
 		"team": "Player",
 		"size": Vector2i(128, 46)
 	},
-	"tender": {
+	"TenderWagon": {
 		"scene": preload("res://scenes/entities/wagons/tender_wagon.tscn"),
 		"team": "Player",
 		"size": Vector2i(128, 45)
 	},
-	"gondola": {
+	"GondolaWagon": {
 		"scene": preload("res://scenes/entities/wagons/gondola_wagon.tscn"),
 		"team": "Player",
 		"size": Vector2i(178, 57)
 	},
-	"xxx": {
+	"XxxWagon": {
 		"scene": preload("res://scenes/entities/wagons/merchandise_wagon.tscn"),
 		"team": "Player",
 		"size": Vector2i(128, 46)

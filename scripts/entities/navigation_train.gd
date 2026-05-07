@@ -44,13 +44,13 @@ const ORIENTATIONS = [
 ]
 
 const OPPOSITE_ORIENTATION = {
-	"N" : "S",
+	"N": "S",
 	"NE": "SW",
-	"E" : "W",
+	"E": "W",
 	"SE": "NW",
-	"S" : "N",
+	"S": "N",
 	"SW": "NE",
-	"W" : "E",
+	"W": "E",
 	"NW": "SE"
 }
 
@@ -120,7 +120,10 @@ func _process(delta):
 func _handle_reverse_direction():
 	if Input.is_action_just_pressed("shift"):
 		if move_speed == 0:
-			set_orientation(OPPOSITE_ORIENTATION[orientation])
+			reverse_direction()
+
+func reverse_direction():
+	set_orientation(OPPOSITE_ORIENTATION[orientation])
 
 func _handle_gear_toggle():
 	if Input.is_action_just_pressed("ctrl"):
@@ -140,6 +143,10 @@ func _move_train(delta: float):
 	var dir = get_direction_vector()
 	position += dir * move_speed * delta
 
+func recenter():
+	position = grid_service.tile_to_world(current_tile)
+	
+
 func _check_tile_change():
 	var tile = grid_service.world_to_tile(position)
 	if current_tile != tile:
@@ -148,7 +155,7 @@ func _check_tile_change():
 		current_tile = tile
 
 func _on_tile_changed(from_tile: Vector2i, to_tile: Vector2i) -> void:
-	train_manager.on_train_reached_tile(self, to_tile)
+	train_manager.on_train_reached_tile(self , to_tile)
 	
 	# if turn_request == 1:
 	# 	rotate_clockwise()
@@ -176,7 +183,7 @@ func update_animation() -> void:
 	sprite.play(orientation)
 
 func on_arrived_to_tile(tile: Vector2i):
-	train_manager.on_train_reached_tile(self, tile)
+	train_manager.on_train_reached_tile(self , tile)
 
 func get_direction_vector() -> Vector2:
 	match ORIENTATIONS[orientation_index]:
@@ -190,4 +197,3 @@ func get_direction_vector() -> Vector2:
 		"NW": return Vector2(0, -1)
 		_:
 			return Vector2.ZERO
-	

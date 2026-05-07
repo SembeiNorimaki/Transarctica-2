@@ -21,7 +21,9 @@ var grid_service: GridService
 #     "caviar": 198
 # }
 
-var resource_spawn_tiles = [Vector2i(23, 18), Vector2i(23, 19), Vector2i(23, 20)]
+var required_resource_spawn_tiles = [Vector2i(22, 19), Vector2i(22, 20), Vector2i(22, 21)]
+var produced_resource_spawn_tiles = [Vector2i(18, 23), Vector2i(19, 23), Vector2i(20, 23)]
+
 var idx = 0
 var RESOURCE_SCENE = preload("res://scenes/entities/resources/resource.tscn")
 
@@ -31,13 +33,16 @@ func _ready() -> void:
 	pass
 
 #region resource spawning
-func spawn_resource(resource_name_: String, qty_: int) -> void:
+func spawn_resource(resource_name_: String, qty_: int, mode: String) -> void:
+	print("Spawning resource %s" % resource_name_)
 	var resource = RESOURCE_SCENE.instantiate()
 	
 	resource.call_deferred("set_type", resource_name_)
 	resource.call_deferred("set_qty", qty_)
-	
-	var tile = resource_spawn_tiles[idx]
+	var tile = produced_resource_spawn_tiles[idx]
+	if mode == "required":
+		tile = required_resource_spawn_tiles[idx]
+
 	var screen_pos = grid_service.tile_to_world(tile)
 	resource.position = screen_pos
 	idx += 1

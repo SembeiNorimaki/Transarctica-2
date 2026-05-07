@@ -89,7 +89,10 @@ func _on_train_tile_changed(train: NavigationTrain, old_tile: Vector2i, new_tile
 #endregion
 
 #region Public API
-
+func recenter_player_train():
+	trains["Player"][0].recenter()
+func reverse_player_train_direction():
+	trains["Player"][0].reverse_direction()
 #endregion
 
 func on_train_reached_tile(train: NavigationTrain, tile: Vector2i) -> void:

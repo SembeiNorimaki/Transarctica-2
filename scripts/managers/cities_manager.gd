@@ -3,15 +3,26 @@ class_name CitiesManager
 
 # Injected by NavigationScene
 var rail_service: RailService
+var city_labels_container: Node2D
+var grid_service: GridService
 
 var cities = {} # EntryTile -> {name, city_tile}
 
-func spawn_city(tile: Vector2i) -> void:
-	#var city_name = "City_%s_%s" % [tile.x, tile.y]
-	var city_name = GameState.cities_by_location[str(tile.x) + "," + str(tile.y)]
-	# print("CityManager: Spawn %s" % city_name)
-	var entry_tile = _compute_entry_tile(tile)
-	cities[entry_tile] = {"name": city_name, "city_tile": tile}
+func spawn_city(city_id: int, city_tile: Vector2i) -> void:
+	#var city_name = GameState.cities_by_location.get(Vector2i(tile.x, tile.y), "NOOOO")
+	var city_name = GameState.cities_by_id.get(city_id, "ERROR")
+	
+	print("CityManager: Spawn %s" % city_name)
+	var entry_tile = _compute_entry_tile(city_tile)
+	cities[entry_tile] = {"name": city_name, "city_tile": city_tile, "city_id": city_id}
+	create_label(city_name, city_tile)
+
+func create_label(city_name: String, city_tile: Vector2i) -> void:
+	var label = Label.new()
+	label.text = city_name
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	city_labels_container.add_child(label)
+	label.position = grid_service.tile_to_world(city_tile) + Vector2(0, -128)
 
 func _compute_entry_tile(tile: Vector2i):
 	for offset in [Vector2i(0, 2), Vector2i(0, -2), Vector2i(2, 0), Vector2i(-2, 0)]:

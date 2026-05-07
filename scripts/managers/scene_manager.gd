@@ -11,7 +11,7 @@ func _process(delta: float) -> void:
 	pass
 
 
-func enter_city(city_data):
+func enter_city(city_name: String):
 	# Disable navigation scene
 	navigation_scene.visible = false
 	navigation_scene.set_process(false)
@@ -22,7 +22,7 @@ func enter_city(city_data):
 	city_scene = CITY_SCENE_CLASS.instantiate()
 
 	# Pass city data to the cisty scene
-	city_scene.initialize(city_data)
+	city_scene.call_deferred("initialize", city_name)
 
 	# Add it to scene tree
 	get_parent().add_child(city_scene)
@@ -36,3 +36,6 @@ func leave_city():
 	navigation_scene.visible = true
 	navigation_scene.set_process(true)
 	navigation_scene.set_physics_process(true)
+
+	navigation_scene.recenter_player_train()
+	navigation_scene.reverse_player_train_direction()

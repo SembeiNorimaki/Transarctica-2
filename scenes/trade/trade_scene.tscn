@@ -47,7 +47,7 @@ script = ExtResource("8_kdl80")
 
 [node name="Containers" type="Node2D" parent="." unique_id=1494143937]
 
-[node name="Wagons" type="Node2D" parent="Containers" unique_id=942685259]
+[node name="Trains" type="Node2D" parent="Containers" unique_id=942685259]
 
 [node name="Resources" type="Node2D" parent="Containers" unique_id=352074794]
 
@@ -119,12 +119,22 @@ text = "Price per unit:"
 layout_mode = 2
 text = "Free space in train:"
 
-[node name="Button" type="Button" parent="TradeMenu/Container/VBoxContainer" unique_id=259454732]
+[node name="Button1" type="Button" parent="TradeMenu/Container/VBoxContainer" unique_id=259454732]
 layout_mode = 2
 text = "Buy 1"
 
-[node name="Button2" type="Button" parent="TradeMenu/Container/VBoxContainer" unique_id=227339199]
+[node name="Button2" type="Button" parent="TradeMenu/Container/VBoxContainer" unique_id=258213929]
 layout_mode = 2
-text = "Buy 10"
 
-[connection signal="pressed" from="TradeMenu/Container/VBoxContainer/Button" to="." method="_on_button_pressed"]
+[node name="Title" type="CanvasLayer" parent="." unique_id=1587740613]
+
+[node name="Label" type="Label" parent="Title" unique_id=1389269309]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "City Name"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="TradeMenu/Container/VBoxContainer/Button1" to="TradeMenu" method="_on_button_pressed"]
+[connection signal="pressed" from="TradeMenu/Container/VBoxContainer/Button2" to="TradeMenu" method="_on_button_2_pressed"]
