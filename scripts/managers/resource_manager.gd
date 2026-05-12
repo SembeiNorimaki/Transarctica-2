@@ -22,7 +22,8 @@ var grid_service: GridService
 # }
 
 var required_resource_spawn_tiles = [Vector2i(22, 19), Vector2i(22, 20), Vector2i(22, 21)]
-var produced_resource_spawn_tiles = [Vector2i(18, 23), Vector2i(19, 23), Vector2i(20, 23)]
+var produced_resource_spawn_tiles = [Vector2i(3, 3), Vector2i(4, 2), Vector2i(5, 1)]
+
 
 var idx = 0
 var RESOURCE_SCENE = preload("res://scenes/entities/resources/resource.tscn")
@@ -60,6 +61,15 @@ func spawn_resource(resource_name_: String, qty_: int, mode: String) -> void:
 	resources[resource_name_] = resource
 
 #endregion
+
+
+func xpos_to_resource_idx(xpos: int):
+	print("Checking resource for x position: %s" % xpos)
+	for i in range(resources.keys().size()):
+		print("Resource %s xpos: %s" % [resources.keys()[i], resources[resources.keys()[i]].global_position.x])
+		if abs(resources[resources.keys()[i]].global_position.x - xpos) < 50:
+			return i
+	return -1
 
 func update_resource_qty(resource_name: String, qty_: int):
 	var resource = resources[resource_name]

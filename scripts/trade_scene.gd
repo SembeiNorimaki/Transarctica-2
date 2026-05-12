@@ -30,6 +30,8 @@ class_name TradeScene
 # Map 
 @onready var map_root = $MapRoot
 
+@onready var loader_vehicle: LoaderVehicle = $Containers/LoaderVehicle
+
 var city_data = {
 	"resources": {
 		"caviar": 2,
@@ -57,12 +59,12 @@ func _ready() -> void:
 	_inject_services()
 	_connect_signals()
 	_load_map("level_1")
-	#call_deferred("initialize", "Barcelona")
+	call_deferred("initialize", "Barcelona")
 
 func initialize(name: String):
 	print("Initializing city: %s" % name)
 	cityname_label.text = name
-	camera_controller.center_at_tile(Vector2i(20, 20))
+	camera_controller.center_at_tile(Vector2i(28, 28))
 	
 	# check if it's a city or an industry
 	if name in GameState.state.cities:
@@ -80,6 +82,7 @@ func initialize(name: String):
 
 	
 	load_train_from_game_state()
+	load_loader_vehicle()
 	trade_service.set_context(city_resource_container, train_resource_container)
 
 
@@ -111,11 +114,13 @@ func load_industry_resources_from_game_state(industry_name: String):
 
 func load_train_from_game_state():
 	print("Loading from game state")
-	var initial_tile = Vector2i(12, 12)
+	var initial_tile = Vector2i(1, 0)
 	var horizontal_train = horizontal_train_manager.spawn_train(initial_tile, "Player")
 	add_child(horizontal_train)
 	print("Spawned horizontal train at tile: %s" % initial_tile)
 
+func load_loader_vehicle():
+	pass
 
 func _inject_services():
 	# Managers
@@ -128,6 +133,9 @@ func _inject_services():
 
 	# Controllers
 	camera_controller.grid_service = grid_service
+
+	loader_vehicle.camera_controller = camera_controller
+	
 
 func _connect_signals():
 	train_resource_container.wagon_resource_type_changed.connect(horizontal_train_manager._on_wagon_resource_type_changed)
@@ -164,12 +172,16 @@ func _unhandled_input(event: InputEvent) -> void:
 		_handle_tile_click(tile, event.button_index)
 	elif event.is_action_pressed("right"):
 		print("Right pressed")
-		horizontal_train_manager.gear_up()
+		loader_vehicle.gear_up()
 	elif event.is_action_pressed("left"):
 		print("Left pressed")
-		horizontal_train_manager.gear_down()
-		
+		loader_vehicle.gear_down()
+	elif event.is_action_pressed("i"):
+		on_i_pressed()
+	elif event.is_action_pressed("k"):
+		on_k_pressed()
 
+		
 func _handle_traffic_light_click():
 	print("Traffic light clicked")
 	traffic_light.toggle()
@@ -230,3 +242,33 @@ func _on_city_resource_amount_changed(resource: String, qty: int):
 
 func _on_train_money_changed(money: int):
 	horizontal_train_manager._on_train_money_changed(money)
+
+func on_i_pressed():
+	var wagon_idx = horizontal_train_manager.player_train.xpos_to_wagon_idx(loader_vehicle.global_position.x)
+	if wagon_idx == -1:
+		return
+	
+	if loader_vehicle.is_empty():
+		# if the loader is empty, unload the selected wagon
+		horizontal_train_manager.player_train.wagons[wagon_idx].open_doors()
+		await get_tree().create_timer(1).timeout
+		var resource_info = train_resource_container.get_wagon_info(wagon_idx)
+		var sell_price = city_resource_container.get_sell_price(resource_info.resource_name)
+		trade_service.set_transaction_data(resource_info.resource_name, "sell", 1, sell_price)
+		trade_service.execute_transaction(1)
+		horizontal_train_manager.player_train.wagons[wagon_idx].close_doors()
+	else:
+		# if the loader is full, load the selected wagon
+		var resource_type = loader_vehicle.unload()
+		print("Unloading %s from loader and loading it in wagon %s" % [resource_type, wagon_idx])
+
+func on_k_pressed():
+	var resource_idx = resource_manager.xpos_to_resource_idx(loader_vehicle.global_position.x)
+	if loader_vehicle.is_empty() && resource_idx != -1:
+		# if the loader is empty, load it with the selected resource
+		var resource_type = resource_manager.resources.keys()[resource_idx]
+		loader_vehicle.load(resource_type)
+		print("Loading %s to loader vehicle" % resource_type)
+	elif not loader_vehicle.is_empty() && resource_idx == -1:
+		# if the loader is full, unload it
+		loader_vehicle.unload()

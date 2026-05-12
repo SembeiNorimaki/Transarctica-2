@@ -18,12 +18,32 @@
             "cargo": [
                 {
                     "resource_name": "fish",
-                    "resource_qty": 4
+                    "resource_qty": 2
                 }
             ]
         },
         {
-            "wagon_name": "MerchandiseWagon",
+            "wagon_name": "ContainerWagon",
+            "cargo": []
+        },
+        {
+            "wagon_name": "ContainerWagon",
+            "cargo": []
+        },
+        {
+            "wagon_name": "ContainerWagon",
+            "cargo": []
+        },
+        {
+            "wagon_name": "ContainerWagon",
+            "cargo": []
+        },
+        {
+            "wagon_name": "ContainerWagon",
+            "cargo": []
+        },
+        {
+            "wagon_name": "ContainerWagon",
             "cargo": []
         }
     ]

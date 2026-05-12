@@ -5,7 +5,7 @@ class_name VehicleUnit
 @onready var qty_label = $Labels/QtyLabel
 
 
-@onready var animated_sprite = $Sprite2D
+@onready var animated_sprite: AnimatedSprite2D = $Sprite
 
 var wagon_manager: HorizontalTrainManager
 

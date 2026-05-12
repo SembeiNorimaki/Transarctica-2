@@ -23,4 +23,5 @@ animations = [{
 script = ExtResource("2_5imnr")
 
 [node name="Sprite" parent="." index="0" unique_id=1438979658]
+position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_tkgjq")

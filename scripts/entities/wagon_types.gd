@@ -34,10 +34,10 @@ const TYPES = {
 		"team": "Player",
 		"size": Vector2i(178, 57)
 	},
-	"XxxWagon": {
-		"scene": preload("res://scenes/entities/wagons/merchandise_wagon.tscn"),
+	"ContainerWagon": {
+		"scene": preload("res://scenes/entities/wagons/container_wagon.tscn"),
 		"team": "Player",
-		"size": Vector2i(128, 46)
+		"size": Vector2i(299, 33)
 	}
 }
 

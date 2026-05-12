@@ -30,6 +30,7 @@ const WAGON_CAPACITIES := {
 	"LocomotiveWagon": 0,
 	"TenderWagon": 60,
 	"MerchandiseWagon": 2,
+	"ContainerWagon": 2,
 	"GondolaWagon": 50,
 	"BarracksWagon": 0,
 	"CannonWagon": 0,

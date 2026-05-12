@@ -78,6 +78,15 @@ func calculate_target_loading_wagon_idx():
 		target_loading_wagon_idx = -1
 
 
+func xpos_to_wagon_idx(xpos: int):
+	# given an x position check if there is a wagon there
+	print("Checking wagon for x position: %s" % xpos)
+	for i in range(wagons.size()):
+		if abs(wagons[i].global_position.x - xpos) < 50:
+			return i
+	return -1
+		
+
 func add_wagon(wagon_data: Dictionary):
 	var wagon_name = wagon_data.wagon_name
 	var wagon_info = WagonTypes.TYPES[wagon_name]

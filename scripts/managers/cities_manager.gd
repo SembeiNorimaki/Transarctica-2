@@ -24,7 +24,29 @@ func create_label(city_name: String, city_tile: Vector2i) -> void:
 	city_labels_container.add_child(label)
 	label.position = grid_service.tile_to_world(city_tile) + Vector2(0, -128)
 
+
 func _compute_entry_tile(tile: Vector2i):
+	if rail_service.has_rail(tile + Vector2i(1, 2)) and not rail_service.has_rail(tile + Vector2i(2, 2)):
+		return tile + Vector2i(1, 2)
+	elif rail_service.has_rail(tile + Vector2i(-1, 2)) and not rail_service.has_rail(tile + Vector2i(-2, 2)):
+		return tile + Vector2i(-1, 2)
+	
+	elif rail_service.has_rail(tile + Vector2i(1, -2)) and not rail_service.has_rail(tile + Vector2i(2, -2)):
+		return tile + Vector2i(1, -2)
+	elif rail_service.has_rail(tile + Vector2i(-1, -2)) and not rail_service.has_rail(tile + Vector2i(-2, -2)):
+		return tile + Vector2i(-1, -2)
+	
+	elif rail_service.has_rail(tile + Vector2i(2, 1)) and not rail_service.has_rail(tile + Vector2i(2, 2)):
+		return tile + Vector2i(2, 1)
+	elif rail_service.has_rail(tile + Vector2i(2, -1)) and not rail_service.has_rail(tile + Vector2i(2, -2)):
+		return tile + Vector2i(2, -1)
+
+	elif rail_service.has_rail(tile + Vector2i(-2, 1)) and not rail_service.has_rail(tile + Vector2i(-2, 2)):
+		return tile + Vector2i(-2, 1)
+	elif rail_service.has_rail(tile + Vector2i(-2, -1)) and not rail_service.has_rail(tile + Vector2i(-2, -2)):
+		return tile + Vector2i(-2, -1)
+
+func _compute_entry_tile_old(tile: Vector2i):
 	for offset in [Vector2i(0, 2), Vector2i(0, -2), Vector2i(2, 0), Vector2i(-2, 0)]:
 		if rail_service.has_rail(tile + offset):
 			return tile + offset

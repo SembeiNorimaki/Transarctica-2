@@ -5,6 +5,32 @@
 [ext_resource type="TileSet" uid="uid://di4xrktsbdfmf" path="res://scenes/maps/cities.tres" id="3_j7s4g"]
 [ext_resource type="Texture2D" uid="uid://2f34a7cpeqkk" path="res://assets/sprites/resources_120x46.png" id="3_w8ktk"]
 [ext_resource type="Texture2D" uid="uid://cv6aud7ei3qni" path="res://assets/sprites/traffic_light.png" id="5_abxr3"]
+[ext_resource type="Texture2D" uid="uid://xxt36wjgwhwi" path="res://assets/tilesets/roads_zi2.png" id="6_ats1p"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8n8mg"]
+texture = ExtResource("6_ats1p")
+texture_region_size = Vector2i(128, 64)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_gnvxj"]
+tile_shape = 1
+tile_layout = 5
+tile_size = Vector2i(128, 64)
+sources/1 = SubResource("TileSetAtlasSource_8n8mg")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_abxr3"]
 texture = ExtResource("3_w8ktk")
@@ -53,6 +79,9 @@ sources/0 = SubResource("TileSetAtlasSource_ats1p")
 
 [node name="Terrain" type="TileMapLayer" parent="." unique_id=1460233366]
 tile_set = ExtResource("1_r7ae1")
+
+[node name="Roads" type="TileMapLayer" parent="." unique_id=1426601861]
+tile_set = SubResource("TileSet_gnvxj")
 
 [node name="Rails" type="TileMapLayer" parent="." unique_id=709758041]
 tile_set = ExtResource("2_1bc6c")
