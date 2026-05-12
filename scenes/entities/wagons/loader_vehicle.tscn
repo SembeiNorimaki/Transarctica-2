@@ -17,4 +17,4 @@ position = Vector2(4, -28)
 texture = ExtResource("3_r3ud8")
 hframes = 3
 vframes = 10
-frame = 27
+frame = 25

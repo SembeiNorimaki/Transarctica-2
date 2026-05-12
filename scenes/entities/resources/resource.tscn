@@ -1,15 +1,16 @@
 [gd_scene format=3 uid="uid://vwnq6stsag6m"]
 
-[ext_resource type="Texture2D" uid="uid://2f34a7cpeqkk" path="res://assets/sprites/resources_120x46.png" id="1_lpi6i"]
 [ext_resource type="Script" uid="uid://clsxpi0xv3s34" path="res://scripts/entities/resource.gd" id="1_slyww"]
+[ext_resource type="Texture2D" uid="uid://b67bqm6hguwr" path="res://assets/sprites/resources_132x46.png" id="2_slyww"]
 
 [node name="Resource" type="Node2D" unique_id=225144462]
 script = ExtResource("1_slyww")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=938393875]
-texture = ExtResource("1_lpi6i")
+texture = ExtResource("2_slyww")
 hframes = 3
-vframes = 7
+vframes = 10
+frame = 25
 
 [node name="QtyLabel" type="Label" parent="." unique_id=1477252243]
 offset_left = 26.0

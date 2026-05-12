@@ -27,23 +27,7 @@
             "cargo": []
         },
         {
-            "wagon_name": "ContainerWagon",
-            "cargo": []
-        },
-        {
-            "wagon_name": "ContainerWagon",
-            "cargo": []
-        },
-        {
-            "wagon_name": "ContainerWagon",
-            "cargo": []
-        },
-        {
-            "wagon_name": "ContainerWagon",
-            "cargo": []
-        },
-        {
-            "wagon_name": "ContainerWagon",
+            "wagon_name": "TimberWagon",
             "cargo": []
         }
     ]

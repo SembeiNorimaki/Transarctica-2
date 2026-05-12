@@ -16,6 +16,11 @@
                 "BuyPrice": 4,
                 "SellPrice": 5,
                 "Quantity": 20
+            },
+            "wood": {
+                "BuyPrice": 4,
+                "SellPrice": 5,
+                "Quantity": 20
             }
         }
     },

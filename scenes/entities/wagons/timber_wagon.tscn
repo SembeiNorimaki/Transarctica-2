@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cn20awligkm30"]
+
+[ext_resource type="PackedScene" uid="uid://db0akj2cdwfl3" path="res://scenes/entities/units/vehicle_unit.tscn" id="1_880tt"]
+[ext_resource type="Texture2D" uid="uid://dfwh14c0hrf4o" path="res://assets/sprites/wagons/15_zi4.png" id="2_nu67d"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n33l7"]
+atlas = ExtResource("2_nu67d")
+region = Rect2(0, 0, 136, 68)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4wvms"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n33l7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="TimberWagon" unique_id=558077121 instance=ExtResource("1_880tt")]
+
+[node name="Sprite" parent="." index="0" unique_id=1438979658]
+sprite_frames = SubResource("SpriteFrames_4wvms")

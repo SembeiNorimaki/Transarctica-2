@@ -34,7 +34,8 @@ const WAGON_CAPACITIES := {
 	"GondolaWagon": 50,
 	"BarracksWagon": 0,
 	"CannonWagon": 0,
-	"TankerWagon": 80
+	"TankerWagon": 80,
+	"TimberWagon": 20
 }
 
 func add_wagon(wagon_type: String, cargo: String = "", qty: int = 0) -> void:

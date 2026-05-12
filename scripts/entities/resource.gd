@@ -17,7 +17,7 @@ var resource_name_to_frame = {
 	"copper": 	  9,
 	"dung": 	  10,
 	"rails": 	  11,
-	"fish": 	  12,
+	"fish": 	  25,
 	"rods": 	  13,
 	"salt": 	  14,
 	"furs": 	  15,
