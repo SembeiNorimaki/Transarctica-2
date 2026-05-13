@@ -86,6 +86,9 @@ func unload() -> String:
 func is_empty() -> bool:
 	return cargo == ""
 
+func get_cargo_type() -> String:
+	return cargo
+
 func load(resource_name: String):
 	cargo = resource_name
 	cargo_sprite.frame = resource_name_to_frame[resource_name]

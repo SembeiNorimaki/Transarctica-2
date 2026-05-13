@@ -9,6 +9,7 @@
 [ext_resource type="TileSet" uid="uid://cn1mah6f2h2yr" path="res://assets/tilesets/ufo.tres" id="6_4735l"]
 [ext_resource type="Texture2D" uid="uid://blqori2m6v0o5" path="res://assets/tilesets/directions.png" id="7_6s13l"]
 [ext_resource type="Texture2D" uid="uid://coekvdlx482ny" path="res://assets/tilesets/URBAN.PNG" id="7_mp2ox"]
+[ext_resource type="TileSet" uid="uid://cl4eqvpcy7aig" path="res://scenes/maps/rails.tres" id="10_pfful"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mp2ox"]
 texture = ExtResource("5_vmw88")
@@ -142,3 +143,6 @@ tile_set = SubResource("TileSet_44sdu")
 
 [node name="PatrolPoints" type="TileMapLayer" parent="." unique_id=1822908890]
 tile_set = SubResource("TileSet_vmw88")
+
+[node name="Rails" type="TileMapLayer" parent="." unique_id=619241653]
+tile_set = ExtResource("10_pfful")

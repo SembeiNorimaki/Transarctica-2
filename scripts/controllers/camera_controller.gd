@@ -6,13 +6,13 @@ signal camera_moved(global_transform: Transform2D)
 @onready var cam = $Camera2D
 var move_speed = 500.0
 var _last_transform: Transform2D
-const ZOOM_SPEED := 0.1
-const MIN_ZOOM := 0.1
-const MAX_ZOOM := 6.0
+const ZOOM_SPEED := 1
+const MIN_ZOOM := 1
+const MAX_ZOOM := 2
 
 @onready var grid_service: GridService
 
-@export var zoom: float = 2.0
+@export var zoom: float = 1.0
 @export var offset := Vector2.ZERO
 #var offset := Vector2.ZERO
 

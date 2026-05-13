@@ -8,9 +8,9 @@ var train_resource_container: TrainResourceContainer
 # make gear an enum with values R, N, D
 var gear := "N"
 var speed := 0.0
-var max_speed := 100.0
+var max_speed := 1000.0
 var acceleration := 2000.0
-var deceleration := 2000.0
+var deceleration := 600.0
 
 var wagons = []
 
@@ -26,12 +26,14 @@ func _process(delta: float) -> void:
 	elif gear == "R":
 		speed -= acceleration * delta
 	elif gear == "N":
-		if speed > 0:
-			if wagons[target_loading_wagon_idx].global_position.x > 0:
-				speed = 0
-		elif speed < 0:
-			if wagons[target_loading_wagon_idx].global_position.x < 0:
-				speed = 0
+		if speed > 0.0:
+			speed -= deceleration * delta
+			if speed < 0.0:
+				speed = 0.0
+		elif speed < 0.0:
+			speed += deceleration * delta
+			if speed > 0.0:
+				speed = 0.0
 			
 			
 		# if speed > 0:
@@ -130,6 +132,15 @@ func set_wagon_resource_type(wagon_idx: int, resource_name: String):
 
 func set_wagon_resource_qty(wagon_idx: int, qty: int):
 	wagons[wagon_idx].set_resource_qty(qty)
+	
+func set_speed(speed_: float):
+	if speed_ > 0:
+		gear = "D"
+	elif speed_ < 0:
+		gear = "R"
+	elif speed_ == 0:
+		gear = "N"
+	speed = speed_
 	
 
 func gear_up():
