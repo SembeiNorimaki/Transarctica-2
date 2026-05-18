@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://bgccilvr7br65"]
+
+[node name="GenericNavigationWagon" type="Node2D" unique_id=212834667]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=2070118109]

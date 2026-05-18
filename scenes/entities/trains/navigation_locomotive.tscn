@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://dvgs7trwrgopf"]
+
+[ext_resource type="PackedScene" uid="uid://bgccilvr7br65" path="res://scenes/entities/trains/generic_navigation_wagon.tscn" id="1_pvm8l"]
+[ext_resource type="Texture2D" uid="uid://2pgxo5bchiho" path="res://assets/sprites/wagons/nav_locomotive/nav_locomotive.png" id="2_5lm0q"]
+[ext_resource type="Script" uid="uid://b8foqfhb5gg2f" path="res://scripts/entities/wagons/navigation_locomotive.gd" id="2_bu4t5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bu4t5"]
+atlas = ExtResource("2_5lm0q")
+region = Rect2(0, 0, 78, 55)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xnhum"]
+atlas = ExtResource("2_5lm0q")
+region = Rect2(468, 0, 78, 55)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v158s"]
+atlas = ExtResource("2_5lm0q")
+region = Rect2(546, 0, 78, 55)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ie1pa"]
+atlas = ExtResource("2_5lm0q")
+region = Rect2(390, 0, 78, 55)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lvcgm"]
+atlas = ExtResource("2_5lm0q")
+region = Rect2(156, 0, 78, 55)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r7ncu"]
+atlas = ExtResource("2_5lm0q")
+region = Rect2(78, 0, 78, 55)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_33umt"]
+atlas = ExtResource("2_5lm0q")
+region = Rect2(234, 0, 78, 55)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xs35n"]
+atlas = ExtResource("2_5lm0q")
+region = Rect2(312, 0, 78, 55)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pvm8l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bu4t5")
+}],
+"loop": true,
+"name": &"E",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xnhum")
+}],
+"loop": true,
+"name": &"N",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v158s")
+}],
+"loop": true,
+"name": &"NE",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ie1pa")
+}],
+"loop": true,
+"name": &"NW",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lvcgm")
+}],
+"loop": true,
+"name": &"S",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r7ncu")
+}],
+"loop": true,
+"name": &"SE",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_33umt")
+}],
+"loop": true,
+"name": &"SW",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xs35n")
+}],
+"loop": true,
+"name": &"W",
+"speed": 5.0
+}]
+
+[node name="NavigationLocomotive" unique_id=212834667 instance=ExtResource("1_pvm8l")]
+script = ExtResource("2_bu4t5")
+
+[node name="Sprite" parent="." index="0" unique_id=2070118109]
+sprite_frames = SubResource("SpriteFrames_pvm8l")
+animation = &"N"

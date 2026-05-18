@@ -127,6 +127,15 @@ func _unhandled_input(event: InputEvent) -> void:
 			if rail_service.has_junction(tile):
 				print(" which is also a junction")
 				rail_service.change_junction(tile)
+	if event is InputEventKey:
+		if event.as_text_keycode() == "Ctrl":
+			_handle_gear_toggle()
+	
+func _handle_gear_toggle():
+	if Input.is_action_just_pressed("ctrl"):
+		train_manager.gear_toggle()
+
+
 
 func _on_player_train_tile_changed(from_tile: Vector2i, to_tile: Vector2i) -> void:
 	print("Train changed tile")

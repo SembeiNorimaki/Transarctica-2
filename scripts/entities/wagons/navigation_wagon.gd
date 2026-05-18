@@ -1,0 +1,49 @@
+extends Node2D
+class_name NavigationWagon
+
+# Dependencies
+var grid_service: GridService
+
+
+signal tile_changed(wagon, old_tile: Vector2i, new_tile: Vector2i)
+
+@onready var sprite = $Sprite
+
+var current_tile := Vector2i(-1, -1)
+var orientation := ""
+var heading = Vector2(1.0, 0.0)
+var speed := 0.0
+
+
+func _ready() -> void:
+	pass
+
+func set_pos(new_pos: Vector2):
+	position = new_pos
+	current_tile = grid_service.world_to_tile(new_pos)
+
+func set_orientation(new_ori: String):
+	print("Setting wagon orientation to %s" % new_ori)
+	if orientation != new_ori:
+		orientation = new_ori
+		update_animation()
+
+func set_heading(new_heading: Vector2):
+	heading = new_heading
+
+func update_animation():
+	sprite.set_animation(orientation)
+	sprite.play(orientation)
+
+func _process(delta):
+	_move(delta)
+	_check_tile_change()
+
+func _move(delta: float):
+	position += heading * speed * delta
+
+func _check_tile_change():
+	var new_tile = grid_service.world_to_tile(position)
+	if current_tile != new_tile:
+		emit_signal("tile_changed", self, current_tile, new_tile)
+		current_tile = new_tile

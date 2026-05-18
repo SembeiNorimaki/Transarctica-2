@@ -1,7 +1,9 @@
-extends Node
-class_name TrainManager
+# Manages navigation trains. The player one and the enemy ones
 
-#Injected by NavigationScene
+extends Node
+class_name NavigationTrainManager
+
+# Injected by NavigationScene
 var rail_service: RailService
 var grid_service: GridService
 var cities_manager: CitiesManager
@@ -51,8 +53,9 @@ func _ready() -> void:
 	pass
 
 #region train spawning
-func spawn_train(tile_pos: Vector2i, orientation: String, team: String):
-	#print("Spawning a train at tile %s with orientation %s" % [tile_pos, orientation])
+func spawn_train(tile_pos: Vector2i, ori: String, team: String):
+	print("Spawning a train at tile %s with orientation %s" % [tile_pos, ori])
+	
 	var id = "t%s%s" % [team[0], next_train_id[team]]
 	next_train_id[team] += 1
 	
@@ -61,9 +64,13 @@ func spawn_train(tile_pos: Vector2i, orientation: String, team: String):
 	# Dependency injection
 	train.train_manager = self
 	train.grid_service = grid_service
+	train.rail_service = rail_service
 
-	train.position = grid_service.tile_to_world(tile_pos)
-	train.current_tile = tile_pos
+	
+	train.call_deferred("initialize", tile_pos, ori)
+
+	# train.position = grid_service.tile_to_world(tile_pos)
+	# train.current_tile = tile_pos
 
 	trains[team].append(train)
 	# Add to scene tree
@@ -72,33 +79,37 @@ func spawn_train(tile_pos: Vector2i, orientation: String, team: String):
 	emit_signal("train_spawned", train)
 #endregion
 
-#region Tile Tracking
-func _on_train_tile_changed(train: NavigationTrain, old_tile: Vector2i, new_tile: Vector2i):
-	#Here we need to check with the rail_service what will be the next orientation for the train
-	#print("Train manager: Train changed from tile %s to tile %s" % [old_tile, new_tile])
-	var delta = new_tile - old_tile
-	var new_ori = rail_service.calculate_new_orientation(new_tile, delta)
-	print("New ori: %s" % new_ori)
-	train.set_orientation(new_ori)
+# #region Tile Tracking
+# func _on_train_tile_changed(train: NavigationTrain, old_tile: Vector2i, new_tile: Vector2i):
+# 	#Here we need to check with the rail_service what will be the next orientation for the train
+# 	#print("Train manager: Train changed from tile %s to tile %s" % [old_tile, new_tile])
+# 	var delta = new_tile - old_tile
+# 	var new_ori = rail_service.calculate_new_orientation(new_tile, delta)
+# 	print("New ori: %s" % new_ori)
+# 	train.set_orientation(new_ori)
 
-	var vision_tiles: Array[Vector2i] = []
-	for offset in train_vision_offsets:
-		vision_tiles.append(new_tile + offset)
-	exploration_layer.reveal(vision_tiles)
+# 	var vision_tiles: Array[Vector2i] = []
+# 	for offset in train_vision_offsets:
+# 		vision_tiles.append(new_tile + offset)
+# 	exploration_layer.reveal(vision_tiles)
 	
-#endregion
+# #endregion
 
 #region Public API
 func recenter_player_train():
 	trains["Player"][0].recenter()
 func reverse_player_train_direction():
 	trains["Player"][0].reverse_direction()
+
+func gear_toggle():
+	trains["Player"][0].gear_toggle()
+	
 #endregion
 
-func on_train_reached_tile(train: NavigationTrain, tile: Vector2i) -> void:
-	_on_train_tile_changed(train, train.current_tile, tile)
-	train.current_tile = tile
-	_check_tile_events(train, tile)
+#func on_train_reached_tile(train: NavigationTrain, tile: Vector2i) -> void:
+	# _on_train_tile_changed(train, train.current_tile, tile)
+	# train.current_tile = tile
+	# _check_tile_events(train, tile)
 	#_give_next_tile(unit)
 
 func _check_tile_events(train: NavigationTrain, tile: Vector2i) -> void:

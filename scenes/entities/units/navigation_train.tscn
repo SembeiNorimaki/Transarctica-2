@@ -1,42 +1,12 @@
 [gd_scene format=3 uid="uid://did4013cgu15i"]
 
 [ext_resource type="Script" uid="uid://dnew8tq4r0jld" path="res://scripts/entities/navigation_train.gd" id="1_743fu"]
-[ext_resource type="Texture2D" uid="uid://d33tibcj0bnuj" path="res://assets/sprites/locomotive/324_zi2.png" id="2_gupt2"]
-[ext_resource type="SpriteFrames" uid="uid://ctyubkho1hfut" path="res://assets/sprites/navigation_train.tres" id="2_y3scl"]
 [ext_resource type="PackedScene" uid="uid://dtxrg38hrli2n" path="res://scenes/combat/state_machines/action_state_machine.tscn" id="3_njqyl"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_743fu"]
-size = Vector2(5, 5)
 
 [node name="NavigationTrain" type="Node2D" unique_id=1952438565]
 script = ExtResource("1_743fu")
 
-[node name="Sprite2D6" type="Sprite2D" parent="." unique_id=854954104]
-position = Vector2(-164, -85)
-texture = ExtResource("2_gupt2")
-
-[node name="Sprite2D5" type="Sprite2D" parent="." unique_id=916774378]
-position = Vector2(-131, -68)
-texture = ExtResource("2_gupt2")
-
-[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1972153967]
-position = Vector2(-99, -51)
-texture = ExtResource("2_gupt2")
-
-[node name="Sprite2D4" type="Sprite2D" parent="." unique_id=994756691]
-position = Vector2(-66, -34)
-texture = ExtResource("2_gupt2")
-
-[node name="Sprite2D3" type="Sprite2D" parent="." unique_id=461084309]
-position = Vector2(-33, -17)
-texture = ExtResource("2_gupt2")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1023001264]
-sprite_frames = ExtResource("2_y3scl")
-animation = &"E"
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1953255085]
-texture = SubResource("PlaceholderTexture2D_743fu")
+[node name="WagonContainer" type="Node2D" parent="." unique_id=502085928]
 
 [node name="Labels" type="Node2D" parent="." unique_id=832468328]
 
