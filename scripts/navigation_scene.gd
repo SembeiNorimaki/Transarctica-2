@@ -127,13 +127,19 @@ func _unhandled_input(event: InputEvent) -> void:
 			if rail_service.has_junction(tile):
 				print(" which is also a junction")
 				rail_service.change_junction(tile)
-	if event is InputEventKey:
-		if event.as_text_keycode() == "Ctrl":
-			_handle_gear_toggle()
+	# if event is InputEventKey:
+	# 	if event.as_text_keycode() == "Ctrl":
+	if Input.is_action_just_pressed("ctrl"):
+		_handle_gear_toggle()
+	if Input.is_action_just_pressed("shift"):
+		_handle_reverse_train()
 	
 func _handle_gear_toggle():
-	if Input.is_action_just_pressed("ctrl"):
-		train_manager.gear_toggle()
+	train_manager.gear_toggle()
+
+func _handle_reverse_train():
+	train_manager.reverse_train()
+
 
 
 

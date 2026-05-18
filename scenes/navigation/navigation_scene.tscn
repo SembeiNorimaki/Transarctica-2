@@ -79,7 +79,6 @@ script = ExtResource("7_7ires")
 [node name="CameraController" parent="Controllers" unique_id=1787274545 instance=ExtResource("6_tyxpn")]
 
 [node name="Overlays" type="Node2D" parent="." unique_id=1386397876]
-visible = false
 
 [node name="RailsOverlay" type="Node2D" parent="Overlays" unique_id=380620923]
 script = ExtResource("8_e7sg2")

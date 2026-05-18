@@ -98,8 +98,9 @@ func spawn_train(tile_pos: Vector2i, ori: String, team: String):
 #region Public API
 func recenter_player_train():
 	trains["Player"][0].recenter()
-func reverse_player_train_direction():
-	trains["Player"][0].reverse_direction()
+
+func reverse_train():
+	trains["Player"][0].reverse_train()
 
 func gear_toggle():
 	trains["Player"][0].gear_toggle()

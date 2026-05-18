@@ -87,6 +87,7 @@ func _ready() -> void:
 	#position = Vector2(64 * 4, 64 * 3)
 	#current_tile = Vector2i(3, 1)
 
+#region initialization
 func initialize(tile_pos_: Vector2i, ori_: String) -> void:
 	initialize_wagon_positions(tile_pos_, ori_)
 	#set_id(id_)
@@ -133,6 +134,7 @@ func add_wagon():
 
 	wagons.append(wagon)
 
+#endregion
 
 func set_id(id_: String) -> void:
 	if id == "":
@@ -180,6 +182,18 @@ func _process(delta):
 func gear_toggle():
 	gear = "N" if gear == "D" else "D"
 	update_gear_label()
+
+func reverse_train():
+	var positions = []
+	var orientations = []
+	var n = wagons.size()
+	for wagon in wagons:
+		positions.append(wagon.position)
+		orientations.append(wagon.orientation)
+	for i in range(n):
+		wagons[n-i-1].set_pos(positions[i])
+		wagons[n-i-1].set_orientation(OPPOSITE_ORIENTATION[orientations[i]])
+		wagons[n-i-1].set_heading(ori_to_heading[OPPOSITE_ORIENTATION[orientations[i]]])
 
 func _update_speed(delta: float):
 	if gear == "D":
