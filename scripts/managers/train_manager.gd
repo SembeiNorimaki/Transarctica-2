@@ -66,6 +66,9 @@ func spawn_train(tile_pos: Vector2i, ori: String, team: String):
 	train.grid_service = grid_service
 	train.rail_service = rail_service
 
+	# connect signals
+	train.train_tile_changed.connect(on_train_tile_changed)
+
 	
 	train.call_deferred("initialize", tile_pos, ori)
 
@@ -107,7 +110,8 @@ func gear_toggle():
 	
 #endregion
 
-#func on_train_reached_tile(train: NavigationTrain, tile: Vector2i) -> void:
+func on_train_tile_changed(train: NavigationTrain, old_tile: Vector2i, new_tile: Vector2i) -> void:
+	pass
 	# _on_train_tile_changed(train, train.current_tile, tile)
 	# train.current_tile = tile
 	# _check_tile_events(train, tile)

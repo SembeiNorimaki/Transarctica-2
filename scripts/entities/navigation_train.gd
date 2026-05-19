@@ -76,7 +76,7 @@ var ori_to_heading = {
 const WAGON_SCENE = preload("res://scenes/entities/trains/navigation_wagon.tscn")
 const LOCOMOTIVE_SCENE = preload("res://scenes/entities/trains/navigation_locomotive.tscn")
 
-signal tile_changed(old_tile: Vector2i, new_tile: Vector2i)
+signal train_tile_changed(navigation_train: NavigationTrain, old_tile: Vector2i, new_tile: Vector2i)
 
 func _ready() -> void:
 	add_locomotive()
@@ -161,12 +161,6 @@ func update_speed_label():
 	speed_label.text = "Speed: %s" % round(move_speed)
 
 
-func inmediate_stop():
-	move_speed = 0
-	gear = "N"
-	update_gear_label()
-	update_speed_label()
-
 func _process(delta):	
 	_update_speed(delta)
 	#_move_train(delta)
@@ -195,6 +189,14 @@ func reverse_train():
 		wagons[n-i-1].set_orientation(OPPOSITE_ORIENTATION[orientations[i]])
 		wagons[n-i-1].set_heading(ori_to_heading[OPPOSITE_ORIENTATION[orientations[i]]])
 
+func inmediate_stop():
+	move_speed = 0
+	gear = "N"
+	update_gear_label()
+	update_speed_label()
+	for wagon in wagons:
+		wagon.speed = move_speed
+
 func _update_speed(delta: float):
 	if gear == "D":
 		move_speed += ACCELERATION * delta
@@ -207,17 +209,19 @@ func _update_speed(delta: float):
 	update_speed_label()
 
 
+
 func _on_locomotive_tile_changed(locomotive, old_tile: Vector2i, new_tile: Vector2i):
 	print("*** Locomotive has changed tile")
 	_handle_tile_change(locomotive, old_tile, new_tile)
+
 	# locomotive should also handle explaration
-	
 	#var vision_tiles: Array[Vector2i] = []
 	#for offset in train_vision_offsets:
 	#	vision_tiles.append(new_tile + offset)
 	#exploration_layer.reveal(vision_tiles)
 
 	# locomotive should also check for events
+	train_tile_changed.emit(self, old_tile, new_tile)
 
 func _on_wagon_tile_changed(wagon, old_tile: Vector2i, new_tile: Vector2i):
 	print("*** Wagon has changed tile")
@@ -231,6 +235,10 @@ func _handle_tile_change(wagon, old_tile: Vector2i, new_tile: Vector2i):
 	wagon.set_heading(ori_to_heading[new_ori])
 	
 	
+
+
+
+
 
 # func on_arrived_to_tile(tile: Vector2i):
 # 	train_manager.on_train_reached_tile(self , tile)
