@@ -103,9 +103,23 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_e0ol1"]
+radius = 3.0
+
 [node name="NavigationWagon" unique_id=212834667 instance=ExtResource("1_tr340")]
 script = ExtResource("2_e0ol1")
 
 [node name="Sprite" parent="." index="0" unique_id=2070118109]
 sprite_frames = SubResource("SpriteFrames_tr340")
-animation = &"N"
+animation = &"E"
+
+[node name="Attachments" type="Area2D" parent="." index="1" unique_id=2080350396]
+position = Vector2(0, 2)
+
+[node name="front" type="CollisionShape2D" parent="Attachments" index="0" unique_id=1631546324]
+position = Vector2(17, 6)
+shape = SubResource("CircleShape2D_e0ol1")
+
+[node name="back" type="CollisionShape2D" parent="Attachments" index="1" unique_id=98484038]
+position = Vector2(-10, -12)
+shape = SubResource("CircleShape2D_e0ol1")

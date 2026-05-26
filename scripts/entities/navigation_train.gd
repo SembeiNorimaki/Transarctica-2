@@ -127,11 +127,19 @@ func add_wagon():
 	# connect signals
 	wagon.tile_changed.connect(_on_wagon_tile_changed)
 
+	wagon.call_deferred("enable_front_attachment", false)
 
 	# add to container
-	wagon_container.add_child(wagon, false)
+	wagon_container.add_child(wagon)
 	wagon_container.move_child(wagon, 0)
 
+
+	# disable previous wagon rear attachment
+	if wagons.size() > 1:
+		var prev_wagon = wagons[-1]
+		prev_wagon.enable_back_attachment(false)
+	# disable current wagon front attachment
+	wagon.enable_front_attachment(false)
 	wagons.append(wagon)
 
 #endregion

@@ -111,15 +111,11 @@ func gear_toggle():
 #endregion
 
 func on_train_tile_changed(train: NavigationTrain, old_tile: Vector2i, new_tile: Vector2i) -> void:
-	pass
-	# _on_train_tile_changed(train, train.current_tile, tile)
-	# train.current_tile = tile
-	# _check_tile_events(train, tile)
-	#_give_next_tile(unit)
-
-func _check_tile_events(train: NavigationTrain, tile: Vector2i) -> void:
-	if cities_manager.is_entry_tile(tile):
-		var city = cities_manager.get_city_by_entry_tile(tile)
+	_check_tile_events(train, new_tile)
+	
+func _check_tile_events(train: NavigationTrain, new_tile: Vector2i) -> void:
+	if cities_manager.is_entry_tile(new_tile):
+		var city = cities_manager.get_city_by_entry_tile(new_tile)
 		print("Train reached city %s" % city.name)
 		train.inmediate_stop()
 		emit_signal("train_reached_city", city.name)

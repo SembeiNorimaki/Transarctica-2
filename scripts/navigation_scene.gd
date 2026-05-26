@@ -24,8 +24,13 @@ extends Node2D
 
 # Containers
 @onready var trains_container = $Containers/Trains
+@onready var wagon_container = $Containers/Wagons
+
 @onready var city_labels_container = $Containers/CityLabels
 
+
+const WAGON_SCENE = preload("res://scenes/entities/trains/navigation_wagon.tscn")
+	
 
 func _ready() -> void:
 	grid_service.set_tile_size(Vector2i(128, 64))
@@ -88,6 +93,7 @@ func _load_map(map_name: String) -> void:
 	_build_rails_from_map(new_map.get_node("Rails"))
 	_spawn_cities_from_map(new_map.get_node("CitiesIds"))
 	_spawn_trains_from_map(new_map.get_node("Trains"))
+	_spawn_wagons()
 
 	
 func _spawn_cities_from_map(cities_ids_tilemap: TileMapLayer) -> void:
@@ -115,6 +121,23 @@ func _build_rails_from_map(rails_tilemap: TileMapLayer) -> void:
 		rail_service.spawn_rail(tile, atlas_coords)
 	
 	#rails_overlay.update()
+
+# spawns wagons that can be picked by the train
+func _spawn_wagons():
+	var wagon = WAGON_SCENE.instantiate()
+
+	# dependency injection
+	wagon.grid_service = grid_service
+
+
+	var tile_pos_ = Vector2i(20, 8)
+	var ori_ = "E"
+	var current_pos = grid_service.tile_to_world(tile_pos_)
+	wagon.set_pos(current_pos)
+	wagon.call_deferred("set_orientation", ori_)
+	
+	# add to container
+	wagon_container.add_child(wagon)
 
 
 func _unhandled_input(event: InputEvent) -> void:

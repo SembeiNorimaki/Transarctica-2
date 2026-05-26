@@ -55,6 +55,8 @@ offset_right = 200.0
 offset_bottom = 130.0
 text = "hello"
 
+[node name="Wagons" type="Node2D" parent="Containers" unique_id=578554994]
+
 [node name="Services" type="Node" parent="." unique_id=1075002304]
 
 [node name="GridService" type="Node" parent="Services" unique_id=1660360493]

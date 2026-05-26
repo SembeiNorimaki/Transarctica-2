@@ -10,17 +10,17 @@
             "fish": {
                 "BuyPrice": 2,
                 "SellPrice": 3,
-                "Quantity": 10
+                "Quantity": 1
             },
             "caviar": {
                 "BuyPrice": 4,
                 "SellPrice": 5,
-                "Quantity": 20
+                "Quantity": 6
             },
             "wood": {
                 "BuyPrice": 4,
                 "SellPrice": 5,
-                "Quantity": 20
+                "Quantity": 12
             }
         }
     },

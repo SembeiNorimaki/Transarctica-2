@@ -27,6 +27,7 @@ var produced_resource_spawn_tiles = [Vector2i(3, 3), Vector2i(4, 2), Vector2i(5,
 
 var idx = 0
 var RESOURCE_SCENE = preload("res://scenes/entities/resources/resource.tscn")
+var CRATE_SCENE = preload("res://scenes/entities/resources/crate.tscn")
 
 var resources = {}
 
@@ -34,6 +35,32 @@ func _ready() -> void:
 	pass
 
 #region resource spawning
+func spawn_crate(resource_name_: String, qty_: int, mode: String):
+	print("Spawning crate %s" % resource_name_)
+	var crate = CRATE_SCENE.instantiate()
+	crate.call_deferred("set_mode", "InGround")
+	crate.call_deferred("set_qty", qty_)
+	
+	var tile = produced_resource_spawn_tiles[idx]
+	if mode == "required":
+		tile = required_resource_spawn_tiles[idx]
+
+	var screen_pos = grid_service.tile_to_world(tile)
+	crate.position = screen_pos
+	idx += 1
+
+	# Dependency injection
+
+	# Add to scene tree
+	get_node("../../Containers/Resources").add_child(crate)
+
+	# Register in occupancy
+	print("Resgistering crate %s to tile %s" % [resource_name_, tile])
+	tile_occupancy_service.register(tile, crate)
+
+	resources[resource_name_] = crate
+
+
 func spawn_resource(resource_name_: String, qty_: int, mode: String) -> void:
 	print("Spawning resource %s" % resource_name_)
 	var resource = RESOURCE_SCENE.instantiate()

@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://b36hgm4vf2hyx"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_y46tj"]
+
+[node name="Control" type="Control" unique_id=790944689]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=175945254]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 0
+color = Color(0.36862746, 0.37254903, 0.8509804, 1)
+
+[node name="Label" type="Label" parent="ColorRect" unique_id=1278489988]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -103.0
+offset_top = -13.75
+offset_right = 103.0
+offset_bottom = 13.75
+grow_horizontal = 2
+grow_vertical = 2
+text = "lorem ipsum"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect" unique_id=1562076485]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -66.0
+offset_top = -33.0
+offset_bottom = 33.0
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 8
+
+[node name="Button" type="Button" parent="ColorRect/VBoxContainer" unique_id=350489203]
+layout_mode = 2
+text = "Accept"
+
+[node name="Button2" type="Button" parent="ColorRect/VBoxContainer" unique_id=214710185]
+layout_mode = 2
+text = "Decline"
+
+[node name="TextureRect" type="TextureRect" parent="ColorRect" unique_id=820562066]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -40.0
+offset_right = 80.0
+offset_bottom = 40.0
+grow_vertical = 2
+texture = SubResource("PlaceholderTexture2D_y46tj")

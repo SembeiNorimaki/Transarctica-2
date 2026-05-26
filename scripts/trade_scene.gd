@@ -101,7 +101,9 @@ func load_city_resources_from_game_state(city_name: String):
 		var buy_price = GameState.state.cities[city_name].TradeResources[resource_name].BuyPrice
 		var max_capacity = 999
 
-		resource_manager.spawn_resource(resource_name, qty, "trade")
+		#resource_manager.spawn_resource(resource_name, qty, "trade")
+		resource_manager.spawn_crate(resource_name, qty, "trade")
+
 		city_resource_container.initialize_resource(resource_name, qty, buy_price, sell_price, max_capacity)
 
 func load_industry_resources_from_game_state(industry_name: String):
