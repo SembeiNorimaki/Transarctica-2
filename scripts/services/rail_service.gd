@@ -82,12 +82,21 @@ const DIRS = {
 	"W": Vector2i(-1, 0)
 }
 
+const EDGE_POS = {
+	"N": Vector2(0.5, -0.5),
+	"E": Vector2(0.5, 0.5),
+	"S": Vector2(-0.5, 0.5),
+	"W": Vector2(-0.5, -0.5)
+}
+
 const DELTA_TO_ENTRY_EDGE = {
 	Vector2i(1, 0): "W",
 	Vector2i(-1, 0): "E",
 	Vector2i(0, 1): "N",
 	Vector2i(0, -1): "S"
 }
+
+
 const OPPOSITE_EDGE = {
 	"N": "S",
 	"S": "N",
@@ -176,6 +185,10 @@ func _rebuild_edges_for_tile(tile: Vector2i, rail_name: String) -> void:
 		edges[tile].append(RailEdge.new(a, b, 1))
 		edges[tile].append(RailEdge.new(c, d, 1))
 		
+
+func get_tile_edges(tile: Vector2i) -> Array:
+	return edges.get(tile, [])
+	
 
 # A tile has an array of edges, for example (1) NS for a single rail, or (3) NS, SE, NE for a junction
 # When arriving to a tile, we need to know which edge we are using to arrive there
