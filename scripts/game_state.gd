@@ -3,7 +3,12 @@ extends Node
 var state := {
 	"cities": {},
 	"industries": {},
-	"train": {}
+	"train": {},
+	"money": 1000,
+	"quests": {
+		"active": {},
+		"completed": []
+	}
 }
 
 var cities_by_location = {}
@@ -52,9 +57,20 @@ func get_city(name: String) -> Dictionary:
 func add_goods_to_city(city_name: String, good_name: String, amount: int):
 	state["cities"][city_name]["goods"][good_name] += amount
 
+func update_wagon_cargo(wagon_idx: int, resource_name: String, qty: int):
+	if state.has("train") and state.train.has("wagons") and wagon_idx < state.train.wagons.size():
+		if resource_name == "":
+			state.train.wagons[wagon_idx].cargo = []
+		else:
+			state.train.wagons[wagon_idx].cargo = [{
+				"resource_name": resource_name,
+				"resource_qty": qty
+			}]
+		save()
+
 func save():
 	var json = JSON.stringify(state)
-	FileAccess.open("user://save,json", FileAccess.WRITE).store_string(json)
+	FileAccess.open("user://save.json", FileAccess.WRITE).store_string(json)
 
 func load():
 	var file = FileAccess.open("user://save.json", FileAccess.READ)

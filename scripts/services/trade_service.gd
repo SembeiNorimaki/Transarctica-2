@@ -3,6 +3,7 @@ class_name TradeService
 
 var city: CityResourceContainer = null
 var train: TrainResourceContainer = null
+var city_name: String = ""
 
 var resource_name: String = ""
 var transaction_type: String = ""
@@ -26,9 +27,10 @@ func execute_transaction(buttonIdx: int):
 	elif transaction_type == "sell":
 		sell(resource_name, qty)
 
-func set_context(city_container: CityResourceContainer, train_container: TrainResourceContainer):
+func set_context(city_container: CityResourceContainer, train_container: TrainResourceContainer, city_name_: String = ""):
 	city = city_container
 	train = train_container
+	city_name = city_name_
 
 func buy(resource: String, qty: int) -> bool:
 	# 1: Price lookup
@@ -75,5 +77,8 @@ func sell(resource: String, qty: int) -> bool:
 	train.add_money(total_gain)
 	train.remove_resource_amount(resource, qty)
 	city.add_resource_amount(resource, qty)
+
+	if city_name != "":
+		QuestManager.notify_goods_delivered(city_name, resource, qty)
 
 	return true

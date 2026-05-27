@@ -40,7 +40,7 @@ func _ready() -> void:
 
 	camera_controller.center_at_tile(Vector2i(15, 5))
 	camera_controller.set_zoom(1.0)
-
+	
 func _inject_services():
 	# Managers
 	train_manager.grid_service = grid_service
@@ -91,6 +91,7 @@ func _load_map(map_name: String) -> void:
 	rail_service.rails_tilemap = $MapRoot/World1/Rails
 	
 	_build_rails_from_map(new_map.get_node("Rails"))
+	_build_bridges_from_map(new_map.get_node("Bridges"))
 	_spawn_cities_from_map(new_map.get_node("CitiesIds"))
 	_spawn_trains_from_map(new_map.get_node("Trains"))
 	_spawn_wagons()
@@ -119,9 +120,16 @@ func _build_rails_from_map(rails_tilemap: TileMapLayer) -> void:
 		var source_id = rails_tilemap.get_cell_source_id(tile)
 		
 		rail_service.spawn_rail(tile, atlas_coords)
-	
-	#rails_overlay.update()
 
+func _build_bridges_from_map(bridges_tilemap: TileMapLayer) -> void:
+	for tile in bridges_tilemap.get_used_cells():
+		var atlas_coords = bridges_tilemap.get_cell_atlas_coords(tile)
+		var source_id = bridges_tilemap.get_cell_source_id(tile)
+		
+		rail_service.spawn_bridge(tile, atlas_coords)
+
+
+	#bridges_overlay.update()
 # spawns wagons that can be picked by the train
 func _spawn_wagons():
 	var wagon = WAGON_SCENE.instantiate()
@@ -164,8 +172,6 @@ func _handle_reverse_train():
 	train_manager.reverse_train()
 
 
-
-
 func _on_player_train_tile_changed(from_tile: Vector2i, to_tile: Vector2i) -> void:
 	print("Train changed tile")
 	pass
@@ -173,6 +179,7 @@ func _on_player_train_tile_changed(from_tile: Vector2i, to_tile: Vector2i) -> vo
 
 func _on_train_reached_city(city_name: String):
 	print("Nav Scene: Train reached city %s" % city_name)
+	QuestManager.notify_city_reached(city_name)
 	SceneManager.enter_city(city_name)
 
 func recenter_player_train():

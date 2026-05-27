@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dgmql3w2ql5v"]
 
-[ext_resource type="Texture2D" uid="uid://clnasqdon2pug" path="res://assets/sprites/resources/container3.png" id="1_0drfh"]
+[ext_resource type="Texture2D" uid="uid://dyy521nc8w37k" path="res://assets/sprites/containers/containers.png" id="1_0drfh"]
 
 [node name="Container" type="Sprite2D" unique_id=917833100]
 texture = ExtResource("1_0drfh")
+hframes = 3

@@ -75,6 +75,16 @@ const RAILNAME_TO_ATLAS = {
 	 "SX": Vector2i(2, 7)
 }
 
+const ATLAS_TO_BRIDGENAME = {
+	Vector2i(0, 0): "WE",
+	Vector2i(1, 0): "NS"
+}
+
+const BRIDGENAME_TO_ATLAS = {
+	 "WE": Vector2i(0, 0),
+	 "NS": Vector2i(1, 0)
+}
+
 const DIRS = {
 	"N": Vector2i(0, -1),
 	"E": Vector2i(1, 0),
@@ -157,6 +167,15 @@ func spawn_rail(tile: Vector2i, atlas_coords: Vector2i) -> void:
 	# update internal graph
 	#_add_to_graph(tile)
 	_rebuild_edges_for_tile(tile, rail_name)
+
+func spawn_bridge(tile: Vector2i, atlas_coords: Vector2i) -> void:
+	var bridge_name = ATLAS_TO_RAILNAME[atlas_coords]
+	#print("Spawning rail %s at %s" % [rail_name, tile])
+	# Place the simplest rail, atlascoords (0, 0)
+	#rails_tilemap.set_cell(tile, 0, Vector2i(0, 0))
+	# update internal graph
+	#_add_to_graph(tile)
+	_rebuild_edges_for_tile(tile, bridge_name)
 
 func _rebuild_edges_for_tile(tile: Vector2i, rail_name: String) -> void:
 	edges[tile] = []

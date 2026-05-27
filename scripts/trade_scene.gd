@@ -78,10 +78,9 @@ func initialize(name: String):
 		print("Error, %s not found in GameState" % name)
 		return
 
-	
 	load_train_from_game_state()
 	load_loader_vehicle()
-	trade_service.set_context(city_resource_container, train_resource_container)
+	trade_service.set_context(city_resource_container, train_resource_container, name)
 
 func _process(delta: float) -> void:
 	if is_intro:
@@ -120,7 +119,7 @@ func load_industry_resources_from_game_state(industry_name: String):
 
 func load_train_from_game_state():
 	print("Loading from game state")
-	var initial_tile = Vector2i(-3, 4)
+	var initial_tile = Vector2(-3.2, 4)
 	horizontal_train = horizontal_train_manager.spawn_train(initial_tile, "Player")
 	horizontal_train.set_speed(horizontal_train.max_speed)
 	add_child(horizontal_train)
@@ -306,7 +305,6 @@ func on_k_pressed():
 		print("Loading %s to loader vehicle" % resource_type)
 	else:
 		# if the loader is full, unload it
-		
 		loader_vehicle.unload_crate()
 		#var resource_type = loader_vehicle.unload()
 		#city_resource_container.add_resource_amount(resource_type, 1)

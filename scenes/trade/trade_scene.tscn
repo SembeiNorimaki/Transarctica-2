@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://b3efv4oicsfhv" path="res://scenes/trade/traffic_light.tscn" id="11_4s0xo"]
 [ext_resource type="Script" uid="uid://bluwsgcbc47h3" path="res://scripts/components/trade_menu.gd" id="11_w35w6"]
 [ext_resource type="PackedScene" uid="uid://ofxj01woinrh" path="res://scenes/entities/wagons/loader_vehicle.tscn" id="12_gh7va"]
+[ext_resource type="PackedScene" uid="uid://dgmql3w2ql5v" path="res://scenes/entities/resources/container.tscn" id="15_8rtxp"]
 
 [node name="TradeScene" type="Control" unique_id=889321148]
 layout_mode = 3
@@ -138,6 +139,9 @@ offset_bottom = 23.0
 grow_horizontal = 2
 text = "City Name"
 horizontal_alignment = 1
+
+[node name="Container" parent="." unique_id=917833100 instance=ExtResource("15_8rtxp")]
+position = Vector2(-195, 218)
 
 [connection signal="pressed" from="TradeMenu/Container/VBoxContainer/Button1" to="TradeMenu" method="_on_button_pressed"]
 [connection signal="pressed" from="TradeMenu/Container/VBoxContainer/Button2" to="TradeMenu" method="_on_button_2_pressed"]

@@ -134,4 +134,5 @@ func _process(delta: float) -> void:
 	
 	position.x += speed * delta
 
-	camera_controller.set_pos(position + Vector2(0, 200))
+	#camera_controller.set_pos(position + Vector2(0, 380)) # for fullscreen
+	camera_controller.set_pos(position + Vector2(0, 200)) # for windowed mode

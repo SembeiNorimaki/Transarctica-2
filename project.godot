@@ -28,6 +28,7 @@ SoldierAtlasLoader="*res://autoload/soldier_atlas_loader.gd"
 WallTypes="*uid://c2owq8l7km3os"
 SceneManager="*uid://l2ixgo1287ln"
 GameState="*uid://ccrkd2eqch3c3"
+QuestManager="*res://scripts/managers/quest_manager.gd"
 
 [display]
 

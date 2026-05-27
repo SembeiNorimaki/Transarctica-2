@@ -7,11 +7,15 @@
 [ext_resource type="Texture2D" uid="uid://d34t5b544o2el" path="res://assets/tilesets/industries/BrickFactory_nav.png" id="4_rb0el"]
 [ext_resource type="Texture2D" uid="uid://dvcba42rxqn1b" path="res://assets/tilesets/industries/Chemical_nav.png" id="5_05yeu"]
 [ext_resource type="Texture2D" uid="uid://dq1f3h6bpvfxr" path="res://assets/sprites/buildings/4457_zi2.png" id="5_odqv0"]
+[ext_resource type="Texture2D" uid="uid://cv7wfcvi2kgkr" path="res://assets/sprites/buildings/house1.png" id="6_hmbkj"]
 [ext_resource type="Texture2D" uid="uid://b4lqp1ecgy2cd" path="res://assets/tilesets/industries/ClayMine_nav.png" id="6_odqv0"]
 [ext_resource type="Texture2D" uid="uid://c3q2bn4ym8vo4" path="res://assets/sprites/buildings/4450_zi2.png" id="6_sl7nf"]
+[ext_resource type="Texture2D" uid="uid://k8atbwyc3pms" path="res://assets/sprites/buildings/house1b.png" id="7_5rpj7"]
 [ext_resource type="Texture2D" uid="uid://xiqowxyigkeu" path="res://assets/sprites/buildings/4451_zi2.png" id="7_hmbkj"]
 [ext_resource type="Texture2D" uid="uid://d4chygp75mc8m" path="res://assets/tilesets/industries/CoalMine_nav.png" id="7_sl7nf"]
+[ext_resource type="Texture2D" uid="uid://cfy2grg5amcxm" path="res://assets/sprites/buildings/house1c.png" id="8_4e560"]
 [ext_resource type="Texture2D" uid="uid://c7s2m75aihq" path="res://assets/tilesets/industries/Container_nav.png" id="8_hmbkj"]
+[ext_resource type="Texture2D" uid="uid://bp2iad5ne03j3" path="res://assets/tilesets/industries/Chemical.png" id="9_4e560"]
 [ext_resource type="Texture2D" uid="uid://cofdsxmqbywes" path="res://assets/tilesets/industries/Copper_nav.png" id="9_5rpj7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vi62s"]
@@ -39,6 +43,27 @@ texture_region_size = Vector2i(93, 56)
 texture = ExtResource("5_odqv0")
 texture_region_size = Vector2i(92, 56)
 0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2ybef"]
+texture = ExtResource("6_hmbkj")
+texture_region_size = Vector2i(178, 141)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fihn5"]
+texture = ExtResource("7_5rpj7")
+texture_region_size = Vector2i(175, 140)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ch53g"]
+texture = ExtResource("8_4e560")
+texture_region_size = Vector2i(178, 137)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wp6cl"]
+texture = ExtResource("9_4e560")
+texture_region_size = Vector2i(771, 522)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, -24)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1fjbj"]
 texture = ExtResource("6_sl7nf")
@@ -101,3 +126,7 @@ sources/2 = SubResource("TileSetAtlasSource_1fjbj")
 sources/3 = SubResource("TileSetAtlasSource_dqeo8")
 sources/11 = SubResource("TileSetAtlasSource_5rpj7")
 sources/12 = SubResource("TileSetAtlasSource_4e560")
+sources/13 = SubResource("TileSetAtlasSource_2ybef")
+sources/14 = SubResource("TileSetAtlasSource_fihn5")
+sources/15 = SubResource("TileSetAtlasSource_ch53g")
+sources/16 = SubResource("TileSetAtlasSource_wp6cl")
