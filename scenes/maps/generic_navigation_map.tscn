@@ -5,6 +5,22 @@
 [ext_resource type="TileSet" uid="uid://di4xrktsbdfmf" path="res://scenes/maps/cities.tres" id="3_ivt2f"]
 [ext_resource type="TileSet" uid="uid://do2omj1xex6mr" path="res://scenes/maps/trains.tres" id="4_r0yyr"]
 [ext_resource type="Texture2D" uid="uid://bxydcu0do0gmg" path="res://assets/tilesets/grid_numbers.png" id="5_r0yyr"]
+[ext_resource type="Texture2D" uid="uid://fiswfxrh3x37" path="res://assets/tilesets/tunnels/tunnels.png" id="6_vi62s"]
+[ext_resource type="Texture2D" uid="uid://brdl7hqxwenxe" path="res://assets/tilesets/bridges/bridges.png" id="7_uqwmi"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_30kp2"]
+texture = ExtResource("7_uqwmi")
+texture_region_size = Vector2i(122, 78)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, -8)
+1:0/0 = 0
+1:0/0/texture_origin = Vector2i(0, -8)
+
+[sub_resource type="TileSet" id="TileSet_vi62s"]
+tile_shape = 1
+tile_layout = 5
+tile_size = Vector2i(128, 64)
+sources/0 = SubResource("TileSetAtlasSource_30kp2")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vi62s"]
 texture = ExtResource("5_r0yyr")
@@ -116,18 +132,39 @@ tile_layout = 5
 tile_size = Vector2i(128, 64)
 sources/1 = SubResource("TileSetAtlasSource_vi62s")
 
-[node name="GenericNavigationMap" type="Node2D" unique_id=1195897361]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uqwmi"]
+texture = ExtResource("6_vi62s")
+texture_region_size = Vector2i(128, 80)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 8)
+1:0/0 = 0
+1:0/0/texture_origin = Vector2i(0, 8)
+2:0/0 = 0
+2:0/0/texture_origin = Vector2i(0, 8)
+3:0/0 = 0
+3:0/0/texture_origin = Vector2i(0, 8)
 
-[node name="Terrain" type="TileMapLayer" parent="." unique_id=831286021]
-tile_set = ExtResource("1_pxm0i")
+[sub_resource type="TileSet" id="TileSet_r0yyr"]
+tile_shape = 1
+tile_layout = 5
+tile_size = Vector2i(128, 64)
+sources/1 = SubResource("TileSetAtlasSource_uqwmi")
+
+[node name="GenericNavigationMap" type="Node2D" unique_id=1195897361]
 
 [node name="Terrain+1" type="TileMapLayer" parent="." unique_id=527008799]
 position = Vector2(0, -16)
 tile_set = ExtResource("1_pxm0i")
 
+[node name="Terrain" type="TileMapLayer" parent="." unique_id=831286021]
+tile_set = ExtResource("1_pxm0i")
+
 [node name="Terrain-1" type="TileMapLayer" parent="." unique_id=49720303]
 position = Vector2(0, 16)
 tile_set = ExtResource("1_pxm0i")
+
+[node name="Bridges" type="TileMapLayer" parent="." unique_id=12452749]
+tile_set = SubResource("TileSet_vi62s")
 
 [node name="Rails" type="TileMapLayer" parent="." unique_id=867218948]
 tile_set = ExtResource("2_pxm0i")
@@ -140,3 +177,6 @@ tile_set = ExtResource("4_r0yyr")
 
 [node name="CitiesIds" type="TileMapLayer" parent="." unique_id=133513815]
 tile_set = SubResource("TileSet_uqwmi")
+
+[node name="Tunnels" type="TileMapLayer" parent="." unique_id=1795313605]
+tile_set = SubResource("TileSet_r0yyr")

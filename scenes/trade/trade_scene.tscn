@@ -14,7 +14,6 @@
 [ext_resource type="PackedScene" uid="uid://b3efv4oicsfhv" path="res://scenes/trade/traffic_light.tscn" id="11_4s0xo"]
 [ext_resource type="Script" uid="uid://bluwsgcbc47h3" path="res://scripts/components/trade_menu.gd" id="11_w35w6"]
 [ext_resource type="PackedScene" uid="uid://ofxj01woinrh" path="res://scenes/entities/wagons/loader_vehicle.tscn" id="12_gh7va"]
-[ext_resource type="PackedScene" uid="uid://ysig1tby6uoi" path="res://scenes/entities/units/unit_xcom2.tscn" id="15_8rtxp"]
 
 [node name="TradeScene" type="Control" unique_id=889321148]
 layout_mode = 3
@@ -48,6 +47,9 @@ script = ExtResource("8_kdl80")
 
 [node name="Containers" type="Node2D" parent="." unique_id=1494143937]
 
+[node name="LoaderVehicle" parent="Containers" unique_id=1277425951 instance=ExtResource("12_gh7va")]
+position = Vector2(0, 177)
+
 [node name="Trains" type="Node2D" parent="Containers" unique_id=942685259]
 
 [node name="Resources" type="Node2D" parent="Containers" unique_id=352074794]
@@ -60,9 +62,6 @@ script = ExtResource("10_w35w6")
 
 [node name="TrafficLight" parent="Containers" unique_id=808951903 instance=ExtResource("11_4s0xo")]
 position = Vector2(590, 52)
-
-[node name="LoaderVehicle" parent="Containers" unique_id=1277425951 instance=ExtResource("12_gh7va")]
-position = Vector2(0, 177)
 
 [node name="Overlays" type="Node2D" parent="." unique_id=1044972962]
 
@@ -139,9 +138,6 @@ offset_bottom = 23.0
 grow_horizontal = 2
 text = "City Name"
 horizontal_alignment = 1
-
-[node name="UnitXcom" parent="." unique_id=182245208 instance=ExtResource("15_8rtxp")]
-position = Vector2(119, 333)
 
 [connection signal="pressed" from="TradeMenu/Container/VBoxContainer/Button1" to="TradeMenu" method="_on_button_pressed"]
 [connection signal="pressed" from="TradeMenu/Container/VBoxContainer/Button2" to="TradeMenu" method="_on_button_2_pressed"]

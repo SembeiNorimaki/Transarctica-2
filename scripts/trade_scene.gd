@@ -127,7 +127,7 @@ func load_train_from_game_state():
 	print("Spawned horizontal train at tile: %s" % initial_tile)
 
 func load_loader_vehicle():
-	pass
+	loader_vehicle.call_deferred("initialize")
 
 func _inject_services():
 	# Managers
@@ -287,7 +287,8 @@ func on_i_pressed():
 		horizontal_train_manager.player_train.wagons[wagon_idx].open_doors()
 		await get_tree().create_timer(1).timeout
 
-		var resource_type = loader_vehicle.unload()
+		#var resource_type = loader_vehicle.unload()
+		var resource_type = loader_vehicle.unload_crate()
 		print("Attempting to load wagon %s with %s from loader" % [wagon_idx, resource_type])
 		train_resource_container.add_resource_qty_to_wagon(wagon_idx, resource_type, 1)
 		print("Unloading %s from loader and loading it in wagon %s" % [resource_type, wagon_idx])
@@ -296,13 +297,16 @@ func on_i_pressed():
 func on_k_pressed():
 	# k acts on resources either loading or unloading them from the loader vehicle
 	var resource_idx = resource_manager.xpos_to_resource_idx(loader_vehicle.global_position.x)
-	if loader_vehicle.is_empty() && resource_idx != -1:
+	if resource_idx != -1:
 		# if the loader is empty, load it with the selected resource
 		var resource_type = resource_manager.resources.keys()[resource_idx]
-		loader_vehicle.load(resource_type)
+		#loader_vehicle.load(resource_type)
+		loader_vehicle.load_crate(resource_type)
 		city_resource_container.remove_resource_amount(resource_type, 1)
 		print("Loading %s to loader vehicle" % resource_type)
-	elif not loader_vehicle.is_empty() && resource_idx == -1:
+	else:
 		# if the loader is full, unload it
-		var resource_type = loader_vehicle.unload()
-		city_resource_container.add_resource_amount(resource_type, 1)
+		
+		loader_vehicle.unload_crate()
+		#var resource_type = loader_vehicle.unload()
+		#city_resource_container.add_resource_amount(resource_type, 1)

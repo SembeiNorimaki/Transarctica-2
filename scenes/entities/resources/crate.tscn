@@ -12,8 +12,8 @@ visible = false
 position = Vector2(0, -19)
 texture = ExtResource("1_dk8nj")
 hframes = 12
+frame = 11
 
 [node name="SpriteInWagon" type="Sprite2D" parent="." unique_id=633881588]
-visible = false
 texture = ExtResource("3_ivlev")
 hframes = 12

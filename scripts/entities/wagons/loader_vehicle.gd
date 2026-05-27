@@ -6,12 +6,16 @@ var camera_controller: CameraController
 var horizontal_train: HorizontalTrain
 
 @onready var cargo_sprite = $CargoSprite
+@onready var crate = $CrateSprite
+
 var speed := 0.0
 var max_speed := 300.0
 var acceleration := 100.0
 var deceleration := 300.0
 var gear := "N"
 var cargo := ""
+
+var crate_qty := 0
 
 var resource_name_to_frame = {
 	"alcohol": 0,
@@ -60,6 +64,11 @@ var frame_to_resource_name = {
 	20: "wood"
 }
 
+func initialize():
+	crate_qty = 0
+	crate.set_mode("InWagon")
+	crate.set_qty(crate_qty)
+
 func gear_up():
 	if gear == "R":
 		gear = "N"
@@ -93,6 +102,20 @@ func load(resource_name: String):
 	cargo = resource_name
 	cargo_sprite.frame = resource_name_to_frame[resource_name]
 	cargo_sprite.visible = true
+
+
+func load_crate(resource_name: String):
+	print("Loading crate")
+	cargo = resource_name
+	crate_qty += 1
+	crate.set_qty(crate_qty)
+
+func unload_crate() -> String:
+	print("Unloading crate")
+	crate_qty -= 1
+	crate.set_qty(crate_qty)
+	return cargo
+	
 
 func _process(delta: float) -> void:
 	if gear == "D":

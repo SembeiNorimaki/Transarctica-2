@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://2f34a7cpeqkk" path="res://assets/sprites/resources_120x46.png" id="3_w8ktk"]
 [ext_resource type="Texture2D" uid="uid://cv6aud7ei3qni" path="res://assets/sprites/traffic_light.png" id="5_abxr3"]
 [ext_resource type="Texture2D" uid="uid://xxt36wjgwhwi" path="res://assets/tilesets/roads_zi2.png" id="6_ats1p"]
+[ext_resource type="Texture2D" uid="uid://5s4q0pfhool" path="res://assets/sprites/signs/signs_small.png" id="7_8n8mg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8n8mg"]
 texture = ExtResource("6_ats1p")
@@ -75,6 +76,46 @@ tile_layout = 5
 tile_size = Vector2i(128, 64)
 sources/0 = SubResource("TileSetAtlasSource_ats1p")
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gnvxj"]
+texture = ExtResource("7_8n8mg")
+texture_region_size = Vector2i(68, 93)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 41)
+1:0/0 = 0
+1:0/0/texture_origin = Vector2i(0, 41)
+2:0/0 = 0
+2:0/0/texture_origin = Vector2i(0, 41)
+3:0/0 = 0
+3:0/0/texture_origin = Vector2i(0, 41)
+4:0/0 = 0
+4:0/0/texture_origin = Vector2i(0, 41)
+5:0/0 = 0
+5:0/0/texture_origin = Vector2i(0, 41)
+6:0/0 = 0
+6:0/0/texture_origin = Vector2i(0, 41)
+7:0/0 = 0
+7:0/0/texture_origin = Vector2i(0, 41)
+8:0/0 = 0
+8:0/0/texture_origin = Vector2i(0, 41)
+9:0/0 = 0
+9:0/0/texture_origin = Vector2i(0, 41)
+10:0/0 = 0
+10:0/0/texture_origin = Vector2i(0, 41)
+11:0/0 = 0
+11:0/0/texture_origin = Vector2i(0, 41)
+12:0/0 = 0
+12:0/0/texture_origin = Vector2i(0, 41)
+13:0/0 = 0
+13:0/0/texture_origin = Vector2i(0, 41)
+14:0/0 = 0
+14:0/0/texture_origin = Vector2i(0, 41)
+
+[sub_resource type="TileSet" id="TileSet_kky6f"]
+tile_shape = 1
+tile_layout = 5
+tile_size = Vector2i(128, 64)
+sources/1 = SubResource("TileSetAtlasSource_gnvxj")
+
 [node name="GenericTradeMap" type="Node2D" unique_id=1011338494]
 
 [node name="Terrain" type="TileMapLayer" parent="." unique_id=1460233366]
@@ -94,3 +135,6 @@ tile_set = ExtResource("3_j7s4g")
 
 [node name="TrafficLight" type="TileMapLayer" parent="." unique_id=221369765]
 tile_set = SubResource("TileSet_w8ktk")
+
+[node name="Signs" type="TileMapLayer" parent="." unique_id=743331694]
+tile_set = SubResource("TileSet_kky6f")
