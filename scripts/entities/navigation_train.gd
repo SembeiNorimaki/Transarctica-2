@@ -1,6 +1,44 @@
 extends Node2D
 class_name NavigationTrain
 
+# ─────────────────────────────────────────────
+#  NavigationTrain
+#
+#  Lifecycle & Setup:
+#    _ready() -> void
+#    initialize(tile_pos_: Vector2i, ori_: String) -> void
+#    initialize_wagon_positions(tile_pos_: Vector2i, ori_: String)
+#
+#  Wagon Management:
+#    add_locomotive()
+#    add_wagon()
+#
+#  State & UI Updates:
+#    set_id(id_: String) -> void
+#    set_team(team_id_: String)
+#    set_action(state: String, params = {}) -> void
+#    update_state_label(state_name: String)
+#    update_gear_label()
+#    update_speed_label()
+#
+#  Train Controls (Public API):
+#    gear_toggle()
+#    reverse_train()
+#    inmediate_stop()
+#
+#  Process & Movement:
+#    _process(delta: float) -> void
+#    _update_speed(delta: float)
+#
+#  Signal Handlers (Tile Tracking):
+#    _on_locomotive_tile_changed(locomotive: Node, old_tile: Vector2i, new_tile: Vector2i)
+#    _on_wagon_tile_changed(wagon: Node, old_tile: Vector2i, new_tile: Vector2i)
+#    _handle_tile_change(wagon: Node, old_tile: Vector2i, new_tile: Vector2i)
+#
+#  Signals:
+#    train_tile_changed(navigation_train: NavigationTrain, old_tile: Vector2i, new_tile: Vector2i)
+# ─────────────────────────────────────────────
+
 @onready var action_sm = $ActionStateMachine
 
 # Labels
@@ -84,14 +122,12 @@ func _ready() -> void:
 	add_wagon()
 	add_wagon()
 	#update_gear_label()
-	#position = Vector2(64 * 4, 64 * 3)
-	#current_tile = Vector2i(3, 1)
-
+	
 #region initialization
-func initialize(tile_pos_: Vector2i, ori_: String) -> void:
+func initialize(id_: String, tile_pos_: Vector2i, ori_: String) -> void:
 	initialize_wagon_positions(tile_pos_, ori_)
-	#set_id(id_)
-	#id_label.text = id
+	set_id(id_)
+	id_label.text = id
 	#set_team(team_id_)
 
 func initialize_wagon_positions(tile_pos_: Vector2i, ori_: String):
@@ -169,7 +205,7 @@ func update_speed_label():
 	speed_label.text = "Speed: %s" % round(move_speed)
 
 
-func _process(delta):	
+func update(delta):
 	_update_speed(delta)
 	#_move_train(delta)
 	#_check_tile_change()
@@ -193,9 +229,9 @@ func reverse_train():
 		positions.append(wagon.position)
 		orientations.append(wagon.orientation)
 	for i in range(n):
-		wagons[n-i-1].set_pos(positions[i])
-		wagons[n-i-1].set_orientation(OPPOSITE_ORIENTATION[orientations[i]])
-		wagons[n-i-1].set_heading(ori_to_heading[OPPOSITE_ORIENTATION[orientations[i]]])
+		wagons[n - i - 1].set_pos(positions[i])
+		wagons[n - i - 1].set_orientation(OPPOSITE_ORIENTATION[orientations[i]])
+		wagons[n - i - 1].set_heading(ori_to_heading[OPPOSITE_ORIENTATION[orientations[i]]])
 
 func inmediate_stop():
 	move_speed = 0
@@ -217,19 +253,18 @@ func _update_speed(delta: float):
 	update_speed_label()
 
 
-
 func _on_locomotive_tile_changed(locomotive, old_tile: Vector2i, new_tile: Vector2i):
 	print("*** Locomotive has changed tile")
 	_handle_tile_change(locomotive, old_tile, new_tile)
 
-	# locomotive should also handle explaration
+	# locomotive should also handle exploration
 	#var vision_tiles: Array[Vector2i] = []
 	#for offset in train_vision_offsets:
 	#	vision_tiles.append(new_tile + offset)
 	#exploration_layer.reveal(vision_tiles)
 
 	# locomotive should also check for events
-	train_tile_changed.emit(self, old_tile, new_tile)
+	train_tile_changed.emit(self , old_tile, new_tile)
 
 func _on_wagon_tile_changed(wagon, old_tile: Vector2i, new_tile: Vector2i):
 	print("*** Wagon has changed tile")
@@ -243,15 +278,8 @@ func _handle_tile_change(wagon, old_tile: Vector2i, new_tile: Vector2i):
 	wagon.set_heading(ori_to_heading[new_ori])
 	
 	
-
-
-
-
-
 # func on_arrived_to_tile(tile: Vector2i):
 # 	train_manager.on_train_reached_tile(self , tile)
-
-
 
 
 # # !!!
@@ -298,7 +326,6 @@ func _handle_tile_change(wagon, old_tile: Vector2i, new_tile: Vector2i):
 # 	print("Setting train animation to ", orientation)
 # 	sprite.set_animation(orientation)
 # 	sprite.play(orientation)
-
 
 
 # func get_direction_vector() -> Vector2:

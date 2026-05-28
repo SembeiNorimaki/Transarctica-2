@@ -57,7 +57,7 @@ func _ready() -> void:
 	_inject_services()
 	_connect_signals()
 	_load_map("level_1")
-	call_deferred("initialize", "Barcelona")
+	#call_deferred("initialize", "Barcelona")
 
 func initialize(name: String):
 	print("Initializing city: %s" % name)

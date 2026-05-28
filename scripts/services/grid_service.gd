@@ -1,13 +1,29 @@
 extends Node
 class_name GridService
 
+# ─────────────────────────────────────────────
+#  GridService
+#
+#    set_tile_size(tile_size_: Vector2i)              → sets the tile size
+#    tile_to_world(tile: Vector2) -> Vector2          → converts tile coordinates to world coordinates
+#    world_to_tile(world_pos: Vector2) -> Vector2i    → rounds to nearest tile
+#    world_to_tilef(world_pos: Vector2) -> Vector2    → doesn't round
+#    tile_delta_to_world_delta(delta_tile: Vector2i)  → Vector2 → converts tile delta to world delta
+#    get_neighbors(tile: Vector2i) -> Array[Vector2i] → gets neighbors of a tile
+#    get_orientation(from_tile: Vector2i, to_tile: Vector2i) -> String → gets orientation of a tile relative to another tile
+#    get_tiles_in_vision_cone(origin: Vector2i, orientation: String, view_angle: float, view_range: int) -> Array[Vector2i] → gets tiles in a vision cone
+#    is_inside_map(tile: Vector2i) -> bool → checks if a tile is inside the map
+# ─────────────────────────────────────────────
+
 # Injected by CombatScene
+var camera_controller: CameraController
+
+
 var tile_size: Vector2i
 var tile_half_size: Vector2i
 var map_origin: Vector2 # is basically half the tile_size
 var map_size: Vector2i
 
-var camera_controller: CameraController
 
 var ORIENTATION_VECTORS := {
     "N": Vector2(0, -1),
@@ -36,24 +52,6 @@ func set_tile_size(tile_size_: Vector2i):
     tile_half_size = Vector2i(tile_size_.x / 2, tile_size_.y / 2)
     map_origin = tile_half_size
 
-func test():
-    pass
-    #print("GridService tests")
-    # #print(tile_to_world(Vector2i(0, 0)))
-    # #print(tile_to_world(Vector2i(1, 0)))
-    # #print(tile_to_world(Vector2i(0, 1)))
-    # #print(tile_to_world(Vector2i(1, 1)))
-
-    #print(world_to_tile(Vector2(16, 1)))
-    #print(world_to_tile(Vector2(16, 8)))
-    #print(world_to_tile(Vector2(16, 14)))
-    #print(world_to_tile(Vector2(3, 8)))
-    #print(world_to_tile(Vector2(29, 8)))
-    #print(world_to_tile(Vector2(9, 4)))
-    #print(world_to_tile(Vector2(22, 4)))
-    #print(world_to_tile(Vector2(8, 11)))
-    #print(world_to_tile(Vector2(22, 11)))
-
 
 #this doesn't use map_origin. Useful for relative positions of tiles
 func tile_delta_to_world_delta(delta_tile: Vector2i) -> Vector2:
@@ -64,10 +62,7 @@ func tile_delta_to_world_delta(delta_tile: Vector2i) -> Vector2:
 
 # Tile(0,0) -> World(16,8) 
 func tile_to_world(tile: Vector2) -> Vector2:
-    return map_origin + Vector2(
-        (tile.x - tile.y) * tile_half_size.x,
-        (tile.x + tile.y) * tile_half_size.y
-    )
+    return map_origin + tile_delta_to_world_delta(tile)
 
 func world_to_tile(world_pos: Vector2) -> Vector2i:
     var p = world_pos - map_origin
@@ -75,22 +70,12 @@ func world_to_tile(world_pos: Vector2) -> Vector2i:
     var tile_y = (p.y / tile_size.y) - (p.x / tile_size.x)
     return Vector2i(round(tile_x), round(tile_y))
 
+func world_to_tilef(world_pos: Vector2) -> Vector2:
+    var p = world_pos - map_origin
+    var tile_x = (p.x / tile_size.x) + (p.y / tile_size.y)
+    var tile_y = (p.y / tile_size.y) - (p.x / tile_size.x)
+    return Vector2(tile_x, tile_y)
 
-# func screen_to_world(screen_pos: Vector2) -> Vector2:
-#     return screen_pos / camera_controller.zoom # + camera_controller.offset
-
-# func world_to_screen(world_pos: Vector2) -> Vector2:
-#     #return (world_pos - camera_controller.offset) * camera_controller.zoom
-#     return world_pos * camera_controller.zoom
-
-# func screen_to_tile(screen_pos: Vector2) -> Vector2i:
-#     var world_pos = screen_to_world(screen_pos)
-#     var tile_pos = world_to_tile(world_pos)
-#     #print("Screen pos: %s, world pos: %s, tile pos: %s" % [screen_pos, world_pos, tile_pos])
-#     return tile_pos
-
-# func tile_to_screen(tile_pos: Vector2i) -> Vector2:
-#     return world_to_screen(tile_to_world(tile_pos))
 
 func get_neighbors(tile: Vector2i) -> Array[Vector2i]:
     var neighbors: Array[Vector2i] = []
@@ -178,3 +163,20 @@ func get_tiles_in_vision_cone(origin: Vector2i, orientation: String, view_angle:
 
 func is_inside_map(tile: Vector2i) -> bool:
     return tile.x >= 0 and tile.x < map_size.x and tile.y >= 0 and tile.y < map_size.y
+
+
+# func screen_to_world(screen_pos: Vector2) -> Vector2:
+#     return screen_pos / camera_controller.zoom # + camera_controller.offset
+
+# func world_to_screen(world_pos: Vector2) -> Vector2:
+#     #return (world_pos - camera_controller.offset) * camera_controller.zoom
+#     return world_pos * camera_controller.zoom
+
+# func screen_to_tile(screen_pos: Vector2) -> Vector2i:
+#     var world_pos = screen_to_world(screen_pos)
+#     var tile_pos = world_to_tile(world_pos)
+#     #print("Screen pos: %s, world pos: %s, tile pos: %s" % [screen_pos, world_pos, tile_pos])
+#     return tile_pos
+
+# func tile_to_screen(tile_pos: Vector2i) -> Vector2:
+#     return world_to_screen(tile_to_world(tile_pos))

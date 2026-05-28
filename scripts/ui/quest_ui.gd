@@ -21,10 +21,14 @@ func refresh_ui() -> void:
 		child.queue_free()
 		
 	var active_quests = {}
+	var completed_quests = []
+	var qm = null
 	if has_node("/root/QuestManager"):
-		active_quests = get_node("/root/QuestManager").active_quests
+		qm = get_node("/root/QuestManager")
+		active_quests = qm.active_quests
+		completed_quests = qm.completed_quests
 		
-	if active_quests.is_empty():
+	if active_quests.is_empty() and completed_quests.is_empty():
 		var empty_label = Label.new()
 		empty_label.text = "No active quests."
 		empty_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -107,6 +111,50 @@ func refresh_ui() -> void:
 		quest_container.add_child(separator)
 		
 		quest_list.add_child(quest_container)
+		
+	for quest_id in completed_quests:
+		if qm == null or not qm.quest_database.has(quest_id):
+			continue
+			
+		var quest_data = qm.quest_database[quest_id]
+		var quest_container = VBoxContainer.new()
+		quest_container.add_theme_constant_override("separation", 4)
+		
+		# Title label with tick
+		var title_label = Label.new()
+		title_label.text = "✓ " + quest_data.get("title", "Untitled Quest")
+		title_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		title_label.add_theme_color_override("font_color", Color(0.5, 0.8, 0.5, 1)) # Greenish for done
+		title_label.add_theme_font_size_override("font_size", 13)
+		quest_container.add_child(title_label)
+		
+		# Description label
+		var desc_label = Label.new()
+		desc_label.text = quest_data.get("description", "")
+		desc_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		desc_label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5, 1)) # Darker grey
+		desc_label.add_theme_font_size_override("font_size", 10)
+		quest_container.add_child(desc_label)
+		
+		var separator = HSeparator.new()
+		separator.modulate = Color(1, 1, 1, 0.15)
+		quest_container.add_child(separator)
+		
+		quest_list.add_child(quest_container)
+		
+	if completed_quests.size() > 0:
+		var clear_btn = Button.new()
+		clear_btn.text = "Clear Completed"
+		clear_btn.add_theme_font_size_override("font_size", 11)
+		clear_btn.pressed.connect(_on_clear_completed_pressed)
+		quest_list.add_child(clear_btn)
+
+func _on_clear_completed_pressed() -> void:
+	if has_node("/root/QuestManager"):
+		var qm = get_node("/root/QuestManager")
+		qm.completed_quests.clear()
+		qm.save_to_game_state()
+		refresh_ui()
 
 func show_notification(message: String, is_completion: bool = true) -> void:
 	if notif_panel == null or notif_label == null:
@@ -130,6 +178,11 @@ func show_notification(message: String, is_completion: bool = true) -> void:
 
 func _on_quest_accepted(quest: Quest) -> void:
 	show_notification("Accepted Quest:\n" + quest.title, false)
+	
+	if Assistant:
+		var msg = "[b]New Quest: %s[/b]\n%s" % [quest.title, quest.description]
+		Assistant.show_message(msg)
+		
 	refresh_ui()
 
 func _on_quest_completed(quest: Quest) -> void:

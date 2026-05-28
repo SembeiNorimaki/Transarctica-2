@@ -236,8 +236,9 @@ func load_from_game_state() -> void:
 			active_quests[String(q_id)] = quest
 			
 		print("QuestManager: Loaded quest state. Active: ", active_quests.size(), ", Completed: ", completed_quests.size())
-	else:
-		# Brand new game! Start the first tutorial quest
+		
+	# Brand new game! Start the first tutorial quest
+	if active_quests.is_empty() and completed_quests.is_empty():
 		print("QuestManager: No quest state found in GameState. Starting first tutorial quest.")
 		accept_quest("quest_tutorial_1")
 		

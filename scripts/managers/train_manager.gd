@@ -3,11 +3,36 @@
 extends Node
 class_name NavigationTrainManager
 
+# ─────────────────────────────────────────────
+#  NavigationTrainManager
+#
+#  Lifecycle & Setup:
+#    _ready() -> void
+#
+#  Train Spawning:
+#    spawn_train(tile_pos: Vector2i, ori: String, team: String)
+#
+#  Public API (Player Train Controls):
+#    recenter_player_train()
+#    reverse_train()
+#    gear_toggle()
+#
+#  Signal Handlers & Internal Logic:
+#    on_train_tile_changed(train: NavigationTrain, old_tile: Vector2i, new_tile: Vector2i) -> void
+#    _check_tile_events(train: NavigationTrain, new_tile: Vector2i) -> void
+#
+#  Signals:
+#    train_spawned(train: NavigationTrain)
+#    train_tile_changed(train: NavigationTrain, old_tile: Vector2i, new_tile: Vector2i)
+#    train_reached_destination(train: NavigationTrain)
+#    train_reached_city(city_name: String)
+# ─────────────────────────────────────────────
+
 # Injected by NavigationScene
 var rail_service: RailService
 var grid_service: GridService
 var cities_manager: CitiesManager
-
+var camera_controller: CameraController
 var exploration_layer
 
 var next_train_id = {"Player": 0, "Enemy": 0}
@@ -16,6 +41,7 @@ var trains := {"Player": [], "Enemy": []}
 
 var TRAIN_SCENE = preload("res://scenes/entities/units/navigation_train.tscn")
 
+# TODO: Should not go here
 var train_vision_offsets = [
 	Vector2i(-2, -2),
 	Vector2i(-2, -1),
@@ -69,8 +95,7 @@ func spawn_train(tile_pos: Vector2i, ori: String, team: String):
 	# connect signals
 	train.train_tile_changed.connect(on_train_tile_changed)
 
-	
-	train.call_deferred("initialize", tile_pos, ori)
+	train.call_deferred("initialize", id, tile_pos, ori)
 
 	# train.position = grid_service.tile_to_world(tile_pos)
 	# train.current_tile = tile_pos
@@ -98,11 +123,18 @@ func spawn_train(tile_pos: Vector2i, ori: String, team: String):
 	
 # #endregion
 
+func _process(delta: float):
+	for train in trains.Player:
+		train.update(delta)
+	camera_controller.set_pos(trains.Player[0].wagons[0].position)
+
+
 #region Public API
 func recenter_player_train():
-	trains["Player"][0].recenter()
+	#trains["Player"][0].recenter()
+	pass
 
-func reverse_train():
+func reverse_player_train():
 	trains["Player"][0].reverse_train()
 
 func gear_toggle():

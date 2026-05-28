@@ -28,12 +28,15 @@ SoldierAtlasLoader="*res://autoload/soldier_atlas_loader.gd"
 WallTypes="*uid://c2owq8l7km3os"
 SceneManager="*uid://l2ixgo1287ln"
 GameState="*uid://ccrkd2eqch3c3"
-QuestManager="*res://scripts/managers/quest_manager.gd"
+QuestManager="*res://autoload/quest_manager.tscn"
+AudioService="*res://autoload/audio_service.tscn"
+Assistant="*res://autoload/assistant_ui.tscn"
 
 [display]
 
 window/size/viewport_width=1200
 window/size/viewport_height=700
+window/size/mode=3
 
 [input]
 

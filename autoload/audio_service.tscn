@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://audio_service_autoload"]
+
+[ext_resource type="Script" path="res://scripts/services/audio_service.gd" id="1_audio"]
+
+[node name="AudioService" type="Node"]
+script = ExtResource("1_audio")

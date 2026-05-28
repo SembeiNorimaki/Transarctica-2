@@ -1,45 +1,79 @@
 extends Node2D
 
+# ─────────────────────────────────────────────
+#  Lifecycle & Setup:
+#    _ready() -> void
+#    _inject_services()
+#    _wire_signals()
+#
+#  Map Loading:
+#    _load_map(map_name: String) -> void
+#    _spawn_cities_from_map(cities_ids_tilemap: TileMapLayer) -> void
+#    _spawn_trains_from_map(trains_tilemap: TileMapLayer) -> void
+#    _build_rails_from_map(rails_tilemap: TileMapLayer) -> void
+#    _build_bridges_from_map(bridges_tilemap: TileMapLayer) -> void
+#    _spawn_wagons()
+#
+#  Input & Interaction:
+#    _unhandled_input(event: InputEvent) -> void
+#    _handle_gear_toggle()
+#    _handle_reverse_train()
+#
+#  Signal Handlers:
+#    _on_train_reached_city(city_name: String)
+#
+#  Public Methods:
+#    recenter_player_train()
+#    reverse_player_train_direction()
+#
+#  Signals:
+#    TrainManager.train_reached_city -> _on_train_reached_city
+# ─────────────────────────────────────────────
+
 # Managers
-@onready var train_manager = $Managers/TrainManager
-@onready var cities_manager = $Managers/CitiesManager
+@onready var train_manager: NavigationTrainManager = $Managers/TrainManager
+@onready var cities_manager: CitiesManager = $Managers/CitiesManager
 
 # Overlays
-@onready var rails_overlay = $Overlays/RailsOverlay
-@onready var cities_overlay = $Overlays/CitiesOverlay
+@onready var rails_overlay: RailsOverlay = $Overlays/RailsOverlay
+@onready var cities_overlay: CitiesOverlay = $Overlays/CitiesOverlay
 
 # Services
-@onready var grid_service = $Services/GridService
-@onready var rail_service = $Services/RailService
+@onready var grid_service: GridService = $Services/GridService
+#@onready var tile_occupancy_service: TileOccupancyService = $Services/TileOccupancyService
+@onready var rail_service: RailService = $Services/RailService
 
 #Controllers
-@onready var camera_controller = $Controllers/CameraController
+@onready var camera_controller: CameraController = $Controllers/CameraController
 
 # Map 
-@onready var map_root = $MapRoot
-@onready var exploration_layer = $MapRoot/ExplorationLayer
+@onready var map_root: Node2D = $MapRoot
+@onready var exploration_layer: TileMapLayer = $MapRoot/ExplorationLayer
 
 #Entities
-@onready var player_train = $Containers/Trains/PlayerTrain
+#@onready var player_train: PlayerTrain = $Containers/Trains/PlayerTrain
 
 # Containers
-@onready var trains_container = $Containers/Trains
-@onready var wagon_container = $Containers/Wagons
+@onready var trains_container: Node2D = $Containers/Trains
+@onready var wagon_container: Node2D = $Containers/Wagons
+@onready var city_labels_container: Node2D = $Containers/CityLabels
 
-@onready var city_labels_container = $Containers/CityLabels
+const WAGON_SCENE: PackedScene = preload("res://scenes/entities/trains/navigation_wagon.tscn")
 
-
-const WAGON_SCENE = preload("res://scenes/entities/trains/navigation_wagon.tscn")
+# Travelling.mp3 is the ambient travel music for the navigation/overworld screen.
+const MUSIC_TRAVEL: AudioStream = preload("res://assets/audio/Travelling.mp3")
 	
-
+#region Lifecycle & Setup
 func _ready() -> void:
-	grid_service.set_tile_size(Vector2i(128, 64))
 	_inject_services()
 	call_deferred("_wire_signals")
 	_load_map("world_1")
 
 	camera_controller.center_at_tile(Vector2i(15, 5))
 	camera_controller.set_zoom(1.0)
+
+	# Start the overworld travel music with a 2-second fade-in.
+	AudioService.play_music(MUSIC_TRAVEL, 2.0)
 	
 func _inject_services():
 	# Managers
@@ -47,6 +81,8 @@ func _inject_services():
 	train_manager.rail_service = rail_service
 	train_manager.cities_manager = cities_manager
 	train_manager.exploration_layer = exploration_layer
+	train_manager.camera_controller = camera_controller
+	
 	cities_manager.rail_service = rail_service
 	cities_manager.city_labels_container = city_labels_container
 	cities_manager.grid_service = grid_service
@@ -67,17 +103,21 @@ func _inject_services():
 func _wire_signals():
 	#player_train.tile_changed.connect(_on_player_train_tile_changed)
 	train_manager.train_reached_city.connect(_on_train_reached_city)
-	pass
+#endregion
 
+#region Map Loading
 func _load_map(map_name: String) -> void:
 	var map_path = "res://scenes/maps/%s.tscn" % map_name
 	if not ResourceLoader.exists(map_path):
 		push_error("Map not found for map: %s at path: %s" % [map_name, map_path])
+		return
+
 	# remove existing map
 	if get_node("MapRoot").get_child_count() > 0:
 		var existing_map = get_node("MapRoot").get_child(0)
 		map_root.remove_child(existing_map)
 		existing_map.free()
+
 	# load new map
 	var new_map = load(map_path).instantiate()
 	map_root.add_child(new_map)
@@ -96,13 +136,13 @@ func _load_map(map_name: String) -> void:
 	_spawn_trains_from_map(new_map.get_node("Trains"))
 	_spawn_wagons()
 
-	
 func _spawn_cities_from_map(cities_ids_tilemap: TileMapLayer) -> void:
 	for tile in cities_ids_tilemap.get_used_cells():
 		var atlas_coords = cities_ids_tilemap.get_cell_atlas_coords(tile)
 		var city_id = atlas_coords.y * 10 + atlas_coords.x
 		cities_manager.spawn_city(city_id, tile)
 
+# TODO: Orientation and team should not be hardcoded
 func _spawn_trains_from_map(trains_tilemap: TileMapLayer) -> void:
 	for tile in trains_tilemap.get_used_cells():
 		var atlas_coords = trains_tilemap.get_cell_atlas_coords(tile)
@@ -130,6 +170,7 @@ func _build_bridges_from_map(bridges_tilemap: TileMapLayer) -> void:
 
 
 	#bridges_overlay.update()
+
 # spawns wagons that can be picked by the train
 func _spawn_wagons():
 	var wagon = WAGON_SCENE.instantiate()
@@ -146,7 +187,7 @@ func _spawn_wagons():
 	
 	# add to container
 	wagon_container.add_child(wagon)
-
+#endregion
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
@@ -165,24 +206,28 @@ func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("shift"):
 		_handle_reverse_train()
 	
-func _handle_gear_toggle():
+func _handle_gear_toggle() -> void:
 	train_manager.gear_toggle()
 
-func _handle_reverse_train():
+func _handle_reverse_train() -> void:
 	train_manager.reverse_train()
 
 
-func _on_player_train_tile_changed(from_tile: Vector2i, to_tile: Vector2i) -> void:
-	print("Train changed tile")
-	pass
-	#rail_service.build_rail(to_tile)
-
 func _on_train_reached_city(city_name: String):
 	print("Nav Scene: Train reached city %s" % city_name)
+	# Fade out travel music before entering the city scene.
+	AudioService.stop_music(1.5)
 	QuestManager.notify_city_reached(city_name)
 	SceneManager.enter_city(city_name)
 
 func recenter_player_train():
 	train_manager.recenter_player_train()
+
 func reverse_player_train_direction():
-	train_manager.reverse_player_train_direction()
+	train_manager.reverse_player_train()
+
+
+# func _on_player_train_tile_changed(from_tile: Vector2i, to_tile: Vector2i) -> void:
+# 	print("Train changed tile")
+# 	pass
+# 	#rail_service.build_rail(to_tile)
