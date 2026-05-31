@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://did4013cgu15i"]
 
-[ext_resource type="Script" uid="uid://dnew8tq4r0jld" path="res://scripts/entities/navigation_train.gd" id="1_743fu"]
-[ext_resource type="PackedScene" uid="uid://dtxrg38hrli2n" path="res://scenes/combat/state_machines/action_state_machine.tscn" id="3_njqyl"]
+[ext_resource type="Script" uid="uid://dnew8tq4r0jld" path="res://scripts/entities/wagons/navigation_train.gd" id="1_743fu"]
+[ext_resource type="PackedScene" uid="uid://dtxrg38hrli2n" path="res://scenes/state_machines/action_state_machine.tscn" id="3_njqyl"]
 
 [node name="NavigationTrain" type="Node2D" unique_id=1952438565]
 script = ExtResource("1_743fu")

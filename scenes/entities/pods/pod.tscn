@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://da35qtnggeadu"]
 
-[ext_resource type="Script" uid="uid://cvnh3q0er8fjh" path="res://scripts/entities/pod.gd" id="1_oo037"]
-[ext_resource type="PackedScene" uid="uid://ca6pq1iv0qhum" path="res://scenes/combat/state_machines/pod_state_machine.tscn" id="2_k4eo6"]
+[ext_resource type="Script" uid="uid://cvnh3q0er8fjh" path="res://scripts/entities/pods/pod.gd" id="1_oo037"]
+[ext_resource type="PackedScene" uid="uid://ca6pq1iv0qhum" path="res://scenes/state_machines/pod_state_machine.tscn" id="2_k4eo6"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_oo037"]
 size = Vector2(10, 10)

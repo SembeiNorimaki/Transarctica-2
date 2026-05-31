@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://djse4j3famfio"]
 
 [ext_resource type="PackedScene" uid="uid://db0akj2cdwfl3" path="res://scenes/entities/units/vehicle_unit.tscn" id="1_aiifv"]
-[ext_resource type="Script" uid="uid://dcsp6jjlhkshf" path="res://scripts/entities/locomotive_wagon.gd" id="2_egxqs"]
-[ext_resource type="Texture2D" uid="uid://dpn7rws27vnto" path="res://assets/sprites/wagons/trn_locomotive_tr.png" id="2_r8gkn"]
+[ext_resource type="Script" uid="uid://dcsp6jjlhkshf" path="res://scripts/entities/wagons/locomotive_wagon.gd" id="2_egxqs"]
+[ext_resource type="Texture2D" uid="uid://dpn7rws27vnto" path="res://assets/sprites/wagons/trade/locomotive_tr.png" id="2_r8gkn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_egxqs"]
 atlas = ExtResource("2_r8gkn")

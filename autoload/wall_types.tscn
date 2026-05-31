@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bqdnm8yum3c5i"]
 
-[ext_resource type="Script" uid="uid://c2owq8l7km3os" path="res://scripts/entities/wall_types.gd" id="1_1bw18"]
+[ext_resource type="Script" uid="uid://c2owq8l7km3os" path="res://data/wall_types.gd" id="1_1bw18"]
 
 [node name="WallTypes" type="Node" unique_id=1886911127]
 script = ExtResource("1_1bw18")

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cem662p2y1jo"]
 
-[ext_resource type="Script" uid="uid://xlrpb4vfjqpv" path="res://scripts/entities/bullet.gd" id="1_t3lan"]
+[ext_resource type="Script" uid="uid://xlrpb4vfjqpv" path="res://scripts/entities/projectiles/bullet.gd" id="1_t3lan"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_t3lan"]
 

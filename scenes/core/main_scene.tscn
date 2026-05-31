@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bwjc36mf4nddw"]
+
+[ext_resource type="PackedScene" uid="uid://cks6neywtnnld" path="res://scenes/core/navigation_scene.tscn" id="1_2siva"]
+[ext_resource type="PackedScene" uid="uid://dxkgsverup06q" path="res://scenes/ui/quest_ui.tscn" id="2_v13ds"]
+
+[node name="MainScene" type="Node2D" unique_id=1427743021]
+
+[node name="NavigationScene" parent="." unique_id=1488826302 instance=ExtResource("1_2siva")]
+
+[node name="QuestUI" parent="." unique_id=440510355 instance=ExtResource("2_v13ds")]

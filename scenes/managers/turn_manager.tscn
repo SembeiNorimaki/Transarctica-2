@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bso7t6rtx8srg"]
+
+[ext_resource type="Script" uid="uid://2sbgq8ns7bjj" path="res://scripts/managers/turn_manager.gd" id="1_dcflo"]
+[ext_resource type="PackedScene" uid="uid://cdofrcb6btuu0" path="res://scenes/state_machines/turn_state_machine.tscn" id="2_jegdh"]
+
+[node name="TurnManager" type="Node"]
+script = ExtResource("1_dcflo")
+
+[node name="TurnStateMachine" parent="." instance=ExtResource("2_jegdh")]

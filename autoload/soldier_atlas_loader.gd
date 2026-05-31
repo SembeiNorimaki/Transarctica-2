@@ -1,8 +1,8 @@
 extends Node
 
 
-const UNIT_ATLAS_LAYOUT = preload("res://unitXcomLayout.gd")
-const WEAPON_ATLAS_LAYOUT = preload("res://weaponXcomLayout.gd")
+const UNIT_ATLAS_LAYOUT = preload("res://data/unitXcomLayout.gd")
+const WEAPON_ATLAS_LAYOUT = preload("res://data/weaponXcomLayout.gd")
 
 var cache = {}
 var weapon_cache = {}

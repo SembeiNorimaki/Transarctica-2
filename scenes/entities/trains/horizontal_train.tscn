@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://fotrjgu1mv8p"]
 
-[ext_resource type="Script" uid="uid://bdjf7nhb8bwxx" path="res://scripts/entities/horizontal_train.gd" id="1_fcfcu"]
+[ext_resource type="Script" uid="uid://bdjf7nhb8bwxx" path="res://scripts/entities/wagons/horizontal_train.gd" id="1_fcfcu"]
 
 [node name="HorizontalTrain" type="Node2D" unique_id=117353223]
 script = ExtResource("1_fcfcu")

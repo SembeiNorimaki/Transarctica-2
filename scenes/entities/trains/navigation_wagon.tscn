@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b6wbptdvxchoe"]
 
 [ext_resource type="PackedScene" uid="uid://bgccilvr7br65" path="res://scenes/entities/trains/generic_navigation_wagon.tscn" id="1_tr340"]
-[ext_resource type="Texture2D" uid="uid://bf1mcpd4gi3jg" path="res://assets/sprites/wagons/nav_wagon/nav_wagon.png" id="2_74mbf"]
+[ext_resource type="Texture2D" uid="uid://bf1mcpd4gi3jg" path="res://assets/sprites/wagons/navigation/nav_wagon.png" id="2_74mbf"]
 [ext_resource type="Script" uid="uid://lkbwl43q34nf" path="res://scripts/entities/wagons/navigation_wagon.gd" id="2_e0ol1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e0ol1"]

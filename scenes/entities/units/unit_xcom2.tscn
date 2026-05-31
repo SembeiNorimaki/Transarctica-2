@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ysig1tby6uoi"]
 
 [ext_resource type="PackedScene" uid="uid://bt6edw4t4rxak" path="res://scenes/entities/units/unit.tscn" id="1_60t8m"]
-[ext_resource type="Script" uid="uid://xboi5aqk1pxk" path="res://scripts/entities/unit_xcom_2.gd" id="2_gbknk"]
+[ext_resource type="Script" uid="uid://xboi5aqk1pxk" path="res://scripts/entities/units/unit_xcom_2.gd" id="2_gbknk"]
 [ext_resource type="SpriteFrames" uid="uid://coyrjsvfyxtg5" path="res://assets/tilesets/torso_frames.tres" id="2_klak8"]
 [ext_resource type="SpriteFrames" uid="uid://ebvhi7pq2ssa" path="res://assets/tilesets/legs_frames.tres" id="3_mbsxs"]
 [ext_resource type="SpriteFrames" uid="uid://b5ha7vwfg0e0p" path="res://assets/tilesets/right_arm_weapon_frames.tres" id="4_gbknk"]

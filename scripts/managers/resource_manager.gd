@@ -21,6 +21,25 @@ var grid_service: GridService
 #     "caviar": 198
 # }
 
+
+var resource_spawn_tiles = {
+	"missiles": Vector2i(-4, 10),
+	"gasoline": Vector2i(-3, 9),
+	"oil": Vector2i(-2, 8),
+	"meat": Vector2i(-1, 7),
+	"rods": Vector2i(0, 6),
+	"caviar": Vector2i(1, 5),
+	"antiques": Vector2i(2, 4),
+	"alcohol": Vector2i(3, 3),
+	"dung": Vector2i(4, 2),
+	"fish": Vector2i(5, 1),
+	"furs": Vector2i(6, 0),
+	"salt": Vector2i(7, -1),
+	"plants": Vector2i(8, -2)
+	
+
+}
+
 var required_resource_spawn_tiles = [Vector2i(22, 19), Vector2i(22, 20), Vector2i(22, 21)]
 var produced_resource_spawn_tiles = [Vector2i(3, 3), Vector2i(4, 2), Vector2i(5, 1)]
 
@@ -41,9 +60,11 @@ func spawn_crate(resource_name_: String, qty_: int, mode: String):
 	crate.call_deferred("set_mode", "InGround")
 	crate.call_deferred("set_qty", qty_)
 	
-	var tile = produced_resource_spawn_tiles[idx]
-	if mode == "required":
-		tile = required_resource_spawn_tiles[idx]
+
+	var tile = resource_spawn_tiles[resource_name_]
+	# var tile = produced_resource_spawn_tiles[idx]
+	# if mode == "required":
+	# 	tile = required_resource_spawn_tiles[idx]
 
 	var screen_pos = grid_service.tile_to_world(tile)
 	crate.position = screen_pos

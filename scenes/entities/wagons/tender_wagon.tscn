@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://6ia7p2rdahel"]
 
 [ext_resource type="PackedScene" uid="uid://db0akj2cdwfl3" path="res://scenes/entities/units/vehicle_unit.tscn" id="1_5wiou"]
-[ext_resource type="Script" uid="uid://cowuh2c7opco2" path="res://scripts/entities/tender_wagon.gd" id="2_11r6t"]
-[ext_resource type="Texture2D" uid="uid://bwq6byg3incp8" path="res://assets/sprites/wagons/trn_tender_tr.png" id="2_fidne"]
+[ext_resource type="Script" uid="uid://cowuh2c7opco2" path="res://scripts/entities/wagons/tender_wagon.gd" id="2_11r6t"]
+[ext_resource type="Texture2D" uid="uid://bwq6byg3incp8" path="res://assets/sprites/wagons/trade/tender_tr.png" id="2_fidne"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_11r6t"]
 atlas = ExtResource("2_fidne")

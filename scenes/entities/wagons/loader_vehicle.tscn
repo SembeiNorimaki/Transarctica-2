@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://ofxj01woinrh"]
 
 [ext_resource type="Script" uid="uid://c0mvrd6sopps" path="res://scripts/entities/wagons/loader_vehicle.gd" id="1_uu1gq"]
-[ext_resource type="Texture2D" uid="uid://bqrap16khsqu6" path="res://assets/sprites/wagons/83_zi4.png" id="1_ynf0a"]
-[ext_resource type="Texture2D" uid="uid://b67bqm6hguwr" path="res://assets/sprites/resources_132x46.png" id="3_r3ud8"]
+[ext_resource type="Texture2D" uid="uid://bqrap16khsqu6" path="res://assets/sprites/wagons/trade/83_zi4.png" id="1_ynf0a"]
+[ext_resource type="Texture2D" uid="uid://2f34a7cpeqkk" path="res://assets/sprites/resources_120x46.png" id="3_wypcv"]
 [ext_resource type="PackedScene" uid="uid://743d5vqsqhno" path="res://scenes/entities/resources/crate.tscn" id="4_wypcv"]
 
 [node name="LoaderVehicle" type="Node2D" unique_id=1277425951]
@@ -13,12 +13,12 @@ position = Vector2(-2, -21)
 texture = ExtResource("1_ynf0a")
 
 [node name="CargoSprite" type="Sprite2D" parent="." unique_id=155320969]
-visible = false
-position = Vector2(4, -28)
-texture = ExtResource("3_r3ud8")
+position = Vector2(50, -17)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_wypcv")
 hframes = 3
-vframes = 10
-frame = 25
+vframes = 7
+frame = 4
 
 [node name="CrateSprite" parent="." unique_id=1088471873 instance=ExtResource("4_wypcv")]
 position = Vector2(2, -29)

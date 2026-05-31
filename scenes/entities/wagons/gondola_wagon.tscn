@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c1gfccfiur7r7"]
 
 [ext_resource type="PackedScene" uid="uid://db0akj2cdwfl3" path="res://scenes/entities/units/vehicle_unit.tscn" id="1_gajbl"]
-[ext_resource type="Texture2D" uid="uid://bi4tvn6uoeqvg" path="res://assets/sprites/wagons/600_zi4.png" id="2_amojp"]
+[ext_resource type="Texture2D" uid="uid://vvgowy3q263a" path="res://assets/sprites/wagons/trade/gondola_wagon.png" id="2_amojp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pk2v6"]
 atlas = ExtResource("2_amojp")
@@ -23,4 +23,3 @@ animations = [{
 [node name="Sprite" parent="." index="0" unique_id=1438979658]
 position = Vector2(0, -29)
 sprite_frames = SubResource("SpriteFrames_algri")
-animation = &"default"

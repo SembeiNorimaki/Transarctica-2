@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bt6edw4t4rxak" path="res://scenes/entities/units/unit.tscn" id="1_d1f82"]
 [ext_resource type="Script" uid="uid://cnlxebbiohl85" path="res://scripts/entities/vehicle_unit.gd" id="2_jruv6"]
-[ext_resource type="Texture2D" uid="uid://d1wihq5v4ewt3" path="res://assets/sprites/wagons/trn_merchandise_tr.png" id="3_m2paw"]
+[ext_resource type="Texture2D" uid="uid://d1wihq5v4ewt3" path="res://assets/sprites/wagons/trade/merchandise_tr.png" id="3_m2paw"]
 [ext_resource type="Texture2D" uid="uid://2f34a7cpeqkk" path="res://assets/sprites/resources_120x46.png" id="4_8fxyf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8fxyf"]

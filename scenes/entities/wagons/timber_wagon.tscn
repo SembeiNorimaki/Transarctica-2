@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cn20awligkm30"]
 
 [ext_resource type="PackedScene" uid="uid://db0akj2cdwfl3" path="res://scenes/entities/units/vehicle_unit.tscn" id="1_880tt"]
-[ext_resource type="Texture2D" uid="uid://dfwh14c0hrf4o" path="res://assets/sprites/wagons/15_zi4.png" id="2_nu67d"]
+[ext_resource type="Texture2D" uid="uid://dfwh14c0hrf4o" path="res://assets/sprites/wagons/trade/15_zi4.png" id="2_nu67d"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n33l7"]
 atlas = ExtResource("2_nu67d")

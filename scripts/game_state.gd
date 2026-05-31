@@ -23,7 +23,7 @@ func _ready() -> void:
 	print("state:", state)
 
 func load_initial_cities():
-	var file = FileAccess.open("res://scripts/data/cities.json", FileAccess.READ)
+	var file = FileAccess.open("res://data/cities.json", FileAccess.READ)
 	var data = JSON.parse_string(file.get_as_text())
 	for city_id in data.keys():
 		var city_name = data[city_id].Name
@@ -43,7 +43,7 @@ func load_initial_industries():
 
 
 func load_initial_train():
-	var file = FileAccess.open("res://scripts/data/player_train.json", FileAccess.READ)
+	var file = FileAccess.open("res://data/player_train.json", FileAccess.READ)
 	var train_data = JSON.parse_string(file.get_as_text())
 	state.train.wagons = []
 	for wagon_info in train_data.wagons:
