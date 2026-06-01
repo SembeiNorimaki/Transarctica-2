@@ -109,3 +109,9 @@ script = ExtResource("2_bu4t5")
 [node name="Sprite" parent="." index="0" unique_id=2070118109]
 sprite_frames = SubResource("SpriteFrames_pvm8l")
 animation = &"N"
+
+[node name="Label" type="Label" parent="." index="1" unique_id=396567743]
+visible = false
+offset_right = 40.0
+offset_bottom = 23.0
+text = "wefwewe"

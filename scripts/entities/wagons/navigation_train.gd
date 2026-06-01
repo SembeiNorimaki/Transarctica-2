@@ -63,9 +63,9 @@ var move_speed := 0.0
 var gear = "N"
 
 
-const MAX_SPEED := 120.0
+const MAX_SPEED := 300.0
 const ACCELERATION := 50.0
-const DECELERATION := 50.0
+const DECELERATION := 200.0
 
 
 #var current_tile := Vector2i(-1, -1)
@@ -78,16 +78,7 @@ const DECELERATION := 50.0
 
 var wagons = []
 
-const ORIENTATIONS = [
-	"N",
-	"NE",
-	"E",
-	"SE",
-	"S",
-	"SW",
-	"W",
-    "NW"
-]
+const ORIENTATIONS = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"]
 
 const OPPOSITE_ORIENTATION = {
 	"N": "S",
@@ -118,9 +109,16 @@ signal train_tile_changed(navigation_train: NavigationTrain, old_tile: Vector2i,
 
 func _ready() -> void:
 	add_locomotive()
-	add_wagon()
-	add_wagon()
-	add_wagon()
+	add_wagon("tender")
+	add_wagon("merchandise")
+	add_wagon("gondola")
+	add_wagon("wood")
+	add_wagon("container")
+	add_wagon("container")
+	add_wagon("container")
+	add_wagon("container")
+	add_wagon("container")
+	add_wagon("container")
 	#update_gear_label()
 	
 #region initialization
@@ -154,7 +152,7 @@ func add_locomotive():
 
 	wagons.append(locomotive)
 
-func add_wagon():
+func add_wagon(wagon_name: String):
 	var wagon = WAGON_SCENE.instantiate()
 	
 	# dependency injection
@@ -163,6 +161,8 @@ func add_wagon():
 	# connect signals
 	wagon.tile_changed.connect(_on_wagon_tile_changed)
 
+	wagon.call_deferred("initialize", wagon_name)
+	
 	wagon.call_deferred("enable_front_attachment", false)
 
 	# add to container

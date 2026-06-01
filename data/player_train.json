@@ -15,7 +15,12 @@
         },
         {
             "wagon_name": "MerchandiseWagon",
-            "cargo": []
+            "cargo": [
+                {
+                    "resource_name": "caviar",
+                    "resource_qty": 4
+                }
+            ]
         },
         {
             "wagon_name": "ContainerWagon",

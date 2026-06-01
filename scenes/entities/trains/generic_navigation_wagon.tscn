@@ -1,5 +1,8 @@
 [gd_scene format=3 uid="uid://bgccilvr7br65"]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_5xlyr"]
+
 [node name="GenericNavigationWagon" type="Node2D" unique_id=212834667]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=2070118109]
+sprite_frames = SubResource("SpriteFrames_5xlyr")

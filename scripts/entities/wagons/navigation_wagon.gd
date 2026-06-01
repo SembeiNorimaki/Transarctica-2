@@ -7,7 +7,7 @@ var grid_service: GridService
 
 signal tile_changed(wagon, old_tile: Vector2i, new_tile: Vector2i)
 
-@onready var sprite = $Sprite
+@onready var sprite: AnimatedSprite2D = $Sprite
 @onready var attachments = {
 	"front": $Attachments/front, 
 	"back": $Attachments/back
@@ -34,8 +34,47 @@ const ATTACHMENTS_OFFSETS = {
 	"SW": { "front": Vector2(-25, 0), "back": Vector2(-24, 0) }
 }
 
+const ORIENTATIONS = ["SE", "S", "SW", "W", "NW", "N", "NE", "E"]
+
+#region initialization
 func _ready() -> void:
 	pass
+
+func initialize(wagon_type: String) -> void:
+	set_wagon_type(wagon_type)
+	
+func set_wagon_type(type_name: String) -> void:
+	var atlas_path = "res://assets/sprites/wagons/navigation/nav_%s.png" % type_name
+	var atlas: Texture2D = load(atlas_path)
+
+	if atlas == null:
+		push_error("Missing atlas for wagon type: %s" % type_name)
+		return
+	_create_direction_animations_from_atlas(atlas)
+
+func _create_direction_animations_from_atlas(atlas: Texture2D) -> void:
+	var frames := SpriteFrames.new()
+	var frame_width = atlas.get_width() / ORIENTATIONS.size()
+	var frame_height = atlas.get_height()
+
+	
+	
+	for i in ORIENTATIONS.size():
+		var ori_name = ORIENTATIONS[i]
+		frames.add_animation(ori_name)
+		frames.set_animation_speed(ori_name, 1) # static frame
+		var region = Rect2(
+			Vector2(i * frame_width, 0),
+			Vector2(frame_width, frame_height)
+		)
+		var atlas_tex := AtlasTexture.new()
+		atlas_tex.atlas = atlas
+		atlas_tex.region = region
+		frames.add_frame(ori_name, atlas_tex)
+
+	sprite.sprite_frames = frames
+
+#endregion
 
 func set_pos(new_pos: Vector2):
 	position = new_pos
@@ -50,7 +89,7 @@ func set_orientation(new_ori: String):
 		attachments.back.position = ATTACHMENTS_OFFSETS[new_ori].back
 		update_animation()
 
-
+#region attachments
 func enable_front_attachment(enabled: bool):
 	attachments.front.disabled = not enabled
 
@@ -60,7 +99,7 @@ func enable_back_attachment(enabled: bool):
 func disable_all_attachments():
 	attachments.front.disabled = true
 	attachments.back.disabled = true
-
+#endregion
 
 func set_heading(new_heading: Vector2):
 	heading = new_heading

@@ -8,6 +8,7 @@ var grid_service: GridService
 signal tile_changed(loco, old_tile: Vector2i, new_tile: Vector2i)
 
 @onready var sprite = $Sprite
+@onready var label: Label = $Label
 
 var current_tile := Vector2i(-1, -1)
 var orientation := ""
@@ -35,10 +36,13 @@ func update_animation():
 	sprite.set_animation(orientation)
 	sprite.play(orientation)
 
+func _update_labels():
+	label.text = "%s,%s\n%s\n%s" % [current_tile.x, current_tile.y, orientation, heading]
+
 func _process(delta):
 	_move(delta)
 	_check_tile_change()
-
+	_update_labels()
 
 func _move(delta: float):
 	position += heading * speed * delta

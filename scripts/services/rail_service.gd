@@ -154,6 +154,8 @@ const junction_changes = {
 	"WEN": "NEW"
 }
 
+const orientations = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"]
+
 
 #var rail_graph := {}
 var rails = {} # tile -> rail_code (e.g. "NS", "EW", "NSe")
@@ -230,8 +232,12 @@ func calculate_new_orientation(tile: Vector2i, delta: Vector2i):
 	if exit_edge:
 		var edge_str = "%s%s" % [entry_edge, exit_edge]
 		var new_ori = RAIL_TO_ORI[edge_str]
-		#print("New orientation: %s" % new_ori)
-		return new_ori
+		print("New orientation: %s" % new_ori)
+		if new_ori in orientations:
+			return new_ori
+		else:
+			new_ori = new_ori.reverse()
+			return new_ori
 	return null
 
 
