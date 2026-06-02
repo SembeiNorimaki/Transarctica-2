@@ -28,7 +28,8 @@ class NodeData:
 # 	var to_tile: Vector2i
 # 	var cost: float
 
-func build_graph():
+func build_graph(terrain_tilemap: TileMapLayer):
+	print("Building navigation graph")
 	nodes.clear()
 	nodes2x2.clear()
 	edges.clear()
@@ -37,9 +38,9 @@ func build_graph():
 	adjacency2x2.clear()
 	#blocked_edges.clear()
 
-	_build_nodes()
+	_build_nodes(terrain_tilemap)
 	_build_edges()
-	_build_nodes_2x2()
+	_build_nodes_2x2(terrain_tilemap)
 	_build_edges_2x2()
 
 
@@ -72,39 +73,32 @@ func is_walkable_2x2(anchor: Vector2i) -> bool:
 
 
 #region Graph Construction
-func _build_nodes():
-	var map_size = grid_service.map_size
-	for x in range(map_size.x):
-		for y in range(map_size.y):
-			var tile := Vector2i(x, y)
+func _build_nodes(terrain_tilemap: TileMapLayer):
+	var tiles = terrain_tilemap.get_used_cells()
+	for tile in tiles:
+		var node = NodeData.new()
+		node.tile = tile
+		node.walkable = not tile_occupancy_service.is_occupied_static(tile)
+		node.terrain_cost = terrain_service.get_cost(tile)
+		node.elevation = terrain_service.get_elevation(tile)
+		
+		nodes[tile] = node
 
-			var node = NodeData.new()
-			node.tile = tile
-			node.walkable = not tile_occupancy_service.is_occupied_static(tile)
-			node.terrain_cost = terrain_service.get_cost(tile)
-			node.elevation = terrain_service.get_elevation(tile)
-			
-			nodes[tile] = node
-	#print("Nodes", nodes.keys())
-	##print("Number of nodes: %s" % nodes.size())
-
-func _build_nodes_2x2():
-	var map_size = grid_service.map_size
-	for x in range(map_size.x):
-		for y in range(map_size.y):
-			var anchor = Vector2i(x, y)
-			
-			if not is_walkable_2x2(anchor):
-				continue
-				
-			# create node
-			var node = NodeData.new()
-			node.tile = anchor
-			node.walkable = true
-			node.terrain_cost = terrain_service.get_cost(anchor)
-			node.elevation = terrain_service.get_elevation(anchor)
-			
-			nodes2x2[anchor] = node
+func _build_nodes_2x2(terrain_tilemap: TileMapLayer):
+	var tiles = terrain_tilemap.get_used_cells()
+	for tile in tiles:
+		
+		if not is_walkable_2x2(tile):
+			continue
+		
+		# create node
+		var node = NodeData.new()
+		node.tile = tile
+		node.walkable = true
+		node.terrain_cost = terrain_service.get_cost(tile)
+		node.elevation = terrain_service.get_elevation(tile)
+		
+		nodes2x2[tile] = node
 
 func _build_edges():
 	for tile in nodes.keys():
@@ -119,7 +113,32 @@ func _build_edges():
 			if not nodes[neighbor].walkable:
 				continue
 			if edge_occupancy_service.is_edge_walk_blocked(tile, neighbor):
+				print("Wall found between %s and %s" % [tile, neighbor])
 				continue
+
+			# prevent diagonal cutting
+			var delta = neighbor - tile
+			
+			# if it's a diagonal
+			if abs(delta.x) == 1 and abs(delta.y) == 1:  
+				var side1 := Vector2i(tile.x + delta.x, tile.y)
+				var side2 := Vector2i(tile.x, tile.y + delta.y)
+
+				if not nodes.has(side1) or not nodes[side1].walkable:
+					continue
+				if not nodes.has(side2) or not nodes[side2].walkable:
+					continue
+
+				# the existence of walls also prevents diagonal cutting
+				if edge_occupancy_service.is_edge_walk_blocked(tile, side1):
+					continue
+				if edge_occupancy_service.is_edge_walk_blocked(tile, side2):
+					continue
+				if edge_occupancy_service.is_edge_walk_blocked(side1, neighbor):
+					continue
+				if edge_occupancy_service.is_edge_walk_blocked(side2, neighbor):
+					continue
+
 
 			var edge = edge_occupancy_service.get_edge(tile, neighbor)
 			# If no edge exists, create a normal edge

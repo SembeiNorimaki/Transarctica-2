@@ -5,13 +5,11 @@ class_name TradeScene
 @onready var horizontal_train_manager = $Managers/HorizontalTrainManager
 @onready var resource_manager = $Managers/ResourceManager
 
-
 # Containers
 @onready var city_resource_container = $Containers/CityResourceContainer
 @onready var train_resource_container = $Containers/TrainResourceContainer
 @onready var loader_resource_container = $Containers/LoaderResourceContainer
 @onready var train_container = $Containers/Trains
-
 
 # Controllers
 @onready var camera_controller = $Controllers/CameraController
@@ -83,13 +81,6 @@ func initialize(name: String):
 	load_loader_vehicle()
 	trade_service.set_context(city_resource_container, train_resource_container, name)
 
-func _process(delta: float) -> void:
-	if is_intro:
-		_process_intro()
-	elif is_outro:
-		_process_outro()
-	
-
 func load_city_resources_from_game_state(city_name: String):
 	if not GameState.state.cities.has(city_name):
 		print("Error, %s not found in GameState" % city_name)
@@ -119,11 +110,11 @@ func load_industry_resources_from_game_state(industry_name: String):
 
 
 func load_train_from_game_state():
-	print("Loading from game state")
+	print("Loading horizontal train from game state")
 	var initial_tile = Vector2(-3.2, 4)
 	horizontal_train = horizontal_train_manager.spawn_train(initial_tile, "Player")
 	horizontal_train.set_speed(horizontal_train.max_speed)
-	add_child(horizontal_train)
+	train_container.add_child(horizontal_train)
 	print("Spawned horizontal train at tile: %s" % initial_tile)
 
 func load_loader_vehicle():
@@ -153,6 +144,12 @@ func _connect_signals():
 	trade_menu.on_button_clicked.connect(trade_service.execute_transaction)
 
 #endregion
+
+func _process(delta: float) -> void:
+	if is_intro:
+		_process_intro()
+	elif is_outro:
+		_process_outro()
 
 func _process_intro():
 	if horizontal_train.global_position.x > 0:

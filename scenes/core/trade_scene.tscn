@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://cghyum27gjwpp" path="res://scripts/services/trade_service.gd" id="8_ekjpa"]
 [ext_resource type="PackedScene" uid="uid://ofxj01woinrh" path="res://scenes/entities/wagons/loader_vehicle.tscn" id="9_7b5sh"]
 [ext_resource type="Script" uid="uid://cyf3w7jtjdj51" path="res://scripts/components/city_resource_container.gd" id="10_eh7ys"]
-[ext_resource type="Script" uid="uid://da4pvmyep7a8f" path="res://scripts/components/train_resource_container.gd" id="11_xpbpu"]
+[ext_resource type="PackedScene" uid="uid://dfbw1t56r8fj6" path="res://scenes/managers/train_resource_container.tscn" id="11_keppn"]
 [ext_resource type="PackedScene" uid="uid://b3efv4oicsfhv" path="res://scenes/trade/traffic_light.tscn" id="12_ahuwk"]
 [ext_resource type="Script" uid="uid://bluwsgcbc47h3" path="res://scripts/components/trade_menu.gd" id="13_epkq4"]
 [ext_resource type="Script" uid="uid://ki2p2i7w5r4w" path="res://scripts/components/loader_resource_container.gd" id="13_jgirw"]
@@ -58,8 +58,7 @@ position = Vector2(0, 177)
 [node name="CityResourceContainer" type="Node" parent="Containers" unique_id=1077810589]
 script = ExtResource("10_eh7ys")
 
-[node name="TrainResourceContainer" type="Node" parent="Containers" unique_id=819297019]
-script = ExtResource("11_xpbpu")
+[node name="TrainResourceContainer" parent="Containers" unique_id=868915929 instance=ExtResource("11_keppn")]
 
 [node name="TrafficLight" parent="Containers" unique_id=808951903 instance=ExtResource("12_ahuwk")]
 position = Vector2(590, 52)

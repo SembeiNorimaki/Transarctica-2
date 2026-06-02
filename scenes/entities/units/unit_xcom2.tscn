@@ -47,7 +47,8 @@ radius = 14.0
 script = ExtResource("2_gbknk")
 
 [node name="Parts" type="Node2D" parent="." index="0" unique_id=1514518540]
-position = Vector2(0, -12)
+position = Vector2(0, -26)
+scale = Vector2(2, 2)
 
 [node name="Torso" type="AnimatedSprite2D" parent="Parts" index="0" unique_id=1163083422]
 sprite_frames = ExtResource("2_klak8")

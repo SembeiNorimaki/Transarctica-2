@@ -12,9 +12,10 @@ class_name CombatScene
 @onready var unit_ai_manager = $Managers/UnitAIManager
 @onready var pod_ai_manager = $Managers/PodAIManager
 
-
 #Containers
 @onready var projectiles_container = $Containers/Projectiles
+@onready var train_container = $Containers/Trains
+@onready var train_resource_container = $Containers/TrainResourceContainer
 
 # Controllers
 @onready var camera_controller = $Controllers/CameraController
@@ -60,16 +61,30 @@ class_name CombatScene
 # UI
 #@onready var ui_wasd = $UI_WASD
 
+var is_intro := true
+var is_outro := false
+var horizontal_train: HorizontalTrain = null
+
 #region initialization
 func _ready() -> void:
 	_inject_services()
 	_register_teams()
 	call_deferred("_wire_signals")
 	_load_map("level_1")
-	navigation_graph_service.build_graph()
-	exploration_service.recalculate()
-	turn_manager.start_combat()
+	navigation_graph_service.build_graph(map_root.get_node("Level1").get_node("Terrain"))
 	
+	#exploration_service.recalculate()
+	#turn_manager.start_combat()
+
+	call_deferred("initialize")
+	
+func initialize():
+	print("Initializing combat")
+	load_train_from_game_state()
+
+
+
+
 func _inject_services():
 	# Managers
 	unit_manager.tile_occupancy_service = tile_occupancy_service
@@ -88,6 +103,7 @@ func _inject_services():
 	pod_manager.grid_service = grid_service
 	horizontal_train_manager.tile_occupancy_service = tile_occupancy_service
 	horizontal_train_manager.grid_service = grid_service
+	horizontal_train_manager.train_resource_container = train_resource_container
 	unit_ai_manager.unit_manager = unit_manager
 	pod_ai_manager.pod_manager = pod_manager
 	pod_ai_manager.unit_manager = unit_manager
@@ -186,7 +202,7 @@ func _load_map(map_name: String) -> void:
 	tile_occupancy_service.tile_size = tile_size
 
 	grid_service.map_size = new_map.get_node("Terrain").get_used_rect().size
-	#print("Map size %s" % grid_service.map_size)
+	print("Map size %s" % grid_service.map_size)
 
 	# Spawn units, buildings, walls, and roads
 	
@@ -196,8 +212,6 @@ func _load_map(map_name: String) -> void:
 	#_spawn_roads_from_map(new_map.get_node("Roads"))
 	_spawn_pods_from_map(new_map.get_node("Pods"), new_map.get_node("PatrolPoints"))
 	_assign_units_to_pods(new_map.get_node("Pods"), tile_occupancy_service)
-
-	#_spawn_train(Vector2i(6, 7))
 
 	#_load_patrol_points_from_map(new_map.get_node("PatrolPoints"), Vector2i(6, 7))
 
@@ -257,10 +271,13 @@ func _assign_units_to_pods(pods_tilemap: TileMapLayer, tile_occupancy_service: T
 		pod_manager.add_unit_to_pod(pod_id, units[0], unit_formation_offset)
 		# print("Assigning unit %s to pod %s" % [units[0].id, pod_id])
 	
-
-func _spawn_train(initial_tile: Vector2i):
-	horizontal_train_manager.spawn_train(initial_tile)
-
+func load_train_from_game_state():
+	print("Loading horizontal train from game state")
+	var initial_tile = Vector2(-3.2, 4)
+	horizontal_train = horizontal_train_manager.spawn_train(initial_tile, "Player")
+	horizontal_train.set_speed(horizontal_train.max_speed)
+	train_container.add_child(horizontal_train)
+	print("Spawned horizontal train at tile: %s" % initial_tile)
 
 func _spawn_units_from_map(units_tilemap: TileMapLayer) -> void:
 	for tile in units_tilemap.get_used_cells():
@@ -329,7 +346,25 @@ func _spawn_roads_from_map(roads_tilemap: TileMapLayer) -> void:
 		road_service.spawn_road(tile)
 #endregion
 
+#region process
+func _process(delta: float) -> void:
+	update_labels()
+	if is_intro:
+		_process_intro()
+	elif is_outro:
+		_process_outro()
 
+func _process_intro():
+	if horizontal_train.global_position.x > 0:
+		horizontal_train.gear_down()
+		is_intro = false
+
+func _process_outro():
+	if horizontal_train.global_position.x > 2000:
+		SceneManager.leave_combat()
+#endregion
+
+# check global inputs, mouse clicks and key presses. Passes mouse clicks and key presses to the state machine
 func _unhandled_input(event: InputEvent) -> void:
 	if _handle_global_input(event):
 		return
@@ -342,9 +377,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		state_machine.current_state.handle_key(event)
 
-	if event is InputEventMouseMotion:
-		update_mouse_label()
+	#if event is InputEventMouseMotion:
+	#	update_mouse_label()
 
+
+# global inputs:
+# e: finish turn
 func _handle_global_input(event: InputEvent) -> bool:
 	if event.is_action_pressed("e"):
 		turn_manager.finish_turn()
@@ -363,13 +401,15 @@ func update_turn_label(turn_id: String) -> void:
 func update_mouse_label():
 	mouse_label.text = "Mouse: %s, tile: %s" % [round(get_local_mouse_position()), grid_service.world_to_tile(get_local_mouse_position())]
 
-func update_camera_label(val):
+func update_camera_label():
 	camera_label.text = "Camera: Offset %s, Zoom %s" % [camera_controller.offset, camera_controller.zoom]
 
 
 func update_labels():
 	#State Machines:
 	state_label.text = "Combat: %s   Turn: %s" % [state_machine.current_state.name, turn_manager.turn_state_machine.current_state.name]
+	update_camera_label()
+	update_mouse_label()
 	
 
 #endregion
@@ -416,10 +456,7 @@ func on_bullet_hit(position):
 		else:
 			wall_manager.apply_damage_to_wall(entities_[0], 10)
 
-func _process(delta: float) -> void:
-	$Labels/FPSLabel.text = "FPS: %s" % Engine.get_frames_per_second()
-	update_camera_label(get_viewport().canvas_transform)
-	update_labels()
+	
 
 
 func set_cursor(cursor_name: String) -> void:

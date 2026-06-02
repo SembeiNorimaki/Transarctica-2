@@ -22,7 +22,7 @@ var target_tile = Vector2i(-1, -1)
 
 var id: String = ""
 var team_id: String = ""
-var move_speed := 20.0
+var move_speed := 40.0
 var orientation := "SE"
 var view_angle := 90.0
 var view_range := 12

@@ -120,6 +120,7 @@ tile_set = ExtResource("1_6jll5")
 tile_set = ExtResource("5_73fdq")
 
 [node name="Units" type="TileMapLayer" parent="." unique_id=119340618]
+scale = Vector2(2, 2)
 tile_set = ExtResource("2_4bwdg")
 
 [node name="Buildings" type="TileMapLayer" parent="." unique_id=997492745]
@@ -135,10 +136,12 @@ tile_set = SubResource("TileSet_6bhn3")
 
 [node name="Right" type="TileMapLayer" parent="Walls" unique_id=1484547573]
 y_sort_enabled = true
+scale = Vector2(2, 2)
 tile_set = ExtResource("6_4735l")
 
 [node name="Left" type="TileMapLayer" parent="Walls" unique_id=638782247]
 y_sort_enabled = true
+scale = Vector2(2, 2)
 tile_set = SubResource("TileSet_44sdu")
 
 [node name="PatrolPoints" type="TileMapLayer" parent="." unique_id=1822908890]
