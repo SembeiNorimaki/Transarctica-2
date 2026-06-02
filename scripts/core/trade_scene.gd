@@ -56,7 +56,13 @@ func _ready() -> void:
 	_inject_services()
 	_connect_signals()
 	_load_map("level_1")
-	call_deferred("initialize", "Barcelona")
+
+	if get_tree().current_scene == self:
+		print("TradeScene is running standalone")
+		call_deferred("initialize", "Barcelona")
+	else:
+		print("TradeScene was instantiated by SceneManager")
+	
 
 func initialize(name: String):
 	print("Initializing city: %s" % name)

@@ -16,6 +16,7 @@ func update(delta: float):
 
 func handle_click(tile: Vector2i, button_index: int):
 	if button_index == MOUSE_BUTTON_LEFT:
+		# Check if we clicked a wagon
 		# Check if there is a unit in this tile:
 		var units: Array = owner_node.tile_occupancy_service.get_units(tile)
 		if units.size() > 0 and units[0].team_id == "Player":

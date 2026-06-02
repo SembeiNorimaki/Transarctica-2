@@ -14,6 +14,10 @@
             ]
         },
         {
+            "wagon_name": "BarracksWagon",
+            "cargo": []
+        },
+        {
             "wagon_name": "MerchandiseWagon",
             "cargo": [
                 {

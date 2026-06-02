@@ -95,6 +95,11 @@ func add_wagon(wagon_data: Dictionary):
 
 	var wagon = wagon_info.scene.instantiate()
 
+	# dependency injection
+	wagon.grid_service = grid_service
+	# connect signals
+	
+
 	var cargo = wagon_data.cargo
 	var resource_name = ""
 	var resource_qty = 0
@@ -106,12 +111,7 @@ func add_wagon(wagon_data: Dictionary):
 	wagon.call_deferred("set_resource_type", resource_name)
 	wagon.call_deferred("set_resource_qty", resource_qty)
 
-	train_resource_container.add_wagon(wagon_name, resource_name, resource_qty)
-
-	# Dependecy injection
-	wagon.grid_service = grid_service
-
-
+	
 	# Position the wagon at the end of the train
 	var wagon_pos = position
 	if wagons:
@@ -123,6 +123,8 @@ func add_wagon(wagon_data: Dictionary):
 
 	wagon.position = wagon_pos
 
+
+	train_resource_container.add_wagon(wagon_name, resource_name, resource_qty)
 	add_child(wagon)
 	wagons.append(wagon)
 	

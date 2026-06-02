@@ -1,12 +1,11 @@
 extends Node2D
 
 # ─────────────────────────────────────────────
-#  Lifecycle & Setup:
+#  Methods:
 #    _ready() -> void
 #    _inject_services()
 #    _wire_signals()
 #
-#  Map Loading:
 #    _load_map(map_name: String) -> void
 #    _spawn_cities_from_map(cities_ids_tilemap: TileMapLayer) -> void
 #    _spawn_trains_from_map(trains_tilemap: TileMapLayer) -> void
@@ -14,21 +13,19 @@ extends Node2D
 #    _build_bridges_from_map(bridges_tilemap: TileMapLayer) -> void
 #    _spawn_wagons()
 #
-#  Input & Interaction:
 #    _unhandled_input(event: InputEvent) -> void
 #    _handle_gear_toggle()
 #    _handle_reverse_train()
 #
-#  Signal Handlers:
 #    _on_train_reached_city(city_name: String)
 #
-#  Public Methods:
 #    recenter_player_train()
 #    reverse_player_train_direction()
 #
 #  Signals:
 #    TrainManager.train_reached_city -> _on_train_reached_city
 # ─────────────────────────────────────────────
+
 
 # Managers
 @onready var train_manager: NavigationTrainManager = $Managers/TrainManager
@@ -75,7 +72,7 @@ func _ready() -> void:
 	# Start the overworld travel music with a 2-second fade-in.
 	AudioService.play_music(MUSIC_TRAVEL, 2.0)
 	
-func _inject_services():
+func _inject_services() -> void:
 	# Managers
 	train_manager.grid_service = grid_service
 	train_manager.rail_service = rail_service
@@ -100,7 +97,7 @@ func _inject_services():
 	# Controllers
 	camera_controller.grid_service = grid_service
 
-func _wire_signals():
+func _wire_signals() -> void:
 	#player_train.tile_changed.connect(_on_player_train_tile_changed)
 	train_manager.train_reached_city.connect(_on_train_reached_city)
 #endregion
@@ -178,7 +175,6 @@ func _spawn_wagons():
 	# dependency injection
 	wagon.grid_service = grid_service
 
-
 	var tile_pos_ = Vector2i(20, 8)
 	var ori_ = "E"
 	var current_pos = grid_service.tile_to_world(tile_pos_)
@@ -212,14 +208,6 @@ func _handle_gear_toggle() -> void:
 func _handle_reverse_train() -> void:
 	train_manager.reverse_player_train()
 
-
-func _on_train_reached_city(city_name: String):
-	print("Nav Scene: Train reached city %s" % city_name)
-	# Fade out travel music before entering the city scene.
-	AudioService.stop_music(1.5)
-	QuestManager.notify_city_reached(city_name)
-	SceneManager.enter_city(city_name)
-
 func recenter_player_train():
 	train_manager.recenter_player_train()
 
@@ -227,7 +215,9 @@ func reverse_player_train_direction():
 	train_manager.reverse_player_train()
 
 
-# func _on_player_train_tile_changed(from_tile: Vector2i, to_tile: Vector2i) -> void:
-# 	print("Train changed tile")
-# 	pass
-# 	#rail_service.build_rail(to_tile)
+func _on_train_reached_city(city_name: String):
+	print("Nav Scene: Train reached city %s" % city_name)
+	# Fade out travel music before entering the city scene.
+	AudioService.stop_music(1.5)
+	QuestManager.notify_city_reached(city_name)
+	SceneManager.enter_city(city_name)
