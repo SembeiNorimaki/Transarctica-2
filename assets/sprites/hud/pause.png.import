@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b62flcuxi0ebe"
-path="res://.godot/imported/nav_GondolaWagon.png-62bf6f5272b8704278a144d792b4d2b1.ctex"
+uid="uid://bn4bl6mj8c4nt"
+path="res://.godot/imported/pause.png-bb13d30d952c35fb0ca917e1acf9d71a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/wagons/navigation/nav_GondolaWagon.png"
-dest_files=["res://.godot/imported/nav_GondolaWagon.png-62bf6f5272b8704278a144d792b4d2b1.ctex"]
+source_file="res://assets/sprites/hud/pause.png"
+dest_files=["res://.godot/imported/pause.png-bb13d30d952c35fb0ca917e1acf9d71a.ctex"]
 
 [params]
 

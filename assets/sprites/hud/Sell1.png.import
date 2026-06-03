@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ifwu7k5kddh3"
-path="res://.godot/imported/trader2.png-4bc2b1c0eafedcfce1b3c16b8b65035a.ctex"
+uid="uid://c1p8lwir8fi35"
+path="res://.godot/imported/Sell1.png-67494566c8daf7f6b839f72a47fd6c15.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/trader2.png"
-dest_files=["res://.godot/imported/trader2.png-4bc2b1c0eafedcfce1b3c16b8b65035a.ctex"]
+source_file="res://assets/sprites/hud/Sell1.png"
+dest_files=["res://.godot/imported/Sell1.png-67494566c8daf7f6b839f72a47fd6c15.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dp0uphxlre3wv"
-path="res://.godot/imported/comrad3.png-0ba75591955341105afbc79afe5d8043.ctex"
+uid="uid://cp73pr5bkx2wx"
+path="res://.godot/imported/gold.png-6aa432fc5f52dce9d2f47faf5024529b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/comrad3.png"
-dest_files=["res://.godot/imported/comrad3.png-0ba75591955341105afbc79afe5d8043.ctex"]
+source_file="res://assets/sprites/hud/gold.png"
+dest_files=["res://.godot/imported/gold.png-6aa432fc5f52dce9d2f47faf5024529b.ctex"]
 
 [params]
 

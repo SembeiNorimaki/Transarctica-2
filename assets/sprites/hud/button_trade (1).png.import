@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bumt047ea0h3a"
-path="res://.godot/imported/nav_merchandise.png-237ecae544a77da1d4bd2c961031fad1.ctex"
+uid="uid://bhdwyrp4gspbu"
+path="res://.godot/imported/button_trade (1).png-84899711801e916b37c41a753308d9a2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/wagons/navigation/nav_merchandise.png"
-dest_files=["res://.godot/imported/nav_merchandise.png-237ecae544a77da1d4bd2c961031fad1.ctex"]
+source_file="res://assets/sprites/hud/button_trade (1).png"
+dest_files=["res://.godot/imported/button_trade (1).png-84899711801e916b37c41a753308d9a2.ctex"]
 
 [params]
 

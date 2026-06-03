@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvaywlbwd08n2"
-path="res://.godot/imported/comrad.png-989032297fd600eae788b92f8033d3f1.ctex"
+uid="uid://ek5kw7v1n7be"
+path="res://.godot/imported/nav_TenderWagon.png-8d4353a62ba5ac2d08711d16d78fb002.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/comrad.png"
-dest_files=["res://.godot/imported/comrad.png-989032297fd600eae788b92f8033d3f1.ctex"]
+source_file="res://assets/sprites/wagons/navigation/nav_TenderWagon.png"
+dest_files=["res://.godot/imported/nav_TenderWagon.png-8d4353a62ba5ac2d08711d16d78fb002.ctex"]
 
 [params]
 

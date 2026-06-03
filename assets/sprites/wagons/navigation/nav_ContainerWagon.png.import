@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c7rnmqj2q0kms"
-path="res://.godot/imported/comrade.png-0e59983242480700934091e1fe8c7658.ctex"
+uid="uid://c6dlc0qmt5krs"
+path="res://.godot/imported/nav_ContainerWagon.png-5f2415c03e19e6914e572369047c9210.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/comrade.png"
-dest_files=["res://.godot/imported/comrade.png-0e59983242480700934091e1fe8c7658.ctex"]
+source_file="res://assets/sprites/wagons/navigation/nav_ContainerWagon.png"
+dest_files=["res://.godot/imported/nav_ContainerWagon.png-5f2415c03e19e6914e572369047c9210.ctex"]
 
 [params]
 

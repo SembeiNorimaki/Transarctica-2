@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://13t5a14lj112"
-path="res://.godot/imported/trader.png-11edf5392d6cb72160f9a89b6828b041.ctex"
+uid="uid://mxmlqi38duam"
+path="res://.godot/imported/button_minimap.png-9891170212dcc67fe35ea649240bb883.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/trader.png"
-dest_files=["res://.godot/imported/trader.png-11edf5392d6cb72160f9a89b6828b041.ctex"]
+source_file="res://assets/sprites/hud/button_minimap.png"
+dest_files=["res://.godot/imported/button_minimap.png-9891170212dcc67fe35ea649240bb883.ctex"]
 
 [params]
 

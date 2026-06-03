@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cr50gg14qspby"
-path="res://.godot/imported/nav_container.png-c9a805e6fb4629eb54b303cd1a08696f.ctex"
+uid="uid://ykl6jubllwh3"
+path="res://.godot/imported/frame.png-65993eb79a349b43be80a838902bc853.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/wagons/navigation/nav_container.png"
-dest_files=["res://.godot/imported/nav_container.png-c9a805e6fb4629eb54b303cd1a08696f.ctex"]
+source_file="res://assets/sprites/hud/frame.png"
+dest_files=["res://.godot/imported/frame.png-65993eb79a349b43be80a838902bc853.ctex"]
 
 [params]
 

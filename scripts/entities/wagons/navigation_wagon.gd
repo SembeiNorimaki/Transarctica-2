@@ -15,8 +15,11 @@ signal tile_changed(wagon, old_tile: Vector2i, new_tile: Vector2i)
 
 var current_tile := Vector2i(-1, -1)
 var orientation := ""
+var cargo := ""
+var cargo_amount := "Empty"
 var heading = Vector2(1.0, 0.0)
 var speed := 0.0
+var wagon_type := ""
 
 
 # offsets for the front and back collision shapes
@@ -43,41 +46,47 @@ func _ready() -> void:
 func initialize(wagon_type: String) -> void:
 	set_wagon_type(wagon_type)
 	
-func set_wagon_type(wagon_type: String) -> void:
+func set_wagon_type(wagon_type_: String) -> void:
+	wagon_type = wagon_type_
 	var atlas_path = "res://assets/sprites/wagons/navigation/nav_%s.png" % wagon_type
 	var atlas: Texture2D = load(atlas_path)
 
-	var orientations = WagonTypes.TYPES[type_name].navigation_atlas_orientations
-	var cargos = WagonTypes.TYPES[type_name].navigation_atlas_cargo
+	var orientations = WagonTypes.TYPES[wagon_type].navigation_atlas_orientations
+	var cargos = WagonTypes.TYPES[wagon_type].navigation_atlas_cargo
+	var default_cargo = WagonTypes.TYPES[wagon_type].default_cargo
+	
+	cargo = default_cargo
+	print("Setting cargo to %s" % cargo)
 	
 	if atlas == null:
-		push_error("Missing atlas for wagon type: %s" % type_name)
+		push_error("Missing atlas for wagon type: %s" % wagon_type)
 		return
 	_create_animations_from_atlas(atlas, orientations, cargos)
 
-func _create_animations_from_atlas(atlas: Texture2D, orientations: Array[String], cargos: Array[String]) -> void:
+func _create_animations_from_atlas(atlas: Texture2D, orientations: Array, cargos: Array) -> void:
 	var frames := SpriteFrames.new()
 
 	var frame_width = atlas.get_width() / orientations.size()
 	var frame_height = atlas.get_height() / cargos.size()
 
 	for j in cargos.size():
-		var tokens = cargos[i].split("_")
+		var tokens = cargos[j].split("_")
 		var cargo_name = tokens[0]      # Wood, Copper, Iron....
 		var cargo_amount = tokens[1]    # either Half or Full
 		for i in orientations.size():
 			var ori_name = orientations[i]
 			var frame_name = "%s_%s_%s" % [ori_name, cargo_name, cargo_amount]   # Ex:  S_Iron_Full, NE_Wood_Half
+			#print("Creating animation %s" % frame_name)
 			frames.add_animation(frame_name)
 			frames.set_animation_speed(frame_name, 1) # static frame
-		var region = Rect2(
-			Vector2(i * frame_width, j * frame_height),
-			Vector2(frame_width, frame_height)
-		)
-		var atlas_tex := AtlasTexture.new()
-		atlas_tex.atlas = atlas
-		atlas_tex.region = region
-		frames.add_frame(frame_name, atlas_tex)
+			var region = Rect2(
+				Vector2(i * frame_width, j * frame_height),
+				Vector2(frame_width, frame_height)
+			)
+			var atlas_tex := AtlasTexture.new()
+			atlas_tex.atlas = atlas
+			atlas_tex.region = region
+			frames.add_frame(frame_name, atlas_tex)
 
 	sprite.sprite_frames = frames
 
@@ -112,8 +121,10 @@ func set_heading(new_heading: Vector2):
 	heading = new_heading
 
 func update_animation():
-	sprite.set_animation(orientation)
-	sprite.play(orientation)
+	var animation_name = "%s_%s_%s" % [orientation, cargo_amount, cargo]
+	print("%s: Animation name: %s" % [wagon_type, animation_name])
+	sprite.set_animation(animation_name)
+	sprite.play(animation_name)
 
 func _process(delta):
 	_move(delta)

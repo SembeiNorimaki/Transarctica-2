@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7j2y6n782tc5"
-path="res://.godot/imported/nav_gondola.png-f218fd94eaa4995071bd4263f4929bb6.ctex"
+uid="uid://vfotljnth18c"
+path="res://.godot/imported/comrade.png-e1fcc20666b60bbedae28fe352bf2b64.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/wagons/navigation/nav_gondola.png"
-dest_files=["res://.godot/imported/nav_gondola.png-f218fd94eaa4995071bd4263f4929bb6.ctex"]
+source_file="res://assets/sprites/hud/comrade.png"
+dest_files=["res://.godot/imported/comrade.png-e1fcc20666b60bbedae28fe352bf2b64.ctex"]
 
 [params]
 

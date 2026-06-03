@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-@export var portrait_texture: Texture2D = preload("res://assets/sprites/comrad.png")
+@export var portrait_texture: Texture2D = preload("res://assets/sprites/hud/comrad_face.png")
 
 @onready var panel_container = $PanelContainer
 @onready var portrait_rect = $PanelContainer/MarginContainer/HBoxContainer/PortraitRect

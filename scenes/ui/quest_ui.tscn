@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://ilnkexor85s7" path="res://scripts/ui/quest_ui.gd" id="1_questui"]
 
 [node name="QuestUI" type="CanvasLayer" unique_id=363591819]
+visible = false
 script = ExtResource("1_questui")
 
 [node name="Control" type="Control" parent="." unique_id=2033827934]

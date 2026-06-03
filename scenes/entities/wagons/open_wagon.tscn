@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://cn20awligkm30"]
+
+[ext_resource type="PackedScene" uid="uid://db0akj2cdwfl3" path="res://scenes/entities/units/vehicle_unit.tscn" id="1_880tt"]
+[ext_resource type="Texture2D" uid="uid://ecucl74gugty" path="res://assets/sprites/wagons/trade/spritesheet.png" id="2_pnlnx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_75l5x"]
+atlas = ExtResource("2_pnlnx")
+region = Rect2(0, 0, 136, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yrwob"]
+atlas = ExtResource("2_pnlnx")
+region = Rect2(136, 0, 136, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_775ee"]
+atlas = ExtResource("2_pnlnx")
+region = Rect2(272, 0, 136, 68)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nh0xe"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_75l5x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yrwob")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_775ee")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="OpenWagon" unique_id=558077121 instance=ExtResource("1_880tt")]
+position = Vector2(0, 1)
+
+[node name="Sprite" parent="." index="0" unique_id=1438979658]
+sprite_frames = SubResource("SpriteFrames_nh0xe")

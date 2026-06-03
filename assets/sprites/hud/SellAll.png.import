@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c4iqqjy0xunm1"
-path="res://.godot/imported/nav_tender.png-210f04f821e354e7b7c231c3eaad0264.ctex"
+uid="uid://bt7lnaa3pekw6"
+path="res://.godot/imported/SellAll.png-9881084ddfa21474793aa0082474e647.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/wagons/navigation/nav_tender.png"
-dest_files=["res://.godot/imported/nav_tender.png-210f04f821e354e7b7c231c3eaad0264.ctex"]
+source_file="res://assets/sprites/hud/SellAll.png"
+dest_files=["res://.godot/imported/SellAll.png-9881084ddfa21474793aa0082474e647.ctex"]
 
 [params]
 

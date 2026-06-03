@@ -108,22 +108,20 @@ const LOCOMOTIVE_SCENE = preload("res://scenes/entities/trains/navigation_locomo
 signal train_tile_changed(navigation_train: NavigationTrain, old_tile: Vector2i, new_tile: Vector2i)
 
 func _ready() -> void:
-	add_locomotive()
-	add_wagon("tender")
-	add_wagon("merchandise")
-	add_wagon("gondola")
-	add_wagon("wood")
-	add_wagon("container")
-	add_wagon("container")
-	add_wagon("container")
-	add_wagon("container")
-	add_wagon("container")
-	add_wagon("container")
-	#update_gear_label()
+	pass
 	
 #region initialization
 func initialize(id_: String, tile_pos_: Vector2i, ori_: String) -> void:
-	initialize_wagon_positions(tile_pos_, ori_)
+	add_locomotive()
+	add_wagon("TenderWagon")
+	add_wagon("MerchandiseWagon")
+	add_wagon("ContainerWagon")
+	#add_wagon("GondolaWagon")
+	#add_wagon("GondolaWagon")
+	#add_wagon("GondolaWagon")
+	
+	#update_gear_label()
+	call_deferred("initialize_wagon_positions", tile_pos_, ori_)
 	set_id(id_)
 	id_label.text = id
 	#set_team(team_id_)
