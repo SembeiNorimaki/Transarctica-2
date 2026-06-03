@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bv0f62tp4rwkn"
-path="res://.godot/imported/nav_locomotive.png-956910b65214d6bca6606c315aa05fae.ctex"
+uid="uid://bhfvklmtpximq"
+path="res://.godot/imported/exploration64.png-d7bde39ddb7c11afcbabf8af48dd41e4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/wagons/navigation/nav_locomotive.png"
-dest_files=["res://.godot/imported/nav_locomotive.png-956910b65214d6bca6606c315aa05fae.ctex"]
+source_file="res://assets/tilesets/exploration64.png"
+dest_files=["res://.godot/imported/exploration64.png-d7bde39ddb7c11afcbabf8af48dd41e4.ctex"]
 
 [params]
 

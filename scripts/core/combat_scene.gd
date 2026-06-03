@@ -467,6 +467,10 @@ func _on_bullet_requested(from, to, scene):
 	projectiles_container.add_child(bullet)
 	bullet.fire(from, to)
 
+func unload_soldier_from_wagon(wagon_id: int) -> void:
+	var tile = Vector2i(8, 0)
+	unit_manager.spawn_unit(tile, "liquidator", "Player")
+
 func on_bullet_hit(position):
 	#convert position to tile
 	var tile_ = grid_service.world_to_tile(position)

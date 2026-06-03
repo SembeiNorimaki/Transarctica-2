@@ -5,13 +5,14 @@ const FOOTPRINTS = {
 
 const TYPES = {
 	"LocomotiveWagon": {
-		"trade_scene": preload("res://scenes/entities/wagons/locomotive_wagon.tscn"),
+		"horizontal_scene": preload("res://scenes/entities/wagons/locomotive_wagon.tscn"),
 		"team": "Player",
-		"size": Vector2i(256, 66),
-		"stores": []
+		"horizontal_size": Vector2i(256, 66),
+		"stores": [],
+		"default_cargo": ""
 	},
 	"BarracksWagon": {
-		"trade_scene": preload("res://scenes/entities/wagons/barracks_wagon.tscn"),
+		"horizontal_scene": preload("res://scenes/entities/wagons/barracks_wagon.tscn"),
 		"navigation_atlas_file": "res://assets/sprites/wagons/navigation/nav_BarracksWagon.png",
 		"navigation_atlas_orientations": ["SE", "S", "SW", "W", "NW", "N", "NE", "E"],
 		"navigation_atlas_cargo": ["Empty_Soldiers"],
@@ -22,7 +23,7 @@ const TYPES = {
 		"default_cargo": "Soldiers"
 	},
 	"CannonWagon": {
-		"trade_scene": preload("res://scenes/entities/wagons/cannon_wagon.tscn"),
+		"horizontal_scene": preload("res://scenes/entities/wagons/cannon_wagon.tscn"),
 		"navigation_atlas_file": "res://assets/sprites/wagons/navigation/nav_CannonWagon.png",
 		"navigation_atlas_orientations": ["SE", "S", "SW", "W", "NW", "N", "NE", "E"],
 		"navigation_atlas_cargo": ["Empty_Ammunition"],
@@ -33,7 +34,7 @@ const TYPES = {
 		"default_cargo": "Ammunition"
 	},
 	"MerchandiseWagon": {
-		"trade_scene": preload("res://scenes/entities/wagons/merchandise_wagon.tscn"),
+		"horizontal_scene": preload("res://scenes/entities/wagons/merchandise_wagon.tscn"),
 		"navigation_atlas_file": "res://assets/sprites/wagons/navigation/nav_MerchandiseWagon.png",
 		"navigation_atlas_orientations": ["SE", "S", "SW", "W", "NW", "N", "NE", "E"],
 		"navigation_atlas_cargo": ["Empty_Crate"],
@@ -44,7 +45,7 @@ const TYPES = {
 		"default_cargo": "Crate"
 	},
 	"TenderWagon": {
-		"trade_scene": preload("res://scenes/entities/wagons/tender_wagon.tscn"),
+		"horizontal_scene": preload("res://scenes/entities/wagons/tender_wagon.tscn"),
 		"navigation_atlas_file": "res://assets/sprites/wagons/navigation/nav_TenderWagon.png",
 		"navigation_atlas_orientations": ["SE", "S", "SW", "W", "NW", "N", "NE", "E"],
 		"navigation_atlas_cargo": ["Empty_Coal"],
@@ -55,7 +56,7 @@ const TYPES = {
 		"default_cargo": "Coal"
 	},
 	"GondolaWagon": {
-		"trade_scene": preload("res://scenes/entities/wagons/gondola_wagon.tscn"),
+		"horizontal_scene": preload("res://scenes/entities/wagons/gondola_wagon.tscn"),
 		"navigation_atlas_file": "res://assets/sprites/wagons/navigation/nav_GondolaWagon.png",
 		"navigation_atlas_orientations": ["SE", "S", "SW", "W", "NW", "N", "NE", "E"],
 		"navigation_atlas_cargo": ["Empty_Iron", "Half_Iron", "Full_Iron", "Empty_Copper", "Half_Copper", "Full_Copper"],
@@ -66,7 +67,7 @@ const TYPES = {
 		"default_cargo": "Iron"
 	},
 	"OpenWagon": {
-		"trade_scene": preload("res://scenes/entities/wagons/open_wagon.tscn"),
+		"horizontal_scene": preload("res://scenes/entities/wagons/open_wagon.tscn"),
 		"navigation_atlas_file": "res://assets/sprites/wagons/navigation/nav_OpenWagon.png",
 		"navigation_atlas_orientations": ["SE", "S", "SW", "W", "NW", "N", "NE", "E"],
 		"navigation_atlas_cargo": ["Empty_Wood", "Half_Wood", "Full_Wood", "Empty_IronRods", "Half_IronRods", "Full_IronRods"],
@@ -78,7 +79,7 @@ const TYPES = {
 	},
 
 	"ContainerWagon": {
-		"trade_scene": preload("res://scenes/entities/wagons/container_wagon.tscn"),
+		"horizontal_scene": preload("res://scenes/entities/wagons/container_wagon.tscn"),
 		"navigation_atlas_file": "res://assets/sprites/wagons/navigation/nav_GondolaWagon.png",
 		"navigation_atlas_orientations": ["SE", "S", "SW", "W", "NW", "N", "NE", "E"],
 		"navigation_atlas_cargo": ["Empty_Container"],

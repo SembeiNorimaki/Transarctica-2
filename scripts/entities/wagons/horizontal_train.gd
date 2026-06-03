@@ -93,7 +93,7 @@ func add_wagon(wagon_data: Dictionary):
 	var wagon_name = wagon_data.wagon_name
 	var wagon_info = WagonTypes.TYPES[wagon_name]
 
-	var wagon = wagon_info.scene.instantiate()
+	var wagon = wagon_info.horizontal_scene.instantiate()
 
 	# dependency injection
 	wagon.grid_service = grid_service
@@ -117,8 +117,8 @@ func add_wagon(wagon_data: Dictionary):
 	if wagons:
 		var prev_wagon_name = wagons[-1].get_script().get_global_name()
 		wagon_pos = wagons[-1].position
-		wagon_pos.x -= WagonTypes.TYPES[prev_wagon_name].size.x / 2
-		wagon_pos.x -= WagonTypes.TYPES[wagon_name].size.x / 2
+		wagon_pos.x -= WagonTypes.TYPES[prev_wagon_name].horizontal_size.x / 2
+		wagon_pos.x -= WagonTypes.TYPES[wagon_name].horizontal_size.x / 2
 		wagon_pos.x -= 2
 
 	wagon.position = wagon_pos

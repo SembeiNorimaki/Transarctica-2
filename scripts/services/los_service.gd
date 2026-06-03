@@ -8,6 +8,7 @@ var los_overlay: LOSOverlay
 
 # computes the bresenham line between two tiles with no diagonals
 func bresenham_line(start: Vector2i, end: Vector2i) -> Array[Vector2i]:
+	#print("Bresenham Line between %s and %s" % [start, end])
 	var tiles: Array[Vector2i] = []
 
 	var x0 = start.x

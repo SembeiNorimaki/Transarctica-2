@@ -41,9 +41,9 @@ func draw_debug_tiles(tiles: Array):
 	#print("Draw debug tiles %s" % [tiles])
 	for i in range(tiles.size()):
 		pass
-		#_tiles_to_draw.append(tiles[i])
+		_tiles_to_draw.append(tiles[i])
 		##print("Tiles %s and  %s" % [tiles[i], tiles[i+1]])
-	#_lines_to_draw.append([tiles[0], tiles[tiles.size() - 1], Color.BLACK])
+	_lines_to_draw.append([tiles[0], tiles[tiles.size() - 1], Color.BLACK])
 	queue_redraw()
 
 func draw_los_line(start: Vector2i, end: Vector2i, color: Color):
