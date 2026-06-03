@@ -43,34 +43,41 @@ func _ready() -> void:
 func initialize(wagon_type: String) -> void:
 	set_wagon_type(wagon_type)
 	
-func set_wagon_type(type_name: String) -> void:
-	var atlas_path = "res://assets/sprites/wagons/navigation/nav_%s.png" % type_name
+func set_wagon_type(wagon_type: String) -> void:
+	var atlas_path = "res://assets/sprites/wagons/navigation/nav_%s.png" % wagon_type
 	var atlas: Texture2D = load(atlas_path)
 
+	var orientations = WagonTypes.TYPES[type_name].navigation_atlas_orientations
+	var cargos = WagonTypes.TYPES[type_name].navigation_atlas_cargo
+	
 	if atlas == null:
 		push_error("Missing atlas for wagon type: %s" % type_name)
 		return
-	_create_direction_animations_from_atlas(atlas)
+	_create_animations_from_atlas(atlas, orientations, cargos)
 
-func _create_direction_animations_from_atlas(atlas: Texture2D) -> void:
+func _create_animations_from_atlas(atlas: Texture2D, orientations: Array[String], cargos: Array[String]) -> void:
 	var frames := SpriteFrames.new()
-	var frame_width = atlas.get_width() / ORIENTATIONS.size()
-	var frame_height = atlas.get_height()
 
-	
-	
-	for i in ORIENTATIONS.size():
-		var ori_name = ORIENTATIONS[i]
-		frames.add_animation(ori_name)
-		frames.set_animation_speed(ori_name, 1) # static frame
+	var frame_width = atlas.get_width() / orientations.size()
+	var frame_height = atlas.get_height() / cargos.size()
+
+	for j in cargos.size():
+		var tokens = cargos[i].split("_")
+		var cargo_name = tokens[0]      # Wood, Copper, Iron....
+		var cargo_amount = tokens[1]    # either Half or Full
+		for i in orientations.size():
+			var ori_name = orientations[i]
+			var frame_name = "%s_%s_%s" % [ori_name, cargo_name, cargo_amount]   # Ex:  S_Iron_Full, NE_Wood_Half
+			frames.add_animation(frame_name)
+			frames.set_animation_speed(frame_name, 1) # static frame
 		var region = Rect2(
-			Vector2(i * frame_width, 0),
+			Vector2(i * frame_width, j * frame_height),
 			Vector2(frame_width, frame_height)
 		)
 		var atlas_tex := AtlasTexture.new()
 		atlas_tex.atlas = atlas
 		atlas_tex.region = region
-		frames.add_frame(ori_name, atlas_tex)
+		frames.add_frame(frame_name, atlas_tex)
 
 	sprite.sprite_frames = frames
 

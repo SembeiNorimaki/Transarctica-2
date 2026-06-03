@@ -35,11 +35,22 @@ const TYPES = {
 		"stores": ["coal"]
 	},
 	"GondolaWagon": {
-		"scene": preload("res://scenes/entities/wagons/gondola_wagon.tscn"),
+		"trade_scene": preload("res://scenes/entities/wagons/gondola_wagon.tscn"),
+		"navigation_atlas_file": "res://assets/sprites/wagons/navigation/nav_GondolaWagon.png"
+		"navigation_atlas_orientations": ["SE", "S", "SW", "W", "NW", "N", "NE", "E"],
+		"navigation_atlas_cargo": ["Empty", "Half_Iron", "Full_Iron", "Half_Copper", "Full_Copper"],
 		"team": "Player",
-		"size": Vector2i(178, 57),
-		"stores": ["ore"]
+		"horizontal_size": Vector2i(178, 57),
+		"navigation_size": Vector2i(78, 55),
+		"stores": ["iron", "copper"]
 	},
+	"OpenWagon": {
+		"trade_scene": preload("res://scenes/entities/wagons/open_wagon.tscn"),
+		"team": "Player",
+		"horizontal_size": Vector2i(178, 57),
+		"stores": []
+	},
+
 	"ContainerWagon": {
 		"scene": preload("res://scenes/entities/wagons/container_wagon.tscn"),
 		"team": "Player",
