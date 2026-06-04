@@ -5,7 +5,7 @@ class_name UnitActionIdleState
 func enter(params = {}):
 	if params.has("unit"):
 		var unit: Unit = params["unit"]
-		unit.stop_animation()
+		unit.play_animation(unit.get_current_action(), unit.orientation)
 
 func exit(params = {}):
 	pass

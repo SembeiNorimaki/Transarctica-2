@@ -22,11 +22,11 @@ func enter(params = {}):
 	print("Enter AimingState with params %s" % params)
 	selected_unit = params["selected_unit"]
 	selected_unit.set_state("AimState", {"unit": selected_unit})
-
 	owner_node.set_cursor("aim")
 
 func exit(params = {}):
 	print("Exiting combat unit aiming state")
+	selected_unit.set_state("IdleState", {"unit": selected_unit})
 	owner_node.set_cursor("")
 
 

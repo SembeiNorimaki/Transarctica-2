@@ -2,61 +2,62 @@ extends Node2D
 class_name CombatScene
 
 # Managers
-@onready var unit_manager = $Managers/UnitManager
-@onready var building_manager = $Managers/BuildingManager
-@onready var wall_manager = $Managers/WallManager
-@onready var turn_manager = $Managers/TurnManager
-@onready var selection_manager = $Managers/SelectionManager
-@onready var pod_manager = $Managers/PodManager
-@onready var horizontal_train_manager = $Managers/HorizontalTrainManager
-@onready var unit_ai_manager = $Managers/UnitAIManager
-@onready var pod_ai_manager = $Managers/PodAIManager
+@onready var unit_manager: UnitManager = $Managers/UnitManager
+@onready var building_manager: BuildingManager = $Managers/BuildingManager
+@onready var wall_manager: WallManager = $Managers/WallManager
+@onready var turn_manager: TurnManager = $Managers/TurnManager
+@onready var selection_manager: SelectionManager = $Managers/SelectionManager
+@onready var pod_manager: PodManager = $Managers/PodManager
+@onready var horizontal_train_manager: HorizontalTrainManager = $Managers/HorizontalTrainManager
+@onready var unit_ai_manager: UnitAIManager = $Managers/UnitAIManager
+@onready var pod_ai_manager: PodAIManager = $Managers/PodAIManager
 
 #Containers
-@onready var projectiles_container = $Containers/Projectiles
-@onready var train_container = $Containers/Trains
-@onready var train_resource_container = $Containers/TrainResourceContainer
+@onready var projectiles_container: Node2D = $Containers/Projectiles
+@onready var train_container: Node2D = $Containers/Trains
+@onready var train_resource_container: TrainResourceContainer = $Containers/TrainResourceContainer
 
 # Controllers
-@onready var camera_controller = $Controllers/CameraController
+@onready var camera_controller: CameraController = $Controllers/CameraController
 
 # Services
-@onready var road_service = $Services/RoadService
-@onready var grid_service = $Services/GridService
-@onready var tile_occupancy_service = $Services/TileOccupancyService
-@onready var pathfinding_service = $Services/PathfindingService
-@onready var terrain_service = $Services/TerrainService
-@onready var navigation_graph_service = $Services/NavigationGraphService
-@onready var edge_occupancy_service = $Services/EdgeOccupancyService
-@onready var los_service = $Services/LOSService
-@onready var weapon_service = $Services/WeaponService
-@onready var exploration_service = $Services/ExplorationService
+@onready var road_service: RoadService = $Services/RoadService
+@onready var grid_service: GridService = $Services/GridService
+@onready var tile_occupancy_service: TileOccupancyService = $Services/TileOccupancyService
+@onready var pathfinding_service: PathfindingService = $Services/PathfindingService
+@onready var terrain_service: TerrainService = $Services/TerrainService
+@onready var navigation_graph_service: NavigationGraphService = $Services/NavigationGraphService
+@onready var edge_occupancy_service: EdgeOccupancyService = $Services/EdgeOccupancyService
+@onready var los_service: LOSService = $Services/LOSService
+@onready var weapon_service: WeaponService = $Services/WeaponService
+@onready var exploration_service: ExplorationService = $Services/ExplorationService
 
 # Overlays
-@onready var units_overlay = $Overlays/UnitsOverlay
-@onready var buildings_overlay = $Overlays/BuildingsOverlay
-@onready var walls_overlay = $Overlays/WallsOverlay
-@onready var roads_overlay = $Overlays/RoadsOverlay
-@onready var paths_overlay = $Overlays/PathsOverlay
-@onready var mouse_hover_overlay = $Overlays/MouseHoverOverlay
-@onready var navigation_graph_overlay = $Overlays/NavigationGraphOverlay
-@onready var los_overlay = $Overlays/LOSOverlay
+@onready var units_overlay: Node2D = $Overlays/UnitsOverlay
+@onready var buildings_overlay: Node2D = $Overlays/BuildingsOverlay
+@onready var walls_overlay: Node2D = $Overlays/WallsOverlay
+@onready var roads_overlay: Node2D = $Overlays/RoadsOverlay
+@onready var paths_overlay: Node2D = $Overlays/PathsOverlay
+@onready var mouse_hover_overlay: Node2D = $Overlays/MouseHoverOverlay
+@onready var navigation_graph_overlay: Node2D = $Overlays/NavigationGraphOverlay
+@onready var los_overlay: Node2D = $Overlays/LOSOverlay
+@onready var fov_overlay: Node2D = $Overlays/FOVOverlay
 
 # Map 
-@onready var map_root = $MapRoot
-@onready var exploration_layer = $MapRoot/ExplorationLayer
+@onready var map_root: Node2D = $MapRoot
+@onready var exploration_layer: ExplorationLayer = $MapRoot/ExplorationLayer
 
 # Input State Machine
-@onready var state_machine = $CombatStateMachine
+@onready var state_machine: StateMachine = $CombatStateMachine
 
 # Labels
-@onready var state_label = $Labels/StateLabel
-@onready var turn_label = $Labels/TurnLabel
-@onready var mouse_label = $Labels/MouseLabel
-@onready var camera_label = $Labels/CameraLabel
+@onready var state_label: Label = $Labels/StateLabel
+@onready var turn_label: Label = $Labels/TurnLabel
+@onready var mouse_label: Label = $Labels/MouseLabel
+@onready var camera_label: Label = $Labels/CameraLabel
 
 # Cursor
-@onready var aim_cursor = $AimCursor
+@onready var aim_cursor: Sprite2D = $AimCursor
 
 # UI
 #@onready var ui_wasd = $UI_WASD
@@ -65,7 +66,7 @@ var is_intro := true
 var is_outro := false
 var horizontal_train: HorizontalTrain = null
 
-var train_initial_tile := Vector2(12, 12)
+var train_initial_tile := Vector2(10, 10)
 var camera_initial_tile := Vector2i(25, 0)
 
 #region initialization
@@ -91,6 +92,8 @@ func _ready() -> void:
 func initialize():
 	print("Initializing combat")
 	load_train_from_game_state()
+
+	unload_soldier_from_wagon(1)
 
 
 func _inject_services():
@@ -131,6 +134,7 @@ func _inject_services():
 	navigation_graph_overlay.navigation_graph_service = navigation_graph_service
 	navigation_graph_overlay.grid_service = grid_service
 	los_overlay.grid_service = grid_service
+	fov_overlay.grid_service = grid_service
 
 	# Services
 	grid_service.camera_controller = camera_controller
@@ -155,6 +159,7 @@ func _inject_services():
 	exploration_service.exploration_layer = exploration_layer
 	exploration_service.los_service = los_service
 	exploration_service.unit_manager = unit_manager
+	exploration_service.fov_overlay = fov_overlay
 
 	camera_controller.grid_service = grid_service
 
@@ -170,7 +175,7 @@ func _wire_signals():
 	unit_manager.connect("unit_removed", units_overlay.redraw)
 	unit_manager.connect("unit_reached_destination", _unit_reached_destination)
 	unit_manager.connect("unit_changed_orientation", _unit_changed_orientation)
-	unit_manager.connect("unit_changed_tile", _unit_changed_tile)
+	unit_manager.connect("unit_tile_changed", _unit_changed_tile)
 
 
 	building_manager.connect("building_spawned", buildings_overlay.redraw)
@@ -468,7 +473,7 @@ func _on_bullet_requested(from, to, scene):
 	bullet.fire(from, to)
 
 func unload_soldier_from_wagon(wagon_id: int) -> void:
-	var tile = Vector2i(8, 0)
+	var tile = Vector2i(32, 0)
 	unit_manager.spawn_unit(tile, "liquidator", "Player")
 
 func on_bullet_hit(position):

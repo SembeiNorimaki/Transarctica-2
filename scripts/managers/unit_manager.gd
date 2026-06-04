@@ -132,7 +132,7 @@ func on_unit_reached_tile(unit: Unit, tile: Vector2i) -> void:
 	unit.current_tile = tile
 	unit.update_tile_label()
 	_give_next_tile(unit)
-	emit_signal("unit_changed_tile", unit, tile)
+	emit_signal("unit_tile_changed", unit, tile)
 
 # called by the unit itself
 func on_unit_orientation_changed(unit: Unit, new_orientation: String) -> void:

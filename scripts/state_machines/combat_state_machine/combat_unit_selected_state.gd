@@ -129,9 +129,14 @@ func handle_click(tile: Vector2i, button_index: int):
 	# 	# draw path overlay
 	# 	owner_node.paths_overlay.show_path(path)
 
+# q toggles aim
+# c toggles crouch
 func handle_key(event: InputEventKey):
 	if event.is_action_pressed("tab"):
 		owner_node.select_next_unit()
 	elif event.is_action_pressed("q"):
 		print("Action pressed q")
 		state_machine.set_state("UnitAimingState", {"selected_unit": selected_unit})
+	elif event.is_action_pressed("c"):
+		print("Action pressed c")
+		selected_unit.toggle_crouch()

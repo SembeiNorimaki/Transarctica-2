@@ -51,7 +51,9 @@ var is_crouching := false
 
 
 func toggle_crouch():
+	print("TOGGLE CROUCH")
 	is_crouching = not is_crouching
+	play_animation(get_current_action(), orientation)
 
 func set_weapon_type(id: String):
 	var frames_dict = SoldierAtlasLoader.get_weapon_type(id)
@@ -98,10 +100,10 @@ func play_animation(state_: String, orientation_ : String):
 
 	var animation_name = "%s_%s" % [state_, orientation_]
 	
-	if is_animation_playing and animation_name == current_animation: # If we are already playing the animation do nothing
-		return
+	#if is_animation_playing and animation_name == current_animation: # If we are already playing the animation do nothing
+	#	return
 	
-	#print("Play animation %s" % animation_name)
+	print("Play animation %s" % animation_name)
 	current_animation = animation_name
 	is_animation_playing = true
 

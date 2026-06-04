@@ -41,5 +41,3 @@ func _physics_process(delta: float):
 		emit_signal("bullet_hit")
 		combat_scene.on_bullet_hit(position)
 		queue_free()
-
-

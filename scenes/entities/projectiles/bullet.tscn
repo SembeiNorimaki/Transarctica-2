@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://xlrpb4vfjqpv" path="res://scripts/entities/projectiles/bullet.gd" id="1_t3lan"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_t3lan"]
+size = Vector2(5, 5)
 
 [node name="Bullet" type="Node2D" unique_id=558605895]
 script = ExtResource("1_t3lan")
