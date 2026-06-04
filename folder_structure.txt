@@ -86,6 +86,7 @@ scenes
 		traffic_light.tscn
 	ui
 		quest_ui.tscn
+		navigation_hud.tscn
 		ui_accept_decline.tscn
 		ui_wasd.tscn
 	
@@ -169,7 +170,11 @@ scripts
 		traffic_light.gd
 		train_resource_container.gd
 		weapon_component.gd
-
+	ui
+		assistant_ui.gd
+		navigation_hud.gd
+		quest_ui.gd
+		ui_wasd.gd
 
 	controllers
 		camera_controller.gd

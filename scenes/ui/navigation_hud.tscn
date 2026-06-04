@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://q66o1687kj6b"]
+
+[ext_resource type="Script" uid="uid://b3brpasucqfmp" path="res://scripts/ui/navigation_hud.gd" id="1_gw02x"]
+[ext_resource type="Texture2D" uid="uid://ykl6jubllwh3" path="res://assets/sprites/hud/frame.png" id="2_cq4lo"]
+[ext_resource type="Texture2D" uid="uid://dnjwekb8cwvso" path="res://assets/sprites/hud/button_findengine.png" id="3_ryoy8"]
+[ext_resource type="Texture2D" uid="uid://caiypx6q01mb" path="res://assets/sprites/hud/button_save.png" id="4_bx3f8"]
+[ext_resource type="Texture2D" uid="uid://mxmlqi38duam" path="res://assets/sprites/hud/button_minimap.png" id="5_t7l6i"]
+[ext_resource type="Texture2D" uid="uid://dh2wquhhi14a" path="res://assets/sprites/hud/fuel.png" id="6_1wh8w"]
+[ext_resource type="Texture2D" uid="uid://cp73pr5bkx2wx" path="res://assets/sprites/hud/gold.png" id="7_ohlqx"]
+
+[node name="NavigationHUD" type="Node2D" unique_id=945411280]
+script = ExtResource("1_gw02x")
+
+[node name="HUDElements" type="Node2D" parent="." unique_id=257012213]
+position = Vector2(-600, -352)
+
+[node name="GUI" type="Node2D" parent="HUDElements" unique_id=1395150182]
+
+[node name="Background" type="Polygon2D" parent="HUDElements/GUI" unique_id=1624471248]
+visible = false
+scale = Vector2(1, 9.777778)
+color = Color(0.54136974, 0.79109627, 0.8592594, 0.2627451)
+polygon = PackedVector2Array(0, 0, 1200, 0, 1200, 72, 0, 72)
+
+[node name="Border" type="Polygon2D" parent="HUDElements/GUI" unique_id=284859999]
+position = Vector2(0, 632)
+color = Color(0.1749846, 0.17498463, 0.1749846, 1)
+polygon = PackedVector2Array(0, 0, 1200, 0, 1200, 72, 0, 72)
+
+[node name="Interactables" type="Node2D" parent="HUDElements" unique_id=38507972]
+
+[node name="FindEngine" type="Sprite2D" parent="HUDElements/Interactables" unique_id=1133130221]
+position = Vector2(80, 664)
+texture = ExtResource("2_cq4lo")
+
+[node name="ButtonFindengine" type="Sprite2D" parent="HUDElements/Interactables/FindEngine" unique_id=1190784052]
+texture = ExtResource("3_ryoy8")
+
+[node name="Save" type="Sprite2D" parent="HUDElements/Interactables" unique_id=2096861513]
+position = Vector2(216, 664)
+texture = ExtResource("2_cq4lo")
+
+[node name="ButtonSave" type="Sprite2D" parent="HUDElements/Interactables/Save" unique_id=892554548]
+texture = ExtResource("4_bx3f8")
+
+[node name="Minimap" type="Sprite2D" parent="HUDElements/Interactables" unique_id=2034303829]
+position = Vector2(352, 664)
+texture = ExtResource("2_cq4lo")
+
+[node name="ButtonMinimap" type="Sprite2D" parent="HUDElements/Interactables/Minimap" unique_id=1309898865]
+texture = ExtResource("5_t7l6i")
+
+[node name="N" type="Sprite2D" parent="HUDElements/Interactables" unique_id=1549259033]
+position = Vector2(712, 664)
+texture = ExtResource("2_cq4lo")
+
+[node name="Label" type="Label" parent="HUDElements/Interactables/N" unique_id=1390369191]
+offset_left = -56.0
+offset_top = -16.0
+offset_right = 56.0
+offset_bottom = 16.0
+theme_override_font_sizes/font_size = 25
+text = "N"
+horizontal_alignment = 1
+
+[node name="Gold" type="Sprite2D" parent="HUDElements/Interactables" unique_id=1574947650]
+position = Vector2(848, 664)
+texture = ExtResource("7_ohlqx")
+
+[node name="Label" type="Label" parent="HUDElements/Interactables/Gold" unique_id=507029783]
+offset_left = -56.0
+offset_top = -16.0
+offset_right = 56.0
+offset_bottom = 16.0
+theme_override_font_sizes/font_size = 25
+text = "N"
+horizontal_alignment = 1
+
+[node name="Fuel" type="Sprite2D" parent="HUDElements/Interactables" unique_id=473469702]
+position = Vector2(984, 664)
+texture = ExtResource("6_1wh8w")
+
+[node name="Label" type="Label" parent="HUDElements/Interactables/Fuel" unique_id=1583232189]
+offset_left = -56.0
+offset_top = -16.0
+offset_right = 56.0
+offset_bottom = 16.0
+theme_override_font_sizes/font_size = 25
+text = "N"
+horizontal_alignment = 1
+
+[node name="Speed" type="Sprite2D" parent="HUDElements/Interactables" unique_id=578017003]
+position = Vector2(1120, 664)
+texture = ExtResource("2_cq4lo")
+
+[node name="Label" type="Label" parent="HUDElements/Interactables/Speed" unique_id=676712383]
+offset_left = -56.0
+offset_top = -16.0
+offset_right = 56.0
+offset_bottom = 16.0
+theme_override_font_sizes/font_size = 25
+text = "N"
+horizontal_alignment = 1
+
+[node name="TimeLabel" type="Label" parent="." unique_id=1086920935]
+offset_left = -176.0
+offset_top = 304.0
+offset_right = 40.0
+offset_bottom = 327.0
+text = "TIME "
+horizontal_alignment = 1

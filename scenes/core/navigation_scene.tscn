@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://d4e8t4fptt104" path="res://scripts/managers/train_manager.gd" id="7_tljxq"]
 [ext_resource type="Script" uid="uid://devn7uqx1hl7x" path="res://scripts/overlays/rails_overlay.gd" id="8_e7sg2"]
 [ext_resource type="Script" uid="uid://cvmcwsjta3bpd" path="res://scripts/overlays/cities_overlay.gd" id="10_7ires"]
+[ext_resource type="PackedScene" uid="uid://q66o1687kj6b" path="res://scenes/ui/navigation_hud.tscn" id="12_rjhdy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tw4gw"]
 texture = ExtResource("3_tlrdu")
@@ -84,6 +85,9 @@ script = ExtResource("8_e7sg2")
 
 [node name="CitiesOverlay" type="Node2D" parent="Overlays" unique_id=424921584]
 script = ExtResource("10_7ires")
+
+[node name="HUD" parent="." unique_id=945411280 instance=ExtResource("12_rjhdy")]
+z_index = 2
 
 [node name="Minimap" type="TextureRect" parent="." unique_id=307107618]
 custom_minimum_size = Vector2(100, 100)
