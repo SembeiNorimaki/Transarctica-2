@@ -116,9 +116,9 @@ func initialize(id_: String, tile_pos_: Vector2i, ori_: String) -> void:
 	add_wagon("TenderWagon")
 	add_wagon("MerchandiseWagon")
 	add_wagon("ContainerWagon")
-	#add_wagon("GondolaWagon")
-	#add_wagon("GondolaWagon")
-	#add_wagon("GondolaWagon")
+	add_wagon("GondolaWagon")
+	add_wagon("GondolaWagon")
+	add_wagon("GondolaWagon")
 	
 	#update_gear_label()
 	call_deferred("initialize_wagon_positions", tile_pos_, ori_)
