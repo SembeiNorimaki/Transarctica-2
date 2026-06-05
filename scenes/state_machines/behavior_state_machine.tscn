@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://chmd8jeqebktc" path="res://scripts/state_machines/unit_behavior/unit_behavior_seek_cover.gd" id="7_amrnx"]
 [ext_resource type="Script" uid="uid://bqs3tjisf4235" path="res://scripts/state_machines/unit_behavior/unit_behavior_attack.gd" id="8_slvo8"]
 [ext_resource type="Script" uid="uid://bef5hqdyxcv8l" path="res://scripts/state_machines/unit_behavior/unit_behavior_advance.gd" id="9_gs42x"]
+[ext_resource type="Script" uid="uid://buspjaljhlfsy" path="res://scripts/state_machines/unit_behavior/unit_behavior_overwatch.gd" id="10_gs42x"]
 
 [node name="BehaviorStateMachine" type="Node" unique_id=1179523889]
 script = ExtResource("1_yjmpd")
@@ -36,3 +37,6 @@ script = ExtResource("8_slvo8")
 
 [node name="AdvanceState" type="Node" parent="." unique_id=506938847]
 script = ExtResource("9_gs42x")
+
+[node name="OverwatchState" type="Node" parent="." unique_id=640246218]
+script = ExtResource("10_gs42x")

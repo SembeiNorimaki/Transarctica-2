@@ -13,10 +13,11 @@ func take_turn() -> Signal:
 	return turn_done
 
 func _run_behavior() -> void:
+	pass
 	# Example behavior
-	if unit.can_see_player():
-		await unit.shoot_player()
-	else:
-		await unit.move_towards_last_known_position()
+	#if unit.can_see_player():
+	#	await unit.shoot_player()
+	#else:
+	#	await unit.move_towards_last_known_position()
 	
-	turn_done.emit()
+	#turn_done.emit()
