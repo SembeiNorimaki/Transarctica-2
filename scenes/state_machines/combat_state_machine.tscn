@@ -1,22 +1,22 @@
 [gd_scene format=3 uid="uid://bfkx5ppuk4u66"]
 
 [ext_resource type="Script" uid="uid://k8wb022mp2v5" path="res://scripts/state_machine.gd" id="1_3isnl"]
-[ext_resource type="Script" uid="uid://clfy4iwe84arf" path="res://scripts/state_machines/combat_state_machine/combat_idle_state.gd" id="2_reagc"]
-[ext_resource type="Script" uid="uid://b2h206dmxnp2u" path="res://scripts/state_machines/combat_state_machine/combat_unit_selected_state.gd" id="3_sepk8"]
-[ext_resource type="Script" uid="uid://gi7f8o4i1aa" path="res://scripts/state_machines/combat_state_machine/combat_unit_moving_state.gd" id="4_xuewf"]
-[ext_resource type="Script" uid="uid://du1pqxf1c2pk4" path="res://scripts/state_machines/combat_state_machine/combat_unit_aiming_state.gd" id="5_m8fr2"]
+[ext_resource type="Script" uid="uid://clfy4iwe84arf" path="res://scripts/state_machines/combat/combat_idle_state.gd" id="2_reagc"]
+[ext_resource type="Script" uid="uid://b2h206dmxnp2u" path="res://scripts/state_machines/combat/combat_unit_selected_state.gd" id="3_sepk8"]
+[ext_resource type="Script" uid="uid://gi7f8o4i1aa" path="res://scripts/state_machines/combat/combat_unit_moving_state.gd" id="4_xuewf"]
+[ext_resource type="Script" uid="uid://du1pqxf1c2pk4" path="res://scripts/state_machines/combat/combat_unit_aiming_state.gd" id="5_m8fr2"]
 
-[node name="CombatStateMachine" type="Node"]
+[node name="CombatStateMachine" type="Node" unique_id=1659863097]
 script = ExtResource("1_3isnl")
 
-[node name="IdleState" type="Node" parent="."]
+[node name="IdleState" type="Node" parent="." unique_id=1205197154]
 script = ExtResource("2_reagc")
 
-[node name="UnitSelectedState" type="Node" parent="."]
+[node name="UnitSelectedState" type="Node" parent="." unique_id=1444413576]
 script = ExtResource("3_sepk8")
 
-[node name="UnitMovingState" type="Node" parent="."]
+[node name="UnitMovingState" type="Node" parent="." unique_id=73699031]
 script = ExtResource("4_xuewf")
 
-[node name="UnitAimingState" type="Node" parent="."]
+[node name="UnitAimingState" type="Node" parent="." unique_id=1883554065]
 script = ExtResource("5_m8fr2")

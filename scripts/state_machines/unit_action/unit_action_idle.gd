@@ -1,5 +1,4 @@
 extends GenericState
-
 class_name UnitActionIdleState
 
 func enter(params = {}):

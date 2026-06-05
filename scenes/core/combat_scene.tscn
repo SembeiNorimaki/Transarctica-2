@@ -16,7 +16,7 @@
 [ext_resource type="Script" uid="uid://bjmpeorfb3bal" path="res://scripts/overlays/buildings_overlay.gd" id="11_etgvb"]
 [ext_resource type="Script" uid="uid://bq2b3d3l2wv0e" path="res://scripts/services/terrain_service.gd" id="11_rui7j"]
 [ext_resource type="Script" uid="uid://ja6lxsbuuwp6" path="res://scripts/services/road_service.gd" id="11_wpptk"]
-[ext_resource type="Script" uid="uid://gyamlb1t2bjg" path="res://scripts/managers/unit_ai_manager.gd" id="12_codwp"]
+[ext_resource type="PackedScene" uid="uid://d4dpd0r3kjw3n" path="res://scenes/ai/faction_ai.tscn" id="12_1mvnh"]
 [ext_resource type="Script" uid="uid://dl0vi3dty8ifv" path="res://scripts/overlays/walls_overlay.gd" id="12_gai5b"]
 [ext_resource type="Script" uid="uid://cc3jvcdr0an6x" path="res://scripts/services/pathfinding_service.gd" id="12_wpptk"]
 [ext_resource type="Script" uid="uid://cw1txxugdjt33" path="res://scripts/services/navigation_graph_service.gd" id="13_4f2bx"]
@@ -81,8 +81,7 @@ script = ExtResource("10_0wpcq")
 [node name="HorizontalTrainManager" type="Node" parent="Managers" unique_id=250359814]
 script = ExtResource("11_5cjt0")
 
-[node name="UnitAIManager" type="Node" parent="Managers" unique_id=686020517]
-script = ExtResource("12_codwp")
+[node name="FactionAI" parent="Managers" unique_id=1376553548 instance=ExtResource("12_1mvnh")]
 
 [node name="PodAIManager" type="Node" parent="Managers" unique_id=1335145418]
 script = ExtResource("13_codwp")

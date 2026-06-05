@@ -19,3 +19,6 @@ func use_ap(amount: int):
 func reset_ap():
     current_ap = max_ap
     emit_signal("ap_changed", current_ap, max_ap)
+
+func get_ap() -> int:
+    return current_ap

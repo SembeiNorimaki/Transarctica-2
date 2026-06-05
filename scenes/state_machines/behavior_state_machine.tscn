@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://cnt4y2pidhhmg"]
+
+[ext_resource type="Script" uid="uid://k8wb022mp2v5" path="res://scripts/state_machine.gd" id="1_yjmpd"]
+[ext_resource type="Script" uid="uid://5schloy8205p" path="res://scripts/state_machines/unit_behavior/unit_behavior_idle.gd" id="2_sd7xb"]
+[ext_resource type="Script" uid="uid://b4vjffdq8bh7s" path="res://scripts/state_machines/unit_behavior/unit_behavior_evaluate.gd" id="3_amrnx"]
+[ext_resource type="Script" uid="uid://cyoalopm71pre" path="res://scripts/state_machines/unit_behavior/unit_behavior_patrol.gd" id="3_yjmpd"]
+[ext_resource type="Script" uid="uid://bjd1ltku3wbx0" path="res://scripts/state_machines/unit_behavior/unit_behavior_engage.gd" id="4_amrnx"]
+[ext_resource type="Script" uid="uid://d3sjkfvto0xdf" path="res://scripts/state_machines/unit_behavior/unit_behavior_retreat.gd" id="5_r1nvi"]
+[ext_resource type="Script" uid="uid://chmd8jeqebktc" path="res://scripts/state_machines/unit_behavior/unit_behavior_seek_cover.gd" id="7_amrnx"]
+[ext_resource type="Script" uid="uid://bqs3tjisf4235" path="res://scripts/state_machines/unit_behavior/unit_behavior_attack.gd" id="8_slvo8"]
+[ext_resource type="Script" uid="uid://bef5hqdyxcv8l" path="res://scripts/state_machines/unit_behavior/unit_behavior_advance.gd" id="9_gs42x"]
+
+[node name="BehaviorStateMachine" type="Node" unique_id=1179523889]
+script = ExtResource("1_yjmpd")
+
+[node name="IdleState" type="Node" parent="." unique_id=1005660200]
+script = ExtResource("2_sd7xb")
+
+[node name="EvaluateState" type="Node" parent="." unique_id=614262188]
+script = ExtResource("3_amrnx")
+
+[node name="PatrolState" type="Node" parent="." unique_id=1759728980]
+script = ExtResource("3_yjmpd")
+
+[node name="EngageState" type="Node" parent="." unique_id=2023432591]
+script = ExtResource("4_amrnx")
+
+[node name="RetreatState" type="Node" parent="." unique_id=1114203816]
+script = ExtResource("5_r1nvi")
+
+[node name="SeekCoverState" type="Node" parent="." unique_id=521774574]
+script = ExtResource("7_amrnx")
+
+[node name="AttackState" type="Node" parent="." unique_id=165939312]
+script = ExtResource("8_slvo8")
+
+[node name="AdvanceState" type="Node" parent="." unique_id=506938847]
+script = ExtResource("9_gs42x")

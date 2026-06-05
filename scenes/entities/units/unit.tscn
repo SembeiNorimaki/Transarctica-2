@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dtxrg38hrli2n" path="res://scenes/state_machines/action_state_machine.tscn" id="4_hix5a"]
 [ext_resource type="PackedScene" uid="uid://b6oluegp0dk6m" path="res://scenes/components/health_component.tscn" id="6_hix5a"]
 [ext_resource type="Script" uid="uid://c867c7wpga0fd" path="res://scripts/components/health_bar.gd" id="8_fh57n"]
+[ext_resource type="PackedScene" uid="uid://drqrhvj5benvu" path="res://scenes/components/ap_component.tscn" id="8_kaxgi"]
 [ext_resource type="Script" uid="uid://884o2ey0pyu7" path="res://scripts/components/weapon_component.gd" id="10_a54ie"]
 
 [node name="Unit" type="Node2D" unique_id=504117717]
@@ -46,6 +47,12 @@ offset_right = 40.0
 offset_bottom = 76.0
 text = "Tile"
 
+[node name="APLabel" type="Label" parent="Labels" unique_id=800066101]
+offset_top = 69.0
+offset_right = 40.0
+offset_bottom = 92.0
+text = "AP"
+
 [node name="ActionStateMachine" parent="." unique_id=117593771 instance=ExtResource("4_hix5a")]
 
 [node name="WeaponComponent" type="Node2D" parent="." unique_id=254933775]
@@ -79,3 +86,5 @@ offset_right = 57.0
 offset_bottom = -11.0
 scale = Vector2(0.3, 0.3)
 text = "50"
+
+[node name="ApComponent" parent="." unique_id=1865661916 instance=ExtResource("8_kaxgi")]
