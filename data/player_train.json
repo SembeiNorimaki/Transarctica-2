@@ -1,34 +1,34 @@
 {
-    "wagons": [
-        {
-            "wagon_name": "LocomotiveWagon",
-            "cargo": []
-        },
-        {
-            "wagon_name": "TenderWagon",
-            "cargo": [
-                {
-                    "resource_name": "coal",
-                    "resource_qty": 400
-                }
-            ]
-        },
-        {
-            "wagon_name": "BarracksWagon",
-            "cargo": []
-        },
-        {
-            "wagon_name": "MerchandiseWagon",
-            "cargo": [
-                {
-                    "resource_name": "caviar",
-                    "resource_qty": 4
-                }
-            ]
-        },
-        {
-            "wagon_name": "ContainerWagon",
-            "cargo": []
-        }
-    ]
+	"wagons": [
+		{
+			"wagon_name": "LocomotiveWagon",
+			"cargo": []
+		},
+		{
+			"wagon_name": "TenderWagon",
+			"cargo": [
+				{
+					"resource_name": "coal",
+					"resource_qty": 400
+				}
+			]
+		},
+		{
+			"wagon_name": "BarracksWagon",
+			"cargo": []
+		},
+		{
+			"wagon_name": "MerchandiseWagon",
+			"cargo": [
+				{
+					"resource_name": "caviar",
+					"resource_qty": 4
+				}
+			]
+		},
+		{
+			"wagon_name": "ContainerWagon",
+			"cargo": []
+		}
+	]
 }
