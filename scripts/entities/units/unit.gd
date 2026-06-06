@@ -18,9 +18,11 @@ class_name Unit
 
 var grid_service: GridService
 var unit_manager: UnitManager
+var cover_service: CoverService
+var navigation_graph_service: NavigationGraphService
 
-var current_tile = Vector2i(-1, -1)
-var target_tile = Vector2i(-1, -1)
+var current_tile := Vector2i(-1, -1)
+var target_tile := Vector2i(-1, -1)
 
 var id: String = ""
 var team_id: String = ""
@@ -164,4 +166,29 @@ func _on_ap_changed(current: int, max: int) -> void:
 	
 func _on_ap_exhausted() -> void:
 	print("Unit %s ap exhausted" % id)
+#endregion
+
+#region cover
+# Returns true if the unit has ANY cover in ANY direction
+func is_in_cover() -> bool:
+	return cover_service.get_cover_value(current_tile) > 0.0
+
+# Returns true if the unit has cover AGAINST a specific enemy
+func is_in_cover_against_enemy(enemy_unit) -> bool:
+	return cover_service.get_cover_against(current_tile, enemy_unit.current_tile) > 0.0
+
+# Finds the best cover tile relative to a specific enemy
+func find_best_cover(enemy_unit) -> Vector2i:
+	var best_tile := current_tile
+	var best_cover := cover_service.get_cover_against(current_tile, enemy_unit.current_tile)
+
+	# TODO: get_reachable_tiles not yet implemented
+	for tile in navigation_graph_service.get_reachable_tiles(self ):
+		var cover = cover_service.get_cover_against(tile, enemy_unit.current_tile)
+		if cover > best_cover:
+			best_cover = cover
+			best_tile = tile
+	return best_tile
+
+
 #endregion

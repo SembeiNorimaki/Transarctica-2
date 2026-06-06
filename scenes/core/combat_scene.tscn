@@ -32,6 +32,7 @@
 [ext_resource type="Script" uid="uid://4j0iw46wbwqu" path="res://scripts/services/exploration_service.gd" id="19_5cjt0"]
 [ext_resource type="Script" uid="uid://tfkljqvf3c22" path="res://scripts/overlays/navigation_graph_overlay.gd" id="20_x34vi"]
 [ext_resource type="Script" uid="uid://cv48uaopsxrky" path="res://scripts/overlays/los_overlay.gd" id="24_kuabr"]
+[ext_resource type="Script" uid="uid://de0bttsq7s2to" path="res://scripts/services/cover_service.gd" id="25_gbuk8"]
 [ext_resource type="PackedScene" uid="uid://dfbw1t56r8fj6" path="res://scenes/managers/train_resource_container.tscn" id="25_h6rme"]
 [ext_resource type="PackedScene" uid="uid://bfkx5ppuk4u66" path="res://scenes/state_machines/combat_state_machine.tscn" id="29_kuabr"]
 [ext_resource type="Script" uid="uid://bhnf0bbk74olp" path="res://scripts/overlays/pods_overlay.gd" id="30_5cjt0"]
@@ -119,6 +120,9 @@ script = ExtResource("17_0wpcq")
 
 [node name="ExplorationService" type="Node" parent="Services" unique_id=1569402066]
 script = ExtResource("19_5cjt0")
+
+[node name="CoverService" type="Node" parent="Services" unique_id=1653981608]
+script = ExtResource("25_gbuk8")
 
 [node name="Containers" type="Node2D" parent="." unique_id=347899867]
 

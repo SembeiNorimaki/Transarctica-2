@@ -6,6 +6,7 @@ var to_tile: Vector2i
 var cost: float
 var blocks_movement: bool = false
 var blocks_vision: bool = false
+var blocks_fire: bool = false
 
 enum CoverType {NONE, HALF, FULL}
 var cover_type: int = CoverType.NONE

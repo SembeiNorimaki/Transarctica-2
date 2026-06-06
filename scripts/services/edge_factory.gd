@@ -1,6 +1,10 @@
 extends Node
 class_name EdgeFactory
 
+enum CoverType {NONE, HALF, FULL}
+enum EdgeType {NORMAL, WALL, FENCE, WINDOW, DOOR}
+
+
 static func create_edge(from_tile: Vector2i, to_tile: Vector2i, kind: int = Edge.EdgeType.NORMAL) -> Edge:
     var e := Edge.new(from_tile, to_tile, kind)
 
