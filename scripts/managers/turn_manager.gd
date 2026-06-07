@@ -8,8 +8,8 @@ signal unit_finished(unit)
 
 #Injected dependencies
 var unit_manager: UnitManager
-var pod_manager : PodManager
-var unit_ai_manager : UnitAIManager
+var pod_manager: PodManager
+var faction_ai: FactionAI
 var pod_ai_manager: PodAIManager
 var selection_manager: SelectionManager
 

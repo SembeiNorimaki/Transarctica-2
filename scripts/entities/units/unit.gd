@@ -183,7 +183,7 @@ func find_best_cover(enemy_unit) -> Vector2i:
 	var best_cover := cover_service.get_cover_against(current_tile, enemy_unit.current_tile)
 
 	# TODO: get_reachable_tiles not yet implemented
-	for tile in navigation_graph_service.get_reachable_tiles(self ):
+	for tile in navigation_graph_service.get_reachable_tiles(self , 4.0):
 		var cover = cover_service.get_cover_against(tile, enemy_unit.current_tile)
 		if cover > best_cover:
 			best_cover = cover

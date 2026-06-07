@@ -9,7 +9,7 @@ class_name CombatScene
 @onready var selection_manager: SelectionManager = $Managers/SelectionManager
 @onready var pod_manager: PodManager = $Managers/PodManager
 @onready var horizontal_train_manager: HorizontalTrainManager = $Managers/HorizontalTrainManager
-@onready var unit_ai_manager: UnitAIManager = $Managers/UnitAIManager
+@onready var faction_ai: FactionAI = $Managers/FactionAI
 @onready var pod_ai_manager: PodAIManager = $Managers/PodAIManager
 
 #Containers
@@ -106,7 +106,7 @@ func _inject_services():
 	wall_manager.edge_occupancy_service = edge_occupancy_service
 	wall_manager.grid_service = grid_service
 	turn_manager.unit_manager = unit_manager
-	turn_manager.unit_ai_manager = unit_ai_manager
+	turn_manager.faction_ai = faction_ai
 	turn_manager.pod_ai_manager = pod_ai_manager
 	turn_manager.selection_manager = selection_manager
 	turn_manager.pod_manager = pod_manager
@@ -115,7 +115,7 @@ func _inject_services():
 	horizontal_train_manager.tile_occupancy_service = tile_occupancy_service
 	horizontal_train_manager.grid_service = grid_service
 	horizontal_train_manager.train_resource_container = train_resource_container
-	unit_ai_manager.unit_manager = unit_manager
+	faction_ai.unit_manager = unit_manager
 	pod_ai_manager.pod_manager = pod_manager
 	pod_ai_manager.unit_manager = unit_manager
 	
