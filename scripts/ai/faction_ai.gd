@@ -12,14 +12,23 @@ func _ready() -> void:
 func take_turn():
 	_run_turn()
 
-@rpc
+
 func _run_turn() -> void:
+	print("Running CPU turn...")
 	var enemy_units = unit_manager.get_units_by_team("Enemy")
+	print("Number of enemy units: %s" % enemy_units.size())
+	var idx := 0
 	for unit in enemy_units:
-		if not unit.is_alive():
+		print("Running CPU unit %s" % idx)
+		if not unit.is_alive:
 			continue
-		var unit_ai = unit.unit_ai
-		await unit_ai.take_turn()
+		# 1) Select the unit visually, 
+		unit_manager.select_unit(unit)
+		# 2) Wait some time
+		await get_tree().create_timer(1.0).timeout
+		# # 3) Run the unit's AI turn
+		await unit.unit_ai.take_turn()
+		idx += 1
 
 	turn_finished.emit()
 

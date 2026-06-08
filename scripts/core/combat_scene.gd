@@ -31,6 +31,7 @@ class_name CombatScene
 @onready var los_service: LOSService = $Services/LOSService
 @onready var weapon_service: WeaponService = $Services/WeaponService
 @onready var exploration_service: ExplorationService = $Services/ExplorationService
+@onready var cover_service: CoverService = $Services/CoverService
 
 # Overlays
 @onready var units_overlay: Node2D = $Overlays/UnitsOverlay
@@ -42,6 +43,9 @@ class_name CombatScene
 @onready var navigation_graph_overlay: Node2D = $Overlays/NavigationGraphOverlay
 @onready var los_overlay: Node2D = $Overlays/LOSOverlay
 @onready var fov_overlay: Node2D = $Overlays/FOVOverlay
+@onready var reachable_tiles_overlay: Node2D = $Overlays/ReachableTilesOverlay
+@onready var cover_overlay: Node2D = $Overlays/CoverOverlay
+
 
 # Map 
 @onready var map_root: Node2D = $MapRoot
@@ -76,7 +80,12 @@ func _ready() -> void:
 	_register_teams()
 	call_deferred("_wire_signals")
 	_load_map("level_1")
+
+	# this precomputation should be done in _load_map
 	navigation_graph_service.build_graph(map_root.get_node("Level1").get_node("Terrain"))
+	cover_service.build_cover_map(navigation_graph_service.nodes.keys())
+
+
 
 	camera_controller.center_at_tile(camera_initial_tile)
 	camera_controller.set_zoom(1.0)
@@ -101,6 +110,8 @@ func _inject_services():
 	# Managers
 	unit_manager.tile_occupancy_service = tile_occupancy_service
 	unit_manager.grid_service = grid_service
+	unit_manager.camera_controller = camera_controller
+	unit_manager.navigation_graph_service = navigation_graph_service
 	building_manager.tile_occupancy_service = tile_occupancy_service
 	building_manager.grid_service = grid_service
 	wall_manager.tile_occupancy_service = tile_occupancy_service
@@ -136,6 +147,8 @@ func _inject_services():
 	navigation_graph_overlay.grid_service = grid_service
 	los_overlay.grid_service = grid_service
 	fov_overlay.grid_service = grid_service
+	reachable_tiles_overlay.grid_service = grid_service
+	cover_overlay.grid_service = grid_service
 
 	# Services
 	grid_service.camera_controller = camera_controller
@@ -147,6 +160,9 @@ func _inject_services():
 	navigation_graph_service.terrain_service = terrain_service
 	navigation_graph_service.tile_occupancy_service = tile_occupancy_service
 	navigation_graph_service.edge_occupancy_service = edge_occupancy_service
+	navigation_graph_service.reachable_tiles_overlay = reachable_tiles_overlay
+	cover_service.edge_occupancy_service = edge_occupancy_service
+	cover_service.cover_overlay = cover_overlay
 	
 	los_service.tile_occupancy_service = tile_occupancy_service
 	los_service.edge_occupancy_service = edge_occupancy_service

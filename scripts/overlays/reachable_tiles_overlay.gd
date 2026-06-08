@@ -1,13 +1,12 @@
 extends Node2D
 class_name ReachableTilesOverlay
 
-var navigation_graph_service: NavigationGraphService
 var grid_service: GridService
 
 var tiles: Array[Vector2i] = []
 
-func show_reachable_tiles(unit):
-	tiles = navigation_graph_service.get_reachable_tiles(unit, 4.0)
+func show_tiles(tiles_):
+	tiles = tiles_
 	queue_redraw()
 
 func clear():

@@ -39,6 +39,7 @@
 [ext_resource type="Texture2D" uid="uid://c8eb6b045eh7f" path="res://assets/sprites/cursors/cursor_07_0.png" id="33_4fugr"]
 [ext_resource type="Script" uid="uid://c8ntb6hd26tod" path="res://scripts/overlays/fov_overlay.gd" id="35_1mvnh"]
 [ext_resource type="Script" uid="uid://c2tuqd4y0dq6d" path="res://scripts/overlays/reachable_tiles_overlay.gd" id="37_yqry4"]
+[ext_resource type="Script" uid="uid://b6cecxops88y7" path="res://scripts/overlays/cover_overlay.gd" id="38_g7udr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1mvnh"]
 texture = ExtResource("3_h6rme")
@@ -182,6 +183,9 @@ script = ExtResource("35_1mvnh")
 
 [node name="ReachableTilesOverlay" type="Node2D" parent="Overlays" unique_id=1386394038]
 script = ExtResource("37_yqry4")
+
+[node name="CoverOverlay" type="Node2D" parent="Overlays" unique_id=888146013]
+script = ExtResource("38_g7udr")
 
 [node name="CombatStateMachine" parent="." unique_id=207202339 instance=ExtResource("29_kuabr")]
 

@@ -8,6 +8,7 @@ class_name Unit
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var health_bar: HealthBar = $HealthBar
 @onready var ap_component: ApComponent = $ApComponent
+@onready var unit_ai: UnitAI = $UnitAI
 
 #Labels
 @onready var id_label = $Labels/IDLabel
@@ -30,6 +31,7 @@ var move_speed := 40.0
 var orientation := "SE"
 var view_angle := 90.0
 var view_range := 12
+var is_alive := true
 
 signal movement_finished
 
@@ -134,6 +136,8 @@ func stop_animation():
 
 func set_selected(selected: bool) -> void:
 	#print("Selected: %s" % selected)
+	if selected:
+		navigation_graph_service.get_reachable_tiles(self, 7.0)
 	sprite_selected.visible = selected
 
 

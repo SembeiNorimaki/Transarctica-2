@@ -43,8 +43,6 @@ var weapon_aiming_offsets = {
 	"NW": Vector2i(-3,-9), 
 }
 
-@onready var unit_ai = $UnitAI
-
 var current_animation := ""
 var is_animation_playing := false
 var is_crouching := false

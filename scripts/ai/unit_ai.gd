@@ -8,12 +8,16 @@ signal turn_done
 func _ready():
 	pass
 
+# This is annoyingly needed because state machine requires it. Should be changed
+func update_state_label(name: String):
+	pass
+
 func take_turn() -> Signal:
 	_run_behavior()
 	return turn_done
 
 func _run_behavior() -> void:
-	pass
+	print("Running unitAI...")
 	# Example behavior
 	#if unit.can_see_player():
 	#	await unit.shoot_player()
