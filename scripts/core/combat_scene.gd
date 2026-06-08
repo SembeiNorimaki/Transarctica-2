@@ -60,6 +60,7 @@ class_name CombatScene
 
 # UI
 #@onready var ui_wasd = $UI_WASD
+@onready var combat_hud = $CombatHUD
 
 var is_intro := true
 var is_outro := false
@@ -178,6 +179,8 @@ func _wire_signals():
 
 	wall_manager.connect("wall_spawned", walls_overlay.redraw)
 	wall_manager.connect("wall_removed", walls_overlay.redraw)
+
+	# combat_hud.reverse_pressed.connect()
 
 	# ui_wasd.connect("move_vector_changed", unit_manager.on_move_vector_changed)
 	# ui_wasd.connect("aim_pressed", unit_manager.on_aim_pressed)

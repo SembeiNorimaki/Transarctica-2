@@ -86,9 +86,6 @@ script = ExtResource("8_e7sg2")
 [node name="CitiesOverlay" type="Node2D" parent="Overlays" unique_id=424921584]
 script = ExtResource("10_7ires")
 
-[node name="HUD" parent="." unique_id=945411280 instance=ExtResource("12_rjhdy")]
-z_index = 2
-
 [node name="Minimap" type="TextureRect" parent="." unique_id=307107618]
 custom_minimum_size = Vector2(100, 100)
 offset_left = 349.0
@@ -96,3 +93,8 @@ offset_top = 28.0
 offset_right = 449.0
 offset_bottom = 128.0
 texture = SubResource("PlaceholderTexture2D_tw4gw")
+
+[node name="NavigationHUD" parent="." unique_id=945411280 instance=ExtResource("12_rjhdy")]
+z_index = 2
+offset_right = 0.0
+offset_bottom = 0.0

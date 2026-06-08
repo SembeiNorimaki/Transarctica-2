@@ -36,6 +36,7 @@
 [ext_resource type="PackedScene" uid="uid://bfkx5ppuk4u66" path="res://scenes/state_machines/combat_state_machine.tscn" id="29_kuabr"]
 [ext_resource type="Script" uid="uid://bhnf0bbk74olp" path="res://scripts/overlays/pods_overlay.gd" id="30_5cjt0"]
 [ext_resource type="Texture2D" uid="uid://c8eb6b045eh7f" path="res://assets/sprites/cursors/cursor_07_0.png" id="33_4fugr"]
+[ext_resource type="PackedScene" uid="uid://b8fisgbo673ps" path="res://scenes/ui/combat_hud.tscn" id="37_1mvnh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1mvnh"]
 texture = ExtResource("3_h6rme")
@@ -206,3 +207,5 @@ offset_bottom = 23.0
 visible = false
 texture = ExtResource("33_4fugr")
 offset = Vector2(0, -13)
+
+[node name="CombatHUD" parent="." unique_id=1846684824 instance=ExtResource("37_1mvnh")]

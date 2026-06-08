@@ -26,8 +26,6 @@ scenes
 			combat_state_machine.tscn
 			pod_state_machine.tscn
 			turn_state_machine.tscn
-		ui
-		
 
 	entities
 		buildings
@@ -86,6 +84,7 @@ scenes
 		traffic_light.tscn
 	ui
 		quest_ui.tscn
+		combat_hud.tscn
 		navigation_hud.tscn
 		ui_accept_decline.tscn
 		ui_wasd.tscn
@@ -172,6 +171,7 @@ scripts
 		weapon_component.gd
 	ui
 		assistant_ui.gd
+		combat_hud.gd
 		navigation_hud.gd
 		quest_ui.gd
 		ui_wasd.gd

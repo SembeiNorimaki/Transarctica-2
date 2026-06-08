@@ -24,6 +24,9 @@ extends Node2D
 #
 #  Signals:
 #    TrainManager.train_reached_city -> _on_train_reached_city
+#    NavigationHUD.findengine_pressed -> recenter_player_train
+#    NavigationHUD.save_pressed -> NO METHOD
+#    NavigationHUD.minimap_pressed -> NO METHOD
 # ─────────────────────────────────────────────
 
 
@@ -54,6 +57,9 @@ extends Node2D
 @onready var trains_container: Node2D = $Containers/Trains
 @onready var wagon_container: Node2D = $Containers/Wagons
 @onready var city_labels_container: Node2D = $Containers/CityLabels
+
+# HUD
+@onready var navigation_hud: Control = $NavigationHUD
 
 const WAGON_SCENE: PackedScene = preload("res://scenes/entities/trains/navigation_wagon.tscn")
 
@@ -100,6 +106,10 @@ func _inject_services() -> void:
 func _wire_signals() -> void:
 	#player_train.tile_changed.connect(_on_player_train_tile_changed)
 	train_manager.train_reached_city.connect(_on_train_reached_city)
+	# NAVIGATION HUD SIGNALS
+	navigation_hud.findengine_pressed.connect(recenter_player_train)
+	#navigation_hud.save_pressed.connect()
+	#navigation_hud.minimap_pressed.connect()
 #endregion
 
 #region Map Loading

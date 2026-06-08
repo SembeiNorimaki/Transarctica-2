@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://bluwsgcbc47h3" path="res://scripts/components/trade_menu.gd" id="13_epkq4"]
 [ext_resource type="Script" uid="uid://ki2p2i7w5r4w" path="res://scripts/components/loader_resource_container.gd" id="13_jgirw"]
 [ext_resource type="Texture2D" uid="uid://d31vinx3rf3y6" path="res://assets/sprites/resourcesx2/caviar.png" id="14_e2h8b"]
+[ext_resource type="PackedScene" uid="uid://c87amfmts7aye" path="res://scenes/ui/trade_hud.tscn" id="16_jgirw"]
 
 [node name="TradeScene" type="Control" unique_id=889321148]
 layout_mode = 3
@@ -131,6 +132,9 @@ text = "Buy 1"
 
 [node name="Button2" type="Button" parent="TradeMenu/Container/VBoxContainer" unique_id=258213929]
 layout_mode = 2
+
+[node name="TradeHUD" parent="." unique_id=1970238105 instance=ExtResource("16_jgirw")]
+layout_mode = 1
 
 [node name="Title" type="CanvasLayer" parent="." unique_id=1587740613]
 

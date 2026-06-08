@@ -2,110 +2,177 @@
 
 [ext_resource type="Script" uid="uid://b3brpasucqfmp" path="res://scripts/ui/navigation_hud.gd" id="1_gw02x"]
 [ext_resource type="Texture2D" uid="uid://ykl6jubllwh3" path="res://assets/sprites/hud/frame.png" id="2_cq4lo"]
-[ext_resource type="Texture2D" uid="uid://dnjwekb8cwvso" path="res://assets/sprites/hud/button_findengine.png" id="3_ryoy8"]
-[ext_resource type="Texture2D" uid="uid://caiypx6q01mb" path="res://assets/sprites/hud/button_save.png" id="4_bx3f8"]
-[ext_resource type="Texture2D" uid="uid://mxmlqi38duam" path="res://assets/sprites/hud/button_minimap.png" id="5_t7l6i"]
-[ext_resource type="Texture2D" uid="uid://dh2wquhhi14a" path="res://assets/sprites/hud/fuel.png" id="6_1wh8w"]
+[ext_resource type="Texture2D" uid="uid://dnjwekb8cwvso" path="res://assets/sprites/hud/button_findengine.png" id="3_cq4lo"]
+[ext_resource type="Texture2D" uid="uid://caiypx6q01mb" path="res://assets/sprites/hud/button_save.png" id="4_ryoy8"]
+[ext_resource type="Texture2D" uid="uid://mxmlqi38duam" path="res://assets/sprites/hud/button_minimap.png" id="5_bx3f8"]
 [ext_resource type="Texture2D" uid="uid://cp73pr5bkx2wx" path="res://assets/sprites/hud/gold.png" id="7_ohlqx"]
+[ext_resource type="Texture2D" uid="uid://dh2wquhhi14a" path="res://assets/sprites/hud/fuel.png" id="7_t7l6i"]
 
-[node name="NavigationHUD" type="Node2D" unique_id=945411280]
+[node name="NavigationHUD" type="Control" unique_id=151102004]
+layout_mode = 3
+anchor_right = 1.1730001
+anchor_bottom = 1.006
+offset_right = -207.6001
+offset_bottom = -4.200012
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
 script = ExtResource("1_gw02x")
 
-[node name="HUDElements" type="Node2D" parent="." unique_id=257012213]
-position = Vector2(-600, -352)
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1164299676]
 
-[node name="GUI" type="Node2D" parent="HUDElements" unique_id=1395150182]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer" unique_id=1156681637]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -700.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
 
-[node name="Background" type="Polygon2D" parent="HUDElements/GUI" unique_id=1624471248]
+[node name="Container1" type="Container" parent="CanvasLayer/HBoxContainer" unique_id=853150109]
+custom_minimum_size = Vector2(150, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Polygon2D" type="Polygon2D" parent="CanvasLayer/HBoxContainer/Container1" unique_id=863787863]
+position = Vector2(0, 8)
+color = Color(0.67981786, 0.7171319, 0.75224006, 1)
+polygon = PackedVector2Array(0, 696, 0, 616, 2112, 616, 2112, 696)
+
+[node name="Polygon2D2" type="Polygon2D" parent="CanvasLayer/HBoxContainer/Container1" unique_id=152433839]
+position = Vector2(0, 8)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 624, 0, 616, 2112, 616, 2112, 624)
+
+[node name="Polygon2D3" type="Polygon2D" parent="CanvasLayer/HBoxContainer/Container1" unique_id=47447997]
+position = Vector2(0, 80)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 624, 0, 616, 2112, 616, 2112, 624)
+
+[node name="Frame" type="Sprite2D" parent="CanvasLayer/HBoxContainer/Container1" unique_id=1370728373]
+position = Vector2(75, 664)
+texture = ExtResource("2_cq4lo")
+
+[node name="ButtonFindengine" type="Button" parent="CanvasLayer/HBoxContainer/Container1/Frame" unique_id=2099360129]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -54.0
+offset_top = -24.0
+offset_right = -74.0
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 2
+icon = ExtResource("3_cq4lo")
+
+[node name="Container2" type="Container" parent="CanvasLayer/HBoxContainer" unique_id=243357809]
+custom_minimum_size = Vector2(150, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Frame" type="Sprite2D" parent="CanvasLayer/HBoxContainer/Container2" unique_id=1956619512]
+position = Vector2(75, 664)
+texture = ExtResource("2_cq4lo")
+
+[node name="ButtonSave" type="Button" parent="CanvasLayer/HBoxContainer/Container2/Frame" unique_id=1348339940]
+offset_left = -54.0
+offset_top = -24.0
+offset_right = 54.0
+offset_bottom = 24.0
+icon = ExtResource("4_ryoy8")
+
+[node name="Container3" type="Container" parent="CanvasLayer/HBoxContainer" unique_id=280470261]
+custom_minimum_size = Vector2(150, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Frame" type="Sprite2D" parent="CanvasLayer/HBoxContainer/Container3" unique_id=351528202]
+position = Vector2(75, 664)
+texture = ExtResource("2_cq4lo")
+
+[node name="ButtonMinimap" type="Button" parent="CanvasLayer/HBoxContainer/Container3/Frame" unique_id=1940703711]
+offset_left = -55.0
+offset_top = -23.0
+offset_right = 53.0
+offset_bottom = 25.0
+icon = ExtResource("5_bx3f8")
+
+[node name="Container4" type="Container" parent="CanvasLayer/HBoxContainer" unique_id=1354642312]
+custom_minimum_size = Vector2(150, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Frame" type="Sprite2D" parent="CanvasLayer/HBoxContainer/Container4" unique_id=1920810267]
 visible = false
-scale = Vector2(1, 9.777778)
-color = Color(0.54136974, 0.79109627, 0.8592594, 0.2627451)
-polygon = PackedVector2Array(0, 0, 1200, 0, 1200, 72, 0, 72)
-
-[node name="Border" type="Polygon2D" parent="HUDElements/GUI" unique_id=284859999]
-position = Vector2(0, 632)
-color = Color(0.1749846, 0.17498463, 0.1749846, 1)
-polygon = PackedVector2Array(0, 0, 1200, 0, 1200, 72, 0, 72)
-
-[node name="Interactables" type="Node2D" parent="HUDElements" unique_id=38507972]
-
-[node name="FindEngine" type="Sprite2D" parent="HUDElements/Interactables" unique_id=1133130221]
-position = Vector2(80, 664)
+position = Vector2(75, 664)
 texture = ExtResource("2_cq4lo")
 
-[node name="ButtonFindengine" type="Sprite2D" parent="HUDElements/Interactables/FindEngine" unique_id=1190784052]
-texture = ExtResource("3_ryoy8")
+[node name="ButtonMinimap" type="Sprite2D" parent="CanvasLayer/HBoxContainer/Container4" unique_id=1826293225]
+visible = false
+position = Vector2(71, 664)
+texture = ExtResource("5_bx3f8")
 
-[node name="Save" type="Sprite2D" parent="HUDElements/Interactables" unique_id=2096861513]
-position = Vector2(216, 664)
-texture = ExtResource("2_cq4lo")
+[node name="Container5" type="Container" parent="CanvasLayer/HBoxContainer" unique_id=877744914]
+custom_minimum_size = Vector2(150, 20)
+layout_mode = 2
+size_flags_horizontal = 3
 
-[node name="ButtonSave" type="Sprite2D" parent="HUDElements/Interactables/Save" unique_id=892554548]
-texture = ExtResource("4_bx3f8")
-
-[node name="Minimap" type="Sprite2D" parent="HUDElements/Interactables" unique_id=2034303829]
-position = Vector2(352, 664)
-texture = ExtResource("2_cq4lo")
-
-[node name="ButtonMinimap" type="Sprite2D" parent="HUDElements/Interactables/Minimap" unique_id=1309898865]
-texture = ExtResource("5_t7l6i")
-
-[node name="N" type="Sprite2D" parent="HUDElements/Interactables" unique_id=1549259033]
-position = Vector2(712, 664)
-texture = ExtResource("2_cq4lo")
-
-[node name="Label" type="Label" parent="HUDElements/Interactables/N" unique_id=1390369191]
-offset_left = -56.0
-offset_top = -16.0
-offset_right = 56.0
-offset_bottom = 16.0
-theme_override_font_sizes/font_size = 25
-text = "N"
-horizontal_alignment = 1
-
-[node name="Gold" type="Sprite2D" parent="HUDElements/Interactables" unique_id=1574947650]
-position = Vector2(848, 664)
+[node name="Gold" type="Sprite2D" parent="CanvasLayer/HBoxContainer/Container5" unique_id=1541989263]
+position = Vector2(78, 664)
 texture = ExtResource("7_ohlqx")
 
-[node name="Label" type="Label" parent="HUDElements/Interactables/Gold" unique_id=507029783]
-offset_left = -56.0
+[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer/Container5/Gold" unique_id=1490105196]
+offset_left = -48.0
 offset_top = -16.0
-offset_right = 56.0
+offset_right = 48.0
 offset_bottom = 16.0
 theme_override_font_sizes/font_size = 25
-text = "N"
+text = "Gold"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Fuel" type="Sprite2D" parent="HUDElements/Interactables" unique_id=473469702]
-position = Vector2(984, 664)
-texture = ExtResource("6_1wh8w")
+[node name="Container6" type="Container" parent="CanvasLayer/HBoxContainer" unique_id=1338379292]
+custom_minimum_size = Vector2(150, 20)
+layout_mode = 2
+size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="HUDElements/Interactables/Fuel" unique_id=1583232189]
-offset_left = -56.0
+[node name="Fuel" type="Sprite2D" parent="CanvasLayer/HBoxContainer/Container6" unique_id=1679863027]
+position = Vector2(75, 664)
+texture = ExtResource("7_t7l6i")
+
+[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer/Container6/Fuel" unique_id=1387314910]
+offset_left = -53.0
 offset_top = -16.0
-offset_right = 56.0
+offset_right = 51.0
 offset_bottom = 16.0
 theme_override_font_sizes/font_size = 25
-text = "N"
+text = "Fuel"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Speed" type="Sprite2D" parent="HUDElements/Interactables" unique_id=578017003]
-position = Vector2(1120, 664)
+[node name="Container7" type="Container" parent="CanvasLayer/HBoxContainer" unique_id=1741213478]
+custom_minimum_size = Vector2(150, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Frame" type="Sprite2D" parent="CanvasLayer/HBoxContainer/Container7" unique_id=106270536]
+position = Vector2(75, 664)
 texture = ExtResource("2_cq4lo")
 
-[node name="Label" type="Label" parent="HUDElements/Interactables/Speed" unique_id=676712383]
-offset_left = -56.0
+[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer/Container7/Frame" unique_id=903332066]
+offset_left = -51.0
 offset_top = -16.0
-offset_right = 56.0
+offset_right = 53.0
 offset_bottom = 16.0
 theme_override_font_sizes/font_size = 25
-text = "N"
+text = "Speed"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="TimeLabel" type="Label" parent="." unique_id=1086920935]
-offset_left = -176.0
-offset_top = 304.0
-offset_right = 40.0
-offset_bottom = 327.0
-text = "TIME "
-horizontal_alignment = 1
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/Container1/Frame/ButtonFindengine" to="." method="_on_button_findengine_pressed"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/Container2/Frame/ButtonSave" to="." method="_on_button_save_pressed"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/Container3/Frame/ButtonMinimap" to="." method="_on_button_minimap_pressed"]

@@ -1,32 +1,26 @@
-extends Node2D
+extends Control
 
-@export var hud_offset: Vector2 = Vector2.ZERO 
+signal findengine_pressed
+signal save_pressed
+signal minimap_pressed
 
-@onready var cam = get_viewport().get_camera_2d()
-@onready var aspect = $AspectRatioContainer
+func update_gold(new_value):
+	$CanvasLayer/HBoxContainer/Container5/Gold/Label.text = str(new_value)
 
-var starting_position: Vector2 = Vector2(77,0) # MUST BE AT POSITION (77,0) OR SCALING WILL BREAK
+func update_fuel(new_value):
+	$CanvasLayer/HBoxContainer/Container6/Fuel/Label.text = str(new_value)
 
-func _process(delta: float) -> void:
-	var cam = get_viewport().get_camera_2d()
+func update_speed(new_value):
+	$CanvasLayer/HBoxContainer/Container7/Frame/Label.text = str(new_value)
 
-	
-	# ALIGN HUD TO VIEWPORT
-	var canvas_transform = get_viewport().get_canvas_transform()
-	var viewport_origin = -canvas_transform.origin
-	#global_position = viewport_origin + Vector2(0, 0)
+func update_time(new_value):
+	$TimeLabel.text = str(new_value)
 
-	if cam:
-		scale = Vector2(1/cam.zoom.x, 1/cam.zoom.y)
-		global_position = cam.position + hud_offset
-	
-	# UPDATE DISPLAY NUMBERS
-	update_info()
+func _on_button_findengine_pressed() -> void:
+	emit_signal("findengine_pressed")
 
-func update_info():
-	$HUDElements/Interactables/N/Label.text = "Null"
-	$HUDElements/Interactables/Gold/Label.text = str(GameState.state.money)
-	$HUDElements/Interactables/Fuel/Label.text = "Null"
-	$HUDElements/Interactables/Speed/Label.text = "Null"
-	$TimeLabel.text = "Null"
-	
+func _on_button_save_pressed() -> void:
+	emit_signal("save_pressed")
+
+func _on_button_minimap_pressed() -> void:
+	emit_signal("minimap_pressed")

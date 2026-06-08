@@ -5,6 +5,7 @@ var state := {
 	"industries": {},
 	"train": {},
 	"money": 1000,
+	"fuel": 100,
 	"quests": {
 		"active": {},
 		"completed": []
