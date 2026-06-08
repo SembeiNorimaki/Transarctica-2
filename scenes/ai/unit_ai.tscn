@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://d3yercai7kjkt"]
 
 [ext_resource type="Script" uid="uid://bblkydhrde6rt" path="res://scripts/ai/unit_ai.gd" id="1_dv22x"]
+[ext_resource type="PackedScene" uid="uid://cnt4y2pidhhmg" path="res://scenes/state_machines/behavior_state_machine.tscn" id="2_vejc3"]
 
 [node name="UnitAI" type="Node" unique_id=423845914]
 script = ExtResource("1_dv22x")
+
+[node name="BehaviorStateMachine" parent="." unique_id=1179523889 instance=ExtResource("2_vejc3")]

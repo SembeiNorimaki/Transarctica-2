@@ -3,10 +3,10 @@ class_name EnemyTurnState
 
 
 func enter(params = {}):
-	print("Enter enemy turn state %s, %s" % [owner_node.pod_manager, owner_node.unit_ai_manager])
+	print("Enter CPU turn state")
 	#await _run_units()
 	#await _run_pods()
-	await _run_units()
+	_run_units()
 	state_machine.set_state("PlayerTurnState")
 
 
@@ -15,8 +15,8 @@ func _run_pods():
 	pod_ai_manager.execute_turn()
 
 func _run_units():
-	var unit_ai_manager = owner_node.unit_ai_manager
-	unit_ai_manager.execute_turn()
+	var faction_ai = owner_node.faction_ai
+	faction_ai.take_turn()
 	
 	# pass
 
