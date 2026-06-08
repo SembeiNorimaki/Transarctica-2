@@ -1,39 +1,39 @@
 {
-    "quest_tutorial_1": {
-        "title": "Welcome to Fallen Haven",
-        "description": "Travel to Madrid to establish a trade connection.",
-        "is_main_quest": true,
-        "next_quest": "quest_deliver_wood",
-        "objectives": [
-            {
-                "id": "reach_madrid",
-                "type": "reach_city",
-                "target_city": "Madrid",
-                "description": "Reach the city of Madrid"
-            }
-        ],
-        "rewards": {
-            "money": 500
-        }
-    },
-    "quest_deliver_wood": {
-        "title": "Madrid Wood Shortage",
-        "description": "Madrid needs wood for construction. Deliver 5 Wood.",
-        "is_main_quest": false,
-        "next_quest": "",
-        "objectives": [
-            {
-                "id": "deliver_wood_madrid",
-                "type": "deliver_goods",
-                "target_city": "Madrid",
-                "target_resource": "wood",
-                "target_qty": 5,
-                "description": "Deliver 5 wood to Madrid"
-            }
-        ],
-        "rewards": {
-            "money": 1000,
-            "wagon": "MerchandiseWagon"
-        }
-    }
+	"quest_tutorial_1": {
+		"title": "Welcome to Fallen Haven",
+		"description": "Travel to Madrid to establish a trade connection.",
+		"is_main_quest": true,
+		"next_quest": "quest_deliver_wood",
+		"objectives": [
+			{
+				"id": "reach_madrid",
+				"type": "reach_city",
+				"target_city": "Madrid",
+				"description": "Reach the city of Madrid"
+			}
+		],
+		"rewards": {
+			"money": 500
+		}
+	},
+	"quest_deliver_wood": {
+		"title": "Madrid Wood Shortage",
+		"description": "Madrid needs wood for construction. Deliver 5 Wood.",
+		"is_main_quest": false,
+		"next_quest": "",
+		"objectives": [
+			{
+				"id": "deliver_wood_madrid",
+				"type": "deliver_goods",
+				"target_city": "Madrid",
+				"target_resource": "wood",
+				"target_qty": 5,
+				"description": "Deliver 5 wood to Madrid"
+			}
+		],
+		"rewards": {
+			"money": 1000,
+			"wagon": "MerchandiseWagon"
+		}
+	}
 }

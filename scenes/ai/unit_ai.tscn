@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://d3yercai7kjkt"]
+
+[ext_resource type="Script" uid="uid://bblkydhrde6rt" path="res://scripts/ai/unit_ai.gd" id="1_dv22x"]
+
+[node name="UnitAI" type="Node" unique_id=423845914]
+script = ExtResource("1_dv22x")

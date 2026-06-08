@@ -16,6 +16,7 @@ func hide_all():
 		set_cell(cell, 0, UNEXPLORED_TILE)
 
 func reveal(visible_tiles: Array[Vector2i]):
+	print("Exploration layer: Revealing tiles: ", visible_tiles)
 	currently_visible = {}
 	
 	# mark new visible tiles

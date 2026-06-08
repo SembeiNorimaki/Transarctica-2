@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://d4dpd0r3kjw3n"]
+
+[ext_resource type="Script" uid="uid://gyamlb1t2bjg" path="res://scripts/ai/faction_ai.gd" id="1_jp22h"]
+
+[node name="FactionAI" type="Node" unique_id=1376553548]
+script = ExtResource("1_jp22h")

@@ -140,8 +140,11 @@ func get_tiles_in_vision_cone(origin: Vector2i, orientation: String, view_angle:
     var half_angle = deg_to_rad(view_angle / 2.0)
 
     # Iterate all tiles in a square around the unit
-    for x in range(max(0, origin.x - view_range), min(map_size.x, origin.x + view_range + 1)):
-        for y in range(max(0, origin.y - view_range), min(map_size.y, origin.y + view_range + 1)):
+    #for x in range(max(0, origin.x - view_range), min(map_size.x, origin.x + view_range + 1)):
+    #    for y in range(max(0, origin.y - view_range), min(map_size.y, origin.y + view_range + 1)):
+    
+    for x in range(origin.x - view_range, origin.x + view_range + 1):
+        for y in range(origin.y - view_range, origin.y + view_range + 1):
             var tile := Vector2i(x, y)
             # Skip origin
             if tile == origin:
