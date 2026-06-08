@@ -135,6 +135,10 @@ layout_mode = 2
 
 [node name="TradeHUD" parent="." unique_id=1970238105 instance=ExtResource("16_jgirw")]
 layout_mode = 1
+offset_left = -184.0
+offset_top = 16.0
+offset_right = -184.0
+offset_bottom = 16.0
 
 [node name="Title" type="CanvasLayer" parent="." unique_id=1587740613]
 

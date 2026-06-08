@@ -65,7 +65,6 @@ class_name CombatScene
 
 # UI
 #@onready var ui_wasd = $UI_WASD
-@onready var combat_hud = $CombatHUD
 
 var is_intro := true
 var is_outro := false
