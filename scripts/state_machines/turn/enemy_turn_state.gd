@@ -3,20 +3,20 @@ class_name EnemyTurnState
 
 
 func enter(params = {}):
-	print("Enter CPU turn state")
-	#await _run_units()
-	#await _run_pods()
-	_run_units()
+	var faction_ai = owner_node.faction_ai
+	print("Enemy Turn State started")
+	await faction_ai.take_turn()
+	print("Enemy Turn State finished")
 	state_machine.set_state("PlayerTurnState")
 
 
-func _run_pods():
-	var pod_ai_manager = owner_node.pod_ai_manager
-	pod_ai_manager.execute_turn()
+# func _run_pods():
+# 	var pod_ai_manager = owner_node.pod_ai_manager
+# 	pod_ai_manager.execute_turn()
 
-func _run_units():
-	var faction_ai = owner_node.faction_ai
-	faction_ai.take_turn()
+# func _run_units():
+# 	var faction_ai = owner_node.faction_ai
+# 	await faction_ai.take_turn()
 	
 	# pass
 

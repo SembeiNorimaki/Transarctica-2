@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://clj8wgdbjuylx"]
+
+[ext_resource type="SpriteFrames" uid="uid://coyrjsvfyxtg5" path="res://assets/tilesets/torso_frames.tres" id="1_l6ds8"]
+[ext_resource type="SpriteFrames" uid="uid://ebvhi7pq2ssa" path="res://assets/tilesets/legs_frames.tres" id="2_lmrkw"]
+[ext_resource type="SpriteFrames" uid="uid://b5ha7vwfg0e0p" path="res://assets/tilesets/right_arm_weapon_frames.tres" id="3_bnr5p"]
+[ext_resource type="SpriteFrames" uid="uid://b512e6mogavan" path="res://assets/tilesets/left_arm_frames.tres" id="4_ash42"]
+[ext_resource type="SpriteFrames" uid="uid://ik2saq3tsh6y" path="res://assets/tilesets/weapon_frames.tres" id="5_2rngw"]
+[ext_resource type="Texture2D" uid="uid://womom5hau1fx" path="res://assets/sprites/HEAVY_TRITANIUM_SUIT.png" id="6_p56a4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g41uj"]
+atlas = ExtResource("6_p56a4")
+region = Rect2(256, 640, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iexex"]
+atlas = ExtResource("6_p56a4")
+region = Rect2(288, 640, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m6ai4"]
+atlas = ExtResource("6_p56a4")
+region = Rect2(320, 640, 32, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tqpfg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g41uj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iexex")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m6ai4")
+}],
+"loop": false,
+"name": &"default2",
+"speed": 5.0
+}]
+
+[node name="Parts" type="Node2D" unique_id=1270920147]
+scale = Vector2(2, 2)
+
+[node name="Torso" type="AnimatedSprite2D" parent="." unique_id=832948641]
+sprite_frames = ExtResource("1_l6ds8")
+animation = &"dead"
+
+[node name="Legs" type="AnimatedSprite2D" parent="." unique_id=1733098086]
+sprite_frames = ExtResource("2_lmrkw")
+animation = &"SE"
+
+[node name="RightArmWeapon" type="AnimatedSprite2D" parent="." unique_id=1319624951]
+sprite_frames = ExtResource("3_bnr5p")
+animation = &"SE"
+
+[node name="LeftArmFree" type="AnimatedSprite2D" parent="." unique_id=1080652891]
+sprite_frames = ExtResource("4_ash42")
+animation = &"SE"
+
+[node name="Weapon" type="AnimatedSprite2D" parent="." unique_id=878151021]
+sprite_frames = ExtResource("5_2rngw")
+animation = &"NW"
+
+[node name="Dead" type="AnimatedSprite2D" parent="." unique_id=1338994065]
+visible = false
+sprite_frames = SubResource("SpriteFrames_tqpfg")
+animation = &"default2"

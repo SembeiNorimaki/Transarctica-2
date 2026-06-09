@@ -4,10 +4,11 @@
 [ext_resource type="SpriteFrames" uid="uid://cy0513d82j3rm" path="res://assets/sprites/ghostBlue.tres" id="2_hix5a"]
 [ext_resource type="Texture2D" uid="uid://b8gf8vdcesbiw" path="res://assets/sprites/active-unit-selection.png" id="3_ak0lx"]
 [ext_resource type="PackedScene" uid="uid://dtxrg38hrli2n" path="res://scenes/state_machines/action_state_machine.tscn" id="4_hix5a"]
+[ext_resource type="PackedScene" uid="uid://bv0irbikrqpdv" path="res://scenes/components/weapon_component.tscn" id="5_fh57n"]
 [ext_resource type="PackedScene" uid="uid://b6oluegp0dk6m" path="res://scenes/components/health_component.tscn" id="6_hix5a"]
-[ext_resource type="Script" uid="uid://c867c7wpga0fd" path="res://scripts/components/health_bar.gd" id="8_fh57n"]
+[ext_resource type="PackedScene" uid="uid://weql0gj4tcs4" path="res://scenes/components/health_bar.tscn" id="7_fh57n"]
 [ext_resource type="PackedScene" uid="uid://drqrhvj5benvu" path="res://scenes/components/ap_component.tscn" id="8_kaxgi"]
-[ext_resource type="Script" uid="uid://884o2ey0pyu7" path="res://scripts/components/weapon_component.gd" id="10_a54ie"]
+[ext_resource type="PackedScene" uid="uid://d3yercai7kjkt" path="res://scenes/ai/unit_ai.tscn" id="9_kaxgi"]
 
 [node name="Unit" type="Node2D" unique_id=504117717]
 script = ExtResource("1_mqyo6")
@@ -55,36 +56,14 @@ text = "AP"
 
 [node name="ActionStateMachine" parent="." unique_id=117593771 instance=ExtResource("4_hix5a")]
 
-[node name="WeaponComponent" type="Node2D" parent="." unique_id=254933775]
-script = ExtResource("10_a54ie")
+[node name="WeaponComponent" parent="." unique_id=564949303 instance=ExtResource("5_fh57n")]
 
 [node name="HealthComponent" parent="." unique_id=1467030158 instance=ExtResource("6_hix5a")]
 
 [node name="DebugDraw" type="Node2D" parent="." unique_id=892141176]
 
-[node name="HealthBar" type="Node2D" parent="." unique_id=1327598114]
-script = ExtResource("8_fh57n")
-
-[node name="Background" type="ColorRect" parent="HealthBar" unique_id=713174861]
-offset_left = -16.0
-offset_top = -32.0
-offset_right = 16.0
-offset_bottom = -28.0
-color = Color(1, 0, 0, 1)
-
-[node name="Fill" type="ColorRect" parent="HealthBar" unique_id=1396436741]
-offset_left = -16.0
-offset_top = -32.0
-offset_right = 16.0
-offset_bottom = -28.0
-color = Color(0, 1, 0, 1)
-
-[node name="Value" type="Label" parent="HealthBar" unique_id=118522576]
-offset_left = 17.0
-offset_top = -34.0
-offset_right = 57.0
-offset_bottom = -11.0
-scale = Vector2(0.3, 0.3)
-text = "50"
+[node name="HealthBar" parent="." unique_id=77219002 instance=ExtResource("7_fh57n")]
 
 [node name="ApComponent" parent="." unique_id=1865661916 instance=ExtResource("8_kaxgi")]
+
+[node name="UnitAI" parent="." unique_id=423845914 instance=ExtResource("9_kaxgi")]

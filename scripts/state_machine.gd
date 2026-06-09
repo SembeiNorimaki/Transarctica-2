@@ -6,14 +6,16 @@ var current_state: Node = null
 var states: Dictionary = {} # Key: state name, Value: state instance eg: {"IdleState": IdleState}
 var id: String
 
+signal state_finished
+
 func _ready():
 	owner_node = get_parent()
 	id = owner_node.name
-	#print("Initializing state machine %s" % id)
+	print("Initializing state machine %s" % id)
 	# Discover all child states automatically
 	for child in get_children():
 		if child is GenericState:
-			#print("Child state found: %s" % child.name)
+			print("Child state found: %s" % child.name)
 			states[child.name] = child
 			child.set_owner_node(owner_node)
 			child.set_state_machine(self)

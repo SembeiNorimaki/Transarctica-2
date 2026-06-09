@@ -170,6 +170,10 @@ func _on_ap_changed(current: int, max: int) -> void:
 	
 func _on_ap_exhausted() -> void:
 	print("Unit %s ap exhausted" % id)
+
+func get_ap() -> int:
+	return ap_component.current_ap
+
 #endregion
 
 #region cover
@@ -196,3 +200,14 @@ func find_best_cover(enemy_unit) -> Vector2i:
 
 
 #endregion
+
+
+# TODO: This functions need implementation for the UnitAI to work
+
+# return a target unit or null
+func get_primary_target():
+	return null
+
+# Used in AdvanceState. 
+func find_advance_tile(enemy_tile: Vector2i):
+	return Vector2i(0, 0)

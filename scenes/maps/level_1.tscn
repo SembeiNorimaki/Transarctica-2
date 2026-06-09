@@ -26,7 +26,7 @@ tile_map_data = PackedByteArray("AAACAP7/AQAAAAAAAAADAP3/AQAAAAAAAAAEAPz/AQAAAAA
 
 [node name="Units" parent="." index="2" unique_id=119340618]
 position = Vector2(1, 0)
-tile_map_data = PackedByteArray("AAAEAAIAAgAAAAAAAAAKAAQAAgADAAEAAAALAAUAAgACAAEAAAALAAMAAgACAAEAAAA=")
+tile_map_data = PackedByteArray("AAAYAP//AgADAAEAAAAWAAEAAgACAAEAAAAaAAMAAgACAAEAAAA=")
 
 [node name="Pods" parent="." index="4" unique_id=153022531]
 tile_map_data = PackedByteArray("AAAKAAQAAQAAAAAAAAALAAMAAQAAAAEAAAALAAUAAQAAAAEAAAA=")

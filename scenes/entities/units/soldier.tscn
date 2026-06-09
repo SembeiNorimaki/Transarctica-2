@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://5hd66w0v84k"]
+
+[ext_resource type="Script" uid="uid://dkekeo1j2mlmt" path="res://scripts/entities/units/soldier.gd" id="1_ecm1g"]
+[ext_resource type="PackedScene" uid="uid://clj8wgdbjuylx" path="res://scenes/components/unit_parts.tscn" id="2_cto3b"]
+[ext_resource type="PackedScene" uid="uid://dtxrg38hrli2n" path="res://scenes/state_machines/action_state_machine.tscn" id="2_iiy1n"]
+[ext_resource type="PackedScene" uid="uid://bv0irbikrqpdv" path="res://scenes/components/weapon_component.tscn" id="3_cto3b"]
+[ext_resource type="PackedScene" uid="uid://b6oluegp0dk6m" path="res://scenes/components/health_component.tscn" id="4_yngi1"]
+[ext_resource type="PackedScene" uid="uid://drqrhvj5benvu" path="res://scenes/components/ap_component.tscn" id="6_6lxp7"]
+[ext_resource type="PackedScene" uid="uid://d3yercai7kjkt" path="res://scenes/ai/unit_ai.tscn" id="7_6g4ix"]
+[ext_resource type="PackedScene" uid="uid://weql0gj4tcs4" path="res://scenes/components/health_bar.tscn" id="8_6g4ix"]
+
+[node name="Soldier" type="Node2D" unique_id=1703524927]
+script = ExtResource("1_ecm1g")
+
+[node name="Parts" parent="." unique_id=1270920147 instance=ExtResource("2_cto3b")]
+
+[node name="ActionStateMachine" parent="." unique_id=1179523889 instance=ExtResource("2_iiy1n")]
+
+[node name="WeaponComponent" parent="." unique_id=564949303 instance=ExtResource("3_cto3b")]
+
+[node name="HealthComponent" parent="." unique_id=1467030158 instance=ExtResource("4_yngi1")]
+
+[node name="SpriteSelected" type="Sprite2D" parent="." unique_id=278141212]
+
+[node name="Labels" type="Node2D" parent="." unique_id=1213081111]
+
+[node name="ApComponent" parent="." unique_id=1865661916 instance=ExtResource("6_6lxp7")]
+
+[node name="UnitAI" parent="." unique_id=423845914 instance=ExtResource("7_6g4ix")]
+
+[node name="HealthBar" parent="." unique_id=77219002 instance=ExtResource("8_6g4ix")]

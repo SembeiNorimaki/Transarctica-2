@@ -24,6 +24,7 @@ signal unit_tile_changed(unit, old_tile, new_tile)
 signal unit_reached_destination(unit)
 signal unit_changed_orientation(unit, new_orientation)
 
+signal unit_action_finished(unit)
 
 func _ready() -> void:
     pass

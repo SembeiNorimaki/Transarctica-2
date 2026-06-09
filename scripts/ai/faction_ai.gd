@@ -10,18 +10,11 @@ func _ready() -> void:
 	pass
 
 func take_turn():
-	_run_turn()
-
-
-func _run_turn() -> void:
-	print("Running CPU turn...")
+	print("  FactionAI: Start enemy turn")
 	var enemy_units = unit_manager.get_units_by_team("Enemy")
-	print("Number of enemy units: %s" % enemy_units.size())
 	var idx := 0
 	for unit in enemy_units:
-		print("Running CPU unit %s" % idx)
-		if not unit.is_alive:
-			continue
+		print("    Running CPU unit %s" % idx)
 		# 1) Select the unit visually, 
 		unit_manager.select_unit(unit)
 		# 2) Wait some time
@@ -29,8 +22,8 @@ func _run_turn() -> void:
 		# # 3) Run the unit's AI turn
 		await unit.unit_ai.take_turn()
 		idx += 1
-
-	turn_finished.emit()
+	print("  FactionAI: Finished enemy turn")
+	#turn_finished.emit()
 
 
 # func _run_turn():

@@ -242,7 +242,7 @@ func _load_map(map_name: String) -> void:
 	_spawn_walls_from_map(new_map.get_node("Walls"))
 	#_spawn_roads_from_map(new_map.get_node("Roads"))
 	_spawn_pods_from_map(new_map.get_node("Pods"), new_map.get_node("PatrolPoints"))
-	_assign_units_to_pods(new_map.get_node("Pods"), tile_occupancy_service)
+	#_assign_units_to_pods(new_map.get_node("Pods"), tile_occupancy_service)
 
 	#_load_patrol_points_from_map(new_map.get_node("PatrolPoints"), Vector2i(6, 7))
 

@@ -2,8 +2,10 @@ extends Node
 class_name UnitAI
 
 @onready var owner_node = get_parent()
+@onready var behavior_state_machine: StateMachine = $BehaviorStateMachine
 
-signal turn_done
+
+signal turn_finished
 
 func _ready():
 	pass
@@ -12,16 +14,12 @@ func _ready():
 func update_state_label(name: String):
 	pass
 
-func take_turn() -> Signal:
-	_run_behavior()
-	return turn_done
-
-func _run_behavior() -> void:
-	print("Running unitAI...")
-	# Example behavior
-	#if unit.can_see_player():
-	#	await unit.shoot_player()
-	#else:
-	#	await unit.move_towards_last_known_position()
-	
-	#turn_done.emit()
+func take_turn() -> void:
+	print("      Unit ", owner.name, " starting turn")	
+	# Start the behavior loop
+	behavior_state_machine.set_state("EvaluateState", {"unit": owner_node})
+	# Wait until EvaluateState decides the turn is finished
+	await turn_finished
+	# After the turn is done, return to idle
+	behavior_state_machine.set_state("IdleState", {"unit": owner_node})
+	print("      Unit ", owner.name, " finished turn.")
