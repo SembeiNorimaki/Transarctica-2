@@ -10,11 +10,18 @@ var max_crates := 12
 
 func is_empty() -> bool:
 	return crate_count == 0
+
 func is_full() -> bool:
 	return crate_count == max_crates
 
 func get_resource_type() -> String:
 	return resource_type
+
+func get_qty() -> int:
+	return crate_count
+
+func get_origin() -> String:
+	return origin
 
 func can_pick(resource: String, from_origin: String) -> bool:
 	# Loader empty can pick anything

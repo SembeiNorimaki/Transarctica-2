@@ -19,7 +19,7 @@ func enter_city(city_name: String):
 	navigation_scene.set_physics_process(false)
 
 	# Load and instantiate the city scene
-	var CITY_SCENE_CLASS = load("res://scenes/trade/trade_scene.tscn")
+	var CITY_SCENE_CLASS = load("res://scenes/core/trade_scene.tscn")
 	city_scene = CITY_SCENE_CLASS.instantiate()
 
 	# Pass city data to the cisty scene

@@ -13,7 +13,8 @@ position = Vector2(-2, -21)
 texture = ExtResource("1_ynf0a")
 
 [node name="CargoSprite" type="Sprite2D" parent="." unique_id=155320969]
-position = Vector2(50, -17)
+visible = false
+position = Vector2(39, 14)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_wypcv")
 hframes = 3

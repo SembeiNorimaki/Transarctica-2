@@ -20,25 +20,41 @@ signal wagon_resource_amount_changed(wagon_index: int, resource: String, qty: in
 signal train_money_changed(money: int)
 
 const RESOURCE_WAGON_TYPE := {
-	"caviar": "MerchandiseWagon",
-	"alcohol": "MerchandiseWagon",
-	"wood": "MerchandiseWagon",
-	"iron": "MerchandiseWagon",
 	"coal": "TenderWagon",
+	"water": "TankerWagon",
 	"oil": "TankerWagon",
-	"water": "TankerWagon"
+	"gasoline": "TankerWagon",
+	"alcohol": "MerchandiseWagon",
+	"antiques": "MerchandiseWagon",
+	"missiles": "MerchandiseWagon",
+	"bricks": "MerchandiseWagon",
+	"caviar": "MerchandiseWagon",
+	"earth": "MerchandiseWagon",
+	"plants": "MerchandiseWagon",
+	"copper": "MerchandiseWagon",
+	"mammothdung": "MerchandiseWagon",
+	"rails": "MerchandiseWagon",
+	"fish": "MerchandiseWagon",
+	"fishingrods": "MerchandiseWagon",
+	"salt": "MerchandiseWagon",
+	"furs": "MerchandiseWagon",
+	"inspection": "MerchandiseWagon",
+	"gray": "MerchandiseWagon",
+	"wolfmeat": "MerchandiseWagon",
+	"wood": "MerchandiseWagon",
+	"iron": "MerchandiseWagon"
 }
 
-const WAGON_CAPACITIES := {
+var WAGON_CAPACITIES := {
 	"LocomotiveWagon": 0,
-	"TenderWagon": 60,
-	"MerchandiseWagon": 2,
-	"ContainerWagon": 2,
-	"GondolaWagon": 50,
-	"BarracksWagon": 0,
+	"TenderWagon": WagonTypes.TYPES.get("TenderWagon").capacity,
+	"MerchandiseWagon": WagonTypes.TYPES.get("MerchandiseWagon").capacity,
+	"ContainerWagon": WagonTypes.TYPES.get("ContainerWagon").capacity,
+	"GondolaWagon": WagonTypes.TYPES.get("GondolaWagon").capacity,
+	"BarracksWagon": WagonTypes.TYPES.get("BarracksWagon").capacity,
 	"CannonWagon": 0,
-	"TankerWagon": 80,
-	"TimberWagon": 20
+	"TankerWagon": 0,
+	"TimberWagon": 0
 }
 
 func add_wagon(wagon_type: String, cargo: String = "", qty: int = 0) -> void:
@@ -183,7 +199,7 @@ func add_resource_qty_to_wagon(wagon_idx: int, resource_name: String, qty: int) 
 			QuestManager.notify_goods_collected(resource_name, wagons[wagon_idx].qty)
 
 
-func remove_resource_qty_from_wagon(wagon_idx: int, qty: int) -> void:
+func remove_resource_qty_from_wagon(wagon_idx: int, qty: int) -> bool:
 	if get_wagon_resource_qty(wagon_idx) >= qty:
 		wagons[wagon_idx].qty -= qty
 		emit_signal("wagon_resource_amount_changed", wagon_idx, wagons[wagon_idx].resource_name, wagons[wagon_idx].qty)
@@ -193,3 +209,5 @@ func remove_resource_qty_from_wagon(wagon_idx: int, qty: int) -> void:
 			emit_signal("wagon_resource_type_changed", wagon_idx, "")
 		GameState.update_wagon_cargo(wagon_idx, wagons[wagon_idx].resource_name, wagons[wagon_idx].qty)
 		QuestManager.notify_goods_collected(old_res, wagons[wagon_idx].qty)
+		return true
+	return false

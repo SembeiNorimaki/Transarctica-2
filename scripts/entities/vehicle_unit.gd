@@ -23,16 +23,16 @@ var resource_name_to_frame = {
 	"coal": 7,
 	"plants": 8,
 	"copper": 9,
-	"dung": 10,
+	"mammothdung": 10,
 	"rails": 11,
 	"fish": 12,
-	"rods": 13,
+	"fishingrods": 13,
 	"salt": 14,
 	"furs": 15,
 	"gasoline": 16,
 	"inspection": 17,
 	"gray": 18,
-	"meat": 19,
+	"wolfmeat": 19,
 	"wood": 20
 }
 

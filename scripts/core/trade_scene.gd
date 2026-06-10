@@ -51,6 +51,8 @@ const source_id_to_name = {
 
 var city_tile = Vector2i(19, 20)
 
+const MUSIC_TRADE: AudioStream = preload("res://assets/audio/city1.wav")
+
 #region initialization
 func _ready() -> void:
 	_inject_services()
@@ -59,9 +61,11 @@ func _ready() -> void:
 
 	if get_tree().current_scene == self:
 		print("TradeScene is running standalone")
-		call_deferred("initialize", "Barcelona")
+		call_deferred("initialize", "Paris")
 	else:
 		print("TradeScene was instantiated by SceneManager")
+
+	AudioService.play_music(MUSIC_TRADE, 0.0)
 	
 
 func initialize(name: String):
@@ -201,6 +205,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		on_k_pressed()
 	elif event.is_action_pressed("u"):
 		on_u_pressed()
+	elif event.is_action_pressed("j"):
+		on_j_pressed()
+	elif event.is_action_pressed("esc"):
+		on_esc_pressed()
 
 		
 func _handle_traffic_light_click():
@@ -270,8 +278,24 @@ func _on_train_money_changed(money: int):
 # This functions handle the loading unloading of resources by the loader vehicle
 
 
-func on_i_pressed():
-	# i transfers a resource from the train to the loader
+func on_esc_pressed():
+	# esc returns the loaded crates to the city
+	var qty = loader_resource_container.get_qty()
+	var resource_name = loader_resource_container.get_resource_type()
+	var price_per_crate = city_resource_container.get_buy_price(resource_name)
+	var train_money = train_resource_container.money
+
+	var new_money = loader_resource_container.undo_to_city(qty, price_per_crate, train_money)
+	
+	if new_money != train_resource_container.money:
+		loader_vehicle.set_crate_qty(0)
+		train_resource_container.money = new_money
+		city_resource_container.add_resource_amount(resource_name, qty)
+
+
+# u: Train -> Loader		
+func on_u_pressed():
+	# u transfers a resource from the train to the loader
 	var wagon_idx = horizontal_train_manager.player_train.xpos_to_wagon_idx(loader_vehicle.global_position.x)
 	if wagon_idx == -1:
 		return
@@ -295,47 +319,49 @@ func on_i_pressed():
 	wagon.close_doors()
 	return
 
-func on_u_pressed():
-	# u transfers a resource from the loader to the train
-	var wagon_idx = horizontal_train_manager.player_train.xpos_to_wagon_idx(loader_vehicle.global_position.x)
-	if wagon_idx == -1:
-		return
-	if loader_resource_container.is_empty():
-		return
 
-	var wagon = horizontal_train_manager.player_train.wagons[wagon_idx]
-
-	var resource_type = loader_resource_container.get_resource_type()
-	# Must match wagon rules
-	if not train_resource_container.wagon_can_store(wagon_idx, resource_type):
+# j: Loader -> City
+func on_j_pressed():
+	# j transfers a resource from the loader to the city
+	var resource_type = resource_manager.xpos_to_resource_name(loader_vehicle.global_position.x)
+	
+	if resource_type == "":
 		return
 	
-	wagon.open_doors()
-	await get_tree().create_timer(1).timeout
+	var price = city_resource_container.get_sell_price(resource_type)
 
+	print("Resource name: %s" % resource_type)
+
+	# Must match resource rules
+	if resource_type != loader_resource_container.get_resource_type():
+		return
+	
 	# Move crate from loader to wagon
-	loader_resource_container.finalize_into_wagon(1)
+	loader_resource_container.finalize_into_city(1)
 	loader_vehicle.unload_crate()
-	train_resource_container.add_resource_qty_to_wagon(wagon_idx, resource_type, 1)
+	city_resource_container.add_resource_amount(resource_type, 1)
 
-	wagon.close_doors()
 
-	
+# k: City -> Loader		
 func on_k_pressed():
 	# k loads a resource from the city into the loader
-	var resource_idx = resource_manager.xpos_to_resource_idx(loader_vehicle.global_position.x)
+	var resource_type = resource_manager.xpos_to_resource_name(loader_vehicle.global_position.x)
 	
-	if resource_idx == -1:
+	if resource_type == "":
 		return
 	
-	if loader_resource_container.is_full():
-		return
-
-	var resource_type = resource_manager.resources.keys()[resource_idx]
 	var price = city_resource_container.get_buy_price(resource_type)
+
+	print("Trying to load a crate of %s in the loader..." % resource_type)
+
+	if loader_resource_container.is_full():
+		print("  Error, Loader is full")
+		return
+	
 
 	var available_qty = city_resource_container.get_available_qty(resource_type)
 	if available_qty == 0:
+		print("  Error, there are no %s left to pick" % resource_type)
 		return
 
 	# Attempt to pick from city (money is subtracted here)
@@ -351,70 +377,80 @@ func on_k_pressed():
 		train_resource_container.money = new_money
 		city_resource_container.remove_resource_amount(resource_type, 1)
 		loader_vehicle.load_crate(resource_type)
-		print("Picked 1 crate of %s from city" % resource_type)
-	
+		print("  Success! Picked 1 crate of %s from city" % resource_type)
+	else:
+		print("  Error picking crate")
 		
-	# # if Loader has crates → unload back to city (undo)
-	# if loader_resource_container.origin == "city":
-	#     var resource_type = loader_resource_container.resource_type
-	#     var price = city_resource_container.get_buy_price(resource_type)
-
-	#     var new_money = loader_resource_container.undo_to_city(1, price, train_resource_container.money)
-	#     if new_money != train_resource_container.money:
-	#         train_resource_container.money = new_money
-	#         city_resource_container.add_resource_amount(resource_type, 1)
-	#         print("Returned 1 crate of %s to city" % resource_type)
-	#     return
-	# # if Loader has crates from wagon → unload back to wagon area
-	# if loader_resource_container.origin == "wagon":
-	#     var resource_type = loader_resource_container.resource_type
-	#     loader_resource_container.undo_to_wagon(1)
-	#     city_resource_container.add_resource_amount(resource_type, 1)
-	#     print("Returned 1 crate of %s to city (from wagon origin)" % resource_type)
-	
-
-func on_i_pressedOLD():
-	# i acts on wagons, either loading or unloading them
+# i: Loader -> Train
+func on_i_pressed():
+	# i transfers a resource from the loader to the train
 	var wagon_idx = horizontal_train_manager.player_train.xpos_to_wagon_idx(loader_vehicle.global_position.x)
 	if wagon_idx == -1:
 		return
+	if loader_resource_container.is_empty():
+		return
+
+	var wagon = horizontal_train_manager.player_train.wagons[wagon_idx]
+	var resource_type = loader_resource_container.get_resource_type()
 	
-	if loader_vehicle.is_empty():
-		# if the loader is empty, unload the selected wagon
-		horizontal_train_manager.player_train.wagons[wagon_idx].open_doors()
-		await get_tree().create_timer(1).timeout
-		var resource_type = train_resource_container.get_wagon_current_resource(wagon_idx)
-		train_resource_container.remove_resource_qty_from_wagon(wagon_idx, 1)
-		loader_vehicle.load(resource_type)
+	# Must match wagon rules
+	if not train_resource_container.wagon_can_store(wagon_idx, resource_type):
+		print("  Error, this wagon cannot store %s" % resource_type)
+		return
+	
+	wagon.open_doors()
+	await get_tree().create_timer(1).timeout
+
+	# Move crate from loader to wagon
+	loader_resource_container.finalize_into_wagon(1)
+	loader_vehicle.unload_crate()
+	train_resource_container.add_resource_qty_to_wagon(wagon_idx, resource_type, 1)
+
+	wagon.close_doors()
+
+
+# func on_i_pressedOLD():
+# 	# i acts on wagons, either loading or unloading them
+# 	var wagon_idx = horizontal_train_manager.player_train.xpos_to_wagon_idx(loader_vehicle.global_position.x)
+# 	if wagon_idx == -1:
+# 		return
+	
+# 	if loader_vehicle.is_empty():
+# 		# if the loader is empty, unload the selected wagon
+# 		horizontal_train_manager.player_train.wagons[wagon_idx].open_doors()
+# 		await get_tree().create_timer(1).timeout
+# 		var resource_type = train_resource_container.get_wagon_current_resource(wagon_idx)
+# 		train_resource_container.remove_resource_qty_from_wagon(wagon_idx, 1)
+# 		loader_vehicle.load(resource_type)
 		
-		#var sell_price = city_resource_container.get_sell_price(resource_type)
-		#trade_service.set_transaction_data(resource_type, "sell", 1, sell_price)
-		#trade_service.execute_transaction(1)
-		horizontal_train_manager.player_train.wagons[wagon_idx].close_doors()
-	else:
-		# if the loader is full, load the selected wagon
-		horizontal_train_manager.player_train.wagons[wagon_idx].open_doors()
-		await get_tree().create_timer(1).timeout
+# 		#var sell_price = city_resource_container.get_sell_price(resource_type)
+# 		#trade_service.set_transaction_data(resource_type, "sell", 1, sell_price)
+# 		#trade_service.execute_transaction(1)
+# 		horizontal_train_manager.player_train.wagons[wagon_idx].close_doors()
+# 	else:
+# 		# if the loader is full, load the selected wagon
+# 		horizontal_train_manager.player_train.wagons[wagon_idx].open_doors()
+# 		await get_tree().create_timer(1).timeout
 
-		#var resource_type = loader_vehicle.unload()
-		var resource_type = loader_vehicle.unload_crate()
-		print("Attempting to load wagon %s with %s from loader" % [wagon_idx, resource_type])
-		train_resource_container.add_resource_qty_to_wagon(wagon_idx, resource_type, 1)
-		print("Unloading %s from loader and loading it in wagon %s" % [resource_type, wagon_idx])
-		horizontal_train_manager.player_train.wagons[wagon_idx].close_doors()
+# 		#var resource_type = loader_vehicle.unload()
+# 		var resource_type = loader_vehicle.unload_crate()
+# 		print("Attempting to load wagon %s with %s from loader" % [wagon_idx, resource_type])
+# 		train_resource_container.add_resource_qty_to_wagon(wagon_idx, resource_type, 1)
+# 		print("Unloading %s from loader and loading it in wagon %s" % [resource_type, wagon_idx])
+# 		horizontal_train_manager.player_train.wagons[wagon_idx].close_doors()
 
-func on_k_pressedOLD():
-	# k acts on resources either loading or unloading them from the loader vehicle
-	var resource_idx = resource_manager.xpos_to_resource_idx(loader_vehicle.global_position.x)
-	if resource_idx != -1:
-		# if the loader is empty, load it with the selected resource
-		var resource_type = resource_manager.resources.keys()[resource_idx]
-		#loader_vehicle.load(resource_type)
-		loader_vehicle.load_crate(resource_type)
-		city_resource_container.remove_resource_amount(resource_type, 1)
-		print("Loading %s to loader vehicle" % resource_type)
-	else:
-		# if the loader is full, unload it
-		loader_vehicle.unload_crate()
-		#var resource_type = loader_vehicle.unload()
-		#city_resource_container.add_resource_amount(resource_type, 1)
+# func on_k_pressedOLD():
+# 	# k acts on resources either loading or unloading them from the loader vehicle
+# 	var resource_idx = resource_manager.xpos_to_resource_idx(loader_vehicle.global_position.x)
+# 	if resource_idx != -1:
+# 		# if the loader is empty, load it with the selected resource
+# 		var resource_type = resource_manager.resources.keys()[resource_idx]
+# 		#loader_vehicle.load(resource_type)
+# 		loader_vehicle.load_crate(resource_type)
+# 		city_resource_container.remove_resource_amount(resource_type, 1)
+# 		print("Loading %s to loader vehicle" % resource_type)
+# 	else:
+# 		# if the loader is full, unload it
+# 		loader_vehicle.unload_crate()
+# 		#var resource_type = loader_vehicle.unload()
+# 		#city_resource_container.add_resource_amount(resource_type, 1)

@@ -9,12 +9,20 @@
 			"cargo": [
 				{
 					"resource_name": "coal",
-					"resource_qty": 400
+					"resource_qty": 100
 				}
 			]
 		},
 		{
-			"wagon_name": "BarracksWagon",
+			"wagon_name": "MerchandiseWagon",
+			"cargo": []
+		},
+		{
+			"wagon_name": "MerchandiseWagon",
+			"cargo": []
+		},
+		{
+			"wagon_name": "MerchandiseWagon",
 			"cargo": []
 		},
 		{
@@ -22,13 +30,9 @@
 			"cargo": [
 				{
 					"resource_name": "caviar",
-					"resource_qty": 4
+					"resource_qty": 2
 				}
 			]
-		},
-		{
-			"wagon_name": "ContainerWagon",
-			"cargo": []
 		}
 	]
 }

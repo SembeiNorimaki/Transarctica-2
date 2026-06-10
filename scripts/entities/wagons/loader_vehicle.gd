@@ -28,16 +28,16 @@ var resource_name_to_frame = {
 	"coal": 7,
 	"plants": 8,
 	"copper": 9,
-	"dung": 10,
+	"mammothdung": 10,
 	"rails": 11,
 	"fish": 12,
-	"rods": 13,
+	"fishingrods": 13,
 	"salt": 14,
 	"furs": 15,
 	"gasoline": 16,
 	"inspection": 17,
 	"gray": 18,
-	"meat": 19,
+	"wolfmeat": 19,
 	"wood": 20
 }
 var frame_to_resource_name = {
@@ -51,16 +51,16 @@ var frame_to_resource_name = {
 	7: "coal",
 	8: "plants",
 	9: "copper",
-	10: "dung",
+	10: "mammothdung",
 	11: "rails",
 	12: "fish",
-	13: "rods",
+	13: "fishingrods",
 	14: "salt",
 	15: "furs",
 	16: "gasoline",
 	17: "inspection",
 	18: "gray",
-	19: "meat",
+	19: "wolfmeat",
 	20: "wood"
 }
 
@@ -82,14 +82,14 @@ func gear_down():
 	elif gear == "N":
 		gear = "R"
 
-func unload() -> String:
-	if cargo == "":
-		print("Error, loader is empty")
-		return ""
-	var result: String = cargo
-	cargo = ""
-	cargo_sprite.visible = false
-	return result
+# func unload() -> String:
+# 	if cargo == "":
+# 		print("Error, loader is empty")
+# 		return ""
+# 	var result: String = cargo
+# 	cargo = ""
+# 	cargo_sprite.visible = false
+# 	return result
 	
 
 func is_empty() -> bool:
@@ -98,15 +98,20 @@ func is_empty() -> bool:
 func get_cargo_type() -> String:
 	return cargo
 
-func load(resource_name: String):
-	cargo = resource_name
-	cargo_sprite.frame = resource_name_to_frame[resource_name]
-	cargo_sprite.visible = true
+func get_qty() -> int:
+	return crate_qty
+
+# func load(resource_name: String):
+# 	cargo = resource_name
+# 	cargo_sprite.frame = resource_name_to_frame[resource_name]
+# 	cargo_sprite.visible = true
 
 
 func load_crate(resource_name: String):
 	print("Loading crate")
 	cargo = resource_name
+	cargo_sprite.frame = resource_name_to_frame[resource_name]
+	cargo_sprite.visible = true
 	crate_qty += 1
 	crate.set_qty(crate_qty)
 
@@ -114,8 +119,17 @@ func unload_crate() -> String:
 	print("Unloading crate")
 	crate_qty -= 1
 	crate.set_qty(crate_qty)
+	if crate_qty == 0:
+		cargo = ""
+		cargo_sprite.visible = false
 	return cargo
 	
+func set_crate_qty(qty: int):
+	crate_qty = qty
+	crate.set_qty(crate_qty)
+	if crate_qty == 0:
+		cargo = ""
+		cargo_sprite.visible = false
 
 func _process(delta: float) -> void:
 	if gear == "D":

@@ -9,7 +9,8 @@ const TYPES = {
 		"team": "Player",
 		"horizontal_size": Vector2i(256, 66),
 		"stores": [],
-		"default_cargo": ""
+		"default_cargo": "",
+		"capacity": 0
 	},
 	"BarracksWagon": {
 		"horizontal_scene": preload("res://scenes/entities/wagons/barracks_wagon.tscn"),
@@ -20,7 +21,8 @@ const TYPES = {
 		"horizontal_size": Vector2i(128, 48),
 		"navigation_size": Vector2i(78, 55),
 		"stores": ["Soldiers"],
-		"default_cargo": "Soldiers"
+		"default_cargo": "Soldiers",
+		"capacity": 6
 	},
 	"CannonWagon": {
 		"horizontal_scene": preload("res://scenes/entities/wagons/cannon_wagon.tscn"),
@@ -31,7 +33,8 @@ const TYPES = {
 		"horizontal_size": Vector2i(128, 58),
 		"navigation_size": Vector2i(78, 55),
 		"stores": ["Ammunition"],
-		"default_cargo": "Ammunition"
+		"default_cargo": "Ammunition",
+		"capacity": 20
 	},
 	"MerchandiseWagon": {
 		"horizontal_scene": preload("res://scenes/entities/wagons/merchandise_wagon.tscn"),
@@ -42,7 +45,8 @@ const TYPES = {
 		"horizontal_size": Vector2i(128, 46),
 		"navigation_size": Vector2i(78, 55),
 		"stores": ["Crate"],
-		"default_cargo": "Crate"
+		"default_cargo": "Crate",
+		"capacity": 10
 	},
 	"TenderWagon": {
 		"horizontal_scene": preload("res://scenes/entities/wagons/tender_wagon.tscn"),
@@ -53,7 +57,8 @@ const TYPES = {
 		"horizontal_size": Vector2i(128, 45),
 		"navigation_size": Vector2i(78, 55),
 		"stores": ["Coal"],
-		"default_cargo": "Coal"
+		"default_cargo": "Coal",
+		"capacity": 100
 	},
 	"GondolaWagon": {
 		"horizontal_scene": preload("res://scenes/entities/wagons/gondola_wagon.tscn"),
@@ -64,7 +69,8 @@ const TYPES = {
 		"horizontal_size": Vector2i(178, 57),
 		"navigation_size": Vector2i(78, 55),
 		"stores": ["Iron", "Copper"],
-		"default_cargo": "Iron"
+		"default_cargo": "Iron",
+		"capacity": 60
 	},
 	"OpenWagon": {
 		"horizontal_scene": preload("res://scenes/entities/wagons/open_wagon.tscn"),
@@ -75,7 +81,8 @@ const TYPES = {
 		"horizontal_size": Vector2i(178, 57),
 		"navigation_size": Vector2i(78, 55),
 		"stores": ["Wood", "IronRods"],
-		"default_cargo": "Wood"
+		"default_cargo": "Wood",
+		"capacity": 70
 	},
 
 	"ContainerWagon": {
@@ -86,7 +93,8 @@ const TYPES = {
 		"team": "Player",
 		"horizontal_size": Vector2i(299, 33),
 		"stores": ["Container"],
-		"default_cargo": "Container"
+		"default_cargo": "Container",
+		"capacity": 4
 	}
 }
 

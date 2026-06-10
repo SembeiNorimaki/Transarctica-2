@@ -42,7 +42,7 @@
 				"SellPrice": 7,
 				"Quantity": 11
 			},
-			"vikingunionbook": {
+			"caviar": {
 				"BuyPrice": 8,
 				"SellPrice": 9,
 				"Quantity": 5
@@ -79,7 +79,7 @@
 			}
 		}
 	},
-		"3": {
+	"3": {
 		"Name": "Amsterdam",
 		"Type": "City",
 		"Location": [
@@ -117,19 +117,19 @@
 			-20
 		],
 		"TradeResources": {
-			"repairkits": {
+			"missiles": {
 				"BuyPrice": 2,
 				"SellPrice": 3,
 				"Quantity": 10
 			},
-			"tools": {
+			"salt": {
 				"BuyPrice": 4,
 				"SellPrice": 5,
 				"Quantity": 6
 			}
 		}
 	},
-		"5": {
+	"5": {
 		"Name": "Ruhr",
 		"Type": "City",
 		"Location": [
@@ -142,12 +142,12 @@
 				"SellPrice": 10,
 				"Quantity": 10
 			},
-			"tools": {
+			"caviar": {
 				"BuyPrice": 10,
 				"SellPrice": 12,
 				"Quantity": 16
 			},
-			"weapons": {
+			"fish": {
 				"BuyPrice": 12,
 				"SellPrice": 15,
 				"Quantity": 6
@@ -162,19 +162,19 @@
 			-10
 		],
 		"TradeResources": {
-			"weapons": {
+			"missiles": {
 				"BuyPrice": 5,
 				"SellPrice": 7,
 				"Quantity": 20
 			},
-			"tools": {
+			"alcohol": {
 				"BuyPrice": 4,
 				"SellPrice": 5,
 				"Quantity": 6
 			}
 		}
 	},
-		"7": {
+	"7": {
 		"Name": "Bayreuth",
 		"Type": "City",
 		"Location": [
@@ -192,7 +192,7 @@
 				"SellPrice": 5,
 				"Quantity": 16
 			},
-			"vikingunionbook": {
+			"plants": {
 				"BuyPrice": 12,
 				"SellPrice": 14,
 				"Quantity": 12

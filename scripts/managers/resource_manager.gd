@@ -26,17 +26,16 @@ var resource_spawn_tiles = {
 	"missiles": Vector2i(-4, 10),
 	"gasoline": Vector2i(-3, 9),
 	"oil": Vector2i(-2, 8),
-	"meat": Vector2i(-1, 7),
-	"rods": Vector2i(0, 6),
+	"wolfmeat": Vector2i(-1, 7),
+	"fishingrods": Vector2i(0, 6),
 	"caviar": Vector2i(1, 5),
 	"antiques": Vector2i(2, 4),
 	"alcohol": Vector2i(3, 3),
-	"dung": Vector2i(4, 2),
+	"mammothdung": Vector2i(4, 2),
 	"fish": Vector2i(5, 1),
 	"furs": Vector2i(6, 0),
 	"salt": Vector2i(7, -1),
-	"plants": Vector2i(8, -2)
-	
+	"plants": Vector2i(8, -2),
 
 }
 
@@ -111,13 +110,23 @@ func spawn_resource(resource_name_: String, qty_: int, mode: String) -> void:
 #endregion
 
 
-func xpos_to_resource_idx(xpos: int):
+func xpos_to_resource_name(xpos: int) -> String:
 	print("Checking resource for x position: %s" % xpos)
-	for i in range(resources.keys().size()):
-		print("Resource %s xpos: %s" % [resources.keys()[i], resources[resources.keys()[i]].global_position.x])
-		if abs(resources[resources.keys()[i]].global_position.x - xpos) < 50:
-			return i
-	return -1
+	var i = 0
+	for resource_name in resource_spawn_tiles.keys():
+		var spawn_tile = resource_spawn_tiles[resource_name]
+		var world_pos = grid_service.tile_to_world(spawn_tile)
+		if abs(world_pos.x - xpos) < 50:
+			return resource_name
+		i += 1
+	return ""
+		
+		
+	# for i in range(resources.keys().size()):
+	# 	print("Resource %s xpos: %s" % [resources.keys()[i], resources[resources.keys()[i]].global_position.x])
+	# 	if abs(resources[resources.keys()[i]].global_position.x - xpos) < 50:
+	# 		return i
+	# return -1
 
 func update_resource_qty(resource_name: String, qty_: int):
 	var resource = resources[resource_name]
