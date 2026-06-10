@@ -70,13 +70,13 @@ const MUSIC_TRAVEL: AudioStream = preload("res://assets/audio/Travelling.mp3")
 func _ready() -> void:
 	_inject_services()
 	call_deferred("_wire_signals")
-	_load_map("world_1")
+	_load_map("world_2")
 
 	camera_controller.center_at_tile(Vector2i(15, 5))
 	camera_controller.set_zoom(1.0)
 
 	# Start the overworld travel music with a 2-second fade-in.
-	AudioService.play_music(MUSIC_TRAVEL, 2.0)
+	AudioService.play_music(MUSIC_TRAVEL, 0.0)
 	
 func _inject_services() -> void:
 	# Managers
@@ -99,7 +99,7 @@ func _inject_services() -> void:
 	# Services
 	#player_train.grid_service = grid_service
 	
-
+	
 	# Controllers
 	camera_controller.grid_service = grid_service
 
@@ -135,7 +135,7 @@ func _load_map(map_name: String) -> void:
 	grid_service.set_tile_size(tile_size)
 	grid_service.map_size = new_map.get_node("Terrain").get_used_rect().size
 
-	rail_service.rails_tilemap = $MapRoot/World1/Rails
+	rail_service.rails_tilemap = new_map.get_node("Rails")
 	
 	_build_rails_from_map(new_map.get_node("Rails"))
 	_build_bridges_from_map(new_map.get_node("Bridges"))

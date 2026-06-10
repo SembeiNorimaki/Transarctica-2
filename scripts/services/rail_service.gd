@@ -261,6 +261,7 @@ func change_junction(tile: Vector2i) -> void:
 		rails_tilemap.set_cell(tile, 0, new_atlas_coords)
 
 func has_junction(tile: Vector2i) -> bool:
+	print("Checking if tile %s is a junction: %s " % [tile, rails[tile]])
 	return rails.has(tile) and rails[tile].length() == 3
 
 func has_rail(tile: Vector2i) -> bool:
