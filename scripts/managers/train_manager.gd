@@ -41,6 +41,8 @@ var trains := {"Player": [], "Enemy": []}
 
 var TRAIN_SCENE = preload("res://scenes/entities/units/navigation_train.tscn")
 
+var camera_lock_to_engine = false ## Will lock camera to the engine when true
+
 # TODO: Should not go here
 var train_vision_offsets = [
 	Vector2i(-2, -2),
@@ -126,13 +128,20 @@ func spawn_train(tile_pos: Vector2i, ori: String, team: String):
 func _process(delta: float):
 	for train in trains.Player:
 		train.update(delta)
-	camera_controller.set_pos(trains.Player[0].wagons[0].position)
+	if camera_lock_to_engine:
+		camera_controller.set_pos(trains.Player[0].wagons[0].position)
 
 
 #region Public API
 func recenter_player_train():
 	#trains["Player"][0].recenter()
-	pass
+	camera_controller.set_pos(trains.Player[0].wagons[0].position)
+
+func camera_lock_to_engine_toggle():
+	if camera_lock_to_engine == false:
+		camera_lock_to_engine = true
+	else:
+		camera_lock_to_engine = false
 
 func reverse_player_train():
 	trains["Player"][0].reverse_train()

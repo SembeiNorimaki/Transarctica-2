@@ -27,6 +27,7 @@ extends Node2D
 #    NavigationHUD.findengine_pressed -> recenter_player_train
 #    NavigationHUD.save_pressed -> NO METHOD
 #    NavigationHUD.minimap_pressed -> NO METHOD
+#    NavigationHUD.camera_lock_to_engine_toggle -> camera_lock_toggle
 # ─────────────────────────────────────────────
 
 
@@ -110,6 +111,7 @@ func _wire_signals() -> void:
 	navigation_hud.findengine_pressed.connect(recenter_player_train)
 	#navigation_hud.save_pressed.connect()
 	#navigation_hud.minimap_pressed.connect()
+	navigation_hud.camera_lock_to_engine_toggle.connect(camera_lock_toggle)
 #endregion
 
 #region Map Loading
@@ -220,6 +222,9 @@ func _handle_reverse_train() -> void:
 
 func recenter_player_train():
 	train_manager.recenter_player_train()
+
+func camera_lock_toggle():
+	train_manager.camera_lock_to_engine_toggle()
 
 func reverse_player_train_direction():
 	train_manager.reverse_player_train()

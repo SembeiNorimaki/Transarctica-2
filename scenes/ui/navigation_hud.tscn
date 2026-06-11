@@ -21,6 +21,12 @@ script = ExtResource("1_gw02x")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1164299676]
 
+[node name="DebugLabel" type="Label" parent="CanvasLayer" unique_id=233021220]
+visible = false
+offset_top = 585.0
+offset_right = 40.0
+offset_bottom = 608.0
+
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer" unique_id=1156681637]
 anchors_preset = 12
 anchor_top = 1.0
@@ -52,6 +58,13 @@ polygon = PackedVector2Array(0, 624, 0, 616, 2112, 616, 2112, 624)
 position = Vector2(0, 80)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(0, 624, 0, 616, 2112, 616, 2112, 624)
+
+[node name="LockIcon" type="Polygon2D" parent="CanvasLayer/HBoxContainer/Container1" unique_id=2013343531]
+visible = false
+position = Vector2(24, 196)
+scale = Vector2(0.6855239, 0.6855239)
+color = Color(0.15487596, 0.154876, 0.15487596, 1)
+polygon = PackedVector2Array(52.51458, 612.6701, 96, 613, 96, 580, 63, 580, 63, 568, 68, 560, 75, 558, 83, 560, 87, 568, 88, 579, 96, 579, 95, 566, 88, 553, 75, 550, 62, 554, 55, 566, 52.51458, 580.5778)
 
 [node name="Frame" type="Sprite2D" parent="CanvasLayer/HBoxContainer/Container1" unique_id=1370728373]
 position = Vector2(75, 664)
