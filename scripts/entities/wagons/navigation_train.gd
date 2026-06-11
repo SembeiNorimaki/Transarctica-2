@@ -272,6 +272,9 @@ func _handle_tile_change(wagon, old_tile: Vector2i, new_tile: Vector2i):
 	# Here we need to check with the rail_service what will be the next orientation for the wagon
 	var delta = new_tile - old_tile
 	var new_ori = rail_service.calculate_new_orientation(new_tile, delta)
+	if new_ori == null:
+		inmediate_stop()
+		return
 	wagon.set_orientation(new_ori)
 	wagon.set_heading(ori_to_heading[new_ori])
 	

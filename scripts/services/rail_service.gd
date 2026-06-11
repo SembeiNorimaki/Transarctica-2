@@ -222,13 +222,18 @@ func calculate_new_orientation(tile: Vector2i, delta: Vector2i):
 	print("Calculating new orientation. Available edges:")
 	for edge in edges[tile]:
 		print(" %s, %s " % [edge.a, edge.b])
-	for edge in edges[tile]:
-		if edge.a == entry_edge:
-			exit_edge = edge.b
-			break
-		elif edge.b == entry_edge:
-			exit_edge = edge.a
-			break
+	var edge = edges[tile][0]
+	
+	if edge.a == entry_edge:
+		exit_edge = edge.b
+	elif edge.b == entry_edge:
+		exit_edge = edge.a
+	else:
+		# this is reached if the edge does not have the entry edge
+		# which happens in junctions if we enter from the disconnected side
+		pass
+		
+	
 	if exit_edge:
 		var edge_str = "%s%s" % [entry_edge, exit_edge]
 		var new_ori = RAIL_TO_ORI[edge_str]
@@ -247,7 +252,7 @@ func change_junction(tile: Vector2i) -> void:
 		var new_tilename = junction_changes[rail_name]
 		
 		rails[tile] = new_tilename
-		var letters = rail_name.split("")
+		var letters = new_tilename.split("")
 		var a = letters[0]
 		var b = letters[1]
 		var c = letters[2]
