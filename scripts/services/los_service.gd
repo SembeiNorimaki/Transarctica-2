@@ -104,11 +104,10 @@ func has_los(start: Vector2i, end: Vector2i) -> bool:
 	return true
 
 
-# func get_block_pos(start: Vector2i, end: Vector2i) -> Array[Vector2i]:
-# 	var tiles = bresenham_line(start, end)
-# 	for i in range(1, tiles.size() - 1):
-# 		var tile1 = tiles[i]
-# 		var tile2 = tiles[i + 1]
-# 		var is_blocked = edge_occupancy_service.is_edge_view_blocked(tile1, tile2)
-# 		if is_blocked:
-# 			pass
+# Given all tiles in a cone and an origin, compute those ones that are visible, so they have LOS
+func filter_visible_tiles(origin: Vector2i, cone_tiles: Array[Vector2i]) -> Array[Vector2i]:
+	var visible_tiles: Array[Vector2i] = []
+	for tile in cone_tiles:
+		if has_los(origin, tile):
+			visible_tiles.append(tile)
+	return visible_tiles

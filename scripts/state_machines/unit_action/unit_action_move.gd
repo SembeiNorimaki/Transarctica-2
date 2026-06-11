@@ -2,6 +2,9 @@ extends GenericState
 class_name UnitActionMoveState
 
 
+# Dependencies injected by unit
+
+# The unit this state machine controls
 var unit: Unit = null
 
 var delta_to_orientation = {
@@ -32,10 +35,18 @@ var heading = Vector2.ZERO
 var target_position = Vector2i.ZERO
 var target_tile = Vector2i.ZERO
 
+# signals
+signal unit_arrived_to_tile(tile: Vector2i)
+
+
+
 # params should contain injected scenes and parameters needed by the node
 func enter(params = {}):
 	print("UnitSM enters move state")
 	unit = params["unit"]
+
+	unit_arrived_to_tile.connect(unit._on_unit_arrived_to_tile)
+
 	var current_tile: Vector2i = unit.current_tile
 	target_tile = unit.target_tile
 	var grid_service: GridService = unit.grid_service
@@ -62,8 +73,10 @@ func update(delta: float):
 	target_position = grid_service.tile_to_world(unit.target_tile)
 	var new_pos = unit.position.move_toward(target_position, unit.move_speed * delta)
 	if new_pos == unit.position:
+		print("ASM UniveMove: Unit arrived to tile")
+		unit_arrived_to_tile.emit(unit.target_tile)
 		#print("Arrived")
-		unit.on_arrived_to_tile(unit.target_tile)
+		#unit.on_arrived_to_tile(unit.target_tile)
 		
 	else:
 		unit.position = new_pos

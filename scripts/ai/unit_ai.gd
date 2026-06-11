@@ -15,11 +15,15 @@ func update_state_label(name: String):
 	pass
 
 func take_turn() -> void:
-	print("      Unit ", owner.name, " starting turn")	
-	# Start the behavior loop
 	behavior_state_machine.set_state("EvaluateState", {"unit": owner_node})
+
+	#print("      Unit ", owner.name, " starting turn")	
+	# Start the behavior loop
 	# Wait until EvaluateState decides the turn is finished
-	await turn_finished
+	#await turn_finished
 	# After the turn is done, return to idle
-	behavior_state_machine.set_state("IdleState", {"unit": owner_node})
-	print("      Unit ", owner.name, " finished turn.")
+	#behavior_state_machine.set_state("IdleState", {"unit": owner_node})
+	#print("      Unit ", owner.name, " finished turn.")
+
+func _on_unit_arrived_to_tile(unit, new_tile: Vector2i):
+	pass

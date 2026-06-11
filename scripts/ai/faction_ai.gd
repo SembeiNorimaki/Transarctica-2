@@ -4,27 +4,49 @@ class_name FactionAI
 # Injected by CombatScene
 var unit_manager: UnitManager
 
+var enemy_units = []
+var current_index := 0
+
 signal turn_finished
+signal faction_finished
 
 func _ready() -> void:
 	pass
 
 func take_turn():
-	print("  FactionAI: Start enemy turn")
-	var enemy_units = unit_manager.get_units_by_team("Enemy")
-	var idx := 0
-	for unit in enemy_units:
-		print("    Running CPU unit %s" % idx)
-		# 1) Select the unit visually, 
-		unit_manager.select_unit(unit)
-		# 2) Wait some time
-		await get_tree().create_timer(1.0).timeout
-		# # 3) Run the unit's AI turn
-		await unit.unit_ai.take_turn()
-		idx += 1
-	print("  FactionAI: Finished enemy turn")
-	#turn_finished.emit()
+	enemy_units = unit_manager.get_units_by_team("Enemy")
+	current_index = 0
+	run_next_unit()
 
+	# print("  FactionAI: Start enemy turn")
+	# var enemy_units = unit_manager.get_units_by_team("Enemy")
+	# var idx := 0
+	# for unit in enemy_units:
+	# 	print("    Running CPU unit %s" % idx)
+	# 	# 1) Select the unit visually, 
+	# 	unit_manager.select_unit(unit)
+	# 	# 2) Wait some time
+	# 	await get_tree().create_timer(1.0).timeout
+	# 	# # 3) Run the unit's AI turn
+	# 	await unit.unit_ai.take_turn()
+	# 	idx += 1
+	# print("  FactionAI: Finished enemy turn")
+	# #turn_finished.emit()
+
+
+func run_next_unit():
+	if current_index >= enemy_units.size():
+		faction_finished.emit()
+		return
+
+	var unit = enemy_units[current_index]
+	unit.unit_ai.turn_finished.connect(_on_unit_finished, CONNECT_ONE_SHOT)
+	unit.unit_ai.take_turn()
+
+
+func _on_unit_finished():
+	current_index += 1
+	run_next_unit()
 
 # func _run_turn():
 # 	print("UnitAIManager execute turn")

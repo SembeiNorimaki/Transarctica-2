@@ -30,7 +30,16 @@ func enter(params = {}):
 	var enemy = unit.get_primary_target()
 	if enemy == null:
 		# No enemy visible, enter overwatch
-		state_machine.set_state("OverwatchState", {"unit": unit})
+		#state_machine.set_state("OverwatchState", {"unit": unit})
+
+		# Move unit 2 tiles south
+		var path : Array[Vector2i] = [
+			unit.current_tile,
+			unit.current_tile + Vector2i(0, 1),
+			unit.current_tile + Vector2i(0, 2),
+			unit.current_tile + Vector2i(0, 3)]
+
+		unit.unit_manager.start_unit_movement(unit, path)
 		return
 		
 	unit.unit_ai.turn_finished.emit()

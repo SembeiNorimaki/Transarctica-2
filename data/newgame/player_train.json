@@ -1,0 +1,48 @@
+{
+	"id": "TP0",
+	"position": [2, 4, "E"],
+
+	"fuel": 40,
+	"max_fuel": 100,
+
+	"max_speed": 100,
+	"acceleration": 10,
+	"deceleration": 20,
+
+	"wagons": [
+		{
+			"type": "locomotive",
+			"hp": 100,
+			"max_hp": 100,
+			"capacity": 0,
+			"resource": null
+		},
+		{
+            "type": "tender",
+            "hp": 60,
+            "max_hp": 60,
+            "capacity": 100,
+            "resource": {
+                "type": "coal",
+                "amount": 40
+            }
+        },
+		 {
+            "type": "merchandise",
+            "hp": 40,
+            "max_hp": 40,
+            "capacity": 20,
+            "resource": {
+                "type": "caviar",
+                "amount": 10
+            }
+        },
+        {
+            "type": "merchandise",
+            "hp": 40,
+            "max_hp": 40,
+            "capacity": 20,
+            "resource": null
+        }
+	]	 
+}

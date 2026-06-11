@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://xboi5aqk1pxk" path="res://scripts/entities/units/unit_xcom_2.gd" id="2_gbknk"]
 [ext_resource type="SpriteFrames" uid="uid://coyrjsvfyxtg5" path="res://assets/tilesets/torso_frames.tres" id="2_klak8"]
 [ext_resource type="PackedScene" uid="uid://clj8wgdbjuylx" path="res://scenes/components/unit_parts.tscn" id="3_cfhyt"]
+[ext_resource type="Texture2D" uid="uid://ecpbijtavdhp" path="res://assets/sprites/behavior_icons.png" id="5_cfhyt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gbknk"]
 radius = 14.0
@@ -49,3 +50,10 @@ visible = false
 position = Vector2(0, -12)
 scale = Vector2(0.5, 1)
 shape = SubResource("CircleShape2D_gbknk")
+
+[node name="BehaviorIcon" type="Sprite2D" parent="." index="12" unique_id=1941898626]
+position = Vector2(5, -67)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_cfhyt")
+hframes = 3
+vframes = 2

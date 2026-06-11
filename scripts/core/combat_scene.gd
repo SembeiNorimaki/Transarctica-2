@@ -111,6 +111,8 @@ func _inject_services():
 	unit_manager.grid_service = grid_service
 	unit_manager.camera_controller = camera_controller
 	unit_manager.navigation_graph_service = navigation_graph_service
+	unit_manager.los_service = los_service
+	
 	building_manager.tile_occupancy_service = tile_occupancy_service
 	building_manager.grid_service = grid_service
 	wall_manager.tile_occupancy_service = tile_occupancy_service
@@ -186,13 +188,15 @@ func _register_teams():
 func _wire_signals():
 	#print("Wiring signals")
 	unit_manager.connect("unit_spawned", units_overlay.redraw)
-	unit_manager.connect("unit_tile_changed", units_overlay.update)
-	unit_manager.connect("unit_tile_changed", paths_overlay.update)
+
+	unit_manager.unit_arrived_to_tile.connect(units_overlay.update)
+	unit_manager.unit_arrived_to_tile.connect(paths_overlay.update)
+	unit_manager.unit_arrived_to_tile.connect(exploration_service.on_unit_tile_changed)
+
 	unit_manager.connect("unit_removed", units_overlay.redraw)
 	unit_manager.connect("unit_reached_destination", _unit_reached_destination)
 	unit_manager.connect("unit_changed_orientation", _unit_changed_orientation)
-	unit_manager.connect("unit_tile_changed", _unit_changed_tile)
-
+	
 
 	building_manager.connect("building_spawned", buildings_overlay.redraw)
 	building_manager.connect("building_removed", buildings_overlay.redraw)
@@ -469,8 +473,7 @@ func _unit_reached_destination(unit):
 func _unit_changed_orientation(unit, new_orientation):
 	exploration_service.on_unit_orientation_changed(unit, new_orientation)
 
-func _unit_changed_tile(unit, new_tile):
-	exploration_service.on_unit_tile_changed(unit, new_tile)
+	
 
 #endregion
 
@@ -512,3 +515,11 @@ func set_cursor(cursor_name: String) -> void:
 		aim_cursor.visible = true
 	elif cursor_name == "":
 		aim_cursor.visible = false
+
+func _update_enemy_visibility():
+	var visible_tiles = exploration_service.get_merged_visible_tiles()
+	for enemy in unit_manager.get_units_by_team("Enemy"):
+		if enemy.current_tile in visible_tiles:
+			enemy.show()
+		else:
+			enemy.hide()

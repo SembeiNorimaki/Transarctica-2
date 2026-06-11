@@ -12,6 +12,10 @@ var state := {
 	}
 }
 
+
+var player_train_state = {}
+
+
 var cities_by_location = {}
 var cities_by_id = {}
 var industries_by_location = {}
@@ -42,7 +46,6 @@ func load_initial_industries():
 		industries_by_location[industry_tile] = industry_name
 	state["industries"] = data
 
-
 func load_initial_train():
 	var file = FileAccess.open("res://data/player_train.json", FileAccess.READ)
 	var train_data = JSON.parse_string(file.get_as_text())
@@ -51,6 +54,34 @@ func load_initial_train():
 		state.train.wagons.append(wagon_info)
 		#print("Initial wagon %s" % wagon_name)
 
+func load_player_train(filename: String = "res://data/newgame/player_train.json"):
+	var file = FileAccess.open(filename, FileAccess.READ)
+	if file == null:
+		push_error("Could not open %s" % filename)
+		return {}
+
+	var train_data = JSON.parse_string(file.get_as_text())
+	if train_data == null:
+		push_error("Invalid JSON in %s " % filename)
+		return {}
+
+	player_train_state = train_data
+	
+	#state.train.wagons = []
+	#for wagon_info in train_data.wagons:
+	#	state.train.wagons.append(wagon_info)
+	#	#print("Initial wagon %s" % wagon_name)
+
+func save_player_train(filename: String = "user://PlayerTrain_Save.json") -> void:
+	var json_text := JSON.stringify(state, "\t")  # pretty print with tabs
+
+	var file := FileAccess.open(filename, FileAccess.WRITE)
+	if file == null:
+		push_error("Could not write %s" % filename)
+		return
+
+	file.store_string(json_text)
+	
 
 func get_city(name: String) -> Dictionary:
 	return state["cities"].get(name, {})

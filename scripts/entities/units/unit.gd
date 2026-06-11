@@ -34,20 +34,32 @@ var view_range := 12
 var is_alive := true
 
 signal movement_finished
+signal unit_arrived_to_tile(unit, tile: Vector2i)
 
 const SOLDIER_HIT_SFX: AudioStream = preload("res://assets/audio/SoldierHit.wav")
 const SOLDIER_DIES_SFX: AudioStream = preload("res://assets/audio/SoldierDies.wav")
 
 func _ready() -> void:
-	health_component.connect("health_changed", _on_health_changed)
-	health_component.connect("died", _on_died)
 
-	ap_component.connect("ap_changed", _on_ap_changed)
-	ap_component.connect("ap_exhausted", _on_ap_exhausted)
-
+	call_deferred("_wire_signals")
 	#Initialize bar
 	health_bar.update_health(health_component.current_health, health_component.max_health)
 	#set_process(false)
+
+func inject_dependencies() -> void:
+	pass
+
+
+func _wire_signals() -> void:
+	unit_arrived_to_tile.connect(unit_manager._on_unit_arrived_to_tile)
+	health_component.health_changed.connect(_on_health_changed)
+	health_component.died.connect(_on_died)
+
+	ap_component.ap_changed.connect(_on_ap_changed)
+	ap_component.ap_exhausted.connect(_on_ap_exhausted)
+
+
+
 
 func initialize(id_: String, team_id_: String) -> void:
 	set_id(id_)
@@ -152,13 +164,14 @@ func move_to_tile(tile: Vector2i):
 	#
 	#set_process(true)
 
-func on_arrived_to_tile(tile: Vector2i):
-	print("Unit %s arrived to tile %s" % [id, tile])
-	#use ap 
-	ap_component.use_ap(1)
-	update_ap_label()
 
-	unit_manager.on_unit_reached_tile(self , tile)
+func _on_unit_arrived_to_tile(tile: Vector2i):
+	print("Unit: Unit arrived to tile")
+	unit_arrived_to_tile.emit(self , tile)
+	
+
+func compute_visible_enemies():
+	pass
 
 func on_movement_finished() -> void:
 	#set_process(false)
