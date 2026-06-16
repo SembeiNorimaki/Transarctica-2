@@ -1,0 +1,1067 @@
+# Managers:
+  building_manager.gd
+    func _ready() -> void:
+    func spawn_building(tile_pos, building_type, owner_id) -> void:
+    func register_building(building: Building, tile_pos: Vector2i) -> void:
+    func unregister_building(building: Building) -> void:
+
+  cities_manager.gd
+    func spawn_city(city_id: int, city_tile: Vector2i) -> void:
+    func create_label(city_name: String, city_tile: Vector2i) -> void:
+    func _compute_entry_tile(tile: Vector2i):
+    func _compute_entry_tile_old(tile: Vector2i):
+    func get_city_by_entry_tile(tile: Vector2i) -> Dictionary:
+    func is_entry_tile(tile: Vector2i) -> bool:
+
+  horizontal_train_manager.gd
+    func gear_up():
+    func gear_down():
+    func spawn_train(tile_pos: Vector2, owner: String) -> HorizontalTrain:
+    func _on_wagon_resource_type_changed(wagon_index: int, resource: String):
+    func _on_wagon_resource_amount_changed(wagon_index: int, resource: String, qty: int):
+    func _on_train_money_changed(money: int):
+    func check_wagon_click(mouse_pos) -> int:
+
+  object_manager.gd
+    func _ready() -> void:
+    func _process(delta: float) -> void:
+
+  pod_ai_manager.gd
+    func _ready() -> void:
+    func execute_turn():
+    func dumb_pod_action(pod: Pod):
+
+  pod_manager.gd
+    func spawn_pod(id: String, tile_pos: Vector2i, patrol_route: Array[Vector2i]) -> void:
+    func add_unit_to_pod(pod_id: String, unit: Unit, formation_offset: Vector2i):
+    func get_pod_by_tile(tile: Vector2i):
+    func get_pod_tile(pod: Pod):
+    func get_pod_patrol_route(id_: String) -> Array[Vector2i]:
+    func get_next_pod() -> Pod:
+    func get_all_pods() -> Array[Pod]:
+    func register_pod(pod: Pod):
+    func unregister_pod(pod: Pod):
+    func start_pod_movement(pod: Pod, path: Array[Vector2i]) -> void:
+    func _give_next_tile(pod: Pod) -> void:
+    func _on_pod_reached_destination(pod):
+
+  quest_manager.gd
+    func _ready() -> void:
+    func load_quest_database() -> void:
+    func accept_quest(quest_id: String) -> void:
+    func notify_city_reached(city_name: String) -> void:
+    func notify_goods_delivered(city_name: String, resource_name: String, qty: int) -> void:
+    func notify_goods_collected(resource_name: String, qty: int) -> void:
+    func notify_money_changed(money: int) -> void:
+    func process_event(event_type: String, event_data: Dictionary) -> void:
+    func complete_quest(quest: Quest) -> void:
+    func claim_rewards(quest: Quest) -> void:
+    func save_to_game_state() -> void:
+    func load_from_game_state() -> void:
+
+  resource_manager.gd
+    func _ready() -> void:
+    func spawn_crate(resource_name_: String, qty_: int, mode: String):
+    func spawn_resource(resource_name_: String, qty_: int, mode: String) -> void:
+    func xpos_to_resource_name(xpos: int) -> String:
+    func update_resource_qty(resource_name: String, qty_: int):
+    func get_resource_in_tile(tile: Vector2i):
+
+  scene_manager.gd
+    func _ready() -> void:
+    func _process(delta: float) -> void:
+    func enter_city(city_name: String):
+    func leave_city():
+
+  selection_manager.gd
+    func select_unit(unit: Unit) -> void:
+    func clear_selection() -> void:
+    func get_selected_unit() -> Unit:
+
+  train_manager.gd
+    func _ready() -> void:
+    func spawn_train(tile_pos: Vector2i, ori: String, team: String):
+    func _process(delta: float):
+    func recenter_player_train():
+    func camera_lock_to_engine_toggle():
+    func reverse_player_train():
+    func gear_toggle():
+    func on_train_tile_changed(train: NavigationTrain, old_tile: Vector2i, new_tile: Vector2i) -> void:
+    func _check_tile_events(train: NavigationTrain, new_tile: Vector2i) -> void:
+
+  turn_manager.gd
+    func _ready() -> void:
+    func start_combat() -> void:
+    func finish_turn():
+    func update_state_label(state_name) -> void:
+    func register_team(team_id: String) -> void:
+    func register_unit(team_id: String, unit: Unit) -> void:
+    func _start_team_turn() -> void:
+    func _activate_next_unit() -> void:
+    func finish_unit_turn() -> void:
+    func _end_team_turn() -> void:
+    func _cleanup_dead_units(team_id: String) -> void:
+
+  unit_manager.gd
+    func _ready() -> void:
+    func _inject_dependencies() -> void:
+    func _wire_signals() -> void:
+    func spawn_unit(tile_pos: Vector2i, unit_type_: String, owner_id: String) -> void:
+    func get_unit_tile(unit: Unit) -> Vector2i:
+    func select_unit(unit, center_camera=true):
+    func unselect_unit():
+    func get_next_unit_by_team(team: String) -> Unit:
+    func get_units_by_team(team: String) -> Array:
+    func get_all_units() -> Array[Unit]:
+    func apply_damage_to_unit(unit: Unit, amount: int):
+    func start_unit_movement(unit: Unit, path: Array[Vector2i]) -> void:
+    func _give_next_tile(unit: Unit) -> void:
+    func _on_unit_reached_destination(unit):
+    func _on_unit_arrived_to_tile(unit, new_tile: Vector2i):
+    func get_visible_tiles_for(unit):
+    func _update_seen_enemies(unit, visible_tiles: Array[Vector2i]):
+    func on_unit_orientation_changed(unit: Unit, new_orientation: String) -> void:
+    func on_move_vector_changed(vec: Vector2i):
+    func on_aim_pressed():
+    func on_aim_released():
+
+  wall_manager.gd
+    func _ready() -> void:
+    func spawn_full_wall(tile_pos: Vector2i, atlas_coords: Vector2i) -> void:
+    func spawn_left_wall(tile_pos: Vector2i, atlas_coords: Vector2i) -> void:
+    func spawn_right_wall(tile_pos: Vector2i, atlas_coords: Vector2i) -> void:
+    func apply_damage_to_wall(wall: Wall, amount: int):
+    func apply_damage_to_wall_edge(wall_edge: WallEdge, amount: int):
+    func _process(delta: float) -> void:
+
+# Services:
+  accuracy_service.gd
+    func compute_hit_chance(_shooter: Unit, _weapon_component: WeaponComponent, _shooter_tile: Vector2i, _target_tile: Vector2i) -> float:
+
+  audio_service.gd
+    func _ready() -> void:
+    func _setup_buses() -> void:
+    func _setup_music_players() -> void:
+    func _setup_sfx_pool() -> void:
+    func play_music(stream: AudioStream, fade_in: float = DEFAULT_FADE_TIME, loop: bool = true) -> void:
+    func stop_music(fade_out: float = DEFAULT_FADE_TIME) -> void:
+    func crossfade_music(stream: AudioStream, duration: float = DEFAULT_FADE_TIME, loop: bool = true) -> void:
+    func pause_music() -> void:
+    func resume_music() -> void:
+    func set_music_volume(db: float) -> void:
+    func is_music_playing() -> bool:
+    func play_sfx(stream: AudioStream, volume_db: float = 0.0, pitch: float = 1.0) -> AudioStreamPlayer:
+    func play_sfx_at(stream: AudioStream, world_position: Vector2,
+    func set_sfx_volume(db: float) -> void:
+    func _next_sfx_player() -> AudioStreamPlayer:
+    func _kill_music_tween() -> void:
+    func _resolve_bus(preferred: String) -> String:
+    func _set_stream_loop(player: AudioStreamPlayer, loop: bool) -> void:
+
+  cover_service.gd
+    func build_cover_map(all_tiles: Array):
+    func _cover_in_direction(tile: Vector2i, dir: Vector2i) -> float:
+    func get_cover_against(tile: Vector2i, enemy_tile: Vector2i) -> float:
+    func get_cover_value(tile: Vector2i) -> float:
+
+  edge.gd
+    func _init(from_tile_: Vector2i, to_tile_: Vector2i, edge_type_: int = EdgeType.NORMAL):
+    func get_tiles() -> Array[Vector2i]:
+
+  edge_factory.gd
+
+  edge_occupancy_service.gd
+    func _ready() -> void:
+    func register(tile_a: Vector2i, tile_b: Vector2i, edge_type_: int = Edge.EdgeType.NORMAL) -> void:
+    func unregister(tile_a: Vector2i, tile_b: Vector2i) -> void:
+    func is_edge_walk_blocked(tile_a: Vector2i, tile_b: Vector2i) -> bool:
+    func is_edge_view_blocked(tile_a: Vector2i, tile_b: Vector2i) -> bool:
+    func get_edge(tile_a: Vector2i, tile_b: Vector2i) -> Edge:
+    func get_all_edges() -> Dictionary:
+    func get_tiles(edge_str: String) -> Array[Vector2i]:
+    func clear() -> void:
+    func _edge_key(a: Vector2i, b: Vector2i) -> String:
+
+  exploration_service.gd
+    func _ready() -> void: pass
+    func reveal_from_unit():
+    func _reveal_tiles(tiles: Array[Vector2i]):
+    func _recalculate():
+    func on_unit_tile_changed(unit: Unit, new_tile: Vector2i) -> void:
+    func on_unit_orientation_changed(unit: Unit, new_orientation: String) -> void:
+    func _get_merged_player_visibility():
+    func _update_units_visibility(selected_unit: Unit) -> void:
+
+  grid_service.gd
+    func set_tile_size(tile_size_: Vector2i):
+    func tile_delta_to_world_delta(delta_tile: Vector2i) -> Vector2:
+    func tile_to_world(tile: Vector2) -> Vector2:
+    func world_to_tile(world_pos: Vector2) -> Vector2i:
+    func world_to_tilef(world_pos: Vector2) -> Vector2:
+    func get_neighbors(tile: Vector2i) -> Array[Vector2i]:
+    func get_orientation(from_tile: Vector2i, to_tile: Vector2i) -> String:
+    func get_tiles_in_vision_cone(origin: Vector2i, orientation: String, view_angle: float, view_range: int) -> Array[Vector2i]:
+    func is_inside_map(tile: Vector2i) -> bool:
+
+  i_resource_container.gd
+    func get_available_qty(resource_name: String) -> int:
+    func get_storage_capacity(resource_name: String) -> int:
+    func add_resource_amount(resource_name: String, qty: int) -> void:
+    func remove_resource_amount(resource_name: String, qty: int) -> void:
+
+  los_service.gd
+    func bresenham_line(start: Vector2i, end: Vector2i) -> Array[Vector2i]:
+    func bresenham_line_diagonals(start: Vector2i, end: Vector2i) -> Array[Vector2i]:
+    func has_los(start: Vector2i, end: Vector2i) -> bool:
+    func filter_visible_tiles(origin: Vector2i, cone_tiles: Array[Vector2i]) -> Array[Vector2i]:
+
+  navigation_graph_service.gd
+    func build_graph(terrain_tilemap: TileMapLayer):
+    func is_walkable_2x2(anchor: Vector2i) -> bool:
+    func get_reachable_tiles(unit: Unit, max_cost: float) -> Array[Vector2i]:
+    func _compare_cost(a, b):
+    func _build_nodes(terrain_tilemap: TileMapLayer):
+    func _build_nodes_2x2(terrain_tilemap: TileMapLayer):
+    func _build_edges():
+    func _build_edges_2x2():
+    func _edge_key(a: Vector2i, b: Vector2i) -> String:
+    func _update_edge(a: Vector2i, b: Vector2i):
+
+  pathfinding_service.gd
+    func find_path(start: Vector2i, goal: Vector2i) -> Array:
+    func find_path_OLD(start: Vector2i, goal: Vector2i) -> Array:
+    func _push_open(open_set: Array, tile: Vector2i, priority: int) -> void:
+    func _pop_open(open_set: Array) -> Vector2i:
+    func _heuristic(a: Vector2i, b: Vector2i) -> int:
+    func _reconstruct_path(came_from: Dictionary, current: Vector2i) -> Array:
+
+  rail_edge.gd
+    func _init(a: String, b: String, cost: float):
+    func get_edges() -> Array[String]:
+    func get_cost() -> float:
+
+  rail_edge_factory.gd
+
+  rail_service.gd
+    func spawn_rail(tile: Vector2i, atlas_coords: Vector2i) -> void:
+    func spawn_bridge(tile: Vector2i, atlas_coords: Vector2i) -> void:
+    func _rebuild_edges_for_tile(tile: Vector2i, rail_name: String) -> void:
+    func get_tile_edges(tile: Vector2i) -> Array:
+    func calculate_new_orientation(tile: Vector2i, delta: Vector2i):
+    func change_junction(tile: Vector2i) -> void:
+    func has_junction(tile: Vector2i) -> bool:
+    func has_rail(tile: Vector2i) -> bool:
+
+  road_service.gd
+    func _ready() -> void:
+    func spawn_road(tile_pos) -> void:
+    func get_occupied_tiles() -> Array:
+    func has_road(tile_pos) -> bool:
+    func _process(delta: float) -> void:
+
+  terrain_service.gd
+    func get_cost(pos: Vector2i) -> float:
+    func get_elevation(pos: Vector2i) -> int:
+
+  tile_occupancy_service.gd
+    func _ready() -> void:
+    func register_footprint(anchor: Vector2i, offsets: Array[Vector2i], entity: Object) -> void:
+    func unregister_footprint(anchor: Vector2i, offsets: Array[Vector2i], entity: Object) -> void:
+    func register(tile: Vector2i, entity: Object) -> void:
+    func unregister(tile: Vector2i, entity: Object) -> void:
+    func get_occupied_tiles() -> Dictionary:
+    func get_entities(tile: Vector2i) -> Array:
+    func get_units(tile: Vector2i) -> Array[Unit]:
+    func get_buildings(tile: Vector2i) -> Array:
+    func get_resources(tile: Vector2i) -> Array:
+    func get_walls(tile: Vector2i) -> Array:
+    func get_roads(tile: Vector2i) -> Array:
+    func is_occupied(tile: Vector2i) -> bool:
+    func is_occupied_static(tile: Vector2i) -> bool:
+    func is_footprint_free(anchor: Vector2i, offsets: Array[Vector2i]) -> bool:
+    func is_blocked(tile: Vector2i) -> bool:
+    func get_all_occupied_tiles() -> Array:
+    func get_all_entities() -> Array:
+
+  trade_service.gd
+    func set_transaction_data(resource_name_: String, transaction_type_: String, qty_: int, price_: int):
+    func execute_transaction(buttonIdx: int):
+    func set_context(city_container: CityResourceContainer, train_container: TrainResourceContainer, city_name_: String = ""):
+    func buy(resource: String, qty: int) -> bool:
+    func sell(resource: String, qty: int) -> bool:
+
+  weapon_service.gd
+    func _ready():
+    func fire_bullet(bullet_scene: PackedScene, from_tile: Vector2i, to_tile: Vector2i, shooter: Unit) -> void:
+
+# State Machines:
+  combat_idle_state.gd
+    func _ready():
+    func enter(params = {}):
+    func exit(params = {}):
+    func update(delta: float):
+    func handle_click(tile: Vector2i, button_index: int):
+    func handle_key(event: InputEventKey):
+
+  combat_unit_aiming_state.gd
+    func _ready():
+    func enter(params = {}):
+    func exit(params = {}):
+    func update(delta: float):
+    func _attempt_shot(tile: Vector2i):
+    func handle_click(tile: Vector2i, button_index: int):
+    func handle_key(event: InputEventKey):
+
+  combat_unit_moving_state.gd
+    func _ready():
+    func enter(params = {}):
+    func exit(params = {}):
+    func update(delta: float):
+    func handle_click(tile: Vector2i, button_index: int):
+
+  combat_unit_selected_state.gd
+    func _ready():
+    func enter(params = {}):
+    func exit(params = {}):
+    func update(delta: float):
+    func _confirm_move():
+    func handle_click(tile: Vector2i, button_index: int):
+    func handle_key(event: InputEventKey):
+
+  enemy_turn_state.gd
+    func enter(params = {}):
+
+  player_turn_state.gd
+    func enter(params = {}):
+
+  unit_action_aim.gd
+    func enter(params = {}):
+    func exit(params = {}):
+    func update(delta: float):
+    func handle_click(tile: Vector2i, button_index: int):
+
+  unit_action_attack.gd
+    func enter(params = {}):
+    func exit(params = {}):
+    func update(delta: float):
+    func handle_click(tile: Vector2i, button_index: int):
+
+  unit_action_dead.gd
+    func enter(params = {}):
+    func exit(params = {}):
+    func update(delta: float):
+    func handle_click(tile: Vector2i, button_index: int):
+
+  unit_action_idle.gd
+    func enter(params = {}):
+    func exit(params = {}):
+    func update(delta: float):
+    func handle_click(tile: Vector2i, button_index: int):
+
+  unit_action_move.gd
+    func enter(params = {}):
+    func exit(params = {}):
+    func update(delta: float):
+    func handle_click(tile: Vector2i, button_index: int):
+
+  unit_behavior_advance.gd
+    func enter(params = {}):
+    func exit(params = {}):
+    func update(delta: float):
+
+  unit_behavior_attack.gd
+    func enter(params = {}):
+    func exit(params = {}):
+    func update(delta: float):
+
+  unit_behavior_engage.gd
+    func enter(params = {}):
+    func exit(params = {}):
+    func update(delta: float):
+
+  unit_behavior_evaluate.gd
+    func _dummy():
+    func enter(params = {}):
+    func exit(params = {}):
+    func update(delta: float):
+
+  unit_behavior_idle.gd
+    func enter(params = {}):
+    func exit(params = {}):
+    func update(delta: float):
+
+  unit_behavior_overwatch.gd
+    func enter(params = {}):
+    func exit(params = {}):
+    func update(delta: float):
+
+  unit_behavior_patrol.gd
+    func enter(params = {}):
+    func exit(params = {}):
+    func update(delta: float):
+
+  unit_behavior_retreat.gd
+    func enter(params = {}):
+    func exit(params = {}):
+    func update(delta: float):
+
+  unit_behavior_seek_cover.gd
+    func enter(params = {}):
+    func exit(params = {}):
+    func update(delta: float):
+
+  idle_state.gd
+    func enter(params = {}):
+
+  patrolling_state.gd
+    func enter(params = {}):
+
+# Overlays:
+  buildings_overlay.gd
+    func redraw() -> void:
+    func _draw():
+
+  cities_overlay.gd
+    func update():
+    func _draw():
+
+  cover_overlay.gd
+    func show_covers(covers_):
+    func clear():
+    func _draw():
+    func _draw_cover(tile, cover_data, color_):
+
+  fov_overlay.gd
+    func redraw() -> void:
+    func _draw():
+    func highlight_tile(tile, color_):
+
+  los_overlay.gd
+    func redraw() -> void:
+    func _draw():
+    func draw_debug_line():
+    func highlight_tile(tile):
+    func draw_debug_tiles(tiles: Array):
+    func draw_los_line(start: Vector2i, end: Vector2i, color: Color):
+
+  mouse_hover_overlay.gd
+    func _process(delta: float) -> void:
+    func update():
+    func _draw():
+
+  navigation_graph_overlay.gd
+    func update():
+    func _draw():
+
+  objects_overlay.gd
+    func _ready() -> void:
+    func _process(delta: float) -> void:
+
+  paths_overlay.gd
+    func _ready():
+    func redraw():
+    func show_path(path_: Array[Vector2i], path_cost_: Array[float]):
+    func update(unit, prev_tile, new_tile):
+    func clear_path():
+    func _draw():
+
+  pods_overlay.gd
+
+  rails_overlay.gd
+    func _ready():
+    func update():
+    func _draw():
+
+  reachable_tiles_overlay.gd
+    func show_tiles(tiles_):
+    func clear():
+    func _draw():
+    func _highlight_tile(tile, color_):
+
+  roads_overlay.gd
+    func _ready():
+    func redraw():
+    func _draw():
+
+  units_overlay.gd
+    func _ready():
+    func redraw():
+    func update(unit, old_tile, new_tile):
+    func _draw():
+
+  walls_overlay.gd
+    func _ready():
+    func redraw():
+    func _draw():
+    func _draw_tile_walls():
+    func _draw_edge_walls():
+    func _edge_to_screen_points(edge: Edge) -> Array[Vector2i]:
+
+# Entities:
+  building.gd
+    func _ready() -> void:
+
+  pod.gd
+    func initialize(id_: String):
+    func add_unit(unit_: Unit):
+    func get_all_units() -> Array[Unit]:
+    func take_turn():
+    func set_state(state: String, params = {}) -> void:
+    func move_to_tile(tile: Vector2i):
+    func update_state_label(state_name: String):
+    func on_arrived_to_tile(tile: Vector2i):
+    func on_movement_finished() -> void:
+
+  bullet.gd
+    func _ready():
+    func fire(from: Vector2, to: Vector2):
+    func _physics_process(delta: float):
+
+  crate.gd
+    func set_mode(mode_: String):
+    func set_qty(qty_: int):
+
+  soldier.gd
+    func _ready() -> void:
+    func initialize(id_: String, team_id_: String) -> void:
+
+  unit.gd
+    func _ready() -> void:
+    func inject_dependencies() -> void:
+    func _wire_signals() -> void:
+    func initialize(id_: String, team_id_: String) -> void:
+    func set_id(id_: String) -> void:
+    func set_team(team_id_: String):
+    func set_soldier_type(id: String):
+    func get_current_action():
+    func _on_health_changed(current: int, max: int):
+    func _on_died():
+    func set_state(state: String, params = {}) -> void:
+    func set_orientation(new_orientation: String):
+    func apply_damage(amount: int):
+    func _draw():
+    func update_state_label(state_name: String):
+    func update_tile_label():
+    func update_ap_label():
+    func stop_animation():
+    func set_selected(selected: bool) -> void:
+    func move_to_tile(tile: Vector2i):
+    func _on_unit_arrived_to_tile(tile: Vector2i):
+    func compute_visible_enemies():
+    func on_movement_finished() -> void:
+    func _on_ap_changed(current: int, max: int) -> void:
+    func _on_ap_exhausted() -> void:
+    func get_ap() -> int:
+    func is_in_cover() -> bool:
+    func is_in_cover_against_enemy(enemy_unit) -> bool:
+    func find_best_cover(enemy_unit) -> Vector2i:
+    func get_primary_target():
+    func find_advance_tile(enemy_tile: Vector2i):
+
+  unit_xcom_2.gd
+    func toggle_crouch():
+    func set_weapon_type(id: String):
+    func set_soldier_type(id: String):
+    func set_orientation(new_orientation: String):
+    func play_animation(state_: String, orientation_ : String):
+    func move_to_tile(tile: Vector2i):
+
+  barracks_wagon.gd
+    func _unload_soldiers():
+    func on_click():
+
+  container_wagon.gd
+    func _ready() -> void:
+    func _process(delta: float) -> void:
+    func on_click():
+
+  horizontal_train.gd
+    func _ready() -> void:
+    func _process(delta: float) -> void:
+    func _on_train_just_stopped():
+    func calculate_target_loading_wagon_idx():
+    func xpos_to_wagon_idx(xpos: int):
+    func add_wagon(wagon_data: Dictionary):
+    func set_wagon_resource_type(wagon_idx: int, resource_name: String):
+    func set_wagon_resource_qty(wagon_idx: int, qty: int):
+    func set_speed(speed_: float):
+    func gear_up():
+    func gear_down():
+    func check_wagon_click(mouse_pos: Vector2) -> int:
+
+  loader_vehicle.gd
+    func initialize():
+    func gear_up():
+    func gear_down():
+    func is_empty() -> bool:
+    func get_cargo_type() -> String:
+    func get_qty() -> int:
+    func load_crate(resource_name: String):
+    func unload_crate() -> String:
+    func set_crate_qty(qty: int):
+    func _process(delta: float) -> void:
+
+  locomotive_wagon.gd
+    func _ready() -> void:
+    func set_money(money: int):
+    func on_click():
+
+  merchandise_wagon.gd
+    func _ready() -> void:
+    func open_doors():
+    func close_doors():
+    func on_click():
+
+  navigation_locomotive.gd
+    func _ready() -> void:
+    func set_pos(new_pos: Vector2):
+    func set_orientation(new_ori: String):
+    func set_heading(new_heading: Vector2):
+    func update_animation():
+    func _update_labels():
+    func _process(delta):
+    func _move(delta: float):
+    func _check_tile_change():
+
+  navigation_train.gd
+    func _ready() -> void:
+    func initialize(id_: String, tile_pos_: Vector2i, ori_: String) -> void:
+    func initialize_wagon_positions(tile_pos_: Vector2i, ori_: String):
+    func add_locomotive():
+    func add_wagon(wagon_name: String):
+    func set_id(id_: String) -> void:
+    func set_team(team_id_: String):
+    func set_action(state: String, params = {}) -> void:
+    func update_state_label(state_name: String):
+    func update_gear_label():
+    func update_speed_label():
+    func update(delta):
+    func gear_toggle():
+    func reverse_train():
+    func inmediate_stop():
+    func _update_speed(delta: float):
+    func _on_locomotive_tile_changed(locomotive, old_tile: Vector2i, new_tile: Vector2i):
+    func _on_wagon_tile_changed(wagon, old_tile: Vector2i, new_tile: Vector2i):
+    func _handle_tile_change(wagon, old_tile: Vector2i, new_tile: Vector2i):
+
+  navigation_wagon.gd
+    func _ready() -> void:
+    func initialize(wagon_type: String) -> void:
+    func set_wagon_type(wagon_type_: String) -> void:
+    func _create_animations_from_atlas(atlas: Texture2D, orientations: Array, cargos: Array) -> void:
+    func set_pos(new_pos: Vector2):
+    func set_orientation(new_ori: String):
+    func enable_front_attachment(enabled: bool):
+    func enable_back_attachment(enabled: bool):
+    func disable_all_attachments():
+    func set_heading(new_heading: Vector2):
+    func update_animation():
+    func _process(delta):
+    func _move(delta: float):
+    func _check_tile_change():
+
+  tender_wagon.gd
+    func _ready() -> void:
+    func _process(delta: float) -> void:
+    func on_click():
+
+  wall.gd
+    func apply_damage(amount: float):
+
+  wall_edge.gd
+    func set_frame(frame):
+    func apply_damage(amount: float):
+
+  quest.gd
+    func is_completed() -> bool:
+    func update_objectives(event_type: String, event_data: Dictionary) -> bool:
+    func to_dict() -> Dictionary:
+    func from_dict(data: Dictionary) -> void:
+
+  quest_objective.gd
+    func update_progress(event_type: String, event_data: Dictionary) -> bool:
+    func to_dict() -> Dictionary:
+    func from_dict(data: Dictionary) -> void:
+
+  resource.gd
+    func _ready() -> void:
+    func set_type(type_: String):
+    func set_qty(qty_: int):
+    func _process(delta: float) -> void:
+
+  vehicle_unit.gd
+    func check_click(mouse_pos) -> bool:
+    func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+    func set_resource_type(resource: String):
+    func set_resource_qty(qty: int):
+
+# Core:
+  combat_scene.gd
+    func _ready() -> void:
+    func initialize():
+    func _inject_services():
+    func _register_teams():
+    func _wire_signals():
+    func _load_map(map_name: String) -> void:
+    func _load_patrol_points_from_map(patrol_tilemap: TileMapLayer, starting_tile: Vector2i) -> Array[Vector2i]:
+    func _assign_units_to_pods(pods_tilemap: TileMapLayer, tile_occupancy_service: TileOccupancyService):
+    func load_train_from_game_state():
+    func _spawn_units_from_map(units_tilemap: TileMapLayer) -> void:
+    func _spawn_pods_from_map(pods_tilemap: TileMapLayer, patrol_tilemap: TileMapLayer) -> void:
+    func _spawn_buildings_from_map(buildings_tilemap: TileMapLayer) -> void:
+    func _spawn_walls_from_map(walls_container: Node2D) -> void:
+    func _spawn_roads_from_map(roads_tilemap: TileMapLayer) -> void:
+    func _process(delta: float) -> void:
+    func _process_intro():
+    func _process_outro():
+    func _unhandled_input(event: InputEvent) -> void:
+    func _handle_wagon_click(wagon_id: int) -> void:
+    func _handle_tile_click(tile: Vector2i, button_index: int) -> void:
+    func _handle_key_press(event: InputEventKey) -> void:
+    func _handle_global_input(event: InputEvent) -> bool:
+    func update_state_label(state_name: String) -> void:
+    func update_turn_label(turn_id: String) -> void:
+    func update_mouse_label():
+    func update_camera_label():
+    func update_labels():
+    func _unit_reached_destination(unit):
+    func _unit_changed_orientation(unit, new_orientation):
+    func select_next_unit():
+    func register_units_in_turn_manager():
+    func _on_bullet_requested(from, to, scene):
+    func unload_soldier_from_wagon(wagon_id: int) -> void:
+    func on_bullet_hit(position):
+    func set_cursor(cursor_name: String) -> void:
+    func _update_enemy_visibility():
+
+  navigation_scene.gd
+    func _ready() -> void:
+    func _inject_services() -> void:
+    func _wire_signals() -> void:
+    func _load_map(map_name: String) -> void:
+    func _spawn_cities_from_map(cities_ids_tilemap: TileMapLayer) -> void:
+    func _spawn_trains_from_map(trains_tilemap: TileMapLayer) -> void:
+    func _build_rails_from_map(rails_tilemap: TileMapLayer) -> void:
+    func _build_bridges_from_map(bridges_tilemap: TileMapLayer) -> void:
+    func _spawn_wagons():
+    func _unhandled_input(event: InputEvent) -> void:
+    func _handle_gear_toggle() -> void:
+    func _handle_reverse_train() -> void:
+    func recenter_player_train():
+    func camera_lock_toggle():
+    func reverse_player_train_direction():
+    func _on_train_reached_city(city_name: String):
+
+  trade_scene.gd
+    func _ready() -> void:
+    func initialize(name: String):
+    func load_city_resources_from_game_state(city_name: String):
+    func load_industry_resources_from_game_state(industry_name: String):
+    func load_train_from_game_state():
+    func load_loader_vehicle():
+    func _inject_services():
+    func _connect_signals():
+    func _process(delta: float) -> void:
+    func _process_intro():
+    func _process_outro():
+    func _load_map(map_name: String) -> void:
+    func _unhandled_input(event: InputEvent) -> void:
+    func _handle_traffic_light_click():
+    func _handle_wagon_click(wagon_id):
+    func _handle_tile_click(tile, button_index):
+    func _handle_city_resource_click(resource):
+    func _on_city_resource_amount_changed(resource: String, qty: int):
+    func _on_train_money_changed(money: int):
+    func on_esc_pressed():
+    func on_u_pressed():
+    func on_j_pressed():
+    func on_k_pressed():
+    func on_i_pressed():
+
+# Controllers:
+  camera_controller.gd
+    func _ready() -> void:
+    func _unhandled_input(event):
+    func center_at_tile(tile: Vector2i):
+    func set_pos(pos: Vector2):
+    func set_zoom(val: float):
+    func _zoom_at_screenpos(direction: int, screen_pos: Vector2):
+    func _process(delta: float) -> void:
+
+# Components:
+  ap_component.gd
+    func _ready():
+    func use_ap(amount: int):
+    func reset_ap():
+    func get_ap() -> int:
+
+  city_resource_container.gd
+    func initialize_resource(resource, qty, buy_price, sell_price, max_capacity):
+    func get_all_info() -> Dictionary:
+    func get_resource_info(resource: String) -> Dictionary:
+    func get_available_qty(resource: String) -> int:
+    func get_buy_price(resource: String) -> int:
+    func get_sell_price(resource: String) -> int:
+    func get_storage_capacity(resource: String) -> int:
+    func add_resource_amount(resource: String, qty: int) -> bool:
+    func remove_resource_amount(resource: String, qty: int) -> bool:
+
+  health_bar.gd
+    func _ready() -> void:
+    func update_health(current_: int, max_: float):
+
+  health_component.gd
+    func _ready():
+    func take_damage(amount: int):
+    func heal(amount: int):
+
+  hitbox_component.gd
+    func _ready():
+    func _on_area_entered(area: Area2D):
+    func enable():
+    func disable():
+
+  hurtbox_component.gd
+    func _ready():
+    func take_damage(amount: int):
+    func _on_died():
+
+  loader_resource_container.gd
+    func is_empty() -> bool:
+    func is_full() -> bool:
+    func get_resource_type() -> String:
+    func get_qty() -> int:
+    func get_origin() -> String:
+    func can_pick(resource: String, from_origin: String) -> bool:
+    func pick_from_city(resource: String, qty: int, price_per_crate: int, train_money: int) -> int:
+    func undo_to_city(qty: int, price_per_crate: int, train_money: int) -> int:
+    func pick_from_wagon(resource: String, qty: int) -> void:
+    func undo_to_wagon(qty: int) -> void:
+    func finalize_into_wagon(qty: int) -> void:
+    func finalize_into_city(qty: int) -> void:
+    func _reset() -> void:
+
+
+  trade_menu.gd
+    func initialize(data):
+    func get_info():
+    func update_resource(resource_, available_, price_, train_space_):
+    func show_buy_mode(resource_info: Dictionary):
+    func show_sell_mode(resource_info: Dictionary):
+    func update_labels():
+    func _on_button_pressed() -> void:
+    func _on_button_2_pressed() -> void:
+
+  traffic_light.gd
+    func check_click(mouse_pos: Vector2i) -> bool:
+    func toggle():
+
+  train_resource_container.gd
+    func _ready() -> void:
+    func add_wagon(wagon_type: String, cargo: String = "", qty: int = 0) -> void:
+    func create_wagon(wagon_type: String, cargo: String, qty: int) -> Dictionary:
+    func get_wagon_count() -> int:
+    func get_wagon_info(idx: int) -> Dictionary:
+    func get_wagon_type(idx: int) -> String:
+    func get_wagon_capacity(idx: int) -> int:
+    func get_wagon_current_resource(idx: int) -> String:
+    func get_wagon_resource_qty(idx: int) -> int:
+    func get_wagon_free_space(idx: int) -> int:
+    func wagon_can_store(wagon_idx: int, resource_name: String) -> bool:
+    func get_wagons_idx_that_can_store(resource_name: String) -> Array:
+    func get_wagon_capacity_for_resource(wagon_idx: int, resource_name: String) -> int:
+    func has_money(total_cost: int):
+    func add_money(amount: int):
+    func remove_money(amount: int):
+    func add_resource_qty_to_wagon(wagon_idx: int, resource_name: String, qty: int) -> void:
+    func remove_resource_qty_from_wagon(wagon_idx: int, qty: int) -> bool:
+
+  weapon_component.gd
+    func _ready():
+    func shoot_at(target_tile: Vector2i, shooter_tile: Vector2i) -> void:
+
+# AI
+  faction_ai.gd
+    func _ready() -> void:
+    func take_turn():
+    func run_next_unit():
+    func _on_unit_finished():
+
+  unit_ai.gd
+    func _ready():
+    func update_state_label(name: String):
+    func take_turn() -> void:
+    func _on_unit_arrived_to_tile(unit, new_tile: Vector2i):
+
+# Misc:
+  exploration_layer.gd
+    func hide_all():
+    func reveal(visible_tiles: Array[Vector2i]):
+    func is_tile_visible(tile: Vector2i) -> bool:
+    func is_tile_explored(tile: Vector2i) -> bool:
+    func _update_tiles():
+
+  game_state.gd
+    func _ready() -> void:
+    func load_initial_cities():
+    func load_initial_industries():
+    func load_initial_train():
+    func load_player_train(filename: String = "res://data/newgame/player_train.json"):
+    func save_player_train(filename: String = "user://PlayerTrain_Save.json") -> void:
+    func get_city(name: String) -> Dictionary:
+    func add_goods_to_city(city_name: String, good_name: String, amount: int):
+    func update_wagon_cargo(wagon_idx: int, resource_name: String, qty: int):
+    func save():
+    func load():
+
+  generic_state.gd
+    func set_owner_node(owner: Node) -> void:
+    func set_state_machine(sm: StateMachine) -> void:
+    func enter(params = {}):
+    func exit(params = {}):
+    func update(delta: float):
+
+  OLDcombat_state_machine.gd
+    func _ready():
+    func init() -> void:
+    func set_state(new_state: Node) -> void:
+    func handle_click(tile: Vector2i) -> void:
+
+  state_machine.gd
+    func _ready():
+    func init() -> void:
+    func _process(delta: float) -> void:
+    func set_state(new_state_str: String, params = {}) -> void:
+    func get_current_state() -> String:
+    func handle_click(tile: Vector2i) -> void:
+
+# Components:
+  ap_component.gd
+    func _ready():
+    func use_ap(amount: int):
+    func reset_ap():
+    func get_ap() -> int:
+
+  city_resource_container.gd
+    func initialize_resource(resource, qty, buy_price, sell_price, max_capacity):
+    func get_all_info() -> Dictionary:
+    func get_resource_info(resource: String) -> Dictionary:
+    func get_available_qty(resource: String) -> int:
+    func get_buy_price(resource: String) -> int:
+    func get_sell_price(resource: String) -> int:
+    func get_storage_capacity(resource: String) -> int:
+    func add_resource_amount(resource: String, qty: int) -> bool:
+    func remove_resource_amount(resource: String, qty: int) -> bool:
+
+  health_bar.gd
+    func _ready() -> void:
+    func update_health(current_: int, max_: float):
+
+  health_component.gd
+    func _ready():
+    func take_damage(amount: int):
+    func heal(amount: int):
+
+  hitbox_component.gd
+    func _ready():
+    func _on_area_entered(area: Area2D):
+    func enable():
+    func disable():
+
+  hurtbox_component.gd
+    func _ready():
+    func take_damage(amount: int):
+    func _on_died():
+
+  loader_resource_container.gd
+    func is_empty() -> bool:
+    func is_full() -> bool:
+    func get_resource_type() -> String:
+    func get_qty() -> int:
+    func get_origin() -> String:
+    func can_pick(resource: String, from_origin: String) -> bool:
+    func pick_from_city(resource: String, qty: int, price_per_crate: int, train_money: int) -> int:
+    func undo_to_city(qty: int, price_per_crate: int, train_money: int) -> int:
+    func pick_from_wagon(resource: String, qty: int) -> void:
+    func undo_to_wagon(qty: int) -> void:
+    func finalize_into_wagon(qty: int) -> void:
+    func finalize_into_city(qty: int) -> void:
+    func _reset() -> void:
+
+  trade_menu.gd
+    func initialize(data):
+    func get_info():
+    func update_resource(resource_, available_, price_, train_space_):
+    func show_buy_mode(resource_info: Dictionary):
+    func show_sell_mode(resource_info: Dictionary):
+    func update_labels():
+    func _on_button_pressed() -> void:
+    func _on_button_2_pressed() -> void:
+
+  traffic_light.gd
+    func check_click(mouse_pos: Vector2i) -> bool:
+    func toggle():
+
+  train_resource_container.gd
+    func _ready() -> void:
+    func add_wagon(wagon_type: String, cargo: String = "", qty: int = 0) -> void:
+    func create_wagon(wagon_type: String, cargo: String, qty: int) -> Dictionary:
+    func get_wagon_count() -> int:
+    func get_wagon_info(idx: int) -> Dictionary:
+    func get_wagon_type(idx: int) -> String:
+    func get_wagon_capacity(idx: int) -> int:
+    func get_wagon_current_resource(idx: int) -> String:
+    func get_wagon_resource_qty(idx: int) -> int:
+    func get_wagon_free_space(idx: int) -> int:
+    func wagon_can_store(wagon_idx: int, resource_name: String) -> bool:
+    func get_wagons_idx_that_can_store(resource_name: String) -> Array:
+    func get_wagon_capacity_for_resource(wagon_idx: int, resource_name: String) -> int:
+    func has_money(total_cost: int):
+    func add_money(amount: int):
+    func remove_money(amount: int):
+    func add_resource_qty_to_wagon(wagon_idx: int, resource_name: String, qty: int) -> void:
+    func remove_resource_qty_from_wagon(wagon_idx: int, qty: int) -> bool:
+
+  weapon_component.gd
+    func _ready():
+    func shoot_at(target_tile: Vector2i, shooter_tile: Vector2i) -> void:
+
+# UI:
+  assistant_ui.gd
+    func _ready() -> void:
+    func show_message(text: String) -> void:
+    func ask_confirmation(text: String, callback: Callable) -> void:
+    func hide_dialog() -> void:
+    func _on_accept_pressed() -> void:
+    func _on_cancel_pressed() -> void:
+
+  combat_hud.gd
+    func _on_reverse_button_pressed() -> void:
+
+  navigation_hud.gd
+    func _physics_process(delta: float) -> void:
+    func update_gold(new_value):
+    func update_fuel(new_value):
+    func update_speed(new_value):
+    func update_time(new_value):
+    func _on_button_findengine_pressed() -> void:
+    func _on_button_save_pressed() -> void:
+    func _on_button_minimap_pressed() -> void:
+
+  quest_ui.gd
+    func _ready() -> void:
+    func refresh_ui() -> void:
+    func _on_clear_completed_pressed() -> void:
+    func show_notification(message: String, is_completion: bool = true) -> void:
+    func _on_quest_accepted(quest: Quest) -> void:
+    func _on_quest_completed(quest: Quest) -> void:
+    func _on_quest_objective_updated(quest: Quest, objective: QuestObjective) -> void:
+
+  trade_hud.gd
+    func _ready() -> void:
+    func _process(delta: float) -> void:
+
+  ui_wasd.gd
+    func _process(delta):
+    func _input(event: InputEvent):
+
