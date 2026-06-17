@@ -5,7 +5,9 @@ class_name UnitAI
 @onready var behavior_state_machine: StateMachine = $BehaviorStateMachine
 
 
+# EvaluateState emits this signal
 signal turn_finished
+
 
 func _ready():
 	pass
@@ -15,6 +17,7 @@ func update_state_label(name: String):
 	pass
 
 func take_turn() -> void:
+	print("UnitAI TakeTurn started")
 	behavior_state_machine.set_state("EvaluateState", {"unit": owner_node})
 
 	#print("      Unit ", owner.name, " starting turn")	
@@ -27,3 +30,6 @@ func take_turn() -> void:
 
 func _on_unit_arrived_to_tile(unit, new_tile: Vector2i):
 	pass
+
+func on_unit_reached_destination(unit):
+	behavior_state_machine.states.EvaluateState.on_unit_reached_destination(unit)

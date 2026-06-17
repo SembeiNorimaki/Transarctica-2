@@ -85,7 +85,6 @@ func _ready() -> void:
 	cover_service.build_cover_map(navigation_graph_service.nodes.keys())
 
 
-
 	camera_controller.center_at_tile(camera_initial_tile)
 	camera_controller.set_zoom(1.0)
 	
@@ -101,8 +100,14 @@ func _ready() -> void:
 func initialize():
 	print("Initializing combat")
 	load_train_from_game_state()
+	#unload_soldier_from_wagon(1)
 
-	unload_soldier_from_wagon(1)
+	# Calculates initial visibility by all player units
+	unit_manager.recalculate_all_units_vision()
+	unit_manager.relculate_all_units_seen_enemies()
+	exploration_service.initialize()
+
+	#
 
 
 func _inject_services():
@@ -197,12 +202,13 @@ func _wire_signals():
 	unit_manager.connect("unit_reached_destination", _unit_reached_destination)
 	unit_manager.connect("unit_changed_orientation", _unit_changed_orientation)
 	
-
 	building_manager.connect("building_spawned", buildings_overlay.redraw)
 	building_manager.connect("building_removed", buildings_overlay.redraw)
 
 	wall_manager.connect("wall_spawned", walls_overlay.redraw)
 	wall_manager.connect("wall_removed", walls_overlay.redraw)
+
+	faction_ai.faction_finished.connect(turn_manager._on_faction_finished)
 
 	# combat_hud.reverse_pressed.connect()
 
@@ -469,12 +475,13 @@ func update_labels():
 
 func _unit_reached_destination(unit):
 	state_machine.set_state("UnitSelectedState", {"selected_unit": unit})
+	_update_enemy_visibility()
 
 func _unit_changed_orientation(unit, new_orientation):
 	exploration_service.on_unit_orientation_changed(unit, new_orientation)
+	_update_enemy_visibility()
 
 	
-
 #endregion
 
 func select_next_unit():
@@ -518,8 +525,11 @@ func set_cursor(cursor_name: String) -> void:
 
 func _update_enemy_visibility():
 	var visible_tiles = exploration_service.get_merged_visible_tiles()
+	print("CombatScene: N Visible tiles: %s" % visible_tiles.size())
 	for enemy in unit_manager.get_units_by_team("Enemy"):
 		if enemy.current_tile in visible_tiles:
+			print("Showing enemy %s" % enemy.id)
 			enemy.show()
 		else:
+			print("Hiding enemy %s" % enemy.id)
 			enemy.hide()

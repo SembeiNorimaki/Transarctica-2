@@ -40,7 +40,6 @@ const SOLDIER_HIT_SFX: AudioStream = preload("res://assets/audio/SoldierHit.wav"
 const SOLDIER_DIES_SFX: AudioStream = preload("res://assets/audio/SoldierDies.wav")
 
 func _ready() -> void:
-
 	call_deferred("_wire_signals")
 	#Initialize bar
 	health_bar.update_health(health_component.current_health, health_component.max_health)
@@ -57,8 +56,6 @@ func _wire_signals() -> void:
 
 	ap_component.ap_changed.connect(_on_ap_changed)
 	ap_component.ap_exhausted.connect(_on_ap_exhausted)
-
-
 
 
 func initialize(id_: String, team_id_: String) -> void:
@@ -149,12 +146,12 @@ func stop_animation():
 func set_selected(selected: bool) -> void:
 	#print("Selected: %s" % selected)
 	if selected:
-		navigation_graph_service.get_reachable_tiles(self, 7.0)
+		navigation_graph_service.get_reachable_tiles(self , 7.0)
 	sprite_selected.visible = selected
 
 
 func move_to_tile(tile: Vector2i):
-	print("Unit %s instructed to move to tile %s" % [id, tile])
+	#print("Unit %s instructed to move to tile %s" % [id, tile])
 	target_tile = tile
 	# calculate new orientation
 	var delta = target_tile - current_tile
@@ -166,7 +163,7 @@ func move_to_tile(tile: Vector2i):
 
 
 func _on_unit_arrived_to_tile(tile: Vector2i):
-	print("Unit: Unit arrived to tile")
+	#print("Unit: Unit arrived to tile")
 	unit_arrived_to_tile.emit(self , tile)
 	
 
@@ -179,7 +176,8 @@ func on_movement_finished() -> void:
 
 #region AP handling
 func _on_ap_changed(current: int, max: int) -> void:
-	print("Unit %s ap changed: %s/%s" % [id, current, max])
+	#print("Unit %s ap changed: %s/%s" % [id, current, max])
+	pass
 	
 func _on_ap_exhausted() -> void:
 	print("Unit %s ap exhausted" % id)
@@ -217,9 +215,6 @@ func find_best_cover(enemy_unit) -> Vector2i:
 
 # TODO: This functions need implementation for the UnitAI to work
 
-# return a target unit or null
-func get_primary_target():
-	return null
 
 # Used in AdvanceState. 
 func find_advance_tile(enemy_tile: Vector2i):

@@ -5,13 +5,15 @@ class_name UnitBehaviorEvaluate
 const LOW_HEALTH_THRESHOLD := 0.3
 const GOOD_SHOT_THRESHOLD := 0.4
 
+
+var unit: Unit = null
 func _dummy():
 	await get_tree().create_timer(2.0).timeout
 	print("Evaluate: done")
 	state_machine.emit_signal("state_finished")
 
 func enter(params = {}):
-	var unit: Unit = params.unit
+	unit = params.unit
 	
 	# 1) Dead?
 	print("Checking if unit is dead")
@@ -27,18 +29,17 @@ func enter(params = {}):
 	
 	# 3) Enemy visible?
 	print("Checking if an enemy is visible")
-	var enemy = unit.get_primary_target()
+	var enemy = unit.unit_manager.get_primary_target_for(unit)
 	if enemy == null:
 		# No enemy visible, enter overwatch
 		#state_machine.set_state("OverwatchState", {"unit": unit})
-
 		# Move unit 2 tiles south
-		var path : Array[Vector2i] = [
+		var path: Array[Vector2i] = [
 			unit.current_tile,
 			unit.current_tile + Vector2i(0, 1),
 			unit.current_tile + Vector2i(0, 2),
 			unit.current_tile + Vector2i(0, 3)]
-
+		
 		unit.unit_manager.start_unit_movement(unit, path)
 		return
 		
@@ -108,3 +109,7 @@ func exit(params = {}):
 
 func update(delta: float):
 	pass
+
+func on_unit_reached_destination(unit):
+	print("Evaluate: on_unit_reached_destination")
+	unit.unit_ai.turn_finished.emit()

@@ -67,6 +67,7 @@ func spawn_unit(tile_pos: Vector2i, unit_type_: String, owner_id: String) -> voi
 
 	units[team].append(unit)
 
+	
 	# Add to scene tree
 	get_node("../../Containers/Units").add_child(unit)
 
@@ -89,15 +90,13 @@ func spawn_unit(tile_pos: Vector2i, unit_type_: String, owner_id: String) -> voi
 #region Tile Tracking
 
 
-
-
 func get_unit_tile(unit: Unit) -> Vector2i:
 	return units_to_tile.get(unit, Vector2i(-1, -1))
 
 #endregion
 
 #region Public API
-func select_unit(unit, center_camera=true):
+func select_unit(unit, center_camera = true):
 	selected_unit = unit
 	if center_camera:
 		camera_controller.center_at_tile(unit.current_tile)
@@ -114,10 +113,10 @@ func get_next_unit_by_team(team: String) -> Unit:
 func get_units_by_team(team: String) -> Array:
 	return units.get(team, [])
 
-func get_all_units() -> Array[Unit]:
+func get_all_units() -> Array:
 	var all_units = []
-	for team in units:
-		all_units.append_array(units[team])
+	all_units.append_array(get_units_by_team("Player"))
+	all_units.append_array(get_units_by_team("Enemy"))
 	return all_units
 
 func apply_damage_to_unit(unit: Unit, amount: int):
@@ -146,8 +145,23 @@ func _on_unit_reached_destination(unit):
 	# set the unit state to idle
 	unit.set_state("IdleState", {"unit": unit})
 	unit.play_animation("IdleState", unit.orientation)
+	unit.unit_ai.on_unit_reached_destination(unit)
 	emit_signal("unit_reached_destination", unit)
-	
+
+
+func update_vision(unit: Unit) -> void:
+	# compute vision
+	var cone_tiles = grid_service.get_tiles_in_vision_cone(unit.current_tile, unit.orientation, unit.view_angle, unit.view_range)
+	var visible_tiles = los_service.filter_visible_tiles(unit.current_tile, cone_tiles)
+	visible_tiles_by_unit[unit] = visible_tiles
+
+func recalculate_all_units_vision():
+	for unit in get_units_by_team("Player"):
+		update_vision(unit)
+func relculate_all_units_seen_enemies():
+	for unit in get_all_units():
+		update_vision(unit)
+
 func _on_unit_arrived_to_tile(unit, new_tile: Vector2i):
 	# update occupancy
 	tile_occupancy_service.unregister(unit.current_tile, unit)
@@ -162,13 +176,10 @@ func _on_unit_arrived_to_tile(unit, new_tile: Vector2i):
 	units_to_tile[unit] = new_tile
 	unit.update_tile_label()
 	
-	# compute vision
-	var cone_tiles = grid_service.get_tiles_in_vision_cone(new_tile, unit.orientation, unit.view_angle, unit.view_range)
-	var visible_tiles = los_service.filter_visible_tiles(new_tile, cone_tiles)
-	visible_tiles_by_unit[unit] = visible_tiles
-	
+	update_vision(unit)
+
 	# compute seen enemies
-	_update_seen_enemies(unit, visible_tiles)
+	_update_seen_enemies(unit, visible_tiles_by_unit[unit])
 	
 	# continue movement
 	_give_next_tile(unit)
@@ -179,7 +190,16 @@ func _on_unit_arrived_to_tile(unit, new_tile: Vector2i):
 	
 func get_visible_tiles_for(unit):
 	return visible_tiles_by_unit[unit]
-	
+
+func get_seen_enemies_for(unit):
+	return seen_enemies_by_unit[unit]
+
+func get_primary_target_for(unit):
+	var enemies_seen = get_seen_enemies_for(unit)
+	print("Number of enemies seen: %s" % enemies_seen.size())
+	return enemies_seen[0] if enemies_seen else null
+
+
 func _update_seen_enemies(unit, visible_tiles: Array[Vector2i]):
 	var previous = seen_enemies_by_unit.get(unit, [])
 	var current = []
@@ -191,23 +211,18 @@ func _update_seen_enemies(unit, visible_tiles: Array[Vector2i]):
 			current.append(occupants[0])
 		
 		# TODO: not valid gdscript syntax
-		var newly_spotted = [] #current.filter(e not in previous)
-		var lost_sight = [] #previous.filter(e not in current)
+		var newly_spotted = [] # current.filter(e not in previous)
+		var lost_sight = [] # previous.filter(e not in current)
 
 		seen_enemies_by_unit[unit] = current
 
 		unit_visibility_changed.emit(unit, newly_spotted, lost_sight)
 
 func on_unit_orientation_changed(unit: Unit, new_orientation: String) -> void:
-	# compute vision
-	var cone_tiles = grid_service.get_tiles_in_vision_cone(unit.current_tile, new_orientation, unit.view_angle, unit.view_range)
-	var visible_tiles = los_service.filter_visible_tiles(unit.current_tile, cone_tiles)
-	visible_tiles_by_unit[unit] = visible_tiles
-
-	print("Visible tiles: %s" % cone_tiles.size())
-
+	update_vision(unit)
+	
 	# compute seen enemies
-	_update_seen_enemies(unit, visible_tiles)
+	_update_seen_enemies(unit, visible_tiles_by_unit[unit])
 
 	# notify CombatScene
 	unit_changed_orientation.emit(unit, new_orientation)

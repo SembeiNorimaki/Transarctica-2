@@ -4,7 +4,7 @@ class_name MerchandiseWagon
 var wagon_type: String
 
 func _ready() -> void:
-	sprite_half_size = Vector2i(128, 46)
+	sprite_half_size = Vector2i(64, 23)
 	capacity = WagonTypes.TYPES["MerchandiseWagon"].capacity
 	wagon_type = "MerchandiseWagon"
 

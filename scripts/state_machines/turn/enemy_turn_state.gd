@@ -3,11 +3,14 @@ class_name EnemyTurnState
 
 
 func enter(params = {}):
+	print("EnemyTurnState entered")
 	var faction_ai = owner_node.faction_ai
-	print("Enemy Turn State started")
-	await faction_ai.take_turn()
-	print("Enemy Turn State finished")
-	state_machine.set_state("PlayerTurnState")
+	faction_ai.take_turn()
+	
+	#print("Enemy Turn State started")
+	#await faction_ai.take_turn()
+	#print("Enemy Turn State finished")
+	#state_machine.set_state("PlayerTurnState")
 
 
 # func _run_pods():

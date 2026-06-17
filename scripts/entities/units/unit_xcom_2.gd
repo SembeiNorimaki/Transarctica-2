@@ -33,14 +33,14 @@ var ori_to_weapon_holding_ori = {
 }
 
 var weapon_aiming_offsets = {
-	"N":  Vector2i(8,-6),
-	"NE": Vector2i(10,-3),
-	"E":  Vector2i(7,0),
-	"SE": Vector2i(4,2),
-	"S":  Vector2i(-9,0),
-	"SW": Vector2i(-11,-4),
-	"W":  Vector2i(-7,-7),
-	"NW": Vector2i(-3,-9), 
+	"N": Vector2i(8, -6),
+	"NE": Vector2i(10, -3),
+	"E": Vector2i(7, 0),
+	"SE": Vector2i(4, 2),
+	"S": Vector2i(-9, 0),
+	"SW": Vector2i(-11, -4),
+	"W": Vector2i(-7, -7),
+	"NW": Vector2i(-3, -9),
 }
 
 var current_animation := ""
@@ -86,10 +86,10 @@ func set_orientation(new_orientation: String):
 		part.z_index = i
 	
 	play_animation(get_current_action(), new_orientation)
-	unit_manager.on_unit_orientation_changed(self, new_orientation)
+	unit_manager.on_unit_orientation_changed(self , new_orientation)
 	queue_redraw()
 
-func play_animation(state_: String, orientation_ : String):
+func play_animation(state_: String, orientation_: String):
 	if state_ == "DeadState":
 		print("playing animation dead, ", dead_part)
 		dead_part.play("DeadState_default")
@@ -101,7 +101,7 @@ func play_animation(state_: String, orientation_ : String):
 	#if is_animation_playing and animation_name == current_animation: # If we are already playing the animation do nothing
 	#	return
 	
-	print("Play animation %s" % animation_name)
+	#print("Play animation %s" % animation_name)
 	current_animation = animation_name
 	is_animation_playing = true
 
@@ -115,14 +115,14 @@ func play_animation(state_: String, orientation_ : String):
 	if state_ == "AimState":
 		weapon.offset = weapon_aiming_offsets[orientation_]
 	else:
-		weapon.offset = Vector2(0,0)
+		weapon.offset = Vector2(0, 0)
 	weapon.play(animation_name)
 	#else:
 	#	var weapon_animation_name = "%s_%s" % [state_, ori_to_weapon_holding_ori[orientation_]]
 	#	weapon.play(weapon_animation_name)
 
 func move_to_tile(tile: Vector2i):
-	print("Unit %s instructed to move to tile %s" % [id, tile])
+	#print("Unit %s instructed to move to tile %s" % [id, tile])
 	target_tile = tile
 	# calculate new orientation
 	var delta = target_tile - current_tile

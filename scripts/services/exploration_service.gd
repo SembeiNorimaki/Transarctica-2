@@ -7,17 +7,20 @@ var los_service: LOSService
 var unit_manager: UnitManager
 var fov_overlay: FOVOverlay
 
-func _ready() -> void: pass
+var merged_player_visibility = []
 
-func reveal_from_unit():
+func _ready() -> void:
 	pass
 
+func initialize():
+	_compute_merged_player_visibility()
+	_reveal_tiles(merged_player_visibility)
 
-func _reveal_tiles(tiles: Array[Vector2i]):
-	#print("Revealing %s tiles" % tiles.size())
-	#for tile in tiles:
-	#	exploration_layer.set_cell(tile, 0, Vector2i(0,0))
+func _reveal_tiles(tiles: Array):
 	exploration_layer.reveal(tiles)
+
+func get_merged_visible_tiles():
+	return merged_player_visibility
 
 # recalculates the viewed tiles for all player units
 func _recalculate():
@@ -34,32 +37,33 @@ func _recalculate():
 	
 
 func on_unit_tile_changed(unit: Unit, new_tile: Vector2i) -> void:
-	var visible_tiles = unit_manager.get_visible_tiles_for(unit)
-	_reveal_tiles(visible_tiles)
+	#var visible_tiles = unit_manager.get_visible_tiles_for(unit)
+	_compute_merged_player_visibility()
+	_reveal_tiles(merged_player_visibility)
 	
 	#fov_overlay._tiles_to_draw_red = cone_tiles
-	fov_overlay._tiles_to_draw_green = visible_tiles
-	fov_overlay.redraw()
+	#fov_overlay._tiles_to_draw_green = visible_tiles
+	#fov_overlay.redraw()
 	
 
 func on_unit_orientation_changed(unit: Unit, new_orientation: String) -> void:
-	var visible_tiles = unit_manager.get_visible_tiles_for(unit)
-	_reveal_tiles(visible_tiles)
+	#var visible_tiles = unit_manager.get_visible_tiles_for(unit)
+	_compute_merged_player_visibility()
+	_reveal_tiles(merged_player_visibility)
 	#_update_units_visibility(unit)
 
 	#fov_overlay._tiles_to_draw_red = cone_tiles
-	fov_overlay._tiles_to_draw_green = visible_tiles
-	fov_overlay.redraw()
+	#fov_overlay._tiles_to_draw_green = visible_tiles
+	#fov_overlay.redraw()
 	
 # UnitManager stores the tiles visible for each unit
 # We need to merge the tiles seen by all player units
-func _get_merged_player_visibility():
-	var merged := {}
+func _compute_merged_player_visibility():
+	merged_player_visibility = []
 	for unit in unit_manager.get_units_by_team("Player"):
 		var tiles = unit_manager.get_visible_tiles_for(unit)
-		for t in tiles:
-			merged[t] = true
-	return merged.keys()
+		print("Unit %s vision: %s tiles" % [unit.id, tiles.size()])
+		merged_player_visibility.append_array(tiles)
 
 func _update_units_visibility(selected_unit: Unit) -> void:
 	var all_units = unit_manager.get_units_by_team("Player")

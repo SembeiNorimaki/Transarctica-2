@@ -118,7 +118,7 @@ func get_reachable_tiles(unit: Unit, max_cost: float) -> Array[Vector2i]:
 				g_cost[neighbor] = new_cost
 				open.append({"tile": neighbor, "cost": new_cost})
 	
-	print("Reachable tiles:",  reachable)
+	#print("Reachable tiles:",  reachable)
 	reachable_tiles_overlay.show_tiles(reachable)
 	return reachable
 
@@ -204,7 +204,6 @@ func _build_edges():
 					continue
 				if edge_occupancy_service.is_edge_walk_blocked(side2, neighbor):
 					continue
-
 
 
 			var edge = edge_occupancy_service.get_edge(tile, neighbor)

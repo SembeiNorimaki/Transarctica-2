@@ -143,6 +143,7 @@ func get_tiles_in_vision_cone(origin: Vector2i, orientation: String, view_angle:
 	#for x in range(max(0, origin.x - view_range), min(map_size.x, origin.x + view_range + 1)):
 	#    for y in range(max(0, origin.y - view_range), min(map_size.y, origin.y + view_range + 1)):
 	
+
 	for x in range(origin.x - view_range, origin.x + view_range + 1):
 		for y in range(origin.y - view_range, origin.y + view_range + 1):
 			var tile := Vector2i(x, y)
@@ -161,7 +162,9 @@ func get_tiles_in_vision_cone(origin: Vector2i, orientation: String, view_angle:
 			if abs(angle) <= half_angle + 0.01:
 				result.append(tile)
 			
-			
+	#print("GS Cone tiles %s" % result.size())
+	#print("xrange: %s - %s" % [origin.x - view_range, origin.x + view_range])
+	#print("yrange: %s - %s" % [origin.y - view_range, origin.y + view_range])
 	return result
 
 func is_inside_map(tile: Vector2i) -> bool:

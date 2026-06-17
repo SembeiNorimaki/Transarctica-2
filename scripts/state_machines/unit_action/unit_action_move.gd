@@ -39,7 +39,6 @@ var target_tile = Vector2i.ZERO
 signal unit_arrived_to_tile(tile: Vector2i)
 
 
-
 # params should contain injected scenes and parameters needed by the node
 func enter(params = {}):
 	print("UnitSM enters move state")
@@ -73,7 +72,7 @@ func update(delta: float):
 	target_position = grid_service.tile_to_world(unit.target_tile)
 	var new_pos = unit.position.move_toward(target_position, unit.move_speed * delta)
 	if new_pos == unit.position:
-		print("ASM UniveMove: Unit arrived to tile")
+		#print("ASM UniveMove: Unit arrived to tile")
 		unit_arrived_to_tile.emit(unit.target_tile)
 		#print("Arrived")
 		#unit.on_arrived_to_tile(unit.target_tile)

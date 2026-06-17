@@ -39,6 +39,13 @@ func finish_turn():
 	else:
 		turn_state_machine.set_state("PlayerTurnState")
 
+
+# When Faction_AI finishes its turn this function will be called
+func _on_faction_finished():
+	# switch to player turn
+	finish_turn()
+
+
 func update_state_label(state_name) -> void:
 	pass
 
