@@ -31,6 +31,8 @@ class_name TradeScene
 
 @onready var loader_vehicle: LoaderVehicle = $Containers/LoaderVehicle
 
+@onready var hud = $TradeHUD
+
 
 var is_intro := true
 var is_outro := false
@@ -57,7 +59,7 @@ const MUSIC_TRADE: AudioStream = preload("res://assets/audio/city1.wav")
 func _ready() -> void:
 	_inject_services()
 	_connect_signals()
-	_load_map("level_1")
+	_load_map("industry_map")
 
 	if get_tree().current_scene == self:
 		print("TradeScene is running standalone")
@@ -68,21 +70,22 @@ func _ready() -> void:
 	AudioService.play_music(MUSIC_TRADE, 0.0)
 	
 
+# things to do when entering the scene
 func initialize(name: String):
 	print("Initializing city: %s" % name)
 	cityname_label.text = name
 	
 	
 	# check if it's a city or an industry
-	if name in GameState.state.cities:
+	if name in GameState.get_all_city_names():
 		print("It's a city")
 		load_city_resources_from_game_state(name)
-	elif name in GameState.state.industries:
+	elif name in GameState.get_all_industry_names():
 		print("It's an industry")
 		# change the city tile for the corresponding industry type
-		var cities_tilemap: TileMapLayer = map_root.get_node("TradeCity").get_node("Cities")
-		cities_tilemap.set_cell(city_tile, )
-		load_industry_resources_from_game_state(name)
+		# var cities_tilemap: TileMapLayer = map_root.get_node("TradeCity").get_node("Cities")
+		# cities_tilemap.set_cell(city_tile, )
+		# load_industry_resources_from_game_state(name)
 	else:
 		print("Error, %s not found in GameState" % name)
 		return
@@ -91,20 +94,30 @@ func initialize(name: String):
 	load_loader_vehicle()
 	trade_service.set_context(city_resource_container, train_resource_container, name)
 
+# things to do when leaving the scene
+func leave_scene():
+	# basically save everythong in the GameState
+	# Save train: Money and Cargos
+	# Save city: Resources and prices
+	pass
+
+
 func load_city_resources_from_game_state(city_name: String):
-	if not GameState.state.cities.has(city_name):
+	# This function uses the structure returned by GameState.get_city_by_name
+	# TradeResources: { resource_name: { Quantity: x, SellPrice: x, BuyPrice: x} }
+	var city_data = GameState.get_city_by_name(city_name)
+	if not city_data:
 		print("Error, %s not found in GameState" % city_name)
 		return
-
-	for resource_name in GameState.state.cities[city_name].TradeResources:
-		var qty = GameState.state.cities[city_name].TradeResources[resource_name].Quantity
-		var sell_price = GameState.state.cities[city_name].TradeResources[resource_name].SellPrice
-		var buy_price = GameState.state.cities[city_name].TradeResources[resource_name].BuyPrice
+		
+	for resource_name in city_data.TradeResources:
+		var qty = city_data.TradeResources[resource_name].Quantity
+		var sell_price = city_data.TradeResources[resource_name].SellPrice
+		var buy_price = city_data.TradeResources[resource_name].BuyPrice
 		var max_capacity = 999
 
 		#resource_manager.spawn_resource(resource_name, qty, "trade")
 		resource_manager.spawn_crate(resource_name, qty, "trade")
-
 		city_resource_container.initialize_resource(resource_name, qty, buy_price, sell_price, max_capacity)
 
 func load_industry_resources_from_game_state(industry_name: String):
@@ -122,7 +135,8 @@ func load_industry_resources_from_game_state(industry_name: String):
 func load_train_from_game_state():
 	print("Loading horizontal train from game state")
 	var initial_tile = Vector2(-3.2, 4)
-	horizontal_train = horizontal_train_manager.spawn_train(initial_tile, "Player")
+	var train_data = GameState.get_player_train()
+	horizontal_train = horizontal_train_manager.spawn_train(initial_tile, train_data)
 	horizontal_train.set_speed(horizontal_train.max_speed)
 	train_container.add_child(horizontal_train)
 	print("Spawned horizontal train at tile: %s" % initial_tile)
@@ -155,11 +169,16 @@ func _connect_signals():
 
 #endregion
 
+#region process
 func _process(delta: float) -> void:
 	if is_intro:
 		_process_intro()
 	elif is_outro:
 		_process_outro()
+
+	hud.update_gold(GameState.state.money)
+	#hud.update_fuel(GameState.state.fuel)
+	
 
 func _process_intro():
 	if horizontal_train.global_position.x > 0:
@@ -169,14 +188,38 @@ func _process_intro():
 func _process_outro():
 	if horizontal_train.global_position.x > 2000:
 		SceneManager.leave_city()
+#endregion
 
 #region Map Loading
 func _load_map(map_name: String) -> void:
-	grid_service.set_tile_size(Vector2i(128, 64))
+	var map_path = "res://scenes/maps/%s.tscn" % map_name
+	if not ResourceLoader.exists(map_path):
+		push_error("Map not found for map: %s at path: %s" % [map_name, map_path])
+	# remove existing map
+	if get_node("MapRoot").get_child_count() > 0:
+		var existing_map = get_node("MapRoot").get_child(0)
+		map_root.remove_child(existing_map)
+		existing_map.free()
+	# load new map
+	var new_map = load(map_path).instantiate()
+	map_root.add_child(new_map)
+	map_root.move_child(new_map, 0)
+
+	# Set tilesize to grid service and tile occupancy service
+	var tile_size = new_map.get_node("Terrain").tile_set.tile_size
+	grid_service.set_tile_size(tile_size)
+	tile_occupancy_service.tile_size = tile_size
+
+	grid_service.map_size = new_map.get_node("Terrain").get_used_rect().size
+	print("Map size %s" % grid_service.map_size)
+
+
+	#grid_service.set_tile_size(Vector2i(128, 64))
 
 	
 #endregion
 
+#region input
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		var mouse_pos = get_local_mouse_position()
@@ -210,14 +253,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("esc"):
 		on_esc_pressed()
 
-		
 func _handle_traffic_light_click():
 	print("Traffic light clicked")
 	traffic_light.toggle()
 	horizontal_train.gear_up()
 	is_outro = true
 	
-
 func _handle_wagon_click(wagon_id):
 	var resource_info = train_resource_container.get_wagon_info(wagon_id)
 
@@ -242,7 +283,6 @@ func _handle_wagon_click(wagon_id):
 	}
 	trade_menu.show_sell_mode(trade_menu_info)
 
-
 func _handle_tile_click(tile, button_index):
 	print("Clicked tile %s" % tile)
 	# check if the tile has a reasource
@@ -259,25 +299,6 @@ func _handle_city_resource_click(resource):
 	trade_service.set_transaction_data(resource_name, "buy", 1, resource_info.buy_price)
 	trade_menu.show_buy_mode(resource_info)
 
-
-# func _on_button_pressed() -> void:
-# 	var resource_info = trade_menu.get_info()
-# 	print("buying 1 unit of %s" % resource_info.resource_name)
-# 	var successful = trade_service.buy(resource_info.resource_name, 1)
-# 	if successful:
-# 		trade_menu.update_resource(resource_info.resource_name, resource_info.available - 1, resource_info.price, resource_info.train_space - 1)
-
-
-func _on_city_resource_amount_changed(resource: String, qty: int):
-	resource_manager.update_resource_qty(resource, qty)
-
-func _on_train_money_changed(money: int):
-	horizontal_train_manager._on_train_money_changed(money)
-
-
-# This functions handle the loading unloading of resources by the loader vehicle
-
-
 func on_esc_pressed():
 	# esc returns the loaded crates to the city
 	var qty = loader_resource_container.get_qty()
@@ -291,6 +312,8 @@ func on_esc_pressed():
 		loader_vehicle.set_crate_qty(0)
 		train_resource_container.money = new_money
 		city_resource_container.add_resource_amount(resource_name, qty)
+
+	hud.update_gold(train_resource_container.money)
 
 
 # u: Train -> Loader		
@@ -317,7 +340,8 @@ func on_u_pressed():
 		loader_resource_container.pick_from_wagon(resource_type, 1)
 		loader_vehicle.load_crate(resource_type)
 	wagon.close_doors()
-	return
+	
+	hud.update_gold(train_resource_container.money)
 
 
 # j: Loader -> City
@@ -340,6 +364,8 @@ func on_j_pressed():
 	loader_resource_container.finalize_into_city(1)
 	loader_vehicle.unload_crate()
 	city_resource_container.add_resource_amount(resource_type, 1)
+
+	hud.update_gold(train_resource_container.money)
 
 
 # k: City -> Loader		
@@ -380,6 +406,8 @@ func on_k_pressed():
 		print("  Success! Picked 1 crate of %s from city" % resource_type)
 	else:
 		print("  Error picking crate")
+
+	hud.update_gold(train_resource_container.money)
 		
 # i: Loader -> Train
 func on_i_pressed():
@@ -408,49 +436,16 @@ func on_i_pressed():
 
 	wagon.close_doors()
 
+	hud.update_gold(train_resource_container.money)
 
-# func on_i_pressedOLD():
-# 	# i acts on wagons, either loading or unloading them
-# 	var wagon_idx = horizontal_train_manager.player_train.xpos_to_wagon_idx(loader_vehicle.global_position.x)
-# 	if wagon_idx == -1:
-# 		return
-	
-# 	if loader_vehicle.is_empty():
-# 		# if the loader is empty, unload the selected wagon
-# 		horizontal_train_manager.player_train.wagons[wagon_idx].open_doors()
-# 		await get_tree().create_timer(1).timeout
-# 		var resource_type = train_resource_container.get_wagon_current_resource(wagon_idx)
-# 		train_resource_container.remove_resource_qty_from_wagon(wagon_idx, 1)
-# 		loader_vehicle.load(resource_type)
-		
-# 		#var sell_price = city_resource_container.get_sell_price(resource_type)
-# 		#trade_service.set_transaction_data(resource_type, "sell", 1, sell_price)
-# 		#trade_service.execute_transaction(1)
-# 		horizontal_train_manager.player_train.wagons[wagon_idx].close_doors()
-# 	else:
-# 		# if the loader is full, load the selected wagon
-# 		horizontal_train_manager.player_train.wagons[wagon_idx].open_doors()
-# 		await get_tree().create_timer(1).timeout
 
-# 		#var resource_type = loader_vehicle.unload()
-# 		var resource_type = loader_vehicle.unload_crate()
-# 		print("Attempting to load wagon %s with %s from loader" % [wagon_idx, resource_type])
-# 		train_resource_container.add_resource_qty_to_wagon(wagon_idx, resource_type, 1)
-# 		print("Unloading %s from loader and loading it in wagon %s" % [resource_type, wagon_idx])
-# 		horizontal_train_manager.player_train.wagons[wagon_idx].close_doors()
+#endregion
 
-# func on_k_pressedOLD():
-# 	# k acts on resources either loading or unloading them from the loader vehicle
-# 	var resource_idx = resource_manager.xpos_to_resource_idx(loader_vehicle.global_position.x)
-# 	if resource_idx != -1:
-# 		# if the loader is empty, load it with the selected resource
-# 		var resource_type = resource_manager.resources.keys()[resource_idx]
-# 		#loader_vehicle.load(resource_type)
-# 		loader_vehicle.load_crate(resource_type)
-# 		city_resource_container.remove_resource_amount(resource_type, 1)
-# 		print("Loading %s to loader vehicle" % resource_type)
-# 	else:
-# 		# if the loader is full, unload it
-# 		loader_vehicle.unload_crate()
-# 		#var resource_type = loader_vehicle.unload()
-# 		#city_resource_container.add_resource_amount(resource_type, 1)
+
+#region callbacks
+func _on_city_resource_amount_changed(resource: String, qty: int):
+	resource_manager.update_resource_qty(resource, qty)
+
+func _on_train_money_changed(money: int):
+	horizontal_train_manager._on_train_money_changed(money)
+#endregion

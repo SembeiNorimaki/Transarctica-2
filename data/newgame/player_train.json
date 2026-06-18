@@ -1,23 +1,25 @@
 {
-	"id": "TP0",
-	"position": [2, 4, "E"],
-
-	"fuel": 40,
-	"max_fuel": 100,
-
-	"max_speed": 100,
-	"acceleration": 10,
-	"deceleration": 20,
-
-	"wagons": [
-		{
-			"type": "locomotive",
-			"hp": 100,
-			"max_hp": 100,
-			"capacity": 0,
-			"resource": null
-		},
-		{
+    "id": "TP0",
+    "owner": "Player",
+    "position": [
+        2,
+        4,
+        "E"
+    ],
+    "fuel": 40,
+    "max_fuel": 100,
+    "max_speed": 100,
+    "acceleration": 10,
+    "deceleration": 20,
+    "wagons": [
+        {
+            "type": "locomotive",
+            "hp": 100,
+            "max_hp": 100,
+            "capacity": 0,
+            "resource": null
+        },
+        {
             "type": "tender",
             "hp": 60,
             "max_hp": 60,
@@ -27,7 +29,7 @@
                 "amount": 40
             }
         },
-		 {
+        {
             "type": "merchandise",
             "hp": 40,
             "max_hp": 40,
@@ -44,5 +46,5 @@
             "capacity": 20,
             "resource": null
         }
-	]	 
+    ]
 }

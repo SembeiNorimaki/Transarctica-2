@@ -305,7 +305,8 @@ func _assign_units_to_pods(pods_tilemap: TileMapLayer, tile_occupancy_service: T
 	
 func load_train_from_game_state():
 	print("Loading horizontal train from game state")
-	horizontal_train = horizontal_train_manager.spawn_train(train_initial_tile, "Player")
+	var train_data = GameState.get_player_train()
+	horizontal_train = horizontal_train_manager.spawn_train(train_initial_tile, train_data)
 	horizontal_train.set_speed(horizontal_train.max_speed)
 	train_container.add_child(horizontal_train)
 	print("Spawned horizontal train at tile: %s" % train_initial_tile)

@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://b1ck3d1of8p8x"]
+
+[ext_resource type="Texture2D" uid="uid://ciq2eciflhn2s" path="res://assets/sprites/truck.png" id="1_8upyt"]
+
+[node name="Truck" type="Node2D" unique_id=748580056]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1720548357]
+texture = ExtResource("1_8upyt")
+hframes = 8
+frame = 2

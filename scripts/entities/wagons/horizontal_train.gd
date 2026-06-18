@@ -90,7 +90,7 @@ func xpos_to_wagon_idx(xpos: int):
 		
 
 func add_wagon(wagon_data: Dictionary):
-	var wagon_name = wagon_data.wagon_name
+	var wagon_name = wagon_data.type
 	var wagon_info = WagonTypes.TYPES[wagon_name]
 
 	var wagon = wagon_info.horizontal_scene.instantiate()
@@ -99,13 +99,9 @@ func add_wagon(wagon_data: Dictionary):
 	wagon.grid_service = grid_service
 	# connect signals
 	
-
-	var cargo = wagon_data.cargo
-	var resource_name = ""
-	var resource_qty = 0
-	if cargo:
-		resource_name = cargo[0].resource_name
-		resource_qty = cargo[0].resource_qty
+	
+	var resource_name = wagon_data.cargo_name
+	var resource_qty = wagon_data.cargo_qty
 
 
 	wagon.call_deferred("set_resource_type", resource_name)
