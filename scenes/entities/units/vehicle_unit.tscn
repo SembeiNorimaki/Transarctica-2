@@ -50,6 +50,9 @@ offset_right = 56.0
 offset_bottom = 24.0
 text = "0 / 50"
 
+[node name="APLabel" parent="Labels" parent_id_path=PackedInt32Array(502842313) index="5" unique_id=800066101]
+visible = false
+
 [node name="Storage" type="Sprite2D" parent="." index="8" unique_id=1707743921]
 visible = false
 position = Vector2(-26, 13)

@@ -42,7 +42,16 @@ func enter(params = {}):
 		
 		unit.unit_manager.start_unit_movement(unit, path)
 		return
+	else:
+		var path: Array[Vector2i] = [
+			unit.current_tile,
+			unit.current_tile + Vector2i(0, -1),
+			unit.current_tile + Vector2i(0, -2),
+			unit.current_tile + Vector2i(0, -3)]
 		
+		unit.unit_manager.start_unit_movement(unit, path)
+		return
+
 	unit.unit_ai.turn_finished.emit()
 	return
 

@@ -29,7 +29,7 @@ signal unit_reached_destination(unit)
 signal unit_changed_orientation(unit, new_orientation)
 signal unit_visibility_changed(unit, new_spotted: Array, lost_sight: Array)
 
-signal unit_action_finished(unit)
+#signal unit_action_finished(unit)
 
 func _ready() -> void:
 	pass
@@ -158,9 +158,14 @@ func update_vision(unit: Unit) -> void:
 func recalculate_all_units_vision():
 	for unit in get_units_by_team("Player"):
 		update_vision(unit)
-func relculate_all_units_seen_enemies():
-	for unit in get_all_units():
+	for unit in get_units_by_team("Enemy"):
 		update_vision(unit)
+		
+func recalculate_all_units_seen_enemies():
+	for unit in get_units_by_team("Player"):
+		_update_seen_enemies(unit, get_visible_tiles_for(unit))
+	for unit in get_units_by_team("Enemy"):
+		_update_seen_enemies(unit, get_visible_tiles_for(unit))
 
 func _on_unit_arrived_to_tile(unit, new_tile: Vector2i):
 	# update occupancy
@@ -193,6 +198,7 @@ func get_visible_tiles_for(unit):
 
 func get_seen_enemies_for(unit):
 	return seen_enemies_by_unit[unit]
+	
 
 func get_primary_target_for(unit):
 	var enemies_seen = get_seen_enemies_for(unit)
@@ -201,7 +207,7 @@ func get_primary_target_for(unit):
 
 
 func _update_seen_enemies(unit, visible_tiles: Array[Vector2i]):
-	var previous = seen_enemies_by_unit.get(unit, [])
+	#var previous = seen_enemies_by_unit.get(unit, [])
 	var current = []
 
 	# 1) Find all enemy units inside visible tiles

@@ -76,20 +76,13 @@ var camera_initial_tile := Vector2i(25, 0)
 #region initialization
 func _ready() -> void:
 	_inject_services()
-	_register_teams()
 	call_deferred("_wire_signals")
 	_load_map("level_1")
-
-	# this precomputation should be done in _load_map
-	navigation_graph_service.build_graph(map_root.get_node("Level1").get_node("Terrain"))
-	cover_service.build_cover_map(navigation_graph_service.nodes.keys())
-
-
+	
 	camera_controller.center_at_tile(camera_initial_tile)
 	camera_controller.set_zoom(1.0)
+	turn_manager.start_combat()
 	
-	#exploration_service.recalculate()
-	#turn_manager.start_combat()
 	if get_tree().current_scene == self:
 		print("Combat is running standalone")
 	else:
@@ -104,7 +97,8 @@ func initialize():
 
 	# Calculates initial visibility by all player units
 	unit_manager.recalculate_all_units_vision()
-	unit_manager.relculate_all_units_seen_enemies()
+	unit_manager.recalculate_all_units_seen_enemies()
+	_update_enemy_visibility()
 	exploration_service.initialize()
 
 	#
@@ -123,13 +117,9 @@ func _inject_services():
 	wall_manager.tile_occupancy_service = tile_occupancy_service
 	wall_manager.edge_occupancy_service = edge_occupancy_service
 	wall_manager.grid_service = grid_service
-	turn_manager.unit_manager = unit_manager
-	turn_manager.faction_ai = faction_ai
-	turn_manager.pod_ai_manager = pod_ai_manager
-	turn_manager.selection_manager = selection_manager
-	turn_manager.pod_manager = pod_manager
 	pod_manager.tile_occupancy_service = tile_occupancy_service
 	pod_manager.grid_service = grid_service
+	turn_manager.faction_ai = faction_ai
 	horizontal_train_manager.tile_occupancy_service = tile_occupancy_service
 	horizontal_train_manager.grid_service = grid_service
 	horizontal_train_manager.train_resource_container = train_resource_container
@@ -137,7 +127,6 @@ func _inject_services():
 	pod_ai_manager.pod_manager = pod_manager
 	pod_ai_manager.unit_manager = unit_manager
 	
-
 	# Overlays
 	units_overlay.grid_service = grid_service
 	units_overlay.tile_occupancy_service = tile_occupancy_service
@@ -186,9 +175,6 @@ func _inject_services():
 
 	camera_controller.grid_service = grid_service
 
-func _register_teams():
-	turn_manager.register_team("Player")
-	turn_manager.register_team("Enemy")
 
 func _wire_signals():
 	#print("Wiring signals")
@@ -198,15 +184,15 @@ func _wire_signals():
 	unit_manager.unit_arrived_to_tile.connect(paths_overlay.update)
 	unit_manager.unit_arrived_to_tile.connect(exploration_service.on_unit_tile_changed)
 
-	unit_manager.connect("unit_removed", units_overlay.redraw)
-	unit_manager.connect("unit_reached_destination", _unit_reached_destination)
-	unit_manager.connect("unit_changed_orientation", _unit_changed_orientation)
+	#unit_manager.unit_removed.connect(units_overlay.redraw)
+	unit_manager.unit_reached_destination.connect(_unit_reached_destination)
+	unit_manager.unit_changed_orientation.connect(_unit_changed_orientation)
 	
-	building_manager.connect("building_spawned", buildings_overlay.redraw)
-	building_manager.connect("building_removed", buildings_overlay.redraw)
+	building_manager.building_spawned.connect(buildings_overlay.redraw)
+	#building_manager.building_removed.connect(buildings_overlay.redraw)
 
-	wall_manager.connect("wall_spawned", walls_overlay.redraw)
-	wall_manager.connect("wall_removed", walls_overlay.redraw)
+	wall_manager.wall_spawned.connect(walls_overlay.redraw)
+	#wall_manager.wall_removed.connect(walls_overlay.redraw)
 
 	faction_ai.faction_finished.connect(turn_manager._on_faction_finished)
 
@@ -260,6 +246,11 @@ func _load_map(map_name: String) -> void:
 	#building_manager.spawn_buildings_from_map(map_instance.buildings)
 	#wall_manager.spawn_walls_from_map(map_instance.walls)
 	#road_service.spawn_roads_from_map(map_instance.roads)
+
+	# Compute navigation_graph and covers
+	navigation_graph_service.build_graph(map_root.get_node("Level1").get_node("Terrain"))
+	cover_service.build_cover_map(navigation_graph_service.nodes.keys())
+
 
 func _load_patrol_points_from_map(patrol_tilemap: TileMapLayer, starting_tile: Vector2i) -> Array[Vector2i]:
 	var atlas_coords_to_tile_delta: Dictionary[Vector2i, Vector2i] = {
@@ -404,6 +395,7 @@ func _process_outro():
 		SceneManager.leave_combat()
 #endregion
 
+#region input
 # check global inputs, mouse clicks and key presses. Passes mouse clicks and key presses to the state machine
 func _unhandled_input(event: InputEvent) -> void:
 	if _handle_global_input(event):
@@ -444,6 +436,7 @@ func _handle_global_input(event: InputEvent) -> bool:
 		turn_manager.finish_turn()
 		return true
 	return false
+#endregion
 
 #region Labels
 func update_state_label(state_name: String) -> void:
@@ -460,14 +453,11 @@ func update_mouse_label():
 func update_camera_label():
 	camera_label.text = "Camera: Offset %s, Zoom %s" % [camera_controller.offset, camera_controller.zoom]
 
-
 func update_labels():
 	#State Machines:
 	state_label.text = "Combat: %s   Turn: %s" % [state_machine.current_state.name, turn_manager.turn_state_machine.current_state.name]
 	update_camera_label()
 	update_mouse_label()
-	
-
 #endregion
 
 
@@ -484,26 +474,14 @@ func _unit_changed_orientation(unit, new_orientation):
 	
 #endregion
 
+
 func select_next_unit():
 	var next_unit = unit_manager.get_next_unit_by_team("Player")
 	if next_unit:
 		state_machine.set_state("UnitSelectedState", {"selected_unit": next_unit})
 
-func register_units_in_turn_manager():
-	for unit in unit_manager.get_player_units():
-		turn_manager.register_unit("player", unit)
-	for unit in unit_manager.get_enemy_units():
-		turn_manager.register_unit("enemy", unit)
-		
-func _on_bullet_requested(from, to, scene):
-	var bullet = scene.instantiate()
-	projectiles_container.add_child(bullet)
-	bullet.fire(from, to)
 
-func unload_soldier_from_wagon(wagon_id: int) -> void:
-	var tile = Vector2i(32, 0)
-	unit_manager.spawn_unit(tile, "liquidator", "Player")
-
+# TODO: this called by bullet.gd. But bullet also emits bullet_hit signal
 func on_bullet_hit(position):
 	#convert position to tile
 	var tile_ = grid_service.world_to_tile(position)
@@ -516,13 +494,15 @@ func on_bullet_hit(position):
 		else:
 			wall_manager.apply_damage_to_wall(entities_[0], 10)
 
-	
+# called by combat_unit_aiming_state when entering/exit the state	
 func set_cursor(cursor_name: String) -> void:
 	if cursor_name == "aim":
 		aim_cursor.visible = true
 	elif cursor_name == "":
 		aim_cursor.visible = false
 
+# TODO: called by CombatScene._unit_reached_destination !! should be unit_changed_tile
+#			      CombatScene._unit_changed_orientation
 func _update_enemy_visibility():
 	var visible_tiles = exploration_service.get_merged_visible_tiles()
 	print("CombatScene: N Visible tiles: %s" % visible_tiles.size())

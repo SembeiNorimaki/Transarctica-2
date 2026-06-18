@@ -91,7 +91,7 @@ func get_reachable_tiles(unit: Unit, max_cost: float) -> Array[Vector2i]:
 
 	var reachable: Array[Vector2i] = []
 	var g_cost := {} # tile -> cost
-	var visited := {} # tile -> bool
+	#var visited := {} # tile -> bool
 	var open := [] # priority queue [ {tile, cost} ]
 	
 	g_cost[start] = 0.0

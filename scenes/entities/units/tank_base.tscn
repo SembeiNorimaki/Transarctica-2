@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dr22ihlmnbj2p"]
+
+[ext_resource type="Texture2D" uid="uid://c2lkosy77ygw2" path="res://assets/sprites/tank_base.png" id="1_hsl7p"]
+[ext_resource type="Script" uid="uid://dq4ty7k0n0mi8" path="res://scripts/entities/units/tank_base.gd" id="1_v2f3q"]
+[ext_resource type="PackedScene" uid="uid://dc1hk0xj7hhpu" path="res://scenes/ui/ui_wasd.tscn" id="2_wkb70"]
+
+[node name="TankBase" type="Node2D" unique_id=281489711]
+script = ExtResource("1_v2f3q")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2056493287]
+position = Vector2(180, 132)
+texture = ExtResource("1_hsl7p")
+hframes = 8
+vframes = 4
+
+[node name="UI_WASD" parent="." unique_id=1564418215 instance=ExtResource("2_wkb70")]

@@ -236,3 +236,10 @@ func _on_train_reached_city(city_name: String):
 	AudioService.stop_music(1.5)
 	QuestManager.notify_city_reached(city_name)
 	SceneManager.enter_city(city_name)
+
+
+func _process(delta: float) -> void:
+	# feed hud indicators
+	navigation_hud.update_gold(GameState.state.money)
+	navigation_hud.update_fuel(GameState.state.fuel)
+	navigation_hud.update_speed(int(train_manager.trains["Player"][0].move_speed))

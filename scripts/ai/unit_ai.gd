@@ -13,7 +13,7 @@ func _ready():
 	pass
 
 # This is annoyingly needed because state machine requires it. Should be changed
-func update_state_label(name: String):
+func update_state_label(_name: String):
 	pass
 
 func take_turn() -> void:
@@ -28,7 +28,7 @@ func take_turn() -> void:
 	#behavior_state_machine.set_state("IdleState", {"unit": owner_node})
 	#print("      Unit ", owner.name, " finished turn.")
 
-func _on_unit_arrived_to_tile(unit, new_tile: Vector2i):
+func _on_unit_arrived_to_tile(_unit, _new_tile: Vector2i):
 	pass
 
 func on_unit_reached_destination(unit):

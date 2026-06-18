@@ -24,7 +24,7 @@ func _draw():
 		_draw_cover(tile, cover_data, Color(0, 1, 0, 0.3))
 	
 
-func _draw_cover(tile, cover_data, color_):
+func _draw_cover(tile, cover_data, _color):
 	print("Drawing cover for tile %s: %s" % [tile, cover_data])
 	
 	var world_pos = grid_service.tile_to_world(tile)

@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://ki2p2i7w5r4w" path="res://scripts/components/loader_resource_container.gd" id="13_jgirw"]
 [ext_resource type="Texture2D" uid="uid://d31vinx3rf3y6" path="res://assets/sprites/resourcesx2/caviar.png" id="14_e2h8b"]
 [ext_resource type="PackedScene" uid="uid://c87amfmts7aye" path="res://scenes/ui/trade_hud.tscn" id="16_jgirw"]
+[ext_resource type="PackedScene" uid="uid://dr22ihlmnbj2p" path="res://scenes/entities/units/tank_base.tscn" id="17_xmr62"]
 
 [node name="TradeScene" type="Control" unique_id=889321148]
 layout_mode = 3
@@ -149,6 +150,10 @@ offset_bottom = 23.0
 grow_horizontal = 2
 text = "City Name"
 horizontal_alignment = 1
+
+[node name="TankBase" parent="." unique_id=281489711 instance=ExtResource("17_xmr62")]
+position = Vector2(-153, 169)
+scale = Vector2(0.5, 0.5)
 
 [connection signal="pressed" from="TradeMenu/Container/VBoxContainer/Button1" to="TradeMenu" method="_on_button_pressed"]
 [connection signal="pressed" from="TradeMenu/Container/VBoxContainer/Button2" to="TradeMenu" method="_on_button_2_pressed"]

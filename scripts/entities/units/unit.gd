@@ -76,17 +76,17 @@ func set_team(team_id_: String):
 		sprite.modulate = Color.RED
 
 
-func set_soldier_type(id: String):
+func set_soldier_type(_id: String):
 	pass
 	
 func get_current_action():
 	return action_sm.current_state.name
 
 
-func _on_health_changed(current: int, max: int):
+func _on_health_changed(current: int, max_: int):
 	#print("Unit _on_health_changed %s %s" % [current, max])
-	health_bar.visible = current < max # hide health bar when at full health
-	health_bar.update_health(current, max)
+	health_bar.visible = current < max_ # hide health bar when at full health
+	health_bar.update_health(current, max_)
 
 func _on_died():
 	health_bar.visible = false
@@ -154,7 +154,7 @@ func move_to_tile(tile: Vector2i):
 	#print("Unit %s instructed to move to tile %s" % [id, tile])
 	target_tile = tile
 	# calculate new orientation
-	var delta = target_tile - current_tile
+	#var delta = target_tile - current_tile
 	var new_ori = grid_service.get_orientation(current_tile, target_tile)
 	set_orientation(new_ori)
 	#set_state("MoveState", {"unit": self})

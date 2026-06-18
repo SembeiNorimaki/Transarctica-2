@@ -1,0 +1,63 @@
+Combat Scene Wiki:
+
+ready: 1. inject_services, register_teams, wire_signals, 
+       2. load_map: load map scene, spawn units, buildings, walls, pods, compute_navigation_graph, compute_covers
+       3. centers_camera
+       4. load train
+       5. recalculate_all_units_vision
+       6. recalculate_all_units_seen_enemies
+       7. initialize_exploration
+
+
+Signals (skipping signals for overlays):
+    unit_manager.unit_arrived_to_tile -> exploration_service.on_unit_tile_changed
+    unit_manager.unit_reached_destination -> _unit_reached_destination
+    unit_manager.unit_changed_orientation -> _unit_changed_orientation
+    faction_ai.faction_finished -> turn_manager._on_faction_finished
+
+    
+turn_manager.turn_started
+turn_manager.turn_ended
+turn_manager.unit_activated
+turn_manager.unit_finished
+
+unit_manager.unit_spawned
+unit_manager.unit_arrived_to_tile
+unit_manager.unit_reached_destination
+unit_manager.unit_changed_orientation
+unit_manager.unit_visibility_changed
+
+unit.movement_finished
+unit.unit_arrived_to_tile
+
+unit_action_move.unit_arrived_to_tile
+
+unit_behavior_evaluate.state_machine.state_finished
+
+
+ap_component.ap_changed
+ap_component.ap_exhausted
+ap_component.ap_changed
+
+health_component.died
+health_component.health_changed
+
+weapon_component.fired
+weapon_component.out_of_ammo
+weapon_component.request_bullet_fire
+
+pod.movement_finished
+pod.turn_finished
+
+bullet.bullet_hit
+
+
+
+barracks_wagon.unload_soldiers
+
+building_manager.building_spawned
+wall_manager.wall_spawned
+road_service.road_spawned
+pod_manager.pod_spawned
+
+

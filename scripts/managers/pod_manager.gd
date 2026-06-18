@@ -8,7 +8,7 @@ var grid_service: GridService
 var pods_to_tile := {} # Dict of pods -> tile_position
 var tile_to_pod := {}
 var pods: Array[Pod] = []
-var pods_units := {}  # Dict pod_id -> ["Unit": Unit, "Formation_offset": Vector2i]
+var pods_units := {} # Dict pod_id -> ["Unit": Unit, "Formation_offset": Vector2i]
 var pods_by_id := {}
 var pods_paths := {} # Dict of pods -> path
 var pods_patrol_routes := {} # Dict of pods -> patrol routes
@@ -57,7 +57,7 @@ func add_unit_to_pod(pod_id: String, unit: Unit, formation_offset: Vector2i):
 func get_pod_by_tile(tile: Vector2i):
 	return tile_to_pod[tile]
 func get_pod_tile(pod: Pod):
-	return pods_to_tile[pod]	
+	return pods_to_tile[pod]
 func get_pod_patrol_route(id_: String) -> Array[Vector2i]:
 	return pods_patrol_routes[id_]
 
@@ -81,7 +81,6 @@ func unregister_pod(pod: Pod):
 	pods.erase(pod)
 
 
-
 #region Movement orchestration
 func start_pod_movement(pod: Pod, path: Array[Vector2i]) -> void:
 	path.pop_front() # remove first point since it's the current tile
@@ -102,4 +101,4 @@ func _on_pod_reached_destination(pod):
 	# set the unit state to idle
 	pod.set_state("IdleState", {"pod": pod})
 	#unit.play_animation("IdleState", unit.orientation)
-	emit_signal("pod_reached_destination", pod)
+	#emit_signal("pod_reached_destination", pod)
