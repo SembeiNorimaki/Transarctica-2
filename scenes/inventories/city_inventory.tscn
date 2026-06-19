@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://c41gfpq2cjly4"]
+
+[ext_resource type="Script" uid="uid://cyf3w7jtjdj51" path="res://scripts/inventories/city_inventory.gd" id="1_d470i"]
+
+[node name="CityInventory" type="Node" unique_id=812769519]
+script = ExtResource("1_d470i")

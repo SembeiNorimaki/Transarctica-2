@@ -1,5 +1,5 @@
 extends Node
-class_name TrainResourceContainer
+class_name TrainInventory
 
 # resources example:
 # resources := {
@@ -7,17 +7,26 @@ class_name TrainResourceContainer
 #     "iron": {"qty": 10, "buy_price": 8, "sell_price": 6, "max_capacity": 50}
 # }
 
+# wagons example
+# wagons := [{
+# 	"wagon_type": "MerchandiseWagon",
+# 	"max_capacity": 20,
+# 	"qty": 0,
+# 	"resource_name": ""
+# }]
+
 var resources := {}
 var wagons := []
 
 var money: int
 
-func _ready() -> void:
-	money = GameState.state.money
-	
 signal wagon_resource_type_changed(wagon_index: int, resource: String)
 signal wagon_resource_amount_changed(wagon_index: int, resource: String, qty: int)
 signal train_money_changed(money: int)
+
+func _ready() -> void:
+	money = GameState.state.money
+
 
 const RESOURCE_WAGON_TYPE := {
 	"coal": "TenderWagon",
@@ -58,7 +67,6 @@ var WAGON_CAPACITIES := {
 }
 
 func add_wagon(wagon_type: String, cargo: String = "", qty: int = 0) -> void:
-	print("Adding wagon %s with %s units of %s" % [wagon_type, qty, cargo])
 	wagons.append(create_wagon(wagon_type, cargo, qty))
 
 
@@ -70,17 +78,6 @@ func create_wagon(wagon_type: String, cargo: String, qty: int) -> Dictionary:
 		"resource_name": cargo
 	}
 	
-
-# func initialize_resource(resource, qty, max_capacity):
-# 	resources[resource] = {
-# 		"qty": qty,
-# 		"max_capacity": max_capacity
-# 	}
-
-
-# func get_all_info() -> Dictionary:
-# 	return resources
-
 func get_wagon_count() -> int:
 	return wagons.size()
 
@@ -131,25 +128,50 @@ func get_wagon_capacity_for_resource(wagon_idx: int, resource_name: String) -> i
 		return 0
 	return get_wagon_free_space(wagon_idx)
 
-# region money
+
+#region money
 func has_money(total_cost: int):
 	return total_cost <= money
 
-func add_money(amount: int):
-	money += amount
-	GameState.state.money = money
-	GameState.save()
-	QuestManager.notify_money_changed(money)
-	emit_signal("train_money_changed", money)
+# func add_money(amount: int):
+# 	money += amount
+# 	GameState.state.money = money
+# 	QuestManager.notify_money_changed(money)
+# 	emit_signal("train_money_changed", money)
 
-func remove_money(amount: int):
-	money -= amount
-	GameState.state.money = money
-	GameState.save()
-	QuestManager.notify_money_changed(money)
-	emit_signal("train_money_changed", money)
+# func remove_money(amount: int):
+# 	money -= amount
+# 	GameState.state.money = money
+# 	QuestManager.notify_money_changed(money)
+# 	emit_signal("train_money_changed", money)
 
 #endregion
+
+
+func add_resource_qty_to_wagon(wagon_idx: int, resource_name: String, qty: int) -> void:
+	if wagon_can_store(wagon_idx, resource_name):
+		if get_wagon_free_space(wagon_idx) >= qty:
+			if get_wagon_current_resource(wagon_idx) == "":
+				wagons[wagon_idx].resource_name = resource_name
+				emit_signal("wagon_resource_type_changed", wagon_idx, resource_name)
+			wagons[wagon_idx].qty += qty
+			emit_signal("wagon_resource_amount_changed", wagon_idx, resource_name, wagons[wagon_idx].qty)
+			GameState.update_wagon_cargo(wagon_idx, wagons[wagon_idx].resource_name, wagons[wagon_idx].qty)
+			QuestManager.notify_goods_collected(resource_name, wagons[wagon_idx].qty)
+
+
+func remove_resource_qty_from_wagon(wagon_idx: int, qty: int) -> bool:
+	if get_wagon_resource_qty(wagon_idx) >= qty:
+		wagons[wagon_idx].qty -= qty
+		emit_signal("wagon_resource_amount_changed", wagon_idx, wagons[wagon_idx].resource_name, wagons[wagon_idx].qty)
+		var old_res = wagons[wagon_idx].resource_name
+		if get_wagon_resource_qty(wagon_idx) == 0:
+			wagons[wagon_idx].resource_name = ""
+			emit_signal("wagon_resource_type_changed", wagon_idx, "")
+		GameState.update_wagon_cargo(wagon_idx, wagons[wagon_idx].resource_name, wagons[wagon_idx].qty)
+		QuestManager.notify_goods_collected(old_res, wagons[wagon_idx].qty)
+		return true
+	return false
 
 
 # # region queries about the whole train, not just a specific wagon
@@ -186,28 +208,3 @@ func remove_money(amount: int):
 # 		total += wagon.max_capacity - used
 
 # 	return total
-
-func add_resource_qty_to_wagon(wagon_idx: int, resource_name: String, qty: int) -> void:
-	if wagon_can_store(wagon_idx, resource_name):
-		if get_wagon_free_space(wagon_idx) >= qty:
-			if get_wagon_current_resource(wagon_idx) == "":
-				wagons[wagon_idx].resource_name = resource_name
-				emit_signal("wagon_resource_type_changed", wagon_idx, resource_name)
-			wagons[wagon_idx].qty += qty
-			emit_signal("wagon_resource_amount_changed", wagon_idx, resource_name, wagons[wagon_idx].qty)
-			GameState.update_wagon_cargo(wagon_idx, wagons[wagon_idx].resource_name, wagons[wagon_idx].qty)
-			QuestManager.notify_goods_collected(resource_name, wagons[wagon_idx].qty)
-
-
-func remove_resource_qty_from_wagon(wagon_idx: int, qty: int) -> bool:
-	if get_wagon_resource_qty(wagon_idx) >= qty:
-		wagons[wagon_idx].qty -= qty
-		emit_signal("wagon_resource_amount_changed", wagon_idx, wagons[wagon_idx].resource_name, wagons[wagon_idx].qty)
-		var old_res = wagons[wagon_idx].resource_name
-		if get_wagon_resource_qty(wagon_idx) == 0:
-			wagons[wagon_idx].resource_name = ""
-			emit_signal("wagon_resource_type_changed", wagon_idx, "")
-		GameState.update_wagon_cargo(wagon_idx, wagons[wagon_idx].resource_name, wagons[wagon_idx].qty)
-		QuestManager.notify_goods_collected(old_res, wagons[wagon_idx].qty)
-		return true
-	return false

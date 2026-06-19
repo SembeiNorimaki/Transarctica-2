@@ -5,7 +5,7 @@ class_name HorizontalTrainManager
 #Injected by CombatScene
 var tile_occupancy_service: TileOccupancyService
 var grid_service: GridService
-var train_resource_container: TrainResourceContainer
+var train_inventory: TrainInventory
 
 #var wagons := {"Player": [], "Enemy": []}
 
@@ -29,7 +29,7 @@ func spawn_train(tile_pos: Vector2i, train_data: Dictionary) -> HorizontalTrain:
 
 	# Dependecy injection
 	horizontal_train.grid_service = grid_service
-	horizontal_train.train_resource_container = train_resource_container
+	horizontal_train.train_inventory = train_inventory
 
 	# add wagons to train
 	for wagon_data in train_data.wagons:

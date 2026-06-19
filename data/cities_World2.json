@@ -8,8 +8,8 @@
 		],
 		"TradeResources": {
 			"alcohol": {
-				"BuyPrice": 8,
-				"SellPrice": 12,
+				"BuyPrice": 20,
+				"SellPrice": 10,
 				"Quantity": 4
 			},
 			"fishingrods": {

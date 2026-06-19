@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dfbw1t56r8fj6"]
 
-[ext_resource type="Script" uid="uid://da4pvmyep7a8f" path="res://scripts/components/train_resource_container.gd" id="1_t3ksd"]
+[ext_resource type="Script" uid="uid://da4pvmyep7a8f" path="res://scripts/inventories/train_inventory.gd" id="1_t3ksd"]
 
 [node name="TrainResourceContainer" type="Node" unique_id=868915929]
 script = ExtResource("1_t3ksd")

@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://boyrh8km2fvhn"]
+
+[ext_resource type="Script" uid="uid://m1bnjh6hvfnd" path="res://scripts/ui/master_hud.gd" id="1_jx5eh"]
+[ext_resource type="PackedScene" uid="uid://dmpx52ivxd6by" path="res://scenes/ui/unit_hud.tscn" id="2_sqtu0"]
+[ext_resource type="PackedScene" uid="uid://f66qwbf4mlhf" path="res://scenes/ui/wagon_hud.tscn" id="3_8os72"]
+[ext_resource type="PackedScene" uid="uid://dn7qpd5tgtte0" path="res://scenes/ui/empty_hud.tscn" id="4_a8llo"]
+
+[node name="MasterHUD" type="Control" unique_id=2063402505]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jx5eh")
+
+[node name="UnitHUD" parent="." unique_id=159959425 instance=ExtResource("2_sqtu0")]
+layout_mode = 1
+
+[node name="WagonHUD" parent="." unique_id=368405506 instance=ExtResource("3_8os72")]
+visible = false
+layout_mode = 1
+
+[node name="EmptyHUD" parent="." unique_id=1680113790 instance=ExtResource("4_a8llo")]
+visible = false
+layout_mode = 1

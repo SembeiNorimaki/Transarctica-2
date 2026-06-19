@@ -3,7 +3,7 @@ class_name HorizontalTrain
 
 #Dependencies:
 var grid_service: GridService
-var train_resource_container: TrainResourceContainer
+var train_inventory: TrainInventory
 
 # make gear an enum with values R, N, D
 var gear := "N"
@@ -120,7 +120,7 @@ func add_wagon(wagon_data: Dictionary):
 	wagon.position = wagon_pos
 
 
-	train_resource_container.add_wagon(wagon_name, resource_name, resource_qty)
+	train_inventory.add_wagon(wagon_name, resource_name, resource_qty)
 	add_child(wagon)
 	wagons.append(wagon)
 	

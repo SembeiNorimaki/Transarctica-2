@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://cm3taqyltqkqe"]
 
 [ext_resource type="PackedScene" uid="uid://dxot3aouof2ut" path="res://scenes/maps/generic_navigation_map.tscn" id="1_0xw6c"]
+[ext_resource type="TileSet" uid="uid://kplbg4vwhgj" path="res://assets/tilesets/big_navigation_tiles.tres" id="2_208fp"]
 
 [node name="World1" unique_id=1301367354 instance=ExtResource("1_0xw6c")]
 
@@ -30,3 +31,7 @@ tile_map_data = PackedByteArray("AAANAAMAAQAAAAAAAAAZAAUAAQABAAAAAAAZAAsAAQACAAA
 
 [node name="Tunnels" parent="." index="8" unique_id=1795313605]
 tile_map_data = PackedByteArray("AAAPAA0AAQAAAAAAAAARAAwAAQADAAAAAAA=")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." index="9" unique_id=60672661]
+tile_map_data = PackedByteArray("AAADABEAAAAAAAMAAAA=")
+tile_set = ExtResource("2_208fp")

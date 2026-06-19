@@ -15,7 +15,7 @@ class_name CombatScene
 #Containers
 @onready var projectiles_container: Node2D = $Containers/Projectiles
 @onready var train_container: Node2D = $Containers/Trains
-@onready var train_resource_container: TrainResourceContainer = $Containers/TrainResourceContainer
+@onready var train_inventory: TrainInventory = $Containers/TrainInventory
 
 # Controllers
 @onready var camera_controller: CameraController = $Controllers/CameraController
@@ -122,7 +122,7 @@ func _inject_services():
 	turn_manager.faction_ai = faction_ai
 	horizontal_train_manager.tile_occupancy_service = tile_occupancy_service
 	horizontal_train_manager.grid_service = grid_service
-	horizontal_train_manager.train_resource_container = train_resource_container
+	horizontal_train_manager.train_inventory = train_inventory
 	faction_ai.unit_manager = unit_manager
 	pod_ai_manager.pod_manager = pod_manager
 	pod_ai_manager.unit_manager = unit_manager
@@ -404,6 +404,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	if event is InputEventMouseButton and event.pressed:
 		var mouse_pos = get_local_mouse_position()
+		print("Mouse pressed: %s" % mouse_pos)
 
 		# Check if we clicked a wagon
 		var clicked_wagon_id = horizontal_train_manager.check_wagon_click(mouse_pos)

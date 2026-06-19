@@ -1,84 +1,105 @@
 extends Node
 class_name TradeService
 
-var city: CityResourceContainer = null
-var train: TrainResourceContainer = null
-var city_name: String = ""
+@onready var city_inventory: CityInventory = $CityInventory
+@onready var train_inventory: TrainInventory = $TrainInventory
+@onready var loader_inventory: LoaderInventory = $LoaderInventory
 
-var resource_name: String = ""
-var transaction_type: String = ""
-var qty: int = 0
-var price: int = 0
 
-func set_transaction_data(resource_name_: String, transaction_type_: String, qty_: int, price_: int):
-	resource_name = resource_name_
-	transaction_type = transaction_type_
-	qty = qty_
-	price = price_
-
-func execute_transaction(buttonIdx: int):
-	if buttonIdx == 1:
-		qty = 1
-	elif buttonIdx == 2:
-		qty = 10
-	print("Executing transaction %s of %s units of %s" % [transaction_type, qty, resource_name])
-	if transaction_type == "buy":
-		buy(resource_name, qty)
-	elif transaction_type == "sell":
-		sell(resource_name, qty)
-
-func set_context(city_container: CityResourceContainer, train_container: TrainResourceContainer, city_name_: String = ""):
-	city = city_container
-	train = train_container
-	city_name = city_name_
-
-func buy(resource: String, qty: int) -> bool:
-	# 1: Price lookup
-	var price_per_unit = price
-	var total_cost = price_per_unit * qty
-
-	# 2: City must have enough resources
-	if qty > city.get_available_qty(resource):
-		print("City has not enough resources")
+func transfer_from_city_to_loader(resource_name: String, qty: int) -> bool:
+	if resource_name == "":
+		print("Error: Resource name is empty")
 		return false
 	
-	# 3: Train must have enough money
-	if not train.has_money(total_cost):
-		print("Train has not enough money")
+	if loader_inventory.is_full():
+		print("Error: Loader inventory is full")
 		return false
 	
-	# 4: Train must have enough capacity
-	if qty > train.get_storage_capacity(resource):
-		print("Train has not enough storage capacity")
+	var available_qty = city_inventory.get_available_qty(resource_name)
+	if available_qty < qty:
+		print("Error: insufficient %s " % resource_name)
 		return false
-	
-	# 5: Perform transaction
-	train.remove_money(total_cost)
-	city.remove_resource_amount(resource, qty)
-	train.add_resource_amount(resource, qty)
+
+	var price_per_unit = city_inventory.get_buy_price(resource_name)
+
+	var money = GameState.get_money()
+	if money < price_per_unit * qty:
+		print("Error, not enough money")
+		return false
+
+	var success = loader_inventory.pick_from_city(resource_name, qty)
+	if not success:
+		print("Error picking crate")
+		return false
+
+	city_inventory.remove_resource_amount(resource_name, qty)
+	print("Price per unit: ", price_per_unit)
+	GameState.subtract_money(price_per_unit * qty)
 	return true
 
-func sell(resource: String, qty: int) -> bool:
-	# 1. Price lookup
-	var price_per_unit = price
-	var total_gain = price_per_unit * qty
-
-	# 2. Train must have enough resources
-	if qty > train.get_available_qty(resource):
-		print("Train does not have enough ", resource)
+func transfer_from_loader_to_city(resource_name: String, qty: int) -> bool:
+	if resource_name == "":
+		print("Error: Resource name is empty")
 		return false
 
-	# 3. City must have capacity
-	if qty > city.get_storage_capacity(resource):
-		print("City lacks storage capacity")
+	# Must match resource rules
+	if resource_name != loader_inventory.get_resource_type():
+		print("Error: Resources don't match")
 		return false
 
-	# 4. Perform transaction
-	train.add_money(total_gain)
-	train.remove_resource_amount(resource, qty)
-	city.add_resource_amount(resource, qty)
+	# Check city capacity
+	if qty > city_inventory.get_storage_capacity(resource_name):
+		print("Error: City has not enough storage capacity")
+		return false
 
-	if city_name != "":
-		QuestManager.notify_goods_delivered(city_name, resource, qty)
+	var price_per_unit = city_inventory.get_sell_price(resource_name)
 
+	# Move crate from loader to wagon
+	loader_inventory.finalize_into_city(qty)
+	city_inventory.add_resource_amount(resource_name, qty)
+	print("Price per unit: ", price_per_unit)
+	GameState.add_money(price_per_unit * qty)
+	return true
+
+func transfer_from_train_to_loader(wagon_idx: int, qty: int) -> bool:
+	if wagon_idx == -1:
+		print("Error: Wagon index is -1")
+		return false
+
+	if loader_inventory.is_full():
+		print("Error: Loader inventory is full")
+		return false
+
+	var resource_name = train_inventory.get_wagon_current_resource(wagon_idx)
+	if resource_name == "":
+		print("Error: Wagon is empty")
+		return false
+
+	# Remove crate from wagon
+	var removed = train_inventory.remove_resource_qty_from_wagon(wagon_idx, qty)
+	if not removed:
+		print("Error removing resource from train")
+		return false
+
+	loader_inventory.pick_from_wagon(resource_name, qty)
+	
+	return true
+
+func transfer_from_loader_to_train(wagon_idx: int, qty: int) -> bool:
+	if wagon_idx == -1:
+		print("Error: Wagon index is -1")
+		return false
+	
+	if loader_inventory.is_empty():
+		print("Error: Loader inventory is empty")
+		return false
+	
+	var resource_name = loader_inventory.get_resource_type()
+	# Must match wagon rules
+	if not train_inventory.wagon_can_store(wagon_idx, resource_name):
+		print("Error, this wagon cannot store %s" % resource_name)
+		return false
+	
+	loader_inventory.finalize_into_wagon(qty)
+	train_inventory.add_resource_qty_to_wagon(wagon_idx, resource_name, qty)
 	return true

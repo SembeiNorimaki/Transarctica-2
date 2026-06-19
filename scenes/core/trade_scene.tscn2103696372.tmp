@@ -16,14 +16,11 @@
 [ext_resource type="PackedScene" uid="uid://bn55wc4dxfhec" path="res://scenes/inventories/loader_inventory.tscn" id="13_xmr62"]
 [ext_resource type="Texture2D" uid="uid://d31vinx3rf3y6" path="res://assets/sprites/resourcesx2/caviar.png" id="14_e2h8b"]
 [ext_resource type="PackedScene" uid="uid://c87amfmts7aye" path="res://scenes/ui/trade_hud.tscn" id="16_jgirw"]
+[ext_resource type="PackedScene" uid="uid://b1ck3d1of8p8x" path="res://scenes/entities/units/truck.tscn" id="17_xmr62"]
 
 [node name="TradeScene" type="Control" unique_id=889321148]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
 script = ExtResource("1_keppn")
 
 [node name="MapRoot" type="Node2D" parent="." unique_id=1260627640]
@@ -151,6 +148,9 @@ offset_bottom = 23.0
 grow_horizontal = 2
 text = "City Name"
 horizontal_alignment = 1
+
+[node name="Truck" parent="." unique_id=748580056 instance=ExtResource("17_xmr62")]
+position = Vector2(137, 236)
 
 [connection signal="pressed" from="TradeMenu/Container/VBoxContainer/Button1" to="TradeMenu" method="_on_button_pressed"]
 [connection signal="pressed" from="TradeMenu/Container/VBoxContainer/Button2" to="TradeMenu" method="_on_button_2_pressed"]

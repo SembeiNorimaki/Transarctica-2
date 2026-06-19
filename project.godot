@@ -14,7 +14,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 [application]
 
-config/name="FallenHavenIII"
+config/name="Transarctica 2"
 run/main_scene="uid://bwjc36mf4nddw"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
@@ -34,7 +34,7 @@ Assistant="*res://autoload/assistant_ui.tscn"
 
 [display]
 
-window/size/viewport_width=1200
+window/size/viewport_width=1400
 window/size/viewport_height=700
 
 [input]

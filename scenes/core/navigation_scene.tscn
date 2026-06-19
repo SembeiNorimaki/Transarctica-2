@@ -29,7 +29,13 @@ sources/0 = SubResource("TileSetAtlasSource_tw4gw")
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_tw4gw"]
 size = Vector2(100, 100)
 
-[node name="NavigationScene" type="Node2D" unique_id=1488826302]
+[node name="NavigationScene" type="Control" unique_id=1847237510]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_w5hjg")
 
 [node name="MapRoot" type="Node2D" parent="." unique_id=666429581]
@@ -88,6 +94,7 @@ script = ExtResource("10_7ires")
 
 [node name="Minimap" type="TextureRect" parent="." unique_id=307107618]
 custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
 offset_left = 349.0
 offset_top = 28.0
 offset_right = 449.0
@@ -96,5 +103,9 @@ texture = SubResource("PlaceholderTexture2D_tw4gw")
 
 [node name="NavigationHUD" parent="." unique_id=945411280 instance=ExtResource("12_rjhdy")]
 z_index = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_right = 0.0
 offset_bottom = 0.0

@@ -6,7 +6,7 @@ var current_state: Node = null
 var states: Dictionary = {} # Key: state name, Value: state instance eg: {"IdleState": IdleState}
 var id: String
 
-signal state_finished
+#signal state_finished
 
 func _ready():
 	owner_node = get_parent()
@@ -40,7 +40,7 @@ func set_state(new_state_str: String, params = {}) -> void:
 	
 	if current_state:
 		current_state.exit({})
-	var prev_state = current_state
+	var _prev_state = current_state
 	current_state = new_state
 	owner_node.update_state_label(new_state.name)
 	#print("New state %s " % new_state.name, prev_state)

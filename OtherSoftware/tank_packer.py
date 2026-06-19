@@ -17,11 +17,16 @@ OFFSETS = {
     8: (0, -16),
     9: (0, -16),
     
-    10: (0, -32),
+    10: (0, 0),
     11: (0, -32),
     12: (0, -16),
     13: (0, -16),
-    14: (0, -32)
+    14: (0, -32),
+    
+    15: (0, 0),
+    16: (0, 0),
+    17: (0, -16),
+    18: (0, 16)
 }
 
 # Custom order: which image index goes into each grid cell (0..19)
@@ -29,7 +34,8 @@ OFFSETS = {
 ORDER = [
     0,  1,  2,  8,  4,
     5,  11,  7,  13, 14,
-    10, 9, 12, 3, 6
+    10, 9, 12, 3, 6,
+    15, 16, 17, 18
 ]
 
 def make_grid(input_folder, output_path):
@@ -37,10 +43,9 @@ def make_grid(input_folder, output_path):
         f for f in os.listdir(input_folder)
         if f.lower().endswith((".png", ".jpg", ".jpeg"))
     ])
-    files = files[:15]
 
-    #if len(files) != 19:
-    #    raise ValueError("Folder must contain exactly 20 images")
+    if len(files) != 19:
+        raise ValueError("Folder must contain exactly 20 images")
 
     # Load all images into memory indexed by 0..19
     images = [Image.open(os.path.join(input_folder, f)).convert("RGBA") for f in files]
@@ -68,6 +73,6 @@ def make_grid(input_folder, output_path):
         grid.paste(img, (x, y), img)
 
     # Save result
-    grid.save(output_path + f"tileset_{input_folder[-1]}.png")
+    grid.save(output_path + "output.png")
 
-make_grid(r"C:/Users/Isaac/Downloads/tiles_in/k", r"C:/Users/Isaac/Downloads/tiles_out/")
+make_grid(r"C:/Users/Isaac/Downloads/tiles_in/", r"C:/Users/Isaac/Downloads/tiles_out/")
