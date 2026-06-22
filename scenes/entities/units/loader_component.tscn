@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://lpliac5e0p0b"]
+
+[ext_resource type="Script" uid="uid://0wmqj74oawpr" path="res://scripts/entities/units/loader_component.gd" id="1_johia"]
+[ext_resource type="Texture2D" uid="uid://2f34a7cpeqkk" path="res://assets/sprites/resources_120x46.png" id="2_aafxg"]
+[ext_resource type="PackedScene" uid="uid://743d5vqsqhno" path="res://scenes/entities/resources/crate.tscn" id="3_w5vnd"]
+
+[node name="LoaderComponent" type="Node2D" unique_id=153692997]
+script = ExtResource("1_johia")
+
+[node name="Node2D" type="Node2D" parent="." unique_id=84447223]
+
+[node name="CargoSprite" type="Sprite2D" parent="." unique_id=583447868]
+visible = false
+position = Vector2(39, 14)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_aafxg")
+hframes = 3
+vframes = 7
+frame = 4
+
+[node name="CrateSprite" parent="." unique_id=1088471873 instance=ExtResource("3_w5vnd")]
+position = Vector2(2, -29)

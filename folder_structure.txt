@@ -50,6 +50,7 @@ scenes
 			artillery.tscn
 			ghost.tscn
 			ghost2.tscn
+			loader_component.tscn
 			navigation_train.tscn
 			tank.tscn
 			unit.tscn
@@ -121,6 +122,7 @@ scripts
 		bullet.gd
 		container_wagon.gd
 		horizontal_train.gd
+		loader_component.gd
 		locomotive_wagon.gd
 		merchandise_wagon.gd
 		navigation_train.gd

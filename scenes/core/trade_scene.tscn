@@ -8,10 +8,10 @@
 [ext_resource type="PackedScene" uid="uid://w8jrafekm730" path="res://scenes/services/tile_occupancy_service.tscn" id="6_vv4w2"]
 [ext_resource type="PackedScene" uid="uid://cbxffx4parq4x" path="res://scenes/services/grid_service.tscn" id="7_rxsxr"]
 [ext_resource type="Script" uid="uid://cghyum27gjwpp" path="res://scripts/services/trade_service.gd" id="8_ekjpa"]
-[ext_resource type="PackedScene" uid="uid://ofxj01woinrh" path="res://scenes/entities/wagons/loader_vehicle.tscn" id="9_7b5sh"]
 [ext_resource type="PackedScene" uid="uid://c41gfpq2cjly4" path="res://scenes/inventories/city_inventory.tscn" id="10_xmr62"]
 [ext_resource type="PackedScene" uid="uid://dfbw1t56r8fj6" path="res://scenes/managers/train_resource_container.tscn" id="11_keppn"]
 [ext_resource type="PackedScene" uid="uid://b3efv4oicsfhv" path="res://scenes/trade/traffic_light.tscn" id="12_ahuwk"]
+[ext_resource type="PackedScene" uid="uid://dr22ihlmnbj2p" path="res://scenes/entities/units/tank_base.tscn" id="12_xmr62"]
 [ext_resource type="Script" uid="uid://bluwsgcbc47h3" path="res://scripts/components/trade_menu.gd" id="13_epkq4"]
 [ext_resource type="PackedScene" uid="uid://bn55wc4dxfhec" path="res://scenes/inventories/loader_inventory.tscn" id="13_xmr62"]
 [ext_resource type="Texture2D" uid="uid://d31vinx3rf3y6" path="res://assets/sprites/resourcesx2/caviar.png" id="14_e2h8b"]
@@ -59,8 +59,7 @@ script = ExtResource("8_ekjpa")
 
 [node name="Containers" type="Node2D" parent="." unique_id=1494143937]
 
-[node name="LoaderVehicle" parent="Containers" unique_id=1277425951 instance=ExtResource("9_7b5sh")]
-position = Vector2(0, 177)
+[node name="TankBase" parent="Containers" unique_id=281489711 instance=ExtResource("12_xmr62")]
 
 [node name="Trains" type="Node2D" parent="Containers" unique_id=942685259]
 

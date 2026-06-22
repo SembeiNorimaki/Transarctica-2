@@ -34,7 +34,8 @@ class_name TradeScene
 # Map 
 @onready var map_root = $MapRoot
 
-@onready var loader_vehicle: LoaderVehicle = $Containers/LoaderVehicle
+#@onready var loader_vehicle: LoaderVehicle = $Containers/LoaderVehicle
+@onready var loader_vehicle = $Containers/TankBase.loader_component
 
 @onready var hud = $TradeHUD
 #endregion
@@ -163,6 +164,7 @@ func _inject_services():
 	camera_controller.grid_service = grid_service
 
 	loader_vehicle.camera_controller = camera_controller
+	$Containers/TankBase
 	
 
 func _connect_signals():
@@ -244,10 +246,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		_handle_tile_click(tile, event.button_index)
 	elif event.is_action_pressed("right"):
 		print("Right pressed")
-		loader_vehicle.gear_up()
+		#loader_vehicle.gear_up()
 	elif event.is_action_pressed("left"):
 		print("Left pressed")
-		loader_vehicle.gear_down()
+		#loader_vehicle.gear_down()
 	elif event.is_action_pressed("i"):
 		on_i_pressed()
 	elif event.is_action_pressed("k"):
