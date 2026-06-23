@@ -39,7 +39,7 @@ var next_train_id = {"Player": 0, "Enemy": 0}
 var teams = ["Player", "Enemy"]
 var trains := {"Player": [], "Enemy": []}
 
-var TRAIN_SCENE = preload("res://scenes/entities/units/navigation_train.tscn")
+var TRAIN_SCENE = preload("res://scenes/entities/trains/navigation_train.tscn")
 
 var camera_lock_to_engine = false ## Will lock camera to the engine when true
 

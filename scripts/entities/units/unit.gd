@@ -5,8 +5,11 @@ class_name Unit
 @onready var sprite_selected = $SpriteSelected
 @onready var action_sm = $ActionStateMachine
 @onready var weapon_service: WeaponService
+@onready var weapon: WeaponComponent = $WeaponComponent
 @onready var health_component: HealthComponent = $HealthComponent
-@onready var health_bar: HealthBar = $HealthBar
+@onready var hp_bar: HpBar = $HpBar
+@onready var ap_bar: ApBar = $ApBar
+
 @onready var ap_component: ApComponent = $ApComponent
 @onready var unit_ai: UnitAI = $UnitAI
 
@@ -42,7 +45,7 @@ const SOLDIER_DIES_SFX: AudioStream = preload("res://assets/audio/SoldierDies.wa
 func _ready() -> void:
 	call_deferred("_wire_signals")
 	#Initialize bar
-	health_bar.update_health(health_component.current_health, health_component.max_health)
+	hp_bar.update_value(health_component.current_health, health_component.max_health)
 	#set_process(false)
 
 func inject_dependencies() -> void:
@@ -84,14 +87,13 @@ func get_current_action():
 
 
 func _on_health_changed(current: int, max_: int):
-	#print("Unit _on_health_changed %s %s" % [current, max])
-	health_bar.visible = current < max_ # hide health bar when at full health
-	health_bar.update_health(current, max_)
+	#hp_bar.visible = current < max_ # hide health bar when at full health
+	hp_bar.update_value(current, max_)
 
 func _on_died():
-	health_bar.visible = false
+	hp_bar.visible = false
 	AudioService.play_sfx(SOLDIER_DIES_SFX)
-	set_state("DeadState", {"unit": self })
+	set_state("DeadState", {"unit": self})
 
 
 #func _process(delta: float) -> void:
@@ -108,13 +110,25 @@ func set_state(state: String, params = {}) -> void:
 	action_sm.set_state(state, params)
 	update_state_label(state)
 
+#region orientation
 func set_orientation(new_orientation: String):
 	#print("Unit: Setting orientation to %s" % new_orientation)
 	orientation = new_orientation
 	sprite.set_animation(new_orientation)
-	unit_manager.on_unit_orientation_changed(self , new_orientation)
+	unit_manager.on_unit_orientation_changed(self, new_orientation)
 	queue_redraw()
-	
+
+func turn_right(amount: int) -> void:
+	var new_ori = grid_service.turn_right(orientation, amount)
+	set_orientation(new_ori)
+
+func turn_left(amount: int) -> void:
+	var new_ori = grid_service.turn_left(orientation, amount)
+	set_orientation(new_ori)
+
+#endregion
+
+
 func apply_damage(amount: int):
 	# play sfx
 	AudioService.play_sfx(SOLDIER_HIT_SFX)
@@ -146,7 +160,7 @@ func stop_animation():
 func set_selected(selected: bool) -> void:
 	#print("Selected: %s" % selected)
 	if selected:
-		navigation_graph_service.get_reachable_tiles(self , 7.0)
+		navigation_graph_service.get_reachable_tiles(self, 7.0)
 	sprite_selected.visible = selected
 
 
@@ -164,7 +178,7 @@ func move_to_tile(tile: Vector2i):
 
 func _on_unit_arrived_to_tile(tile: Vector2i):
 	#print("Unit: Unit arrived to tile")
-	unit_arrived_to_tile.emit(self , tile)
+	unit_arrived_to_tile.emit(self, tile)
 	
 
 func compute_visible_enemies():
@@ -174,10 +188,10 @@ func on_movement_finished() -> void:
 	#set_process(false)
 	emit_signal("movement_finished")
 
-#region AP handling
-func _on_ap_changed(current: int, max: int) -> void:
-	#print("Unit %s ap changed: %s/%s" % [id, current, max])
-	pass
+#region AP
+func _on_ap_changed(current: int, max_: int) -> void:
+	#ap_bar.visible = current < max_ 
+	ap_bar.update_value(current, max_)
 	
 func _on_ap_exhausted() -> void:
 	print("Unit %s ap exhausted" % id)
@@ -188,27 +202,10 @@ func get_ap() -> int:
 #endregion
 
 #region cover
-# Returns true if the unit has ANY cover in ANY direction
-func is_in_cover() -> bool:
-	return cover_service.get_cover_value(current_tile) > 0.0
 
-# Returns true if the unit has cover AGAINST a specific enemy
-func is_in_cover_against_enemy(enemy_unit) -> bool:
-	return cover_service.get_cover_against(current_tile, enemy_unit.current_tile) > 0.0
 
-# Finds the best cover tile relative to a specific enemy
-func find_best_cover(enemy_unit) -> Vector2i:
-	var best_tile := current_tile
-	var best_cover := cover_service.get_cover_against(current_tile, enemy_unit.current_tile)
-
-	# TODO: get_reachable_tiles not yet implemented
-	for tile in navigation_graph_service.get_reachable_tiles(self , 4.0):
-		var cover = cover_service.get_cover_against(tile, enemy_unit.current_tile)
-		if cover > best_cover:
-			best_cover = cover
-			best_tile = tile
-	return best_tile
-
+func get_health_ratio() -> float:
+	return health_component.get_health_ratio()
 
 #endregion
 
@@ -219,3 +216,7 @@ func find_best_cover(enemy_unit) -> Vector2i:
 # Used in AdvanceState. 
 func find_advance_tile(enemy_tile: Vector2i):
 	return Vector2i(0, 0)
+
+# TODO: Needs to be implemented, not here but in unit_manager
+func has_good_shoot(enemy: Unit) -> bool:
+	return true

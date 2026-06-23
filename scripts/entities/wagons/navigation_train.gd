@@ -165,7 +165,7 @@ func add_wagon(wagon_name: String):
 
 	# add to container
 	wagon_container.add_child(wagon)
-	wagon_container.move_child(wagon, 0)
+	#wagon_container.move_child(wagon, 0)
 
 
 	# disable previous wagon rear attachment
@@ -262,7 +262,7 @@ func _on_locomotive_tile_changed(locomotive, old_tile: Vector2i, new_tile: Vecto
 	#exploration_layer.reveal(vision_tiles)
 
 	# locomotive should also check for events
-	train_tile_changed.emit(self , old_tile, new_tile)
+	train_tile_changed.emit(self, old_tile, new_tile)
 
 func _on_wagon_tile_changed(wagon, old_tile: Vector2i, new_tile: Vector2i):
 	print("*** Wagon has changed tile")

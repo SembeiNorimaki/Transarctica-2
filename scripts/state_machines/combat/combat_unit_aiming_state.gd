@@ -10,7 +10,7 @@ var selected_unit: Unit = null
 
 var prev_mouse_tile := Vector2i(-1, -1)
 
-var BULLET_SCENE = preload("res://scenes/entities/projectiles/bullet.tscn")
+#var BULLET_SCENE = preload("res://scenes/entities/projectiles/bullet.tscn")
 
 func _ready():
 	#weapon_service = owner_node.weapon_service
@@ -45,27 +45,27 @@ func _attempt_shot(tile: Vector2i):
 	var shooter_tile = shooter.current_tile
 	var target_tile = tile
 
-	#print("Attempting shoot: Shooter %s, from %s to %s" % [shooter, shooter_tile, target_tile])
+	var success = owner_node.unit_manager.request_shoot(shooter, target_tile)
 
-	owner_node.los_service.bresenham_line(shooter_tile, target_tile)
+	if success:
+		state_machine.set_state("UnitSelectedState", {"selected_unit": shooter})
+	else:
+		print("Shoot not possible")
+
+	#owner_node.los_service.bresenham_line(shooter_tile, target_tile)
 	#if not los_service.has_los(shooter_tile, target_tile):
 	#	#print("NO LOS")
 	#	return
-	owner_node.weapon_service.fire_bullet(BULLET_SCENE, shooter_tile, target_tile, shooter)
+	#owner_node.weapon_service.fire_bullet(BULLET_SCENE, shooter_tile, target_tile, shooter)
 	
 	
 func handle_click(tile: Vector2i, button_index: int):
-	#_attempt_shot(tile)
-	
-	# Right click:
-	#    Rotate unit so it looks in this direction
+	# Right click: Rotate unit so it looks in this direction
 	if button_index == MOUSE_BUTTON_RIGHT:
 		var new_orientation = owner_node.grid_service.get_orientation(selected_unit.current_tile, tile)
 		selected_unit.set_orientation(new_orientation)
 	elif button_index == MOUSE_BUTTON_LEFT:
 		_attempt_shot(tile)
-
-
 
 
 func handle_key(event: InputEventKey):

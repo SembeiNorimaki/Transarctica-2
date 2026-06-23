@@ -47,12 +47,15 @@ var DELTA_TO_ORI = {
 	Vector2i(-1, -1): "NW"
 }
 
+# clockwise orientations
+var ORIENTATIONS := ["N", "NE", "E", "SE", "S", "SW", "W", "NW"]
+
 func set_tile_size(tile_size_: Vector2i):
 	tile_size = tile_size_
 	tile_half_size = Vector2i(tile_size_.x / 2, tile_size_.y / 2)
 	map_origin = tile_half_size
 
-
+#region tile to world conversions
 #this doesn't use map_origin. Useful for relative positions of tiles
 func tile_delta_to_world_delta(delta_tile: Vector2i) -> Vector2:
 	return Vector2(
@@ -75,6 +78,7 @@ func world_to_tilef(world_pos: Vector2) -> Vector2:
 	var tile_x = (p.x / tile_size.x) + (p.y / tile_size.y)
 	var tile_y = (p.y / tile_size.y) - (p.x / tile_size.x)
 	return Vector2(tile_x, tile_y)
+#endregion
 
 
 func get_neighbors(tile: Vector2i) -> Array[Vector2i]:
@@ -87,6 +91,22 @@ func get_neighbors(tile: Vector2i) -> Array[Vector2i]:
 
 		#neighbors = [tile + Vector2i(1, 0), tile + Vector2i(-1, 0), tile + Vector2i(0, 1), tile + Vector2i(0, -1)]
 	return neighbors
+
+# given an orientation "N" turns left a discrete amount of orientations. Ex: N,1 -> NW,  N,2 -> W 
+func turn_left(ori: String, amount: int):
+	var index = ORIENTATIONS.find(ori)
+	index -= amount
+	while index < 0:
+		index += ORIENTATIONS.size()
+	return ORIENTATIONS[index]
+
+func turn_right(ori: String, amount: int):
+	var index = ORIENTATIONS.find(ori)
+	index += amount
+	while index >= ORIENTATIONS.size():
+		index -= ORIENTATIONS.size()
+	return ORIENTATIONS[index]
+
 
 func get_orientation(from_tile: Vector2i, to_tile: Vector2i) -> String:
 	var delta = to_tile - from_tile

@@ -9,7 +9,7 @@ signal tile_changed(wagon, old_tile: Vector2i, new_tile: Vector2i)
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var attachments = {
-	"front": $Attachments/front, 
+	"front": $Attachments/front,
 	"back": $Attachments/back
 }
 
@@ -24,17 +24,17 @@ var wagon_type := ""
 
 # offsets for the front and back collision shapes
 const ATTACHMENTS_OFFSETS = {
-	"N":  { "front": Vector2(10, -11), "back": Vector2(-18,  6) },
-	"S":  { "front": Vector2(-18, 6), "back": Vector2(10, -11) },
+	"N": {"front": Vector2(10, -11), "back": Vector2(-18, 6)},
+	"S": {"front": Vector2(-18, 6), "back": Vector2(10, -11)},
 
-	"E":  { "front": Vector2(17, 6), "back": Vector2(-10, -12) },
-	"W":  { "front": Vector2(-10, -12), "back": Vector2(17, 6) },
+	"E": {"front": Vector2(17, 6), "back": Vector2(-10, -12)},
+	"W": {"front": Vector2(-10, -12), "back": Vector2(17, 6)},
 	
-	"NW": { "front": Vector2(0, -24), "back": Vector2(0, 13) },
-	"SE": { "front": Vector2(0, 13), "back": Vector2(0, -24) },
+	"NW": {"front": Vector2(0, -24), "back": Vector2(0, 13)},
+	"SE": {"front": Vector2(0, 13), "back": Vector2(0, -24)},
 
-	"NE": { "front": Vector2(24, 0), "back": Vector2(-25, 0) },
-	"SW": { "front": Vector2(-25, 0), "back": Vector2(-24, 0) }
+	"NE": {"front": Vector2(24, 0), "back": Vector2(-25, 0)},
+	"SW": {"front": Vector2(-25, 0), "back": Vector2(-24, 0)}
 }
 
 const ORIENTATIONS = ["SE", "S", "SW", "W", "NW", "N", "NE", "E"]
@@ -71,11 +71,11 @@ func _create_animations_from_atlas(atlas: Texture2D, orientations: Array, cargos
 
 	for j in cargos.size():
 		var tokens = cargos[j].split("_")
-		var cargo_name = tokens[0]      # Wood, Copper, Iron....
-		var cargo_amount = tokens[1]    # either Half or Full
+		var cargo_name = tokens[0] # Wood, Copper, Iron....
+		var cargo_amount = tokens[1] # either Half or Full
 		for i in orientations.size():
 			var ori_name = orientations[i]
-			var frame_name = "%s_%s_%s" % [ori_name, cargo_name, cargo_amount]   # Ex:  S_Iron_Full, NE_Wood_Half
+			var frame_name = "%s_%s_%s" % [ori_name, cargo_name, cargo_amount] # Ex:  S_Iron_Full, NE_Wood_Half
 			#print("Creating animation %s" % frame_name)
 			frames.add_animation(frame_name)
 			frames.set_animation_speed(frame_name, 1) # static frame

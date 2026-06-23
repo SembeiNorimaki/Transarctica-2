@@ -5,8 +5,9 @@ signal fired(target_tile: Vector2i)
 signal out_of_ammo
 
 @export var damage: int = 10
-@export var range: float = 100.0
+@export var max_range: float = 100.0
 @export var ammo: int = 10
+@export var ap_cost: int = 10
 
 signal request_bullet_fire(from, to, bullet_scene)
 
@@ -24,7 +25,7 @@ func shoot_at(target_tile: Vector2i, shooter_tile: Vector2i) -> void:
 		return
 	
 	# Range check
-	if target_tile.distance_to(shooter_tile) > range:
+	if target_tile.distance_to(shooter_tile) > max_range:
 		return
 
 	# LOS check

@@ -7,6 +7,7 @@
 script = ExtResource("1_743fu")
 
 [node name="WagonContainer" type="Node2D" parent="." unique_id=502085928]
+y_sort_enabled = true
 
 [node name="Labels" type="Node2D" parent="." unique_id=832468328]
 

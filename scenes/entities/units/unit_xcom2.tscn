@@ -51,9 +51,15 @@ position = Vector2(0, -12)
 scale = Vector2(0.5, 1)
 shape = SubResource("CircleShape2D_gbknk")
 
+[node name="HpBar" parent="." index="11" unique_id=1337128565]
+position = Vector2(0, -94)
+
 [node name="BehaviorIcon" type="Sprite2D" parent="." index="12" unique_id=1941898626]
-position = Vector2(5, -67)
+position = Vector2(5, -112)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("5_cfhyt")
 hframes = 3
 vframes = 2
+
+[node name="ApBar" parent="." index="13" unique_id=390017496]
+position = Vector2(0, -77)

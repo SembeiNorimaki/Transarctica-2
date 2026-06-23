@@ -45,6 +45,7 @@ class_name CombatScene
 @onready var fov_overlay: Node2D = $Overlays/FOVOverlay
 @onready var reachable_tiles_overlay: Node2D = $Overlays/ReachableTilesOverlay
 @onready var cover_overlay: Node2D = $Overlays/CoverOverlay
+@onready var defensiveness_overlay: Node2D = $Overlays/DefensivenessOverlay
 
 
 # Map 
@@ -111,6 +112,10 @@ func _inject_services():
 	unit_manager.camera_controller = camera_controller
 	unit_manager.navigation_graph_service = navigation_graph_service
 	unit_manager.los_service = los_service
+	unit_manager.cover_service = cover_service
+	unit_manager.weapon_service = weapon_service
+	unit_manager.pathfinding_service = pathfinding_service
+	unit_manager.defensiveness_overlay = defensiveness_overlay
 	
 	building_manager.tile_occupancy_service = tile_occupancy_service
 	building_manager.grid_service = grid_service
@@ -144,6 +149,7 @@ func _inject_services():
 	fov_overlay.grid_service = grid_service
 	reachable_tiles_overlay.grid_service = grid_service
 	cover_overlay.grid_service = grid_service
+	defensiveness_overlay.grid_service = grid_service
 
 	# Services
 	grid_service.camera_controller = camera_controller

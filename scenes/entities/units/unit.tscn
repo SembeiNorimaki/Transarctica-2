@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://weql0gj4tcs4" path="res://scenes/components/health_bar.tscn" id="7_fh57n"]
 [ext_resource type="PackedScene" uid="uid://drqrhvj5benvu" path="res://scenes/components/ap_component.tscn" id="8_kaxgi"]
 [ext_resource type="PackedScene" uid="uid://d3yercai7kjkt" path="res://scenes/ai/unit_ai.tscn" id="9_kaxgi"]
+[ext_resource type="PackedScene" uid="uid://ymohgfwvv8og" path="res://scenes/components/ap_bar.tscn" id="10_y8rb5"]
 
 [node name="Unit" type="Node2D" unique_id=504117717]
 script = ExtResource("1_mqyo6")
@@ -62,8 +63,12 @@ text = "AP"
 
 [node name="DebugDraw" type="Node2D" parent="." unique_id=892141176]
 
-[node name="HealthBar" parent="." unique_id=77219002 instance=ExtResource("7_fh57n")]
-
 [node name="ApComponent" parent="." unique_id=1865661916 instance=ExtResource("8_kaxgi")]
 
 [node name="UnitAI" parent="." unique_id=423845914 instance=ExtResource("9_kaxgi")]
+
+[node name="HpBar" parent="." unique_id=1337128565 instance=ExtResource("7_fh57n")]
+position = Vector2(0, -67)
+
+[node name="ApBar" parent="." unique_id=390017496 instance=ExtResource("10_y8rb5")]
+position = Vector2(0, -58)

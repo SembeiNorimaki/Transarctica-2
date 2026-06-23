@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://ymohgfwvv8og"]
+
+[ext_resource type="PackedScene" uid="uid://d2tbhw4saruem" path="res://scenes/components/generic_bar.tscn" id="1_6myvk"]
+[ext_resource type="Script" uid="uid://cbia7jsa14gy5" path="res://scripts/ui/ap_bar.gd" id="2_bfat2"]
+
+[node name="ApBar" unique_id=1337128565 instance=ExtResource("1_6myvk")]
+script = ExtResource("2_bfat2")
+
+[node name="Fill" parent="." index="1" unique_id=1041461801]
+color = Color(0, 0, 1, 1)

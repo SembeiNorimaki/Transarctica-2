@@ -51,6 +51,7 @@ script = ExtResource("4_tw4gw")
 [node name="Containers" type="Node2D" parent="." unique_id=330968115]
 
 [node name="Trains" type="Node2D" parent="Containers" unique_id=981413229]
+y_sort_enabled = true
 
 [node name="CityLabels" type="Node2D" parent="Containers" unique_id=1440292590]
 

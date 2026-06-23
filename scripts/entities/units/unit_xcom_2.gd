@@ -1,24 +1,24 @@
 extends Unit
 
-@onready var torso: AnimatedSprite2D = $Parts/Torso
-@onready var legs: AnimatedSprite2D = $Parts/Legs
-@onready var left_arm: AnimatedSprite2D = $Parts/LeftArmFree
-@onready var right_arm: AnimatedSprite2D = $Parts/RightArmWeapon
-@onready var weapon: AnimatedSprite2D = $Parts/Weapon
-@onready var dead_part: AnimatedSprite2D = $Parts/Dead
+@onready var torso_sprite: AnimatedSprite2D = $Parts/Torso
+@onready var legs_sprite: AnimatedSprite2D = $Parts/Legs
+@onready var left_arm_sprite: AnimatedSprite2D = $Parts/LeftArmFree
+@onready var right_arm_sprite: AnimatedSprite2D = $Parts/RightArmWeapon
+@onready var weapon_sprite: AnimatedSprite2D = $Parts/Weapon
+@onready var dead_part_sprite: AnimatedSprite2D = $Parts/Dead
 
 
 @onready var render_order = {
-	"N": [weapon, left_arm, legs, torso, right_arm],
-	"S": [torso, legs, right_arm, left_arm, weapon],
+	"N": [weapon_sprite, left_arm_sprite, legs_sprite, torso_sprite, right_arm_sprite],
+	"S": [torso_sprite, legs_sprite, right_arm_sprite, left_arm_sprite, weapon_sprite],
 	
-	"NE": [left_arm, legs, torso, weapon, right_arm],
-	"E": [left_arm, legs, torso, weapon, right_arm],
-	"SE": [left_arm, legs, torso, weapon, right_arm],
+	"NE": [left_arm_sprite, legs_sprite, torso_sprite, weapon_sprite, right_arm_sprite],
+	"E": [left_arm_sprite, legs_sprite, torso_sprite, weapon_sprite, right_arm_sprite],
+	"SE": [left_arm_sprite, legs_sprite, torso_sprite, weapon_sprite, right_arm_sprite],
 	
-	"SW": [right_arm, legs, torso, left_arm, weapon],
-	"W": [right_arm, weapon, legs, torso, left_arm],
-	"NW": [right_arm, weapon, legs, torso, left_arm]
+	"SW": [right_arm_sprite, legs_sprite, torso_sprite, left_arm_sprite, weapon_sprite],
+	"W": [right_arm_sprite, weapon_sprite, legs_sprite, torso_sprite, left_arm_sprite],
+	"NW": [right_arm_sprite, weapon_sprite, legs_sprite, torso_sprite, left_arm_sprite]
 }
 
 var ori_to_weapon_holding_ori = {
@@ -55,18 +55,18 @@ func toggle_crouch():
 
 func set_weapon_type(id: String):
 	var frames_dict = SoldierAtlasLoader.get_weapon_type(id)
-	weapon.sprite_frames = frames_dict["weapon"]
+	weapon_sprite.sprite_frames = frames_dict["weapon"]
 	#print("Weapon: %s" % weapon.sprite_frames.get_animation_names())
 
 func set_soldier_type(id: String):
 	#print("Setting soldier type to %s" % id)
 	var frames_dict = SoldierAtlasLoader.get_soldier_type(id)
 	#print("FramesDict:", frames_dict["dead_part"])
-	torso.sprite_frames = frames_dict["torso"]
-	legs.sprite_frames = frames_dict["legs"]
-	left_arm.sprite_frames = frames_dict["left_arm"]
-	right_arm.sprite_frames = frames_dict["right_arm"]
-	dead_part.sprite_frames = frames_dict["dead_part"]
+	torso_sprite.sprite_frames = frames_dict["torso"]
+	legs_sprite.sprite_frames = frames_dict["legs"]
+	left_arm_sprite.sprite_frames = frames_dict["left_arm"]
+	right_arm_sprite.sprite_frames = frames_dict["right_arm"]
+	dead_part_sprite.sprite_frames = frames_dict["dead_part"]
 
 	var animation_name = "%s_%s" % ["IdleState", orientation]
 	play_animation("IdleState", orientation)
@@ -86,13 +86,13 @@ func set_orientation(new_orientation: String):
 		part.z_index = i
 	
 	play_animation(get_current_action(), new_orientation)
-	unit_manager.on_unit_orientation_changed(self , new_orientation)
+	unit_manager.on_unit_orientation_changed(self, new_orientation)
 	queue_redraw()
 
 func play_animation(state_: String, orientation_: String):
 	if state_ == "DeadState":
-		print("playing animation dead, ", dead_part)
-		dead_part.play("DeadState_default")
+		print("playing animation dead, ", dead_part_sprite)
+		dead_part_sprite.play("DeadState_default")
 		return
 
 
@@ -105,18 +105,18 @@ func play_animation(state_: String, orientation_: String):
 	current_animation = animation_name
 	is_animation_playing = true
 
-	torso.play(animation_name)
+	torso_sprite.play(animation_name)
 	if is_crouching:
-		legs.play("CrouchState_" + orientation_)
+		legs_sprite.play("CrouchState_" + orientation_)
 	else:
-		legs.play(animation_name)
-	left_arm.play(animation_name)
-	right_arm.play(animation_name)
+		legs_sprite.play(animation_name)
+	left_arm_sprite.play(animation_name)
+	right_arm_sprite.play(animation_name)
 	if state_ == "AimState":
-		weapon.offset = weapon_aiming_offsets[orientation_]
+		weapon_sprite.offset = weapon_aiming_offsets[orientation_]
 	else:
-		weapon.offset = Vector2(0, 0)
-	weapon.play(animation_name)
+		weapon_sprite.offset = Vector2(0, 0)
+	weapon_sprite.play(animation_name)
 	#else:
 	#	var weapon_animation_name = "%s_%s" % [state_, ori_to_weapon_holding_ori[orientation_]]
 	#	weapon.play(weapon_animation_name)

@@ -1,28 +1,7 @@
 [gd_scene format=3 uid="uid://weql0gj4tcs4"]
 
-[ext_resource type="Script" uid="uid://c867c7wpga0fd" path="res://scripts/components/health_bar.gd" id="1_cmd0n"]
+[ext_resource type="PackedScene" uid="uid://d2tbhw4saruem" path="res://scenes/components/generic_bar.tscn" id="1_cmd0n"]
+[ext_resource type="Script" uid="uid://b5xvs35hr04tj" path="res://scripts/ui/health_bar.gd" id="2_b05m6"]
 
-[node name="HealthBar" type="Node2D" unique_id=77219002]
-script = ExtResource("1_cmd0n")
-
-[node name="Background" type="ColorRect" parent="." unique_id=1749218945]
-offset_left = -16.0
-offset_top = -32.0
-offset_right = 16.0
-offset_bottom = -28.0
-color = Color(1, 0, 0, 1)
-
-[node name="Fill" type="ColorRect" parent="." unique_id=1041461801]
-offset_left = -16.0
-offset_top = -32.0
-offset_right = 16.0
-offset_bottom = -28.0
-color = Color(0, 1, 0, 1)
-
-[node name="Value" type="Label" parent="." unique_id=1997362610]
-offset_left = 17.0
-offset_top = -34.0
-offset_right = 57.0
-offset_bottom = -11.0
-scale = Vector2(0.3, 0.3)
-text = "50"
+[node name="HealthBar" unique_id=1337128565 instance=ExtResource("1_cmd0n")]
+script = ExtResource("2_b05m6")
