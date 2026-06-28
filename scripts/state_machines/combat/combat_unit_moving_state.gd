@@ -8,9 +8,9 @@ func _ready():
     pass
 
 func enter(params = {}):
-	# print("Enter CombatUnitMovingState with params %s" % params)
-	selected_unit = params["selected_unit"]
-	#parent_scene.selection_manager.select_unit(selected_unit)
+    # print("Enter CombatUnitMovingState with params %s" % params)
+    selected_unit = params["selected_unit"]
+    #parent_scene.selection_manager.select_unit(selected_unit)
 
 func exit(params = {}):
     pass

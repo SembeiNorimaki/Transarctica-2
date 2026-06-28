@@ -1,48 +1,48 @@
 {
-	"0": {
-		"Name": "Barcelona",
-		"Type": "City",
-		"Location": [
-			13,
-			3
-		],
-		"TradeResources": {
-			"fish": {
-				"BuyPrice": 2,
-				"SellPrice": 3,
-				"Quantity": 1
-			},
-			"caviar": {
-				"BuyPrice": 4,
-				"SellPrice": 5,
-				"Quantity": 6
-			},
-			"furs": {
-				"BuyPrice": 4,
-				"SellPrice": 5,
-				"Quantity": 12
-			}
-		}
-	},
-	"1": {
-		"Name": "Madrid",
-		"Type": "City",
-		"Location": [
-			20,
-			5
-		],
-		"TradeResources": {
-			"alcohol": {
-				"BuyPrice": 6,
-				"SellPrice": 7,
-				"Quantity": 11
-			},
-			"missiles": {
-				"BuyPrice": 8,
-				"SellPrice": 9,
-				"Quantity": 12
-			}
-		}
-	}
-	
+    "0": {
+        "Name": "Barcelona",
+        "Type": "City",
+        "Location": [
+            13,
+            3
+        ],
+        "TradeResources": {
+            "fish": {
+                "BuyPrice": 2,
+                "SellPrice": 3,
+                "Quantity": 1
+            },
+            "caviar": {
+                "BuyPrice": 4,
+                "SellPrice": 5,
+                "Quantity": 6
+            },
+            "furs": {
+                "BuyPrice": 4,
+                "SellPrice": 5,
+                "Quantity": 12
+            }
+        }
+    },
+    "1": {
+        "Name": "Madrid",
+        "Type": "City",
+        "Location": [
+            20,
+            5
+        ],
+        "TradeResources": {
+            "alcohol": {
+                "BuyPrice": 6,
+                "SellPrice": 7,
+                "Quantity": 11
+            },
+            "missiles": {
+                "BuyPrice": 8,
+                "SellPrice": 9,
+                "Quantity": 12
+            }
+        }
+    }
+    
 }

@@ -7,11 +7,11 @@ var has_fired: bool = false
 var weapon_service: WeaponService
 
 func enter(params = {}):
-	# print("UnitActionAttackState: enter")
-	unit = params.unit
-	weapon_service = params.weapon_service
-	target_tile = params.target_tile
-	has_fired = false
+    # print("UnitActionAttackState: enter")
+    unit = params.unit
+    weapon_service = params.weapon_service
+    target_tile = params.target_tile
+    has_fired = false
 
     # Rotate unit toward target
 

@@ -8,5 +8,5 @@ func set_frame(frame):
     sprite.frame = frame
 
 func apply_damage(amount: float):
-	# print("Applying damage to wall edge, not implemented")
-	pass
+    # print("Applying damage to wall edge, not implemented")
+    pass

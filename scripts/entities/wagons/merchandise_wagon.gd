@@ -16,5 +16,5 @@ func close_doors():
     animated_sprite.play("close")
 
 func on_click():
-	# print("Merchandise wagon clicked")
-	pass
+    # print("Merchandise wagon clicked")
+    pass

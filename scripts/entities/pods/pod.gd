@@ -19,15 +19,15 @@ signal movement_finished
 signal turn_finished
 
 func initialize(id_: String):
-	# print("Initializing pod with id %s" % id_)
-	id = id_
-	id_label.text = id
-	units_label.text = "nUnits: " + str(units.size())
+    # print("Initializing pod with id %s" % id_)
+    id = id_
+    id_label.text = id
+    units_label.text = "nUnits: " + str(units.size())
 
 
 func add_unit(unit_: Unit):
-	# print("Adding unit %s to pod %s" % [str(unit_.id), str(id)])
-	units.append(unit_)
+    # print("Adding unit %s to pod %s" % [str(unit_.id), str(id)])
+    units.append(unit_)
 
 func get_all_units() -> Array[Unit]:
     return units

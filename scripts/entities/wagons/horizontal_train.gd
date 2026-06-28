@@ -54,14 +54,14 @@ func _process(delta: float) -> void:
 
 # when train just stops, calculate what is the loading wagon
 func _on_train_just_stopped():
-	for i in range(wagons.size()):
-		if abs(wagons[i].global_position.x) < 50:
-			loading_wagon_idx = i
-			# print("Loading wagon idx: %s" % loading_wagon_idx)
-			return
-	loading_wagon_idx = -1
-	# print("Loading wagon idx: %s" % loading_wagon_idx)
-	
+    for i in range(wagons.size()):
+        if abs(wagons[i].global_position.x) < 50:
+            loading_wagon_idx = i
+            # print("Loading wagon idx: %s" % loading_wagon_idx)
+            return
+    loading_wagon_idx = -1
+    # print("Loading wagon idx: %s" % loading_wagon_idx)
+    
 
 func calculate_target_loading_wagon_idx():
     if speed > 0:

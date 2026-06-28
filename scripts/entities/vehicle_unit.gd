@@ -38,26 +38,29 @@ var resource_name_to_frame = {
 
 
 func check_click(mouse_pos) -> bool:
-	# print(mouse_pos, global_position, sprite_half_size)
-	if mouse_pos.x > global_position.x - sprite_half_size.x and \
-		mouse_pos.x < global_position.x + sprite_half_size.x and \
-		mouse_pos.y > global_position.y - 2 * sprite_half_size.y and \
-		mouse_pos.y < global_position.y:
-			return true
-	return false
-			
+    # print(mouse_pos, global_position, sprite_half_size)
+    if mouse_pos.x > global_position.x - sprite_half_size.x and \
+        mouse_pos.x < global_position.x + sprite_half_size.x and \
+        mouse_pos.y > global_position.y - 2 * sprite_half_size.y and \
+        mouse_pos.y < global_position.y:
+            return true
+    return false
+            
 
 func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	if event is InputEventMouseButton:
-		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-			pass
-			# print("Left mouse button clicked inside the Area2D")
+    if event is InputEventMouseButton:
+        if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+            pass
+            # print("Left mouse button clicked inside the Area2D")
 func set_resource_type(resource: String):
     if resource == "":
-        storage.visible = false
+        pass
+        #storage.visible = false
     else:
-        storage.visible = true
-        storage.frame = resource_name_to_frame[resource]
+        pass
+        #storage.visible = true
+        #storage.frame = resource_name_to_frame[resource]
 
 func set_resource_qty(qty: int):
-    qty_label.text = "%s / %s " % [str(qty), str(capacity)]
+    pass
+    #qty_label.text = "%s / %s " % [str(qty), str(capacity)]

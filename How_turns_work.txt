@@ -53,7 +53,7 @@
 # When it receives the action_finished signal it checks the EvaluateState if there's any action
 # left to do, if so it takes next action, otherwise it emits turn_finished
     func _ready():
-	    behavior_state_machine.states.EvaluateState.action_finished.connect(_on_action_finished)
+        behavior_state_machine.states.EvaluateState.action_finished.connect(_on_action_finished)
 
     func take_turn() -> void:
         behavior_state_machine.set_state("EvaluateState", {"unit": owner_node})
@@ -72,16 +72,16 @@
 
     func enter(params = {}):
         unit = params.unit
-	    take_next_action()
+        take_next_action()
 
     func take_next_action():
-	    match action_counter:
-		    0: _do_action_1()
-		    1: _do_action_2()
+        match action_counter:
+            0: _do_action_1()
+            1: _do_action_2()
             _: 
                 action_finished.emit()
                 return
-	    action_counter += 1
+        action_counter += 1
 
     func _do_action_1():
         print("Doing action 1")

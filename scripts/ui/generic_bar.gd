@@ -10,12 +10,12 @@ class_name GenericBar
 @onready var value := $Value
 
 func _ready() -> void:
-	background.size = Vector2(width, height)
-	fill.size = Vector2(width, height)
-	#position = offset
+    background.size = Vector2(width, height)
+    fill.size = Vector2(width, height)
+    #position = offset
 
 func update_value(current_: int, max_: float):
-	var ratio = float(current_) / float(max_)
-	fill.size.x = width * ratio
-	fill.visible = ratio > 0
-	value.text = str(current_) + " / " + str(max_)
+    var ratio = float(current_) / float(max_)
+    fill.size.x = width * ratio
+    fill.visible = ratio > 0
+    value.text = str(current_) + " / " + str(max_)

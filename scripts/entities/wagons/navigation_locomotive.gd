@@ -24,11 +24,11 @@ func set_pos(new_pos: Vector2):
     current_tile = grid_service.world_to_tile(new_pos)
 
 func set_orientation(new_ori: String):
-	# print("Setting locomotive orientation to %s" % new_ori)
-	if orientation != new_ori:
-		orientation = new_ori
-		update_animation()
-		
+    # print("Setting locomotive orientation to %s" % new_ori)
+    if orientation != new_ori:
+        orientation = new_ori
+        update_animation()
+        
 func set_heading(new_heading: Vector2):
     heading = new_heading
 

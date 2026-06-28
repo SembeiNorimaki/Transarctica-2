@@ -108,22 +108,22 @@ func get_qty() -> int:
 
 
 func load_crate(resource_name: String):
-	# print("Loading crate")
-	cargo = resource_name
-	cargo_sprite.frame = resource_name_to_frame[resource_name]
-	cargo_sprite.visible = true
-	crate_qty += 1
-	crate.set_qty(crate_qty)
+    # print("Loading crate")
+    cargo = resource_name
+    cargo_sprite.frame = resource_name_to_frame[resource_name]
+    cargo_sprite.visible = true
+    crate_qty += 1
+    crate.set_qty(crate_qty)
 
 func unload_crate() -> String:
-	# print("Unloading crate")
-	crate_qty -= 1
-	crate.set_qty(crate_qty)
-	if crate_qty == 0:
-		cargo = ""
-		cargo_sprite.visible = false
-	return cargo
-	
+    # print("Unloading crate")
+    crate_qty -= 1
+    crate.set_qty(crate_qty)
+    if crate_qty == 0:
+        cargo = ""
+        cargo_sprite.visible = false
+    return cargo
+    
 func set_crate_qty(qty: int):
     crate_qty = qty
     crate.set_qty(crate_qty)

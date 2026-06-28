@@ -5,39 +5,39 @@ extends Node
 var city_scene
 
 func _ready() -> void:
-	pass
+    pass
 
 func _process(delta: float) -> void:
-	pass
+    pass
 
 
 func enter_city(city_name: String):
-	# Disable navigation scene
-	navigation_scene.visible = false
-	navigation_scene.camera_controller.cam.enabled = false
-	navigation_scene.set_process(false)
-	navigation_scene.set_physics_process(false)
+    # Disable navigation scene
+    navigation_scene.visible = false
+    navigation_scene.camera_controller.cam.enabled = false
+    navigation_scene.set_process(false)
+    navigation_scene.set_physics_process(false)
 
-	# Load and instantiate the city scene
-	var CITY_SCENE_CLASS = load("res://scenes/core/trade_scene.tscn")
-	city_scene = CITY_SCENE_CLASS.instantiate()
+    # Load and instantiate the city scene
+    var CITY_SCENE_CLASS = load("res://scenes/core/trade_scene.tscn")
+    city_scene = CITY_SCENE_CLASS.instantiate()
 
-	# Pass city data to the cisty scene
-	city_scene.call_deferred("initialize", city_name)
+    # Pass city data to the cisty scene
+    city_scene.call_deferred("initialize", city_name)
 
-	# Add it to scene tree
-	get_parent().add_child(city_scene)
+    # Add it to scene tree
+    get_parent().add_child(city_scene)
 
 func leave_city():
-	if city_scene:
-		city_scene.queue_free()
-		city_scene = null
-	
-	# Re-enable navigation scene
-	navigation_scene.visible = true
-	navigation_scene.camera_controller.cam.enabled = true
-	navigation_scene.set_process(true)
-	navigation_scene.set_physics_process(true)
+    if city_scene:
+        city_scene.queue_free()
+        city_scene = null
+    
+    # Re-enable navigation scene
+    navigation_scene.visible = true
+    navigation_scene.camera_controller.cam.enabled = true
+    navigation_scene.set_process(true)
+    navigation_scene.set_physics_process(true)
 
-	navigation_scene.recenter_player_train()
-	navigation_scene.reverse_player_train_direction()
+    navigation_scene.recenter_player_train()
+    navigation_scene.reverse_player_train_direction()

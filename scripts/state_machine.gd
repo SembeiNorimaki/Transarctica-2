@@ -9,18 +9,18 @@ var id: String
 #signal state_finished
 
 func _ready():
-	owner_node = get_parent()
-	id = owner_node.name
-	# print("Initializing state machine %s" % id)
-	# Discover all child states automatically
-	for child in get_children():
-		if child is GenericState:
-			# print("Child state found: %s" % child.name)
-			states[child.name] = child
-			child.set_owner_node(owner_node)
-			child.set_state_machine(self)
-		##print("SM %s Discovered child %s of type %s" % [id, child.name, child])
-	call_deferred("init")
+    owner_node = get_parent()
+    id = owner_node.name
+    # print("Initializing state machine %s" % id)
+    # Discover all child states automatically
+    for child in get_children():
+        if child is GenericState:
+            # print("Child state found: %s" % child.name)
+            states[child.name] = child
+            child.set_owner_node(owner_node)
+            child.set_state_machine(self)
+        ##print("SM %s Discovered child %s of type %s" % [id, child.name, child])
+    call_deferred("init")
 
 func init() -> void:
     # Initialize to IdleState or first state

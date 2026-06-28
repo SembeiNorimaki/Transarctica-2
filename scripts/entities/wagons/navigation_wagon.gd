@@ -51,17 +51,17 @@ func set_wagon_type(wagon_type_: String) -> void:
     var atlas_path = "res://assets/sprites/wagons/navigation/nav_%s.png" % wagon_type
     var atlas: Texture2D = load(atlas_path)
 
-	var orientations = WagonTypes.TYPES[wagon_type].navigation_atlas_orientations
-	var cargos = WagonTypes.TYPES[wagon_type].navigation_atlas_cargo
-	var default_cargo = WagonTypes.TYPES[wagon_type].default_cargo
-	
-	cargo = default_cargo
-	# print("Setting cargo to %s" % cargo)
-	
-	if atlas == null:
-		push_error("Missing atlas for wagon type: %s" % wagon_type)
-		return
-	_create_animations_from_atlas(atlas, orientations, cargos)
+    var orientations = WagonTypes.TYPES[wagon_type].navigation_atlas_orientations
+    var cargos = WagonTypes.TYPES[wagon_type].navigation_atlas_cargo
+    var default_cargo = WagonTypes.TYPES[wagon_type].default_cargo
+    
+    cargo = default_cargo
+    # print("Setting cargo to %s" % cargo)
+    
+    if atlas == null:
+        push_error("Missing atlas for wagon type: %s" % wagon_type)
+        return
+    _create_animations_from_atlas(atlas, orientations, cargos)
 
 func _create_animations_from_atlas(atlas: Texture2D, orientations: Array, cargos: Array) -> void:
     var frames := SpriteFrames.new()
@@ -97,13 +97,13 @@ func set_pos(new_pos: Vector2):
     current_tile = grid_service.world_to_tile(new_pos)
 
 func set_orientation(new_ori: String):
-	# print("Setting wagon orientation to %s" % new_ori)
-	if orientation != new_ori:
-		orientation = new_ori
-		# change the position of the attachments
-		attachments.front.position = ATTACHMENTS_OFFSETS[new_ori].front
-		attachments.back.position = ATTACHMENTS_OFFSETS[new_ori].back
-		update_animation()
+    # print("Setting wagon orientation to %s" % new_ori)
+    if orientation != new_ori:
+        orientation = new_ori
+        # change the position of the attachments
+        attachments.front.position = ATTACHMENTS_OFFSETS[new_ori].front
+        attachments.back.position = ATTACHMENTS_OFFSETS[new_ori].back
+        update_animation()
 
 #region attachments
 func enable_front_attachment(enabled: bool):
@@ -121,10 +121,10 @@ func set_heading(new_heading: Vector2):
     heading = new_heading
 
 func update_animation():
-	var animation_name = "%s_%s_%s" % [orientation, cargo_amount, cargo]
-	# print("%s: Animation name: %s" % [wagon_type, animation_name])
-	sprite.set_animation(animation_name)
-	sprite.play(animation_name)
+    var animation_name = "%s_%s_%s" % [orientation, cargo_amount, cargo]
+    # print("%s: Animation name: %s" % [wagon_type, animation_name])
+    sprite.set_animation(animation_name)
+    sprite.play(animation_name)
 
 func _process(delta):
     _move(delta)

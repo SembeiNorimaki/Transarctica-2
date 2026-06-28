@@ -198,22 +198,22 @@ func _spawn_wagons():
 #endregion
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed:
-		var mouse_pos = get_local_mouse_position()
-		var tile = grid_service.world_to_tile(mouse_pos)
-		# print("Mouse pos: %s, tile: %s" % [mouse_pos, tile])
-		if rail_service.has_rail(tile):
-			# print("Clicked a rail")
-			if rail_service.has_junction(tile):
-				# print(" which is also a junction")
-				rail_service.change_junction(tile)
-	# if event is InputEventKey:
-	# 	if event.as_text_keycode() == "Ctrl":
-	if Input.is_action_just_pressed("ctrl"):
-		_handle_gear_toggle()
-	if Input.is_action_just_pressed("shift"):
-		_handle_reverse_train()
-	
+    if event is InputEventMouseButton and event.pressed:
+        var mouse_pos = get_local_mouse_position()
+        var tile = grid_service.world_to_tile(mouse_pos)
+        # print("Mouse pos: %s, tile: %s" % [mouse_pos, tile])
+        if rail_service.has_rail(tile):
+            # print("Clicked a rail")
+            if rail_service.has_junction(tile):
+                # print(" which is also a junction")
+                rail_service.change_junction(tile)
+    # if event is InputEventKey:
+    #     if event.as_text_keycode() == "Ctrl":
+    if Input.is_action_just_pressed("ctrl"):
+        _handle_gear_toggle()
+    if Input.is_action_just_pressed("shift"):
+        _handle_reverse_train()
+    
 func _handle_gear_toggle() -> void:
     train_manager.gear_toggle()
 
@@ -231,11 +231,11 @@ func reverse_player_train_direction():
 
 
 func _on_train_reached_city(city_name: String):
-	# print("Nav Scene: Train reached city %s" % city_name)
-	# Fade out travel music before entering the city scene.
-	AudioService.stop_music(1.5)
-	QuestManager.notify_city_reached(city_name)
-	SceneManager.enter_city(city_name)
+    # print("Nav Scene: Train reached city %s" % city_name)
+    # Fade out travel music before entering the city scene.
+    AudioService.stop_music(1.5)
+    QuestManager.notify_city_reached(city_name)
+    SceneManager.enter_city(city_name)
 
 
 func _process(delta: float) -> void:

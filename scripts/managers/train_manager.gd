@@ -82,11 +82,11 @@ func _ready() -> void:
 
 #region train spawning
 func spawn_train(tile_pos: Vector2i, ori: String, team: String):
-	# print("Spawning a train at tile %s with orientation %s" % [tile_pos, ori])
-	var id = "t%s%s" % [team[0], next_train_id[team]]
-	next_train_id[team] += 1
-	
-	var train = TRAIN_SCENE.instantiate()
+    # print("Spawning a train at tile %s with orientation %s" % [tile_pos, ori])
+    var id = "t%s%s" % [team[0], next_train_id[team]]
+    next_train_id[team] += 1
+    
+    var train = TRAIN_SCENE.instantiate()
 
     # Dependency injection
     train.train_manager = self
@@ -154,8 +154,8 @@ func on_train_tile_changed(train: NavigationTrain, old_tile: Vector2i, new_tile:
     _check_tile_events(train, new_tile)
     
 func _check_tile_events(train: NavigationTrain, new_tile: Vector2i) -> void:
-	if cities_manager.is_entry_tile(new_tile):
-		var city = cities_manager.get_city_by_entry_tile(new_tile)
-		# print("Train reached city %s" % city.name)
-		train.inmediate_stop()
-		emit_signal("train_reached_city", city.name)
+    if cities_manager.is_entry_tile(new_tile):
+        var city = cities_manager.get_city_by_entry_tile(new_tile)
+        # print("Train reached city %s" % city.name)
+        train.inmediate_stop()
+        emit_signal("train_reached_city", city.name)

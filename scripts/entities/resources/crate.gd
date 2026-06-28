@@ -19,13 +19,13 @@ func set_mode(mode_: String):
         sprite_inground.visible = true
 
 func set_qty(qty_: int):
-	# print("Setting crate qty to %s" % qty_)
-	qty = qty_
-	if qty_ == 0:
-		current_sprite.visible = false
-	elif qty_ > 12:
-		current_sprite.frame = 11
-		current_sprite.visible = true
-	else:
-		current_sprite.frame = qty_ - 1
-		current_sprite.visible = true
+    # print("Setting crate qty to %s" % qty_)
+    qty = qty_
+    if qty_ == 0:
+        current_sprite.visible = false
+    elif qty_ > 12:
+        current_sprite.frame = 11
+        current_sprite.visible = true
+    else:
+        current_sprite.frame = qty_ - 1
+        current_sprite.visible = true

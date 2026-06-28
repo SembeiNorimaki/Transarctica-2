@@ -2,10 +2,10 @@ extends GenericState
 class_name UnitBehaviorPatrol
 
 func enter(params = {}):
-	pass
+    pass
 
 func exit(params = {}):
-	pass
+    pass
 
 func update(delta: float):
-	pass
+    pass

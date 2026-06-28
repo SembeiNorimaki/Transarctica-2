@@ -252,8 +252,8 @@ func _update_speed(delta: float):
 
 
 func _on_locomotive_tile_changed(locomotive, old_tile: Vector2i, new_tile: Vector2i):
-	# print("*** Locomotive has changed tile")
-	_handle_tile_change(locomotive, old_tile, new_tile)
+    # print("*** Locomotive has changed tile")
+    _handle_tile_change(locomotive, old_tile, new_tile)
 
     # locomotive should also handle exploration
     #var vision_tiles: Array[Vector2i] = []
@@ -265,8 +265,8 @@ func _on_locomotive_tile_changed(locomotive, old_tile: Vector2i, new_tile: Vecto
     train_tile_changed.emit(self, old_tile, new_tile)
 
 func _on_wagon_tile_changed(wagon, old_tile: Vector2i, new_tile: Vector2i):
-	# print("*** Wagon has changed tile")
-	_handle_tile_change(wagon, old_tile, new_tile)
+    # print("*** Wagon has changed tile")
+    _handle_tile_change(wagon, old_tile, new_tile)
 
 func _handle_tile_change(wagon, old_tile: Vector2i, new_tile: Vector2i):
     # Here we need to check with the rail_service what will be the next orientation for the wagon

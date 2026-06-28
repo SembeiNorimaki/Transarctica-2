@@ -17,11 +17,11 @@ var train_space: int = 0
 signal on_button_clicked(buttonIdx: int)
 
 func initialize(data):
-	# print("initializing trademenu with data %s" % data)
-	resource_name = data.name
-	available = data.available
-	price = data.price
-	train_space = data.train_space
+    # print("initializing trademenu with data %s" % data)
+    resource_name = data.name
+    available = data.available
+    price = data.price
+    train_space = data.train_space
 
     update_labels()
 

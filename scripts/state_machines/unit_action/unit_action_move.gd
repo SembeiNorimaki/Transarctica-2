@@ -41,8 +41,8 @@ signal unit_arrived_to_tile(tile: Vector2i)
 
 # params should contain injected scenes and parameters needed by the node
 func enter(params = {}):
-	# print("UnitSM enters move state")
-	unit = params["unit"]
+    # print("UnitSM enters move state")
+    unit = params["unit"]
 
     unit_arrived_to_tile.connect(unit._on_unit_arrived_to_tile)
 

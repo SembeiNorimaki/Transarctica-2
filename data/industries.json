@@ -1,34 +1,34 @@
 {
-	"ClayMine1": {
-		"Type": "Industry",
-		"Location": [
-			13,
-			3
-		],
-		"Requires": [],
-		"Produces": [
+    "ClayMine1": {
+        "Type": "Industry",
+        "Location": [
+            13,
+            3
+        ],
+        "Requires": [],
+        "Produces": [
             "clay"
-		]
-	},
-	"BrickFactory1": {
-		"Type": "Industry",
-		"Location": [
-			20,
-			5
-		],
-		"Requires": [
+        ]
+    },
+    "BrickFactory1": {
+        "Type": "Industry",
+        "Location": [
+            20,
+            5
+        ],
+        "Requires": [
             "clay"
-		],
-		"Produces": [
+        ],
+        "Produces": [
             "bricks"
-		],
-		"formula": {
-			"input": {
-				"clay": 2
-			},
-			"output": {
-				"bricks": 1
-			}
-		}
-	}
+        ],
+        "formula": {
+            "input": {
+                "clay": 2
+            },
+            "output": {
+                "bricks": 1
+            }
+        }
+    }
 }

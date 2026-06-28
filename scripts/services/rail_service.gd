@@ -215,36 +215,36 @@ func get_tile_edges(tile: Vector2i) -> Array:
 # When arriving to a tile, we need to know which edge we are using to arrive there
 # We know old tile and new tile, so can compute delta. From delta we can get the entry edge
 func calculate_new_orientation(tile: Vector2i, delta: Vector2i):
-	var entry_edge = DELTA_TO_ENTRY_EDGE[delta]
-	# We enter tile (1,1) from W
-	# We need to know if this tile has an edge connecting W to somewhere
-	var exit_edge = null
-	# print("Calculating new orientation. Available edges:")
-	for edge in edges[tile]:
-		# print(" %s, %s " % [edge.a, edge.b])
-		pass
-	var edge = edges[tile][0]
-	
-	if edge.a == entry_edge:
-		exit_edge = edge.b
-	elif edge.b == entry_edge:
-		exit_edge = edge.a
-	else:
-		# this is reached if the edge does not have the entry edge
-		# which happens in junctions if we enter from the disconnected side
-		pass
-		
-	
-	if exit_edge:
-		var edge_str = "%s%s" % [entry_edge, exit_edge]
-		var new_ori = RAIL_TO_ORI[edge_str]
-		# print("New orientation: %s" % new_ori)
-		if new_ori in orientations:
-			return new_ori
-		else:
-			new_ori = new_ori.reverse()
-			return new_ori
-	return null
+    var entry_edge = DELTA_TO_ENTRY_EDGE[delta]
+    # We enter tile (1,1) from W
+    # We need to know if this tile has an edge connecting W to somewhere
+    var exit_edge = null
+    # print("Calculating new orientation. Available edges:")
+    for edge in edges[tile]:
+        # print(" %s, %s " % [edge.a, edge.b])
+        pass
+    var edge = edges[tile][0]
+    
+    if edge.a == entry_edge:
+        exit_edge = edge.b
+    elif edge.b == entry_edge:
+        exit_edge = edge.a
+    else:
+        # this is reached if the edge does not have the entry edge
+        # which happens in junctions if we enter from the disconnected side
+        pass
+        
+    
+    if exit_edge:
+        var edge_str = "%s%s" % [entry_edge, exit_edge]
+        var new_ori = RAIL_TO_ORI[edge_str]
+        # print("New orientation: %s" % new_ori)
+        if new_ori in orientations:
+            return new_ori
+        else:
+            new_ori = new_ori.reverse()
+            return new_ori
+    return null
 
 
 func change_junction(tile: Vector2i) -> void:
@@ -262,13 +262,13 @@ func change_junction(tile: Vector2i) -> void:
         edges[tile].append(RailEdge.new(a, c, 1))
         edges[tile].append(RailEdge.new(b, c, 1))
 
-		# print("changing junction from %s to %s" % [rail_name, new_tilename])
-		var new_atlas_coords = RAILNAME_TO_ATLAS[new_tilename]
-		rails_tilemap.set_cell(tile, 0, new_atlas_coords)
+        # print("changing junction from %s to %s" % [rail_name, new_tilename])
+        var new_atlas_coords = RAILNAME_TO_ATLAS[new_tilename]
+        rails_tilemap.set_cell(tile, 0, new_atlas_coords)
 
 func has_junction(tile: Vector2i) -> bool:
-	# print("Checking if tile %s is a junction: %s " % [tile, rails[tile]])
-	return rails.has(tile) and rails[tile].length() == 3
+    # print("Checking if tile %s is a junction: %s " % [tile, rails[tile]])
+    return rails.has(tile) and rails[tile].length() == 3
 
 func has_rail(tile: Vector2i) -> bool:
     return rails.has(tile)

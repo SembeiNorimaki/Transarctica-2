@@ -49,19 +49,19 @@ func get_storage_capacity(resource_name: String) -> int:
     return info.get("max_capacity", 0) - info.get("qty", 0)
 
 func add_resource_amount(resource_name: String, qty: int) -> bool:
-	if not resources.has(resource_name):
-		return false
-	# print("Adding %s units of %s to city" % [qty, resource_name])
-	resources[resource_name].qty += qty
-	GameState.add_goods_to_city(city_name, resource_name, qty)
-	city_resource_amount_changed.emit(resource_name, resources[resource_name].qty)
-	return true
+    if not resources.has(resource_name):
+        return false
+    # print("Adding %s units of %s to city" % [qty, resource_name])
+    resources[resource_name].qty += qty
+    GameState.add_goods_to_city(city_name, resource_name, qty)
+    city_resource_amount_changed.emit(resource_name, resources[resource_name].qty)
+    return true
 
 func remove_resource_amount(resource_name: String, qty: int) -> bool:
-	if not resources.has(resource_name):
-		return false
-	# print("Removing %s units of %s from city" % [qty, resource_name])
-	resources[resource_name].qty -= qty
-	GameState.remove_goods_from_city(city_name, resource_name, qty)
-	city_resource_amount_changed.emit(resource_name, resources[resource_name].qty)
-	return true
+    if not resources.has(resource_name):
+        return false
+    # print("Removing %s units of %s from city" % [qty, resource_name])
+    resources[resource_name].qty -= qty
+    GameState.remove_goods_from_city(city_name, resource_name, qty)
+    city_resource_amount_changed.emit(resource_name, resources[resource_name].qty)
+    return true

@@ -10,8 +10,8 @@ class_name PlayerTurnState
 func enter(params = {}):
     # print("PlayerTurnState entered")
     pass
-# 	selected_unit = params["selected_unit"]
-# 	#parent_scene.selection_manager.select_unit(selected_unit)
+#     selected_unit = params["selected_unit"]
+#     #parent_scene.selection_manager.select_unit(selected_unit)
 
 # func exit(params = {}):
 #     pass

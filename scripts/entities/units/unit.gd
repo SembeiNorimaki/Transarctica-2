@@ -159,10 +159,10 @@ func stop_animation():
     sprite.stop()
 
 func set_selected(selected: bool) -> void:
-	#print("Selected: %s" % selected)
-	if selected:
-		navigation_graph_service.get_reachable_tiles(self, move_range)
-	sprite_selected.visible = selected
+    #print("Selected: %s" % selected)
+    if selected:
+        navigation_graph_service.get_reachable_tiles(self, move_range)
+    sprite_selected.visible = selected
 
 
 func move_to_tile(tile: Vector2i):
@@ -195,8 +195,8 @@ func _on_ap_changed(current: int, max_: int) -> void:
     ap_bar.update_value(current, max_)
     
 func _on_ap_exhausted() -> void:
-	# print("Unit %s ap exhausted" % id)
-	pass
+    # print("Unit %s ap exhausted" % id)
+    pass
 func get_ap() -> int:
     return ap_component.current_ap
 

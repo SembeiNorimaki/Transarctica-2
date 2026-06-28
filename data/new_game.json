@@ -1,10 +1,10 @@
 {
-	"world1": {
-		"map_name": "World 1",
-		"cities": "cities.json"
-		},
-	"world2": {
-		"map_name": "World 2",
-		"cities": "cities_World2.json"
-	}
+    "world1": {
+        "map_name": "World 1",
+        "cities": "cities.json"
+        },
+    "world2": {
+        "map_name": "World 2",
+        "cities": "cities_World2.json"
+    }
 }

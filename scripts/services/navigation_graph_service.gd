@@ -45,14 +45,14 @@ class NodeData:
 #     var cost: float
 
 func build_graph(terrain_tilemap: TileMapLayer):
-	# print("Building navigation graph")
-	nodes.clear()
-	nodes2x2.clear()
-	edges.clear()
-	edges2x2.clear()
-	adjacency.clear()
-	adjacency2x2.clear()
-	#blocked_edges.clear()
+    # print("Building navigation graph")
+    nodes.clear()
+    nodes2x2.clear()
+    edges.clear()
+    edges2x2.clear()
+    adjacency.clear()
+    adjacency2x2.clear()
+    #blocked_edges.clear()
 
     _build_nodes(terrain_tilemap)
     _build_edges()
@@ -76,26 +76,26 @@ func is_walkable_2x2(anchor: Vector2i) -> bool:
     return true
 
 func get_reachable_tiles(unit: Unit, max_cost: float) -> Array[Vector2i]:
-	var start := unit.current_tile
-	var footprint := 1
-	
-	# select the correct adjacency graph
-	var graph_adj := adjacency
-	if footprint == 2:
-		graph_adj = adjacency2x2
+    var start := unit.current_tile
+    var footprint := 1
+    
+    # select the correct adjacency graph
+    var graph_adj := adjacency
+    if footprint == 2:
+        graph_adj = adjacency2x2
 
     if not graph_adj.has(start):
         return []
 
-	var reachable: Array[Vector2i] = []
-	var g_cost := {} # tile -> cost
-	var visited := {} # tile -> bool
-	var open := [] # priority queue [ {tile, cost} ]
-	var came_from := {} # tile -> predecessor tile
+    var reachable: Array[Vector2i] = []
+    var g_cost := {} # tile -> cost
+    var visited := {} # tile -> bool
+    var open := [] # priority queue [ {tile, cost} ]
+    var came_from := {} # tile -> predecessor tile
 
-	g_cost[start] = 0.0
-	
-	open.append({"tile": start, "cost": 0.0})
+    g_cost[start] = 0.0
+    
+    open.append({"tile": start, "cost": 0.0})
 
     while open.size() > 0:
         # pop lowest cost entry
@@ -104,30 +104,30 @@ func get_reachable_tiles(unit: Unit, max_cost: float) -> Array[Vector2i]:
         var tile: Vector2i = current.tile
         var cost: float = current.cost
 
-		if visited.has(tile):
-			continue
-		visited[tile] = true
+        if visited.has(tile):
+            continue
+        visited[tile] = true
 
-		reachable.append(tile)
+        reachable.append(tile)
 
-		# Explore neighbors
-		for edge in graph_adj[tile]:
-			var neighbor = edge.to_tile
-			if visited.has(neighbor):
-				continue
+        # Explore neighbors
+        for edge in graph_adj[tile]:
+            var neighbor = edge.to_tile
+            if visited.has(neighbor):
+                continue
 
-			var new_cost = cost + edge.cost
-			if new_cost > max_cost:
-				continue
-			
-			if new_cost < g_cost.get(neighbor, INF):
-				g_cost[neighbor] = new_cost
-				came_from[neighbor] = tile
-				open.append({"tile": neighbor, "cost": new_cost})
-	
-	#print("Reachable tiles:",  reachable)
-	reachable_tiles_overlay.show_tiles(reachable, came_from)
-	return reachable
+            var new_cost = cost + edge.cost
+            if new_cost > max_cost:
+                continue
+            
+            if new_cost < g_cost.get(neighbor, INF):
+                g_cost[neighbor] = new_cost
+                came_from[neighbor] = tile
+                open.append({"tile": neighbor, "cost": new_cost})
+    
+    #print("Reachable tiles:",  reachable)
+    reachable_tiles_overlay.show_tiles(reachable, came_from)
+    return reachable
 
 
 # Priority queue comparator
@@ -181,14 +181,14 @@ func _build_edges():
 
         adjacency[tile] = []
 
-		for neighbor in grid_service.get_neighbors(tile):
-			if not nodes.has(neighbor):
-				continue
-			if not nodes[neighbor].walkable:
-				continue
-			if edge_occupancy_service.is_edge_walk_blocked(tile, neighbor):
-				# print("Wall found between %s and %s" % [tile, neighbor])
-				continue
+        for neighbor in grid_service.get_neighbors(tile):
+            if not nodes.has(neighbor):
+                continue
+            if not nodes[neighbor].walkable:
+                continue
+            if edge_occupancy_service.is_edge_walk_blocked(tile, neighbor):
+                # print("Wall found between %s and %s" % [tile, neighbor])
+                continue
 
             # prevent diagonal cutting
             var delta = neighbor - tile

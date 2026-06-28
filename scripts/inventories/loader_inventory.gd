@@ -32,13 +32,13 @@ func can_pick(resource_name_: String, from_origin: String) -> bool:
     return resource_name_ == resource_name and from_origin == origin
 
 func pick_from_city(resource_name_: String, qty: int) -> bool:
-	if not can_pick(resource_name_, "city"):
-		# print("Error, cannot pick from city")
-		return false
+    if not can_pick(resource_name_, "city"):
+        # print("Error, cannot pick from city")
+        return false
 
-	if crate_count + qty > max_crates:
-		# print("Error, insufficient amount in city")
-		return false
+    if crate_count + qty > max_crates:
+        # print("Error, insufficient amount in city")
+        return false
 
     # First pickup defines loader state
     if is_empty():
@@ -50,16 +50,16 @@ func pick_from_city(resource_name_: String, qty: int) -> bool:
 
 
 func pick_from_wagon(resource_name_: String, qty: int) -> bool:
-	if not can_pick(resource_name_, "wagon"):
-		# print("Error, cannot pick from wagon")
-		return false
-	
-	if is_empty():
-		resource_name = resource_name_
-		origin = "wagon"
-		
-	crate_count = min(crate_count + qty, max_crates)
-	return true
+    if not can_pick(resource_name_, "wagon"):
+        # print("Error, cannot pick from wagon")
+        return false
+    
+    if is_empty():
+        resource_name = resource_name_
+        origin = "wagon"
+        
+    crate_count = min(crate_count + qty, max_crates)
+    return true
 
 func finalize_into_city(qty: int) -> void:
     qty = min(qty, crate_count)

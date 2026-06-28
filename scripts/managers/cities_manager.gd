@@ -9,13 +9,13 @@ var grid_service: GridService
 var cities = {} # EntryTile -> {name, city_tile}
 
 func spawn_city(city_id: int, city_tile: Vector2i) -> void:
-	#var city_name = GameState.cities_by_location.get(Vector2i(tile.x, tile.y), "NOOOO")
-	var city_data = GameState.get_city_by_id(city_id)
-	var city_name = city_data.Name
-	# print("CityManager: Spawn %s" % city_name)
-	var entry_tile = _compute_entry_tile(city_tile)
-	cities[entry_tile] = {"name": city_name, "city_tile": city_tile, "city_id": city_id}
-	create_label(city_name, city_tile)
+    #var city_name = GameState.cities_by_location.get(Vector2i(tile.x, tile.y), "NOOOO")
+    var city_data = GameState.get_city_by_id(city_id)
+    var city_name = city_data.Name
+    # print("CityManager: Spawn %s" % city_name)
+    var entry_tile = _compute_entry_tile(city_tile)
+    cities[entry_tile] = {"name": city_name, "city_tile": city_tile, "city_id": city_id}
+    create_label(city_name, city_tile)
 
 func create_label(city_name: String, city_tile: Vector2i) -> void:
     var label = Label.new()

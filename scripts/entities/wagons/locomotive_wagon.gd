@@ -11,5 +11,5 @@ func set_money(money: int):
     qty_label.text = "Money: " + str(money)
 
 func on_click():
-	# print("Locomotive clicked")
-	pass
+    # print("Locomotive clicked")
+    pass

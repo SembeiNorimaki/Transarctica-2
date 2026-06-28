@@ -95,12 +95,12 @@ var _industries_by_id = {}
 
 #region initialization
 func _ready() -> void:
-	# print("Game state Ready")
-	load_initial_cities("cities_World2.json")
-	#load_initial_industries("industries.json")
-	load_initial_player_train("player_train.json")
-	
-	# print(_cities_state.keys())
+    # print("Game state Ready")
+    load_initial_cities("cities_World2.json")
+    #load_initial_industries("industries.json")
+    load_initial_player_train("player_train.json")
+    
+    # print(_cities_state.keys())
 
 func load_initial_cities(filename: String):
     _cities_state = {}

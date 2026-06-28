@@ -14,5 +14,5 @@ func _process(delta: float) -> void:
     pass
 
 func on_click():
-	# print("Tender wagon clicked")
-	pass
+    # print("Tender wagon clicked")
+    pass

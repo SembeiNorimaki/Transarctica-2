@@ -10,10 +10,10 @@ func start_combat() -> void:
     turn_state_machine.set_state("PlayerTurnState")
 
 func finish_turn() -> void:
-	if turn_state_machine.get_current_state() == "PlayerTurnState":
-		turn_state_machine.set_state("EnemyTurnState")
-	else:
-		turn_state_machine.set_state("PlayerTurnState")
+    if turn_state_machine.get_current_state() == "PlayerTurnState":
+        turn_state_machine.set_state("EnemyTurnState")
+    else:
+        turn_state_machine.set_state("PlayerTurnState")
 
 # When Faction_AI finishes its turn this function will be called
 func _on_faction_finished():
@@ -21,8 +21,8 @@ func _on_faction_finished():
     finish_turn()
 
 func get_current_state() -> String:
-	return turn_state_machine.get_current_state()
+    return turn_state_machine.get_current_state()
 
 
 func update_state_label(state_name) -> void:
-	pass
+    pass

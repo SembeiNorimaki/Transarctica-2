@@ -22,21 +22,21 @@ func _ready():
 
 # Public API
 func fire(from: Vector2, to: Vector2):
-	max_distance = Vector2(from.x - to.x, from.y - to.y).length()
-	# print("Setting bullet max distance to ", max_distance)
-	position = from
-	_start_position = from
-	_direction = (to - from).normalized()
-	var _rotation = _direction.angle()
-	
+    max_distance = Vector2(from.x - to.x, from.y - to.y).length()
+    # print("Setting bullet max distance to ", max_distance)
+    position = from
+    _start_position = from
+    _direction = (to - from).normalized()
+    var _rotation = _direction.angle()
+    
 
 #Movement
 func _physics_process(delta: float):
-	var step = _direction * speed * delta
-	position += step
-	distance_travelled += step.length()
-	
-	if distance_travelled >= max_distance:
-		emit_signal("bullet_hit")
-		combat_scene.on_bullet_hit(position, damage)
-		queue_free()
+    var step = _direction * speed * delta
+    position += step
+    distance_travelled += step.length()
+    
+    if distance_travelled >= max_distance:
+        emit_signal("bullet_hit")
+        combat_scene.on_bullet_hit(position, damage)
+        queue_free()

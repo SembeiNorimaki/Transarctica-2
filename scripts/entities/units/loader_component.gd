@@ -70,11 +70,11 @@ var frame_to_resource_name = {
 }
 
 func initialize():
-	crate_qty = 0
-	crate.set_mode("InWagon")
-	crate.set_qty(crate_qty)
-	get_parent().get_parent().sprite.scale = Vector2(0.5, 0.5)
-	scale = Vector2(2, 2)
+    crate_qty = 0
+    crate.set_mode("InWagon")
+    crate.set_qty(crate_qty)
+    get_parent().get_parent().sprite.scale = Vector2(0.5, 0.5)
+    scale = Vector2(2, 2)
 
 # func unload() -> String:
 #     if cargo == "":
@@ -100,22 +100,22 @@ func get_qty() -> int:
 #     cargo_sprite.visible = true
 
 func load_crate(resource_name: String):
-	# print("Loading crate")
-	cargo = resource_name
-	cargo_sprite.frame = resource_name_to_frame[resource_name]
-	cargo_sprite.visible = true
-	crate_qty += 1
-	crate.set_qty(crate_qty)
+    # print("Loading crate")
+    cargo = resource_name
+    cargo_sprite.frame = resource_name_to_frame[resource_name]
+    cargo_sprite.visible = true
+    crate_qty += 1
+    crate.set_qty(crate_qty)
 
 func unload_crate() -> String:
-	# print("Unloading crate")
-	crate_qty -= 1
-	crate.set_qty(crate_qty)
-	if crate_qty == 0:
-		cargo = ""
-		cargo_sprite.visible = false
-	return cargo
-	
+    # print("Unloading crate")
+    crate_qty -= 1
+    crate.set_qty(crate_qty)
+    if crate_qty == 0:
+        cargo = ""
+        cargo_sprite.visible = false
+    return cargo
+    
 func set_crate_qty(qty: int):
     crate_qty = qty
     crate.set_qty(crate_qty)

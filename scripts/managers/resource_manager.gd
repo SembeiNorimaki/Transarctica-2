@@ -54,11 +54,11 @@ func _ready() -> void:
 
 #region resource spawning
 func spawn_crate(resource_name_: String, qty_: int, mode: String):
-	# print("Spawning crate %s" % resource_name_)
-	var crate = CRATE_SCENE.instantiate()
-	crate.call_deferred("set_mode", "InGround")
-	crate.call_deferred("set_qty", qty_)
-	
+    # print("Spawning crate %s" % resource_name_)
+    var crate = CRATE_SCENE.instantiate()
+    crate.call_deferred("set_mode", "InGround")
+    crate.call_deferred("set_qty", qty_)
+    
 
     var tile = resource_spawn_tiles[resource_name_]
     # var tile = produced_resource_spawn_tiles[idx]
@@ -74,22 +74,22 @@ func spawn_crate(resource_name_: String, qty_: int, mode: String):
     # Add to scene tree
     get_node("../../Containers/Resources").add_child(crate)
 
-	# Register in occupancy
-	# print("Resgistering crate %s to tile %s" % [resource_name_, tile])
-	tile_occupancy_service.register(tile, crate)
+    # Register in occupancy
+    # print("Resgistering crate %s to tile %s" % [resource_name_, tile])
+    tile_occupancy_service.register(tile, crate)
 
     resources[resource_name_] = crate
 
 
 func spawn_resource(resource_name_: String, qty_: int, mode: String) -> void:
-	# print("Spawning resource %s" % resource_name_)
-	var resource = RESOURCE_SCENE.instantiate()
-	
-	resource.call_deferred("set_type", resource_name_)
-	resource.call_deferred("set_qty", qty_)
-	var tile = produced_resource_spawn_tiles[idx]
-	if mode == "required":
-		tile = required_resource_spawn_tiles[idx]
+    # print("Spawning resource %s" % resource_name_)
+    var resource = RESOURCE_SCENE.instantiate()
+    
+    resource.call_deferred("set_type", resource_name_)
+    resource.call_deferred("set_qty", qty_)
+    var tile = produced_resource_spawn_tiles[idx]
+    if mode == "required":
+        tile = required_resource_spawn_tiles[idx]
 
     var screen_pos = grid_service.tile_to_world(tile)
     resource.position = screen_pos
@@ -101,9 +101,9 @@ func spawn_resource(resource_name_: String, qty_: int, mode: String) -> void:
     # Add to scene tree
     get_node("../../Containers/Resources").add_child(resource)
 
-	# Register in occupancy
-	# print("Resgistering resource %s to tile %s" % [resource_name_, tile])
-	tile_occupancy_service.register(tile, resource)
+    # Register in occupancy
+    # print("Resgistering resource %s to tile %s" % [resource_name_, tile])
+    tile_occupancy_service.register(tile, resource)
 
     resources[resource_name_] = resource
 
@@ -111,22 +111,22 @@ func spawn_resource(resource_name_: String, qty_: int, mode: String) -> void:
 
 
 func xpos_to_resource_name(xpos: int) -> String:
-	# print("Checking resource for x position: %s" % xpos)
-	var i = 0
-	for resource_name in resource_spawn_tiles.keys():
-		var spawn_tile = resource_spawn_tiles[resource_name]
-		var world_pos = grid_service.tile_to_world(spawn_tile)
-		if abs(world_pos.x - xpos) < 50:
-			return resource_name
-		i += 1
-	return ""
-		
-		
-	# for i in range(resources.keys().size()):
-	# 	print("Resource %s xpos: %s" % [resources.keys()[i], resources[resources.keys()[i]].global_position.x])
-	# 	if abs(resources[resources.keys()[i]].global_position.x - xpos) < 50:
-	# 		return i
-	# return -1
+    # print("Checking resource for x position: %s" % xpos)
+    var i = 0
+    for resource_name in resource_spawn_tiles.keys():
+        var spawn_tile = resource_spawn_tiles[resource_name]
+        var world_pos = grid_service.tile_to_world(spawn_tile)
+        if abs(world_pos.x - xpos) < 50:
+            return resource_name
+        i += 1
+    return ""
+        
+        
+    # for i in range(resources.keys().size()):
+    #     print("Resource %s xpos: %s" % [resources.keys()[i], resources[resources.keys()[i]].global_position.x])
+    #     if abs(resources[resources.keys()[i]].global_position.x - xpos) < 50:
+    #         return i
+    # return -1
 
 func update_resource_qty(resource_name: String, qty_: int):
     var resource = resources[resource_name]

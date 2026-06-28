@@ -49,9 +49,9 @@ var is_crouching := false
 
 
 func toggle_crouch():
-	# print("TOGGLE CROUCH")
-	is_crouching = not is_crouching
-	play_animation(get_current_action(), orientation)
+    # print("TOGGLE CROUCH")
+    is_crouching = not is_crouching
+    play_animation(get_current_action(), orientation)
 
 func set_weapon_type(id: String):
     var frames_dict = SoldierAtlasLoader.get_weapon_type(id)
@@ -78,22 +78,22 @@ func set_soldier_type(id: String):
 
 # Set orientation calls play animation
 func set_orientation(new_orientation: String):
-	# print("Setting orientation to %s" % new_orientation)
-	orientation = new_orientation
-	# set the part z-indexes in the correct order
-	for i in range(5):
-		var part = render_order[new_orientation][i]
-		part.z_index = i
-	
-	play_animation(get_current_action(), new_orientation)
-	unit_manager.on_unit_orientation_changed(self, new_orientation)
-	queue_redraw()
+    # print("Setting orientation to %s" % new_orientation)
+    orientation = new_orientation
+    # set the part z-indexes in the correct order
+    for i in range(5):
+        var part = render_order[new_orientation][i]
+        part.z_index = i
+    
+    play_animation(get_current_action(), new_orientation)
+    unit_manager.on_unit_orientation_changed(self, new_orientation)
+    queue_redraw()
 
 func play_animation(state_: String, orientation_: String):
-	if state_ == "DeadState":
-		# print("playing animation dead, ", dead_part_sprite)
-		dead_part_sprite.play("DeadState_default")
-		return
+    if state_ == "DeadState":
+        # print("playing animation dead, ", dead_part_sprite)
+        dead_part_sprite.play("DeadState_default")
+        return
 
 
     var animation_name = "%s_%s" % [state_, orientation_]
@@ -105,23 +105,23 @@ func play_animation(state_: String, orientation_: String):
     current_animation = animation_name
     is_animation_playing = true
 
-	torso_sprite.play(animation_name)
-	if is_crouching:
-		legs_sprite.play("CrouchState_" + orientation_)
-	else:
-		legs_sprite.play(animation_name)
-	left_arm_sprite.play(animation_name)
-	right_arm_sprite.play(animation_name)
-	if state_ == "AimState":
-		weapon_sprite.offset = weapon_aiming_offsets[orientation_]
-	else:
-		weapon_sprite.offset = Vector2(0, 0)
-	#print("Play animation name: %s" % animation_name)
-	
-	weapon_sprite.play(animation_name)
-	#else:
-	#	var weapon_animation_name = "%s_%s" % [state_, ori_to_weapon_holding_ori[orientation_]]
-	#	weapon.play(weapon_animation_name)
+    torso_sprite.play(animation_name)
+    if is_crouching:
+        legs_sprite.play("CrouchState_" + orientation_)
+    else:
+        legs_sprite.play(animation_name)
+    left_arm_sprite.play(animation_name)
+    right_arm_sprite.play(animation_name)
+    if state_ == "AimState":
+        weapon_sprite.offset = weapon_aiming_offsets[orientation_]
+    else:
+        weapon_sprite.offset = Vector2(0, 0)
+    #print("Play animation name: %s" % animation_name)
+    
+    weapon_sprite.play(animation_name)
+    #else:
+    #    var weapon_animation_name = "%s_%s" % [state_, ori_to_weapon_holding_ori[orientation_]]
+    #    weapon.play(weapon_animation_name)
 
 func move_to_tile(tile: Vector2i):
     #print("Unit %s instructed to move to tile %s" % [id, tile])
