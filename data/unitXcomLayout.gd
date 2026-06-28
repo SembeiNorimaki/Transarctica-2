@@ -143,7 +143,14 @@ const atlas2 = {
     },
     "dead_part": {
         "DeadState": {
-            "default": [Vector2i(8, 16), Vector2i(9, 16), Vector2i(10, 16)]
+            "N": [Vector2i(8, 16), Vector2i(9, 16), Vector2i(10, 16)],
+            "NE": [Vector2i(8, 16), Vector2i(9, 16), Vector2i(10, 16)],
+            "E": [Vector2i(8, 16), Vector2i(9, 16), Vector2i(10, 16)],
+            "SE": [Vector2i(8, 16), Vector2i(9, 16), Vector2i(10, 16)],
+            "S": [Vector2i(8, 16), Vector2i(9, 16), Vector2i(10, 16)],
+            "SW": [Vector2i(8, 16), Vector2i(9, 16), Vector2i(10, 16)],
+            "W": [Vector2i(8, 16), Vector2i(9, 16), Vector2i(10, 16)],
+            "NW": [Vector2i(8, 16), Vector2i(9, 16), Vector2i(10, 16)]
         }
     }
 }

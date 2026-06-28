@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://dn6dbr4n3xpvw" path="res://scripts/exploration_layer.gd" id="3_rbxsu"]
 [ext_resource type="PackedScene" uid="uid://cacigncdesbk0" path="res://scenes/managers/building_manager.tscn" id="3_w220i"]
 [ext_resource type="PackedScene" uid="uid://cppu4nf8qtuhw" path="res://scenes/managers/wall_manager.tscn" id="5_3c7v3"]
+[ext_resource type="Script" uid="uid://dcjmipw2wwclj" path="res://scripts/context/combat_managers.gd" id="5_45pp8"]
 [ext_resource type="PackedScene" uid="uid://ch1611f2p6brv" path="res://scenes/controllers/camera_controller.tscn" id="7_ptoiq"]
 [ext_resource type="PackedScene" uid="uid://bso7t6rtx8srg" path="res://scenes/managers/turn_manager.tscn" id="7_vjejt"]
 [ext_resource type="PackedScene" uid="uid://0m4i4uv2gkbt" path="res://scenes/managers/selection_manager.tscn" id="7_ycbfl"]
@@ -25,6 +26,7 @@
 [ext_resource type="Script" uid="uid://d2ktl7ghvdn82" path="res://scripts/services/edge_occupancy_service.gd" id="14_0gh8j"]
 [ext_resource type="PackedScene" uid="uid://cbxffx4parq4x" path="res://scenes/services/grid_service.tscn" id="15_5cjt0"]
 [ext_resource type="Script" uid="uid://f5sk7dbtjeks" path="res://scripts/overlays/paths_overlay.gd" id="15_b5i4r"]
+[ext_resource type="Script" uid="uid://ctv8v63cx2tvn" path="res://scripts/context/combat_services.gd" id="15_hm6wq"]
 [ext_resource type="PackedScene" uid="uid://w8jrafekm730" path="res://scenes/services/tile_occupancy_service.tscn" id="16_4fugr"]
 [ext_resource type="Script" uid="uid://dxr5vptb6cbh" path="res://scripts/services/los_service.gd" id="16_cv4ch"]
 [ext_resource type="Script" uid="uid://dlyrmrlwsmr6x" path="res://scripts/services/weapon_service.gd" id="17_0wpcq"]
@@ -34,7 +36,10 @@
 [ext_resource type="Script" uid="uid://cv48uaopsxrky" path="res://scripts/overlays/los_overlay.gd" id="24_kuabr"]
 [ext_resource type="Script" uid="uid://de0bttsq7s2to" path="res://scripts/services/cover_service.gd" id="25_gbuk8"]
 [ext_resource type="PackedScene" uid="uid://xt13wgxvrwaq" path="res://scenes/inventories/train_inventory.tscn" id="26_g7udr"]
+[ext_resource type="Script" uid="uid://cpel5x882dt2j" path="res://scripts/services/accuracy_service.gd" id="28_1ngx6"]
+[ext_resource type="Script" uid="uid://xjjrtok1xm2c" path="res://scripts/context/combat_containers.gd" id="28_2fmwu"]
 [ext_resource type="PackedScene" uid="uid://bfkx5ppuk4u66" path="res://scenes/state_machines/combat_state_machine.tscn" id="29_kuabr"]
+[ext_resource type="Script" uid="uid://dbmoqk57k6bms" path="res://scripts/context/combat_overlays.gd" id="30_1ngx6"]
 [ext_resource type="Script" uid="uid://bhnf0bbk74olp" path="res://scripts/overlays/pods_overlay.gd" id="30_5cjt0"]
 [ext_resource type="Texture2D" uid="uid://c8eb6b045eh7f" path="res://assets/sprites/cursors/cursor_07_0.png" id="33_4fugr"]
 [ext_resource type="Script" uid="uid://c8ntb6hd26tod" path="res://scripts/overlays/fov_overlay.gd" id="35_1mvnh"]
@@ -42,6 +47,7 @@
 [ext_resource type="Script" uid="uid://b6cecxops88y7" path="res://scripts/overlays/cover_overlay.gd" id="38_g7udr"]
 [ext_resource type="Script" uid="uid://cvl5kmldec4gj" path="res://scripts/overlays/defensiveness_overlay.gd" id="39_iaca3"]
 [ext_resource type="PackedScene" uid="uid://boyrh8km2fvhn" path="res://scenes/ui/master_hud.tscn" id="41_ouq5i"]
+[ext_resource type="Script" uid="uid://by4bg6xblta3e" path="res://scripts/context/combat_labels.gd" id="45_c836x"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1mvnh"]
 texture = ExtResource("3_h6rme")
@@ -69,6 +75,7 @@ tile_set = SubResource("TileSet_5cjt0")
 script = ExtResource("3_rbxsu")
 
 [node name="Managers" type="Node" parent="." unique_id=1473159719]
+script = ExtResource("5_45pp8")
 
 [node name="UnitManager" parent="Managers" unique_id=559229359 instance=ExtResource("2_n81vl")]
 
@@ -97,19 +104,11 @@ script = ExtResource("13_codwp")
 visible = false
 
 [node name="Services" type="Node" parent="." unique_id=1208536508]
-
-[node name="RoadService" type="Node" parent="Services" unique_id=2130052305]
-script = ExtResource("11_wpptk")
-
-[node name="TerrainService" type="Node" parent="Services" unique_id=1111086030]
-script = ExtResource("11_rui7j")
+script = ExtResource("15_hm6wq")
 
 [node name="GridService" parent="Services" unique_id=2120682751 instance=ExtResource("15_5cjt0")]
 
 [node name="TileOccupancyService" parent="Services" unique_id=1749658010 instance=ExtResource("16_4fugr")]
-
-[node name="PathfindingService" type="Node" parent="Services" unique_id=961982671]
-script = ExtResource("12_wpptk")
 
 [node name="NavigationGraphService" type="Node" parent="Services" unique_id=1415635420]
 script = ExtResource("13_4f2bx")
@@ -117,19 +116,32 @@ script = ExtResource("13_4f2bx")
 [node name="EdgeOccupancyService" type="Node" parent="Services" unique_id=704463371]
 script = ExtResource("14_0gh8j")
 
+[node name="CoverService" type="Node" parent="Services" unique_id=1653981608]
+script = ExtResource("25_gbuk8")
+
 [node name="LOSService" type="Node" parent="Services" unique_id=898682674]
 script = ExtResource("16_cv4ch")
 
 [node name="WeaponService" type="Node" parent="Services" unique_id=1573049826]
 script = ExtResource("17_0wpcq")
 
+[node name="PathfindingService" type="Node" parent="Services" unique_id=961982671]
+script = ExtResource("12_wpptk")
+
+[node name="RoadService" type="Node" parent="Services" unique_id=2130052305]
+script = ExtResource("11_wpptk")
+
+[node name="TerrainService" type="Node" parent="Services" unique_id=1111086030]
+script = ExtResource("11_rui7j")
+
 [node name="ExplorationService" type="Node" parent="Services" unique_id=1569402066]
 script = ExtResource("19_5cjt0")
 
-[node name="CoverService" type="Node" parent="Services" unique_id=1653981608]
-script = ExtResource("25_gbuk8")
+[node name="AccuracyService" type="Node" parent="Services" unique_id=1011169372]
+script = ExtResource("28_1ngx6")
 
 [node name="Containers" type="Node2D" parent="." unique_id=347899867]
+script = ExtResource("28_2fmwu")
 
 [node name="Roads" type="Node2D" parent="Containers" unique_id=2109846279]
 position = Vector2(0, 2)
@@ -151,6 +163,7 @@ position = Vector2(0, 2)
 [node name="TrainInventory" parent="Containers" unique_id=868915929 instance=ExtResource("26_g7udr")]
 
 [node name="Overlays" type="Node2D" parent="." unique_id=1455232822]
+script = ExtResource("30_1ngx6")
 
 [node name="UnitsOverlay" type="Node2D" parent="Overlays" unique_id=2028059611]
 script = ExtResource("10_3c7v3")
@@ -181,11 +194,10 @@ script = ExtResource("24_kuabr")
 [node name="PodsOverlay" type="Node2D" parent="Overlays" unique_id=395708630]
 script = ExtResource("30_5cjt0")
 
-[node name="FOVOverlay" type="Node2D" parent="Overlays" unique_id=2134976881]
+[node name="HighlightTileOverlay" type="Node2D" parent="Overlays" unique_id=2134976881]
 script = ExtResource("35_1mvnh")
 
 [node name="ReachableTilesOverlay" type="Node2D" parent="Overlays" unique_id=1386394038]
-visible = false
 script = ExtResource("37_yqry4")
 
 [node name="CoverOverlay" type="Node2D" parent="Overlays" unique_id=888146013]
@@ -197,6 +209,7 @@ script = ExtResource("39_iaca3")
 [node name="CombatStateMachine" parent="." unique_id=207202339 instance=ExtResource("29_kuabr")]
 
 [node name="Labels" type="CanvasLayer" parent="." unique_id=1980134543]
+script = ExtResource("45_c836x")
 
 [node name="StateLabel" type="Label" parent="Labels" unique_id=1637039438]
 offset_right = 40.0

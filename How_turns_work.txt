@@ -1,0 +1,99 @@
+
+
+# CombatScene
+    func _handle_global_input(event: InputEvent) -> bool:
+        if event.is_action_pressed("e"):
+            turn_manager.finish_turn()
+
+# TurnManager
+    func finish_turn() -> void:
+        if turn_state_machine.get_current_state() == "PlayerTurnState":
+            turn_state_machine.set_state("EnemyTurnState")
+        else:
+            turn_state_machine.set_state("PlayerTurnState")
+
+# EnemyTurnState
+# Tells FactionAI to take its turn.print
+# When FactionAI emits faction_finished signal, it sets the state to PlayerTurnState
+    func enter(params = {}):
+        var faction_ai = owner_node.faction_ai
+        faction_ai.faction_finished.connect(_on_faction_finished, CONNECT_ONE_SHOT)
+        faction_ai.take_turn()
+
+    # executed when faction_ai emits the signal faction_finished
+    func _on_faction_finished():
+        owner_node.turn_manager.finish_turn()
+
+# FactionAI:
+# makes a list of all enemy units, and selects the first of them
+# executes unit.unit_ai.take_turn()
+# when unit_ai emits turn_finished it select the next enemy unit
+# when no more units, it emits faction_finished signal
+    func take_turn():
+        enemy_units = unit_manager.get_units_by_team("Enemy")
+        current_index = 0
+        run_next_unit()
+
+    func run_next_unit():
+        if current_index >= enemy_units.size():
+            faction_finished.emit()
+            return
+        var unit = enemy_units[current_index]
+        unit.unit_ai.turn_finished.connect(_on_unit_finished, CONNECT_ONE_SHOT)
+        unit.set_selected(true)
+        unit.unit_ai.take_turn()
+
+    # executed when unit_ai emits the signal turn_finished
+    func _on_unit_finished():
+        current_index += 1
+        run_next_unit()
+
+# UnitAI
+# take_turn sets the behavior to Evaluate
+# When it receives the action_finished signal it checks the EvaluateState if there's any action
+# left to do, if so it takes next action, otherwise it emits turn_finished
+    func _ready():
+	    behavior_state_machine.states.EvaluateState.action_finished.connect(_on_action_finished)
+
+    func take_turn() -> void:
+        behavior_state_machine.set_state("EvaluateState", {"unit": owner_node})
+
+    func _on_action_finished():
+        if behavior_state_machine.states.EvaluateState.is_anything_left_to_do():
+            behavior_state_machine.states.EvaluateState.take_next_action()
+        else:
+            turn_finished.emit()
+
+# EvaluateState
+# Takes a dummy action and emits action_finished.
+# A total of two actions can be taken, after which no actions are left.
+
+    var action_counter := 0
+
+    func enter(params = {}):
+        unit = params.unit
+	    take_next_action()
+
+    func take_next_action():
+	    match action_counter:
+		    0: _do_action_1()
+		    1: _do_action_2()
+            _: 
+                action_finished.emit()
+                return
+	    action_counter += 1
+
+    func _do_action_1():
+        print("Doing action 1")
+        await get_tree().create_timer(1.0).timeout
+        action_finished.emit()
+
+    func _do_action_2():
+        print("Doing action 2")
+        await get_tree().create_timer(1.0).timeout
+        action_finished.emit()
+
+    func is_anything_left_to_do() -> bool:
+        if action_counter < 2:
+            return true
+        return false

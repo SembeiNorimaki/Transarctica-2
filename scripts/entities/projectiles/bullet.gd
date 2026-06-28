@@ -13,18 +13,17 @@ var _start_position: Vector2
 var _has_hit := false
 
 
-
 @onready var combat_scene = get_parent().get_parent().get_parent()
 
 signal bullet_hit(tile)
 
 func _ready():
-	pass
+    pass
 
 # Public API
 func fire(from: Vector2, to: Vector2):
-	max_distance = Vector2(from.x-to.x, from.y-to.y).length()
-	print("Setting bullet max distance to ", max_distance)
+	max_distance = Vector2(from.x - to.x, from.y - to.y).length()
+	# print("Setting bullet max distance to ", max_distance)
 	position = from
 	_start_position = from
 	_direction = (to - from).normalized()
@@ -39,5 +38,5 @@ func _physics_process(delta: float):
 	
 	if distance_travelled >= max_distance:
 		emit_signal("bullet_hit")
-		combat_scene.on_bullet_hit(position)
+		combat_scene.on_bullet_hit(position, damage)
 		queue_free()

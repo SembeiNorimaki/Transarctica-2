@@ -11,8 +11,8 @@ var cover_service: CoverService
 var weapon_service: WeaponService
 var pathfinding_service: PathfindingService
 var accuracy_service: AccuracyService
-
 var defensiveness_overlay: DefensivenessOverlay
+var highlight_tile_overlay: HighlightTileOverlay
 
 var unit_paths := {} # Dict of units -> path
 var units_to_tile := {} # Dict of units -> tile_position
@@ -60,7 +60,7 @@ func spawn_unit(tile_pos: Vector2i, unit_type_: String, owner_id: String) -> voi
 	var team = owner_id
 	var footprint = unit_info.footprint
 
-	print("Spawning a %s belonging to %s to tile %s" % [unit_type_, owner_id, tile_pos])
+	# print("Spawning a %s belonging to %s to tile %s" % [unit_type_, owner_id, tile_pos])
 	var id = "u%s%s" % [team[0], next_unit_id[team]] # Player unit with id=3 -> uP3
 	next_unit_id[team] += 1
 	
@@ -94,7 +94,7 @@ func spawn_unit(tile_pos: Vector2i, unit_type_: String, owner_id: String) -> voi
 
 	# Connect the tile_change signal
 	#unit.connect("tile_changed", self._on_unit_tile_changed)
-	#	unit.connect("orientation_changed", self._on_unit_orientation_changed)
+	#    unit.connect("orientation_changed", self._on_unit_orientation_changed)
 
 	emit_signal("unit_spawned", unit)
 
@@ -150,18 +150,18 @@ func can_unit_see_enemy(unit: Unit, enemy: Unit) -> bool:
 func request_shoot(shooter: Unit, target_tile: Vector2i) -> bool:
 	# Validate AP
 	if shooter.get_ap() < shooter.weapon.ap_cost:
-		print("Error, not enough AP to shoot")
+		# print("Error, not enough AP to shoot")
 		return false
 	
 	# Validate LOS
 	if not los_service.has_los(shooter.current_tile, target_tile):
-		print("Error, no LOS to target tile")
+		# print("Error, no LOS to target tile")
 		return false
 	
 	# Validate range
 	var dist = shooter.current_tile.distance_to(target_tile)
 	if dist > shooter.weapon.max_range:
-		print("Error, target tile out of range")
+		# print("Error, target tile out of range")
 		return false
 	
 	execute_shoot(shooter, target_tile)
@@ -233,7 +233,7 @@ func find_safest_tile(unit, enemies: Array) -> Vector2i:
 			best_tile = tile
 
 	defensiveness_overlay.update()
-	print("def map: %s" % defensiveness_overlay.danger_map)
+	# print("def map: %s" % defensiveness_overlay.danger_map)
 	return best_tile
 
 # evaluates how good is a tile agains all known enemies
@@ -257,7 +257,7 @@ func evaluate_tile_defensiveness(tile: Vector2i, enemies: Array) -> float:
 
 		# Flanked is VERY bad
 		#if is_flanked:
-		#	score -= 30.0
+		#    score -= 30.0
 
 	return score
 
@@ -291,7 +291,7 @@ func choose_best_target(unit: Unit, enemies: Array) -> Unit:
 #region Movement orchestration
 
 func calculate_path_for_unit(unit: Unit, target_tile: Vector2i) -> Array[Vector2i]:
-	print("AAA", unit.current_tile)
+	# print("AAA", unit.current_tile)
 	var path_and_cost = pathfinding_service.find_path(unit.current_tile, target_tile)
 	var path = path_and_cost[0]
 	var path_cost = path_and_cost[1]
@@ -315,19 +315,21 @@ func _give_next_tile(unit: Unit) -> void:
 		unit.move_to_tile(next_tile)
 
 func _on_unit_reached_destination(unit):
-	print("Unit reached destination")
+	# print("Unit reached destination")
 	# set the unit state to idle
 	unit.set_state("IdleState", {"unit": unit})
 	unit.play_animation("IdleState", unit.orientation)
-	unit.unit_ai.on_unit_reached_destination(unit)
+	#unit.unit_ai.on_unit_reached_destination(unit)
 	emit_signal("unit_reached_destination", unit)
-
 
 func update_vision(unit: Unit) -> void:
 	# compute vision
 	var cone_tiles = grid_service.get_tiles_in_vision_cone(unit.current_tile, unit.orientation, unit.view_angle, unit.view_range)
 	var visible_tiles = los_service.filter_visible_tiles(unit.current_tile, cone_tiles)
 	visible_tiles_by_unit[unit] = visible_tiles
+	
+	highlight_tile_overlay._tiles_to_draw_blue = visible_tiles
+	highlight_tile_overlay.redraw()
 
 func recalculate_all_units_vision():
 	for unit in get_units_by_team("Player"):
@@ -364,7 +366,7 @@ func _on_unit_arrived_to_tile(unit, new_tile: Vector2i):
 	_give_next_tile(unit)
 	
 	# notify CombatScene
-	unit_arrived_to_tile.emit()
+	unit_arrived_to_tile.emit(unit, new_tile)
 	
 	
 func get_visible_tiles_for(unit):
@@ -378,7 +380,7 @@ func get_seen_enemies_for(unit):
 
 func get_primary_target_for(unit):
 	var enemies_seen = get_seen_enemies_for(unit)
-	print("Number of enemies seen: %s" % enemies_seen.size())
+	# print("Number of enemies seen: %s" % enemies_seen.size())
 	return enemies_seen[0] if enemies_seen else null
 
 
@@ -416,7 +418,7 @@ func on_unit_orientation_changed(unit: Unit, new_orientation: String) -> void:
 #region WASD unit movement and aiming
 # This functions are used to move the selected unit with WASD and aim with the right mouse button
 func on_move_vector_changed(vec: Vector2i):
-	print("UM on move vector changed: %s" % vec)
+	# print("UM on move vector changed: %s" % vec)
 	if vec == Vector2i.ZERO:
 		return
 	var selected_unit = units["Player"][next_unit_id["Player"] - 1]
@@ -424,9 +426,9 @@ func on_move_vector_changed(vec: Vector2i):
 	start_unit_movement(selected_unit, [selected_unit.current_tile, selected_unit.current_tile + vec])
 
 func on_aim_pressed():
-	print("UM on aim pressed")
-
+	# print("UM on aim pressed")
+	pass
 func on_aim_released():
-	print("UM on aim released")
-
+	# print("UM on aim released")
+	pass
 #endregion

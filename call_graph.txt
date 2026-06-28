@@ -1,0 +1,3446 @@
+#region OLDcombat_state_machine.gd
+  func _ready()   [line 8]
+
+  func init()   [line 19]
+    -> OLDcombat_state_machine.set_state()     [line 26]
+
+  func set_state()   [line 26]
+    <- OLDcombat_state_machine.init()     [line 19]
+
+  func handle_click()   [line 35]
+
+#endregion
+
+#region accuracy_service.gd
+  func compute_hit_chance()   [line 10]
+    <- unit_manager.choose_best_target()     [line 268]
+
+#endregion
+
+#region ap_component.gd
+  func _ready()   [line 10]
+    -> ap_component.reset_ap()     [line 19]
+
+  func use_ap()   [line 13]
+    <- unit_manager._on_unit_arrived_to_tile()     [line 344]
+    <- unit_manager.execute_shoot()     [line 170]
+
+  func reset_ap()   [line 19]
+    <- ap_component._ready()     [line 10]
+
+  func get_ap()   [line 23]
+
+#endregion
+
+#region assistant_ui.gd
+  func _ready()   [line 13]
+    -> assistant_ui.hide_dialog()     [line 33]
+
+  func show_message()   [line 19]
+    <- quest_ui._on_quest_accepted()     [line 179]
+
+  func ask_confirmation()   [line 26]
+
+  func hide_dialog()   [line 33]
+    <- assistant_ui._on_accept_pressed()     [line 36]
+    <- assistant_ui._on_cancel_pressed()     [line 41]
+    <- assistant_ui._ready()     [line 13]
+
+  func _on_accept_pressed()   [line 36]
+    -> assistant_ui.hide_dialog()     [line 33]
+
+  func _on_cancel_pressed()   [line 41]
+    -> assistant_ui.hide_dialog()     [line 33]
+
+#endregion
+
+#region audio_service.gd
+  func _ready()   [line 48]
+    -> audio_service._setup_buses()     [line 54]
+    -> audio_service._setup_music_players()     [line 65]
+    -> audio_service._setup_sfx_pool()     [line 81]
+
+  func _setup_buses()   [line 54]
+    <- audio_service._ready()     [line 48]
+
+  func _setup_music_players()   [line 65]
+    -> audio_service._resolve_bus()     [line 242]
+
+    <- audio_service._ready()     [line 48]
+
+  func _setup_sfx_pool()   [line 81]
+    -> audio_service._resolve_bus()     [line 242]
+
+    <- audio_service._ready()     [line 48]
+
+  func play_music()   [line 95]
+    -> audio_service._kill_music_tween()     [line 236]
+    -> audio_service._set_stream_loop()     [line 246]
+
+    <- navigation_scene._ready()     [line 71]
+    <- trade_scene._ready()     [line 66]
+
+  func stop_music()   [line 115]
+    -> audio_service._kill_music_tween()     [line 236]
+
+    <- navigation_scene._on_train_reached_city()     [line 233]
+
+  func crossfade_music()   [line 130]
+    -> audio_service._kill_music_tween()     [line 236]
+    -> audio_service._set_stream_loop()     [line 246]
+
+  func pause_music()   [line 156]
+
+  func resume_music()   [line 161]
+
+  func set_music_volume()   [line 166]
+    -> audio_service._resolve_bus()     [line 242]
+
+  func is_music_playing()   [line 172]
+
+  func play_sfx()   [line 181]
+    -> audio_service._next_sfx_player()     [line 227]
+
+    <- unit._on_died()     [line 93]
+    <- unit.apply_damage()     [line 132]
+    <- weapon_service.fire_bullet()     [line 23]
+
+  func play_sfx_at()   [line 197]
+    -> audio_service._resolve_bus()     [line 242]
+
+  func set_sfx_volume()   [line 218]
+    -> audio_service._resolve_bus()     [line 242]
+
+  func _next_sfx_player()   [line 227]
+    <- audio_service.play_sfx()     [line 181]
+
+  func _kill_music_tween()   [line 236]
+    <- audio_service.crossfade_music()     [line 130]
+    <- audio_service.play_music()     [line 95]
+    <- audio_service.stop_music()     [line 115]
+
+  func _resolve_bus()   [line 242]
+    <- audio_service._setup_music_players()     [line 65]
+    <- audio_service._setup_sfx_pool()     [line 81]
+    <- audio_service.play_sfx_at()     [line 197]
+    <- audio_service.set_music_volume()     [line 166]
+    <- audio_service.set_sfx_volume()     [line 218]
+
+  func _set_stream_loop()   [line 246]
+    <- audio_service.crossfade_music()     [line 130]
+    <- audio_service.play_music()     [line 95]
+
+#endregion
+
+#region barracks_wagon.gd
+  func _unload_soldiers()   [line 6]
+    <- barracks_wagon.on_click()     [line 12]
+
+  func on_click()   [line 12]
+    -> barracks_wagon._unload_soldiers()     [line 6]
+
+#endregion
+
+#region building.gd
+  func _ready()   [line 7]
+
+#endregion
+
+#region building_manager.gd
+  func _ready()   [line 17]
+
+  func spawn_building()   [line 20]
+    -> grid_service.tile_to_world()     [line 67]
+
+    <- combat_scene._spawn_buildings_from_map()     [line 347]
+
+  func register_building()   [line 50]
+
+  func unregister_building()   [line 53]
+
+#endregion
+
+#region buildings_overlay.gd
+  func redraw()   [line 6]
+
+  func _draw()   [line 10]
+
+#endregion
+
+#region bullet.gd
+  func _ready()   [line 21]
+
+  func fire()   [line 25]
+    <- weapon_component.shoot_at()     [line 21]
+    <- weapon_service.fire_bullet()     [line 23]
+
+  func _physics_process()   [line 35]
+    -> combat_scene.on_bullet_hit()     [line 493]
+
+#endregion
+
+#region camera_controller.gd
+  func _ready()   [line 19]
+
+  func _unhandled_input()   [line 24]
+    -> camera_controller._zoom_at_screenpos()     [line 47]
+
+  func center_at_tile()   [line 35]
+    -> grid_service.tile_to_world()     [line 67]
+
+    <- combat_scene._ready()     [line 78]
+    <- combat_unit_selected_state.enter()     [line 12]
+    <- navigation_scene._ready()     [line 71]
+    <- unit_manager.select_unit()     [line 113]
+
+  func set_pos()   [line 39]
+
+  func set_zoom()   [line 43]
+    <- combat_scene._ready()     [line 78]
+    <- navigation_scene._ready()     [line 71]
+
+  func _zoom_at_screenpos()   [line 47]
+    <- camera_controller._unhandled_input()     [line 24]
+
+  func _process()   [line 62]
+
+#endregion
+
+#region cities_manager.gd
+  func spawn_city()   [line 11]
+    -> cities_manager._compute_entry_tile()     [line 28]
+    -> cities_manager.create_label()     [line 20]
+    -> game_state.get_city_by_id()     [line 182]
+
+    <- navigation_scene._spawn_cities_from_map()     [line 148]
+
+  func create_label()   [line 20]
+    -> grid_service.tile_to_world()     [line 67]
+
+    <- cities_manager.spawn_city()     [line 11]
+
+  func _compute_entry_tile()   [line 28]
+    -> rail_service.has_rail()     [line 272]
+
+    <- cities_manager.spawn_city()     [line 11]
+
+  func _compute_entry_tile_old()   [line 49]
+    -> rail_service.has_rail()     [line 272]
+
+  func get_city_by_entry_tile()   [line 55]
+    <- train_manager._check_tile_events()     [line 157]
+
+  func is_entry_tile()   [line 58]
+    <- train_manager._check_tile_events()     [line 157]
+
+#endregion
+
+#region cities_overlay.gd
+  func update()   [line 9]
+    -> cities_overlay._draw()     [line 13]
+
+  func _draw()   [line 13]
+    -> grid_service.tile_to_world()     [line 67]
+
+    <- cities_overlay.update()     [line 9]
+
+#endregion
+
+#region city_inventory.gd
+  func initialize_resource()   [line 15]
+    <- trade_scene.load_city_resources_from_game_state()     [line 111]
+
+  func get_all_info()   [line 24]
+
+  func get_resource_info()   [line 27]
+
+  func get_available_qty()   [line 30]
+
+  func get_buy_price()   [line 35]
+    <- trade_scene.on_esc_pressed()     [line 312]
+    <- trade_service.transfer_from_city_to_loader()     [line 9]
+
+  func get_sell_price()   [line 40]
+    <- trade_service.transfer_from_loader_to_city()     [line 40]
+
+  func get_storage_capacity()   [line 45]
+
+  func add_resource_amount()   [line 51]
+    -> game_state.add_goods_to_city()     [line 219]
+
+  func remove_resource_amount()   [line 60]
+    -> game_state.remove_goods_from_city()     [line 222]
+
+#endregion
+
+#region combat_hud.gd
+  func _on_reverse_button_pressed()   [line 5]
+
+#endregion
+
+#region combat_idle_state.gd
+  func _ready()   [line 5]
+
+  func enter()   [line 8]
+
+  func exit()   [line 11]
+
+  func update()   [line 14]
+
+  func handle_click()   [line 17]
+    -> tile_occupancy_service.get_units()     [line 59]
+
+  func handle_key()   [line 27]
+    -> combat_scene.select_next_unit()     [line 486]
+
+#endregion
+
+#region combat_scene.gd
+  func _ready()   [line 78]
+    -> camera_controller.center_at_tile()     [line 35]
+    -> camera_controller.set_zoom()     [line 43]
+    -> combat_scene._inject_services()     [line 108]
+    -> combat_scene._load_map()     [line 214]
+    -> turn_manager.start_combat()     [line 29]
+
+  func initialize()   [line 94]
+    -> combat_scene._update_enemy_visibility()     [line 514]
+    -> combat_scene.load_train_from_game_state()     [line 312]
+    -> unit_manager.recalculate_all_units_seen_enemies()     [line 338]
+    -> unit_manager.recalculate_all_units_vision()     [line 332]
+
+  func _inject_services()   [line 108]
+    <- combat_scene._ready()     [line 78]
+
+  func _wire_signals()   [line 185]
+
+  func _load_map()   [line 214]
+    -> combat_scene._spawn_buildings_from_map()     [line 347]
+    -> combat_scene._spawn_pods_from_map()     [line 331]
+    -> combat_scene._spawn_units_from_map()     [line 320]
+    -> combat_scene._spawn_walls_from_map()     [line 358]
+    -> cover_service.build_cover_map()     [line 17]
+    -> game_state.load()     [line 238]
+    -> grid_service.set_tile_size()     [line 53]
+    -> navigation_graph_service.build_graph()     [line 48]
+
+    <- combat_scene._ready()     [line 78]
+
+  func _load_patrol_points_from_map()   [line 261]
+    <- combat_scene._spawn_pods_from_map()     [line 331]
+
+  func _assign_units_to_pods()   [line 293]
+    -> pod_manager.add_unit_to_pod()     [line 50]
+    -> pod_manager.get_pod_tile()     [line 59]
+    -> tile_occupancy_service.get_units()     [line 59]
+
+  func load_train_from_game_state()   [line 312]
+    -> game_state.get_player_train()     [line 160]
+    -> horizontal_train.set_speed()     [line 134]
+
+    <- combat_scene.initialize()     [line 94]
+
+  func _spawn_units_from_map()   [line 320]
+    -> unit_manager.spawn_unit()     [line 58]
+
+    <- combat_scene._load_map()     [line 214]
+
+  func _spawn_pods_from_map()   [line 331]
+    -> combat_scene._load_patrol_points_from_map()     [line 261]
+    -> pod_manager.spawn_pod()     [line 21]
+
+    <- combat_scene._load_map()     [line 214]
+
+  func _spawn_buildings_from_map()   [line 347]
+    -> building_manager.spawn_building()     [line 20]
+
+    <- combat_scene._load_map()     [line 214]
+
+  func _spawn_walls_from_map()   [line 358]
+    -> wall_manager.spawn_full_wall()     [line 35]
+    -> wall_manager.spawn_left_wall()     [line 64]
+    -> wall_manager.spawn_right_wall()     [line 87]
+
+    <- combat_scene._load_map()     [line 214]
+
+  func _spawn_roads_from_map()   [line 382]
+    -> road_service.spawn_road()     [line 14]
+
+  func _process()   [line 388]
+    -> combat_scene._process_intro()     [line 395]
+    -> combat_scene._process_outro()     [line 400]
+    -> combat_scene.update_labels()     [line 464]
+
+  func _process_intro()   [line 395]
+    <- combat_scene._process()     [line 388]
+
+  func _process_outro()   [line 400]
+    <- combat_scene._process()     [line 388]
+
+  func _unhandled_input()   [line 407]
+    -> combat_scene._handle_global_input()     [line 442]
+    -> combat_scene._handle_tile_click()     [line 433]
+    -> combat_scene._handle_wagon_click()     [line 428]
+    -> grid_service.world_to_tile()     [line 70]
+
+  func _handle_wagon_click()   [line 428]
+    <- combat_scene._unhandled_input()     [line 407]
+
+  func _handle_tile_click()   [line 433]
+    <- combat_scene._unhandled_input()     [line 407]
+
+  func _handle_key_press()   [line 437]
+
+  func _handle_global_input()   [line 442]
+    -> turn_manager.finish_turn()     [line 32]
+
+    <- combat_scene._unhandled_input()     [line 407]
+
+  func update_state_label()   [line 450]
+
+  func update_turn_label()   [line 454]
+
+  func update_mouse_label()   [line 458]
+    -> grid_service.world_to_tile()     [line 70]
+
+    <- combat_scene.update_labels()     [line 464]
+
+  func update_camera_label()   [line 461]
+    <- combat_scene.update_labels()     [line 464]
+
+  func update_labels()   [line 464]
+    -> combat_scene.update_camera_label()     [line 461]
+    -> combat_scene.update_mouse_label()     [line 458]
+
+    <- combat_scene._process()     [line 388]
+
+  func _unit_reached_destination()   [line 474]
+    -> combat_scene._update_enemy_visibility()     [line 514]
+
+  func _unit_changed_orientation()   [line 478]
+    -> combat_scene._update_enemy_visibility()     [line 514]
+
+  func select_next_unit()   [line 486]
+    -> unit_manager.get_next_unit_by_team()     [line 121]
+
+    <- combat_idle_state.handle_key()     [line 27]
+    <- combat_unit_aiming_state.handle_key()     [line 71]
+    <- combat_unit_selected_state.handle_key()     [line 134]
+
+  func on_bullet_hit()   [line 493]
+    -> grid_service.world_to_tile()     [line 70]
+    -> tile_occupancy_service.get_entities()     [line 56]
+    -> unit_manager.apply_damage_to_unit()     [line 136]
+    -> wall_manager.apply_damage_to_wall()     [line 109]
+
+    <- bullet._physics_process()     [line 35]
+
+  func set_cursor()   [line 506]
+    <- combat_unit_aiming_state.enter()     [line 21]
+    <- combat_unit_aiming_state.exit()     [line 27]
+
+  func _update_enemy_visibility()   [line 514]
+    -> exploration_service.get_merged_visible_tiles()     [line 22]
+    -> unit_manager.get_units_by_team()     [line 127]
+
+    <- combat_scene._unit_changed_orientation()     [line 478]
+    <- combat_scene._unit_reached_destination()     [line 474]
+    <- combat_scene.initialize()     [line 94]
+
+#endregion
+
+#region combat_unit_aiming_state.gd
+  func _ready()   [line 15]
+
+  func enter()   [line 21]
+    -> combat_scene.set_cursor()     [line 506]
+
+  func exit()   [line 27]
+    -> combat_scene.set_cursor()     [line 506]
+
+  func update()   [line 33]
+    -> grid_service.tile_to_world()     [line 67]
+    -> grid_service.world_to_tile()     [line 70]
+    -> los_service.has_los()     [line 84]
+
+  func _attempt_shot()   [line 43]
+    -> unit_manager.request_shoot()     [line 150]
+
+    <- combat_unit_aiming_state.handle_click()     [line 62]
+
+  func handle_click()   [line 62]
+    -> combat_unit_aiming_state._attempt_shot()     [line 43]
+    -> grid_service.get_orientation()     [line 111]
+
+  func handle_key()   [line 71]
+    -> combat_scene.select_next_unit()     [line 486]
+
+#endregion
+
+#region combat_unit_moving_state.gd
+  func _ready()   [line 7]
+
+  func enter()   [line 10]
+
+  func exit()   [line 15]
+
+  func update()   [line 19]
+
+  func handle_click()   [line 22]
+
+#endregion
+
+#region combat_unit_selected_state.gd
+  func _ready()   [line 9]
+
+  func enter()   [line 12]
+    -> camera_controller.center_at_tile()     [line 35]
+
+  func exit()   [line 18]
+
+  func update()   [line 22]
+
+  func _confirm_move()   [line 25]
+    -> unit_manager.start_unit_movement()     [line 302]
+
+    <- combat_unit_selected_state.handle_click()     [line 40]
+
+  func handle_click()   [line 40]
+    -> combat_unit_selected_state._confirm_move()     [line 25]
+    -> grid_service.get_orientation()     [line 111]
+    -> pathfinding_service.find_path()     [line 21]
+    -> paths_overlay.clear_path()     [line 24]
+    -> paths_overlay.show_path()     [line 14]
+    -> tile_occupancy_service.get_units()     [line 59]
+    -> unit_manager.get_unit_tile()     [line 107]
+
+  func handle_key()   [line 134]
+    -> combat_scene.select_next_unit()     [line 486]
+    -> unit_xcom_2.toggle_crouch()     [line 51]
+
+#endregion
+
+#region container_wagon.gd
+  func _ready()   [line 7]
+
+  func _process()   [line 12]
+
+  func on_click()   [line 15]
+
+#endregion
+
+#region cover_overlay.gd
+  func show_covers()   [line 13]
+    <- cover_service.build_cover_map()     [line 17]
+
+  func clear()   [line 17]
+
+  func _draw()   [line 21]
+    -> cover_overlay._draw_cover()     [line 27]
+
+  func _draw_cover()   [line 27]
+    -> grid_service.tile_to_world()     [line 67]
+
+    <- cover_overlay._draw()     [line 21]
+
+#endregion
+
+#region cover_service.gd
+  func build_cover_map()   [line 17]
+    -> cover_overlay.show_covers()     [line 13]
+    -> cover_service._cover_in_direction()     [line 34]
+
+    <- combat_scene._load_map()     [line 214]
+
+  func _cover_in_direction()   [line 34]
+    -> edge_occupancy_service.get_edge()     [line 30]
+
+    <- cover_service.build_cover_map()     [line 17]
+
+  func get_cover_against()   [line 42]
+    <- unit_manager.choose_best_target()     [line 268]
+    <- unit_manager.evaluate_tile_defensiveness()     [line 240]
+    <- unit_manager.is_unit_in_cover_against_enemy()     [line 189]
+
+  func get_cover_value()   [line 68]
+    <- unit_manager.is_unit_in_cover()     [line 185]
+
+#endregion
+
+#region crate.gd
+  func set_mode()   [line 11]
+    <- loader_component.initialize()     [line 72]
+    <- loader_vehicle.initialize()     [line 67]
+
+  func set_qty()   [line 21]
+
+#endregion
+
+#region defensiveness_overlay.gd
+  func update()   [line 7]
+
+  func _draw()   [line 10]
+    -> grid_service.tile_to_world()     [line 67]
+
+#endregion
+
+#region edge.gd
+  func _init()   [line 19]
+
+  func get_tiles()   [line 24]
+
+#endregion
+
+#region edge_factory.gd
+  func create_edge()   [line 8]
+
+#endregion
+
+#region edge_occupancy_service.gd
+  func _ready()   [line 9]
+
+  func register()   [line 13]
+    -> edge_occupancy_service._edge_key()     [line 44]
+
+  func unregister()   [line 18]
+    -> edge_occupancy_service._edge_key()     [line 44]
+
+  func is_edge_walk_blocked()   [line 21]
+    -> edge_occupancy_service._edge_key()     [line 44]
+
+    <- navigation_graph_service._build_edges()     [line 169]
+    <- navigation_graph_service._build_edges_2x2()     [line 235]
+    <- navigation_graph_service._update_edge()     [line 268]
+
+  func is_edge_view_blocked()   [line 25]
+    -> edge_occupancy_service._edge_key()     [line 44]
+
+    <- los_service.has_los()     [line 84]
+
+  func get_edge()   [line 30]
+    -> edge_occupancy_service._edge_key()     [line 44]
+
+    <- cover_service._cover_in_direction()     [line 34]
+    <- navigation_graph_service._build_edges()     [line 169]
+    <- navigation_graph_service._build_edges_2x2()     [line 235]
+
+  func get_all_edges()   [line 33]
+    <- walls_overlay._draw_edge_walls()     [line 51]
+
+  func get_tiles()   [line 37]
+
+  func clear()   [line 40]
+
+  func _edge_key()   [line 44]
+    <- edge_occupancy_service.get_edge()     [line 30]
+    <- edge_occupancy_service.is_edge_view_blocked()     [line 25]
+    <- edge_occupancy_service.is_edge_walk_blocked()     [line 21]
+    <- edge_occupancy_service.register()     [line 13]
+    <- edge_occupancy_service.unregister()     [line 18]
+
+#endregion
+
+#region enemy_turn_state.gd
+  func enter()   [line 5]
+
+#endregion
+
+#region exploration_layer.gd
+  func hide_all()   [line 12]
+
+  func reveal()   [line 18]
+    -> exploration_layer._update_tiles()     [line 40]
+
+    <- exploration_service._reveal_tiles()     [line 19]
+
+  func is_tile_visible()   [line 34]
+    <- exploration_service._update_units_visibility()     [line 68]
+
+  func is_tile_explored()   [line 37]
+
+  func _update_tiles()   [line 40]
+    <- exploration_layer.reveal()     [line 18]
+
+#endregion
+
+#region exploration_service.gd
+  func _ready()   [line 12]
+
+  func initialize()   [line 15]
+    -> exploration_service._compute_merged_player_visibility()     [line 61]
+    -> exploration_service._reveal_tiles()     [line 19]
+
+  func _reveal_tiles()   [line 19]
+    -> exploration_layer.reveal()     [line 18]
+
+    <- exploration_service.initialize()     [line 15]
+    <- exploration_service.on_unit_orientation_changed()     [line 49]
+    <- exploration_service.on_unit_tile_changed()     [line 39]
+
+  func get_merged_visible_tiles()   [line 22]
+    <- combat_scene._update_enemy_visibility()     [line 514]
+
+  func _recalculate()   [line 26]
+
+  func on_unit_tile_changed()   [line 39]
+    -> exploration_service._compute_merged_player_visibility()     [line 61]
+    -> exploration_service._reveal_tiles()     [line 19]
+
+  func on_unit_orientation_changed()   [line 49]
+    -> exploration_service._compute_merged_player_visibility()     [line 61]
+    -> exploration_service._reveal_tiles()     [line 19]
+
+  func _compute_merged_player_visibility()   [line 61]
+    -> unit_manager.get_units_by_team()     [line 127]
+    -> unit_manager.get_visible_tiles_for()     [line 370]
+
+    <- exploration_service.initialize()     [line 15]
+    <- exploration_service.on_unit_orientation_changed()     [line 49]
+    <- exploration_service.on_unit_tile_changed()     [line 39]
+
+  func _update_units_visibility()   [line 68]
+    -> exploration_layer.is_tile_visible()     [line 34]
+    -> unit_manager.get_units_by_team()     [line 127]
+
+#endregion
+
+#region faction_ai.gd
+  func _ready()   [line 13]
+
+  func take_turn()   [line 16]
+    -> faction_ai.run_next_unit()     [line 38]
+    -> unit_manager.get_units_by_team()     [line 127]
+
+  func run_next_unit()   [line 38]
+    -> unit.set_selected()     [line 160]
+
+    <- faction_ai._on_unit_finished()     [line 51]
+    <- faction_ai.take_turn()     [line 16]
+
+  func _on_unit_finished()   [line 51]
+    -> faction_ai.run_next_unit()     [line 38]
+
+#endregion
+
+#region fov_overlay.gd
+  func redraw()   [line 10]
+    -> fov_overlay._draw()     [line 13]
+
+  func _draw()   [line 13]
+    -> fov_overlay.highlight_tile()     [line 22]
+
+    <- fov_overlay.redraw()     [line 10]
+
+  func highlight_tile()   [line 22]
+    -> grid_service.tile_to_world()     [line 67]
+
+    <- fov_overlay._draw()     [line 13]
+
+#endregion
+
+#region game_state.gd
+  func _ready()   [line 97]
+    -> game_state.load_initial_cities()     [line 106]
+    -> game_state.load_initial_player_train()     [line 137]
+
+  func load_initial_cities()   [line 106]
+    <- game_state._ready()     [line 97]
+
+  func load_initial_industries()   [line 120]
+
+  func load_initial_player_train()   [line 137]
+    <- game_state._ready()     [line 97]
+
+  func get_money()   [line 149]
+    <- trade_scene.on_i_pressed()     [line 367]
+    <- trade_scene.on_j_pressed()     [line 347]
+    <- trade_scene.on_k_pressed()     [line 357]
+    <- trade_scene.on_u_pressed()     [line 330]
+    <- trade_service.transfer_from_city_to_loader()     [line 9]
+
+  func add_money()   [line 152]
+    <- quest_manager.claim_rewards()     [line 157]
+    <- trade_service.transfer_from_loader_to_city()     [line 40]
+
+  func subtract_money()   [line 155]
+    <- trade_service.transfer_from_city_to_loader()     [line 9]
+
+  func get_player_train()   [line 160]
+    <- combat_scene.load_train_from_game_state()     [line 312]
+    <- trade_scene.load_train_from_game_state()     [line 142]
+
+  func set_player_train()   [line 163]
+
+  func set_wagon_cargo()   [line 166]
+
+  func get_wagon_cargo()   [line 168]
+
+  func get_all_city_names()   [line 173]
+    <- trade_scene.initialize()     [line 81]
+
+  func get_city_by_name()   [line 176]
+    <- trade_scene.load_city_resources_from_game_state()     [line 111]
+
+  func get_city_by_location()   [line 179]
+
+  func get_city_by_id()   [line 182]
+    <- cities_manager.spawn_city()     [line 11]
+
+  func set_city()   [line 185]
+
+  func get_all_industry_names()   [line 189]
+    <- trade_scene.initialize()     [line 81]
+
+  func get_industry_by_name()   [line 192]
+
+  func get_industry_by_location()   [line 195]
+
+  func get_industry_by_id()   [line 198]
+
+  func set_industry()   [line 201]
+
+  func save_player_train()   [line 208]
+
+  func add_goods_to_city()   [line 219]
+    <- city_inventory.add_resource_amount()     [line 51]
+
+  func remove_goods_from_city()   [line 222]
+    <- city_inventory.remove_resource_amount()     [line 60]
+
+  func update_wagon_cargo()   [line 226]
+    <- train_inventory.add_resource_qty_to_wagon()     [line 151]
+    <- train_inventory.remove_resource_qty_from_wagon()     [line 163]
+
+  func save()   [line 234]
+    <- quest_manager.claim_rewards()     [line 157]
+    <- quest_manager.notify_city_reached()     [line 82]
+    <- quest_manager.save_to_game_state()     [line 206]
+
+  func load()   [line 238]
+    <- combat_scene._load_map()     [line 214]
+    <- navigation_scene._load_map()     [line 118]
+    <- navigation_wagon.set_wagon_type()     [line 49]
+    <- scene_manager.enter_city()     [line 14]
+    <- trade_scene._load_map()     [line 202]
+
+#endregion
+
+#region generic_bar.gd
+  func _ready()   [line 12]
+
+  func update_value()   [line 17]
+    <- unit._on_ap_changed()     [line 192]
+    <- unit._on_health_changed()     [line 89]
+    <- unit._ready()     [line 45]
+
+#endregion
+
+#region generic_state.gd
+  func set_owner_node()   [line 7]
+    <- state_machine._ready()     [line 11]
+
+  func set_state_machine()   [line 10]
+    <- state_machine._ready()     [line 11]
+
+  func enter()   [line 13]
+
+  func exit()   [line 17]
+
+  func update()   [line 20]
+
+#endregion
+
+#region grid_service.gd
+  func set_tile_size()   [line 53]
+    <- combat_scene._load_map()     [line 214]
+    <- navigation_scene._load_map()     [line 118]
+    <- trade_scene._load_map()     [line 202]
+
+  func tile_delta_to_world_delta()   [line 60]
+    <- grid_service.tile_to_world()     [line 67]
+
+  func tile_to_world()   [line 67]
+    -> grid_service.tile_delta_to_world_delta()     [line 60]
+
+    <- building_manager.spawn_building()     [line 20]
+    <- camera_controller.center_at_tile()     [line 35]
+    <- cities_manager.create_label()     [line 20]
+    <- cities_overlay._draw()     [line 13]
+    <- combat_unit_aiming_state.update()     [line 33]
+    <- cover_overlay._draw_cover()     [line 27]
+    <- defensiveness_overlay._draw()     [line 10]
+    <- fov_overlay.highlight_tile()     [line 22]
+    <- horizontal_train_manager.spawn_train()     [line 25]
+    <- los_overlay._draw()     [line 12]
+    <- los_overlay.highlight_tile()     [line 25]
+    <- mouse_hover_overlay._draw()     [line 19]
+    <- navigation_graph_overlay._draw()     [line 16]
+    <- navigation_scene._spawn_wagons()     [line 184]
+    <- navigation_train.initialize_wagon_positions()     [line 129]
+    <- paths_overlay._draw()     [line 28]
+    <- pod_manager.spawn_pod()     [line 21]
+    <- rails_overlay._draw()     [line 23]
+    <- reachable_tiles_overlay._highlight_tile()     [line 20]
+    <- resource_manager.spawn_crate()     [line 56]
+    <- resource_manager.spawn_resource()     [line 84]
+    <- resource_manager.xpos_to_resource_name()     [line 113]
+    <- roads_overlay._draw()     [line 15]
+    <- unit_action_move.enter()     [line 43]
+    <- unit_action_move.update()     [line 70]
+    <- unit_manager.spawn_unit()     [line 58]
+    <- units_overlay._draw()     [line 19]
+    <- wall_manager.spawn_full_wall()     [line 35]
+    <- wall_manager.spawn_left_wall()     [line 64]
+    <- wall_manager.spawn_right_wall()     [line 87]
+    <- walls_overlay._draw_tile_walls()     [line 30]
+    <- walls_overlay._edge_to_screen_points()     [line 61]
+    <- weapon_service.fire_bullet()     [line 23]
+
+  func world_to_tile()   [line 70]
+    <- combat_scene._unhandled_input()     [line 407]
+    <- combat_scene.on_bullet_hit()     [line 493]
+    <- combat_scene.update_mouse_label()     [line 458]
+    <- combat_unit_aiming_state.update()     [line 33]
+    <- mouse_hover_overlay._process()     [line 8]
+    <- navigation_locomotive._check_tile_change()     [line 50]
+    <- navigation_locomotive.set_pos()     [line 22]
+    <- navigation_scene._unhandled_input()     [line 200]
+    <- navigation_wagon._check_tile_change()     [line 136]
+    <- navigation_wagon.set_pos()     [line 95]
+    <- trade_scene._unhandled_input()     [line 231]
+
+  func world_to_tilef()   [line 76]
+
+  func get_neighbors()   [line 84]
+    <- navigation_graph_service._build_edges()     [line 169]
+    <- navigation_graph_service._build_edges_2x2()     [line 235]
+
+  func turn_left()   [line 96]
+
+  func turn_right()   [line 103]
+
+  func get_orientation()   [line 111]
+    <- combat_unit_aiming_state.handle_click()     [line 62]
+    <- combat_unit_selected_state.handle_click()     [line 40]
+    <- unit.move_to_tile()     [line 167]
+    <- unit_xcom_2.move_to_tile()     [line 124]
+
+  func get_tiles_in_vision_cone()   [line 156]
+    <- unit_manager.update_vision()     [line 326]
+
+  func is_inside_map()   [line 190]
+    <- navigation_graph_service.is_walkable_2x2()     [line 65]
+
+#endregion
+
+#region health_bar.gd
+  func _ready()   [line 12]
+
+  func update_health()   [line 17]
+
+#endregion
+
+#region health_component.gd
+  func _ready()   [line 11]
+
+  func take_damage()   [line 14]
+
+  func heal()   [line 25]
+
+  func get_health_ratio()   [line 32]
+
+#endregion
+
+#region hitbox_component.gd
+  func _ready()   [line 6]
+
+  func _on_area_entered()   [line 11]
+
+  func enable()   [line 15]
+
+  func disable()   [line 19]
+
+#endregion
+
+#region horizontal_train.gd
+  func _ready()   [line 20]
+
+  func _process()   [line 23]
+
+  func _on_train_just_stopped()   [line 56]
+
+  func calculate_target_loading_wagon_idx()   [line 66]
+    <- horizontal_train.gear_down()     [line 152]
+    <- horizontal_train.gear_up()     [line 144]
+
+  func xpos_to_wagon_idx()   [line 83]
+    <- trade_scene.on_i_pressed()     [line 367]
+    <- trade_scene.on_u_pressed()     [line 330]
+
+  func add_wagon()   [line 92]
+
+  func set_wagon_resource_type()   [line 128]
+    -> vehicle_unit.set_resource_type()     [line 56]
+
+    <- horizontal_train_manager._on_wagon_resource_type_changed()     [line 47]
+
+  func set_wagon_resource_qty()   [line 131]
+    -> vehicle_unit.set_resource_qty()     [line 63]
+
+    <- horizontal_train_manager._on_wagon_resource_amount_changed()     [line 51]
+
+  func set_speed()   [line 134]
+    <- combat_scene.load_train_from_game_state()     [line 312]
+    <- trade_scene.load_train_from_game_state()     [line 142]
+
+  func gear_up()   [line 144]
+    -> horizontal_train.calculate_target_loading_wagon_idx()     [line 66]
+
+  func gear_down()   [line 152]
+    -> horizontal_train.calculate_target_loading_wagon_idx()     [line 66]
+
+  func check_wagon_click()   [line 160]
+
+#endregion
+
+#region horizontal_train_manager.gd
+  func gear_up()   [line 18]
+
+  func gear_down()   [line 20]
+
+  func spawn_train()   [line 25]
+    -> grid_service.tile_to_world()     [line 67]
+
+  func _on_wagon_resource_type_changed()   [line 47]
+    -> horizontal_train.set_wagon_resource_type()     [line 128]
+
+  func _on_wagon_resource_amount_changed()   [line 51]
+    -> horizontal_train.set_wagon_resource_qty()     [line 131]
+
+  func _on_train_money_changed()   [line 55]
+
+  func check_wagon_click()   [line 62]
+
+#endregion
+
+#region hurtbox_component.gd
+  func _ready()   [line 9]
+
+  func take_damage()   [line 13]
+
+  func _on_died()   [line 23]
+
+#endregion
+
+#region i_resource_container.gd
+  func get_available_qty()   [line 4]
+
+  func get_storage_capacity()   [line 7]
+
+  func add_resource_amount()   [line 10]
+
+  func remove_resource_amount()   [line 13]
+
+#endregion
+
+#region idle_state.gd
+  func enter()   [line 5]
+
+#endregion
+
+#region loader_component.gd
+  func initialize()   [line 72]
+    -> crate.set_mode()     [line 11]
+
+  func is_empty()   [line 88]
+
+  func get_cargo_type()   [line 91]
+
+  func get_qty()   [line 94]
+
+  func load_crate()   [line 102]
+
+  func unload_crate()   [line 110]
+
+  func set_crate_qty()   [line 119]
+
+#endregion
+
+#region loader_inventory.gd
+  func is_empty()   [line 11]
+    <- loader_inventory.can_pick()     [line 26]
+    <- loader_inventory.finalize_into_city()     [line 64]
+    <- loader_inventory.finalize_into_wagon()     [line 71]
+    <- loader_inventory.pick_from_city()     [line 34]
+    <- loader_inventory.pick_from_wagon()     [line 52]
+
+  func is_full()   [line 14]
+    <- trade_service.transfer_from_city_to_loader()     [line 9]
+    <- trade_service.transfer_from_train_to_loader()     [line 64]
+
+  func get_resource_type()   [line 17]
+    <- trade_scene.on_esc_pressed()     [line 312]
+    <- trade_scene.on_i_pressed()     [line 367]
+    <- trade_service.transfer_from_loader_to_city()     [line 40]
+    <- trade_service.transfer_from_loader_to_train()     [line 88]
+
+  func get_qty()   [line 20]
+
+  func get_origin()   [line 23]
+
+  func can_pick()   [line 26]
+    -> loader_inventory.is_empty()     [line 11]
+
+    <- loader_inventory.pick_from_city()     [line 34]
+    <- loader_inventory.pick_from_wagon()     [line 52]
+
+  func pick_from_city()   [line 34]
+    -> loader_inventory.can_pick()     [line 26]
+    -> loader_inventory.is_empty()     [line 11]
+
+    <- trade_service.transfer_from_city_to_loader()     [line 9]
+
+  func pick_from_wagon()   [line 52]
+    -> loader_inventory.can_pick()     [line 26]
+    -> loader_inventory.is_empty()     [line 11]
+
+    <- trade_service.transfer_from_train_to_loader()     [line 64]
+
+  func finalize_into_city()   [line 64]
+    -> loader_inventory._reset()     [line 137]
+    -> loader_inventory.is_empty()     [line 11]
+
+    <- trade_service.transfer_from_loader_to_city()     [line 40]
+
+  func finalize_into_wagon()   [line 71]
+    -> loader_inventory._reset()     [line 137]
+    -> loader_inventory.is_empty()     [line 11]
+
+    <- trade_service.transfer_from_loader_to_train()     [line 88]
+
+  func _reset()   [line 137]
+    <- loader_inventory.finalize_into_city()     [line 64]
+    <- loader_inventory.finalize_into_wagon()     [line 71]
+
+#endregion
+
+#region loader_vehicle.gd
+  func initialize()   [line 67]
+    -> crate.set_mode()     [line 11]
+
+  func gear_up()   [line 72]
+
+  func gear_down()   [line 79]
+
+  func is_empty()   [line 95]
+
+  func get_cargo_type()   [line 98]
+
+  func get_qty()   [line 101]
+
+  func load_crate()   [line 110]
+
+  func unload_crate()   [line 118]
+
+  func set_crate_qty()   [line 127]
+
+  func _process()   [line 134]
+
+#endregion
+
+#region locomotive_wagon.gd
+  func _ready()   [line 6]
+
+  func set_money()   [line 10]
+
+  func on_click()   [line 13]
+
+#endregion
+
+#region los_overlay.gd
+  func redraw()   [line 9]
+    -> los_overlay._draw()     [line 12]
+
+  func _draw()   [line 12]
+    -> grid_service.tile_to_world()     [line 67]
+    -> los_overlay.highlight_tile()     [line 25]
+
+    <- los_overlay.redraw()     [line 9]
+
+  func draw_debug_line()   [line 22]
+
+  func highlight_tile()   [line 25]
+    -> grid_service.tile_to_world()     [line 67]
+
+    <- los_overlay._draw()     [line 12]
+
+  func draw_debug_tiles()   [line 39]
+    <- los_service.bresenham_line()     [line 10]
+    <- los_service.bresenham_line_diagonals()     [line 52]
+
+  func draw_los_line()   [line 49]
+    <- los_service.has_los()     [line 84]
+
+#endregion
+
+#region los_service.gd
+  func bresenham_line()   [line 10]
+    -> los_overlay.draw_debug_tiles()     [line 39]
+
+    <- los_service.has_los()     [line 84]
+
+  func bresenham_line_diagonals()   [line 52]
+    -> los_overlay.draw_debug_tiles()     [line 39]
+
+  func has_los()   [line 84]
+    -> edge_occupancy_service.is_edge_view_blocked()     [line 25]
+    -> los_overlay.draw_los_line()     [line 49]
+    -> los_service.bresenham_line()     [line 10]
+
+    <- combat_unit_aiming_state.update()     [line 33]
+    <- los_service.filter_visible_tiles()     [line 108]
+    <- unit_manager.evaluate_tile_defensiveness()     [line 240]
+    <- unit_manager.request_shoot()     [line 150]
+
+  func filter_visible_tiles()   [line 108]
+    -> los_service.has_los()     [line 84]
+
+    <- unit_manager.update_vision()     [line 326]
+
+#endregion
+
+#region master_hud.gd
+  func _ready()   [line 5]
+
+  func hide_all()   [line 12]
+    <- master_hud.show_hud()     [line 16]
+
+  func show_hud()   [line 16]
+    -> master_hud.hide_all()     [line 12]
+
+#endregion
+
+#region merchandise_wagon.gd
+  func _ready()   [line 6]
+
+  func open_doors()   [line 12]
+    <- trade_scene.on_i_pressed()     [line 367]
+    <- trade_scene.on_u_pressed()     [line 330]
+
+  func close_doors()   [line 15]
+    <- trade_scene.on_i_pressed()     [line 367]
+    <- trade_scene.on_u_pressed()     [line 330]
+
+  func on_click()   [line 18]
+
+#endregion
+
+#region mouse_hover_overlay.gd
+  func _process()   [line 8]
+    -> grid_service.world_to_tile()     [line 70]
+
+  func update()   [line 15]
+    -> mouse_hover_overlay._draw()     [line 19]
+
+  func _draw()   [line 19]
+    -> grid_service.tile_to_world()     [line 67]
+
+    <- mouse_hover_overlay.update()     [line 15]
+
+#endregion
+
+#region navigation_graph_overlay.gd
+  func update()   [line 12]
+    -> navigation_graph_overlay._draw()     [line 16]
+
+  func _draw()   [line 16]
+    -> grid_service.tile_to_world()     [line 67]
+
+    <- navigation_graph_overlay.update()     [line 12]
+
+#endregion
+
+#region navigation_graph_service.gd
+  func build_graph()   [line 48]
+    -> navigation_graph_service._build_edges()     [line 169]
+    -> navigation_graph_service._build_edges_2x2()     [line 235]
+    -> navigation_graph_service._build_nodes()     [line 143]
+    -> navigation_graph_service._build_nodes_2x2()     [line 154]
+
+    <- combat_scene._load_map()     [line 214]
+
+  func is_walkable_2x2()   [line 65]
+    -> grid_service.is_inside_map()     [line 190]
+    -> tile_occupancy_service.is_occupied_static()     [line 98]
+
+    <- navigation_graph_service._build_nodes_2x2()     [line 154]
+
+  func get_reachable_tiles()   [line 79]
+    -> reachable_tiles_overlay.show_tiles()     [line 8]
+
+    <- unit.set_selected()     [line 160]
+    <- unit_manager.find_safest_tile()     [line 222]
+
+  func _compare_cost()   [line 126]
+
+  func _build_nodes()   [line 143]
+    -> terrain_service.get_elevation()     [line 7]
+    -> tile_occupancy_service.is_occupied_static()     [line 98]
+
+    <- navigation_graph_service.build_graph()     [line 48]
+
+  func _build_nodes_2x2()   [line 154]
+    -> navigation_graph_service.is_walkable_2x2()     [line 65]
+    -> terrain_service.get_elevation()     [line 7]
+
+    <- navigation_graph_service.build_graph()     [line 48]
+
+  func _build_edges()   [line 169]
+    -> edge_occupancy_service.get_edge()     [line 30]
+    -> edge_occupancy_service.is_edge_walk_blocked()     [line 21]
+    -> grid_service.get_neighbors()     [line 84]
+    -> navigation_graph_service._edge_key()     [line 265]
+
+    <- navigation_graph_service.build_graph()     [line 48]
+
+  func _build_edges_2x2()   [line 235]
+    -> edge_occupancy_service.get_edge()     [line 30]
+    -> edge_occupancy_service.is_edge_walk_blocked()     [line 21]
+    -> grid_service.get_neighbors()     [line 84]
+    -> navigation_graph_service._edge_key()     [line 265]
+
+    <- navigation_graph_service.build_graph()     [line 48]
+
+  func _edge_key()   [line 265]
+    <- navigation_graph_service._build_edges()     [line 169]
+    <- navigation_graph_service._build_edges_2x2()     [line 235]
+    <- navigation_graph_service._update_edge()     [line 268]
+
+  func _update_edge()   [line 268]
+    -> edge_occupancy_service.is_edge_walk_blocked()     [line 21]
+    -> navigation_graph_service._edge_key()     [line 265]
+
+#endregion
+
+#region navigation_hud.gd
+  func _physics_process()   [line 13]
+
+  func update_gold()   [line 20]
+
+  func update_fuel()   [line 23]
+    <- navigation_scene._process()     [line 241]
+
+  func update_speed()   [line 26]
+    <- navigation_scene._process()     [line 241]
+
+  func update_time()   [line 29]
+
+  func _on_button_findengine_pressed()   [line 32]
+
+  func _on_button_save_pressed()   [line 46]
+
+  func _on_button_minimap_pressed()   [line 49]
+
+#endregion
+
+#region navigation_locomotive.gd
+  func _ready()   [line 19]
+
+  func set_pos()   [line 22]
+    -> grid_service.world_to_tile()     [line 70]
+
+  func set_orientation()   [line 26]
+    -> navigation_locomotive.update_animation()     [line 35]
+
+  func set_heading()   [line 32]
+
+  func update_animation()   [line 35]
+    <- navigation_locomotive.set_orientation()     [line 26]
+
+  func _update_labels()   [line 39]
+    <- navigation_locomotive._process()     [line 42]
+
+  func _process()   [line 42]
+    -> navigation_locomotive._check_tile_change()     [line 50]
+    -> navigation_locomotive._move()     [line 47]
+    -> navigation_locomotive._update_labels()     [line 39]
+
+  func _move()   [line 47]
+    <- navigation_locomotive._process()     [line 42]
+
+  func _check_tile_change()   [line 50]
+    -> grid_service.world_to_tile()     [line 70]
+
+    <- navigation_locomotive._process()     [line 42]
+
+#endregion
+
+#region navigation_scene.gd
+  func _ready()   [line 71]
+    -> audio_service.play_music()     [line 95]
+    -> camera_controller.center_at_tile()     [line 35]
+    -> camera_controller.set_zoom()     [line 43]
+    -> navigation_scene._inject_services()     [line 82]
+    -> navigation_scene._load_map()     [line 118]
+
+  func _inject_services()   [line 82]
+    <- navigation_scene._ready()     [line 71]
+
+  func _wire_signals()   [line 107]
+
+  func _load_map()   [line 118]
+    -> game_state.load()     [line 238]
+    -> grid_service.set_tile_size()     [line 53]
+    -> navigation_scene._build_bridges_from_map()     [line 173]
+    -> navigation_scene._build_rails_from_map()     [line 166]
+    -> navigation_scene._spawn_cities_from_map()     [line 148]
+    -> navigation_scene._spawn_trains_from_map()     [line 155]
+    -> navigation_scene._spawn_wagons()     [line 184]
+
+    <- navigation_scene._ready()     [line 71]
+
+  func _spawn_cities_from_map()   [line 148]
+    -> cities_manager.spawn_city()     [line 11]
+
+    <- navigation_scene._load_map()     [line 118]
+
+  func _spawn_trains_from_map()   [line 155]
+    <- navigation_scene._load_map()     [line 118]
+
+  func _build_rails_from_map()   [line 166]
+    -> rail_service.spawn_rail()     [line 164]
+
+    <- navigation_scene._load_map()     [line 118]
+
+  func _build_bridges_from_map()   [line 173]
+    -> rail_service.spawn_bridge()     [line 173]
+
+    <- navigation_scene._load_map()     [line 118]
+
+  func _spawn_wagons()   [line 184]
+    -> grid_service.tile_to_world()     [line 67]
+
+    <- navigation_scene._load_map()     [line 118]
+
+  func _unhandled_input()   [line 200]
+    -> grid_service.world_to_tile()     [line 70]
+    -> navigation_scene._handle_gear_toggle()     [line 217]
+    -> navigation_scene._handle_reverse_train()     [line 220]
+    -> rail_service.change_junction()     [line 249]
+    -> rail_service.has_junction()     [line 268]
+    -> rail_service.has_rail()     [line 272]
+
+  func _handle_gear_toggle()   [line 217]
+    <- navigation_scene._unhandled_input()     [line 200]
+
+  func _handle_reverse_train()   [line 220]
+    -> train_manager.reverse_player_train()     [line 146]
+
+    <- navigation_scene._unhandled_input()     [line 200]
+
+  func recenter_player_train()   [line 223]
+
+  func camera_lock_toggle()   [line 226]
+    -> train_manager.camera_lock_to_engine_toggle()     [line 140]
+
+  func reverse_player_train_direction()   [line 229]
+    -> train_manager.reverse_player_train()     [line 146]
+
+    <- scene_manager.leave_city()     [line 31]
+
+  func _on_train_reached_city()   [line 233]
+    -> audio_service.stop_music()     [line 115]
+    -> quest_manager.notify_city_reached()     [line 82]
+    -> scene_manager.enter_city()     [line 14]
+
+  func _process()   [line 241]
+    -> navigation_hud.update_fuel()     [line 23]
+    -> navigation_hud.update_speed()     [line 26]
+
+#endregion
+
+#region navigation_train.gd
+  func _ready()   [line 110]
+
+  func initialize()   [line 114]
+    -> navigation_train.add_locomotive()     [line 138]
+    -> navigation_train.add_wagon()     [line 153]
+    -> navigation_train.set_id()     [line 181]
+
+  func initialize_wagon_positions()   [line 129]
+    -> grid_service.tile_to_world()     [line 67]
+
+  func add_locomotive()   [line 138]
+    <- navigation_train.initialize()     [line 114]
+
+  func add_wagon()   [line 153]
+    -> navigation_wagon.enable_back_attachment()     [line 112]
+    -> navigation_wagon.enable_front_attachment()     [line 109]
+
+    <- navigation_train.initialize()     [line 114]
+
+  func set_id()   [line 181]
+    <- navigation_train.initialize()     [line 114]
+    <- soldier.initialize()     [line 32]
+
+  func set_team()   [line 187]
+    <- soldier.initialize()     [line 32]
+
+  func set_action()   [line 192]
+    -> navigation_train.update_state_label()     [line 196]
+
+  func update_state_label()   [line 196]
+    <- navigation_train.set_action()     [line 192]
+
+  func update_gear_label()   [line 199]
+    <- navigation_train.gear_toggle()     [line 218]
+    <- navigation_train.inmediate_stop()     [line 234]
+
+  func update_speed_label()   [line 202]
+    <- navigation_train._update_speed()     [line 242]
+    <- navigation_train.inmediate_stop()     [line 234]
+
+  func update()   [line 206]
+    -> navigation_train._update_speed()     [line 242]
+
+  func gear_toggle()   [line 218]
+    -> navigation_train.update_gear_label()     [line 199]
+
+  func reverse_train()   [line 222]
+    <- train_manager.reverse_player_train()     [line 146]
+
+  func inmediate_stop()   [line 234]
+    -> navigation_train.update_gear_label()     [line 199]
+    -> navigation_train.update_speed_label()     [line 202]
+
+    <- navigation_train._handle_tile_change()     [line 271]
+    <- train_manager._check_tile_events()     [line 157]
+
+  func _update_speed()   [line 242]
+    -> navigation_train.update_speed_label()     [line 202]
+
+    <- navigation_train.update()     [line 206]
+
+  func _on_locomotive_tile_changed()   [line 254]
+    -> navigation_train._handle_tile_change()     [line 271]
+
+  func _on_wagon_tile_changed()   [line 267]
+    -> navigation_train._handle_tile_change()     [line 271]
+
+  func _handle_tile_change()   [line 271]
+    -> navigation_train.inmediate_stop()     [line 234]
+    -> rail_service.calculate_new_orientation()     [line 217]
+
+    <- navigation_train._on_locomotive_tile_changed()     [line 254]
+    <- navigation_train._on_wagon_tile_changed()     [line 267]
+
+#endregion
+
+#region navigation_wagon.gd
+  func _ready()   [line 43]
+
+  func initialize()   [line 46]
+    -> navigation_wagon.set_wagon_type()     [line 49]
+
+  func set_wagon_type()   [line 49]
+    -> game_state.load()     [line 238]
+    -> navigation_wagon._create_animations_from_atlas()     [line 66]
+
+    <- navigation_wagon.initialize()     [line 46]
+
+  func _create_animations_from_atlas()   [line 66]
+    <- navigation_wagon.set_wagon_type()     [line 49]
+
+  func set_pos()   [line 95]
+    -> grid_service.world_to_tile()     [line 70]
+
+  func set_orientation()   [line 99]
+    -> navigation_wagon.update_animation()     [line 123]
+
+  func enable_front_attachment()   [line 109]
+    <- navigation_train.add_wagon()     [line 153]
+
+  func enable_back_attachment()   [line 112]
+    <- navigation_train.add_wagon()     [line 153]
+
+  func disable_all_attachments()   [line 115]
+
+  func set_heading()   [line 120]
+
+  func update_animation()   [line 123]
+    <- navigation_wagon.set_orientation()     [line 99]
+
+  func _process()   [line 129]
+    -> navigation_wagon._check_tile_change()     [line 136]
+    -> navigation_wagon._move()     [line 133]
+
+  func _move()   [line 133]
+    <- navigation_wagon._process()     [line 129]
+
+  func _check_tile_change()   [line 136]
+    -> grid_service.world_to_tile()     [line 70]
+
+    <- navigation_wagon._process()     [line 129]
+
+#endregion
+
+#region object_manager.gd
+  func _ready()   [line 5]
+
+  func _process()   [line 10]
+
+#endregion
+
+#region objects_overlay.gd
+  func _ready()   [line 5]
+
+  func _process()   [line 10]
+
+#endregion
+
+#region pathfinding_service.gd
+  func find_path()   [line 21]
+    -> pathfinding_service._heuristic()     [line 135]
+    -> pathfinding_service._pop_open()     [line 131]
+    -> pathfinding_service._push_open()     [line 127]
+    -> pathfinding_service._reconstruct_path()     [line 139]
+    -> tile_occupancy_service.is_occupied()     [line 95]
+
+    <- combat_unit_selected_state.handle_click()     [line 40]
+    <- unit_manager.calculate_path_for_unit()     [line 293]
+
+  func find_path_OLD()   [line 73]
+    -> pathfinding_service._heuristic()     [line 135]
+    -> pathfinding_service._pop_open()     [line 131]
+    -> pathfinding_service._push_open()     [line 127]
+    -> pathfinding_service._reconstruct_path()     [line 139]
+    -> tile_occupancy_service.is_occupied()     [line 95]
+
+  func _push_open()   [line 127]
+    <- pathfinding_service.find_path()     [line 21]
+    <- pathfinding_service.find_path_OLD()     [line 73]
+
+  func _pop_open()   [line 131]
+    <- pathfinding_service.find_path()     [line 21]
+    <- pathfinding_service.find_path_OLD()     [line 73]
+
+  func _heuristic()   [line 135]
+    <- pathfinding_service.find_path()     [line 21]
+    <- pathfinding_service.find_path_OLD()     [line 73]
+
+  func _reconstruct_path()   [line 139]
+    <- pathfinding_service.find_path()     [line 21]
+    <- pathfinding_service.find_path_OLD()     [line 73]
+
+#endregion
+
+#region paths_overlay.gd
+  func _ready()   [line 8]
+
+  func redraw()   [line 11]
+    -> paths_overlay._draw()     [line 28]
+
+  func show_path()   [line 14]
+    -> paths_overlay._draw()     [line 28]
+
+    <- combat_unit_selected_state.handle_click()     [line 40]
+
+  func update()   [line 20]
+    -> paths_overlay._draw()     [line 28]
+
+  func clear_path()   [line 24]
+    -> paths_overlay._draw()     [line 28]
+
+    <- combat_unit_selected_state.handle_click()     [line 40]
+
+  func _draw()   [line 28]
+    -> grid_service.tile_to_world()     [line 67]
+
+    <- paths_overlay.clear_path()     [line 24]
+    <- paths_overlay.redraw()     [line 11]
+    <- paths_overlay.show_path()     [line 14]
+    <- paths_overlay.update()     [line 20]
+
+#endregion
+
+#region patrolling_state.gd
+  func enter()   [line 5]
+
+#endregion
+
+#region player_turn_state.gd
+  func enter()   [line 10]
+
+#endregion
+
+#region pod.gd
+  func initialize()   [line 21]
+
+  func add_unit()   [line 28]
+    <- pod_manager.add_unit_to_pod()     [line 50]
+
+  func get_all_units()   [line 32]
+
+  func take_turn()   [line 35]
+
+  func set_state()   [line 39]
+    <- pod.move_to_tile()     [line 43]
+
+  func move_to_tile()   [line 43]
+    -> pod.set_state()     [line 39]
+
+  func update_state_label()   [line 48]
+
+  func on_arrived_to_tile()   [line 51]
+
+  func on_movement_finished()   [line 54]
+
+#endregion
+
+#region pod_ai_manager.gd
+  func _ready()   [line 8]
+
+  func execute_turn()   [line 11]
+    -> pod_ai_manager.dumb_pod_action()     [line 21]
+    -> pod_manager.get_all_pods()     [line 70]
+
+  func dumb_pod_action()   [line 21]
+    -> pod_manager.get_pod_patrol_route()     [line 61]
+    -> unit_manager.start_unit_movement()     [line 302]
+
+    <- pod_ai_manager.execute_turn()     [line 11]
+
+#endregion
+
+#region pod_manager.gd
+  func spawn_pod()   [line 21]
+    -> grid_service.tile_to_world()     [line 67]
+
+    <- combat_scene._spawn_pods_from_map()     [line 331]
+
+  func add_unit_to_pod()   [line 50]
+    -> pod.add_unit()     [line 28]
+
+    <- combat_scene._assign_units_to_pods()     [line 293]
+
+  func get_pod_by_tile()   [line 57]
+
+  func get_pod_tile()   [line 59]
+    <- combat_scene._assign_units_to_pods()     [line 293]
+
+  func get_pod_patrol_route()   [line 61]
+    <- pod_ai_manager.dumb_pod_action()     [line 21]
+
+  func get_next_pod()   [line 64]
+
+  func get_all_pods()   [line 70]
+    <- pod_ai_manager.execute_turn()     [line 11]
+
+  func register_pod()   [line 77]
+
+  func unregister_pod()   [line 80]
+
+  func start_pod_movement()   [line 85]
+    -> pod_manager._give_next_tile()     [line 91]
+
+  func _give_next_tile()   [line 91]
+    -> pod_manager._on_pod_reached_destination()     [line 99]
+
+    <- pod_manager.start_pod_movement()     [line 85]
+
+  func _on_pod_reached_destination()   [line 99]
+    <- pod_manager._give_next_tile()     [line 91]
+
+#endregion
+
+#region quest.gd
+  func is_completed()   [line 13]
+    <- quest_manager.process_event()     [line 107]
+
+  func update_objectives()   [line 21]
+    -> quest_objective.update_progress()     [line 13]
+
+  func to_dict()   [line 32]
+
+  func from_dict()   [line 48]
+
+#endregion
+
+#region quest_manager.gd
+  func _ready()   [line 14]
+    -> quest_manager.load_quest_database()     [line 20]
+
+  func load_quest_database()   [line 20]
+    <- quest_manager._ready()     [line 14]
+
+  func accept_quest()   [line 36]
+    -> quest_manager.notify_city_reached()     [line 82]
+    -> quest_manager.save_to_game_state()     [line 206]
+
+    <- quest_manager.load_from_game_state()     [line 219]
+
+  func notify_city_reached()   [line 82]
+    -> game_state.save()     [line 234]
+    -> quest_manager.process_event()     [line 107]
+
+    <- navigation_scene._on_train_reached_city()     [line 233]
+    <- quest_manager.accept_quest()     [line 36]
+
+  func notify_goods_delivered()   [line 89]
+    -> quest_manager.process_event()     [line 107]
+
+  func notify_goods_collected()   [line 96]
+    -> quest_manager.process_event()     [line 107]
+
+    <- train_inventory.add_resource_qty_to_wagon()     [line 151]
+    <- train_inventory.remove_resource_qty_from_wagon()     [line 163]
+
+  func notify_money_changed()   [line 102]
+    -> quest_manager.process_event()     [line 107]
+
+  func process_event()   [line 107]
+    -> quest.is_completed()     [line 13]
+    -> quest_manager.complete_quest()     [line 134]
+    -> quest_manager.save_to_game_state()     [line 206]
+    -> quest_objective.update_progress()     [line 13]
+
+    <- quest_manager.notify_city_reached()     [line 82]
+    <- quest_manager.notify_goods_collected()     [line 96]
+    <- quest_manager.notify_goods_delivered()     [line 89]
+    <- quest_manager.notify_money_changed()     [line 102]
+
+  func complete_quest()   [line 134]
+    -> quest_manager.claim_rewards()     [line 157]
+    -> quest_manager.save_to_game_state()     [line 206]
+
+    <- quest_manager.process_event()     [line 107]
+
+  func claim_rewards()   [line 157]
+    -> game_state.add_money()     [line 152]
+    -> game_state.save()     [line 234]
+
+    <- quest_manager.complete_quest()     [line 134]
+
+  func save_to_game_state()   [line 206]
+    -> game_state.save()     [line 234]
+
+    <- quest_manager.accept_quest()     [line 36]
+    <- quest_manager.complete_quest()     [line 134]
+    <- quest_manager.process_event()     [line 107]
+    <- quest_ui._on_clear_completed_pressed()     [line 152]
+
+  func load_from_game_state()   [line 219]
+    -> quest_manager.accept_quest()     [line 36]
+
+#endregion
+
+#region quest_objective.gd
+  func update_progress()   [line 13]
+    <- quest.update_objectives()     [line 21]
+    <- quest_manager.process_event()     [line 107]
+
+  func to_dict()   [line 51]
+
+  func from_dict()   [line 63]
+
+#endregion
+
+#region quest_ui.gd
+  func _ready()   [line 7]
+    -> quest_ui.refresh_ui()     [line 18]
+
+  func refresh_ui()   [line 18]
+    <- quest_ui._on_clear_completed_pressed()     [line 152]
+    <- quest_ui._on_quest_accepted()     [line 179]
+    <- quest_ui._on_quest_completed()     [line 188]
+    <- quest_ui._on_quest_objective_updated()     [line 192]
+    <- quest_ui._ready()     [line 7]
+
+  func _on_clear_completed_pressed()   [line 152]
+    -> quest_manager.save_to_game_state()     [line 206]
+    -> quest_ui.refresh_ui()     [line 18]
+
+  func show_notification()   [line 159]
+    <- quest_ui._on_quest_accepted()     [line 179]
+    <- quest_ui._on_quest_completed()     [line 188]
+
+  func _on_quest_accepted()   [line 179]
+    -> assistant_ui.show_message()     [line 19]
+    -> quest_ui.refresh_ui()     [line 18]
+    -> quest_ui.show_notification()     [line 159]
+
+  func _on_quest_completed()   [line 188]
+    -> quest_ui.refresh_ui()     [line 18]
+    -> quest_ui.show_notification()     [line 159]
+
+  func _on_quest_objective_updated()   [line 192]
+    -> quest_ui.refresh_ui()     [line 18]
+
+#endregion
+
+#region rail_edge.gd
+  func _init()   [line 8]
+
+  func get_edges()   [line 13]
+
+  func get_cost()   [line 16]
+
+#endregion
+
+#region rail_edge_factory.gd
+  func create_edge()   [line 4]
+
+#endregion
+
+#region rail_service.gd
+  func spawn_rail()   [line 164]
+    -> rail_service._rebuild_edges_for_tile()     [line 182]
+
+    <- navigation_scene._build_rails_from_map()     [line 166]
+
+  func spawn_bridge()   [line 173]
+    -> rail_service._rebuild_edges_for_tile()     [line 182]
+
+    <- navigation_scene._build_bridges_from_map()     [line 173]
+
+  func _rebuild_edges_for_tile()   [line 182]
+    <- rail_service.spawn_bridge()     [line 173]
+    <- rail_service.spawn_rail()     [line 164]
+
+  func get_tile_edges()   [line 210]
+
+  func calculate_new_orientation()   [line 217]
+    <- navigation_train._handle_tile_change()     [line 271]
+
+  func change_junction()   [line 249]
+    <- navigation_scene._unhandled_input()     [line 200]
+
+  func has_junction()   [line 268]
+    <- navigation_scene._unhandled_input()     [line 200]
+
+  func has_rail()   [line 272]
+    <- cities_manager._compute_entry_tile()     [line 28]
+    <- cities_manager._compute_entry_tile_old()     [line 49]
+    <- navigation_scene._unhandled_input()     [line 200]
+
+#endregion
+
+#region rails_overlay.gd
+  func _ready()   [line 15]
+
+  func update()   [line 18]
+    -> rails_overlay._draw()     [line 23]
+
+  func _draw()   [line 23]
+    -> grid_service.tile_to_world()     [line 67]
+
+    <- rails_overlay.update()     [line 18]
+
+#endregion
+
+#region reachable_tiles_overlay.gd
+  func show_tiles()   [line 8]
+    <- navigation_graph_service.get_reachable_tiles()     [line 79]
+
+  func clear()   [line 12]
+
+  func _draw()   [line 16]
+    -> reachable_tiles_overlay._highlight_tile()     [line 20]
+
+  func _highlight_tile()   [line 20]
+    -> grid_service.tile_to_world()     [line 67]
+
+    <- reachable_tiles_overlay._draw()     [line 16]
+
+#endregion
+
+#region resource.gd
+  func _ready()   [line 54]
+
+  func set_type()   [line 57]
+
+  func set_qty()   [line 62]
+
+  func _process()   [line 66]
+
+#endregion
+
+#region resource_manager.gd
+  func _ready()   [line 52]
+
+  func spawn_crate()   [line 56]
+    -> grid_service.tile_to_world()     [line 67]
+
+    <- trade_scene.load_city_resources_from_game_state()     [line 111]
+
+  func spawn_resource()   [line 84]
+    -> grid_service.tile_to_world()     [line 67]
+
+    <- trade_scene.load_industry_resources_from_game_state()     [line 130]
+
+  func xpos_to_resource_name()   [line 113]
+    -> grid_service.tile_to_world()     [line 67]
+
+    <- trade_scene.on_j_pressed()     [line 347]
+    <- trade_scene.on_k_pressed()     [line 357]
+
+  func update_resource_qty()   [line 131]
+    <- trade_scene._on_city_resource_amount_changed()     [line 386]
+
+  func get_resource_in_tile()   [line 136]
+    -> tile_occupancy_service.get_entities()     [line 56]
+
+#endregion
+
+#region road_service.gd
+  func _ready()   [line 11]
+
+  func spawn_road()   [line 14]
+    <- combat_scene._spawn_roads_from_map()     [line 382]
+
+  func get_occupied_tiles()   [line 22]
+
+  func has_road()   [line 26]
+
+  func _process()   [line 30]
+
+#endregion
+
+#region roads_overlay.gd
+  func _ready()   [line 7]
+
+  func redraw()   [line 11]
+    -> roads_overlay._draw()     [line 15]
+
+  func _draw()   [line 15]
+    -> grid_service.tile_to_world()     [line 67]
+
+    <- roads_overlay.redraw()     [line 11]
+
+#endregion
+
+#region scene_manager.gd
+  func _ready()   [line 7]
+
+  func _process()   [line 10]
+
+  func enter_city()   [line 14]
+    -> game_state.load()     [line 238]
+
+    <- navigation_scene._on_train_reached_city()     [line 233]
+
+  func leave_city()   [line 31]
+    -> navigation_scene.reverse_player_train_direction()     [line 229]
+
+    <- trade_scene._process_outro()     [line 196]
+
+#endregion
+
+#region selection_manager.gd
+  func select_unit()   [line 6]
+
+  func clear_selection()   [line 13]
+
+  func get_selected_unit()   [line 18]
+
+#endregion
+
+#region soldier.gd
+  func _ready()   [line 28]
+
+  func initialize()   [line 32]
+    -> navigation_train.set_id()     [line 181]
+    -> navigation_train.set_team()     [line 187]
+    -> unit.set_id()     [line 69]
+    -> unit.set_team()     [line 75]
+
+#endregion
+
+#region state_machine.gd
+  func _ready()   [line 11]
+    -> generic_state.set_owner_node()     [line 7]
+    -> generic_state.set_state_machine()     [line 10]
+
+  func init()   [line 25]
+    -> state_machine.set_state()     [line 36]
+
+  func _process()   [line 33]
+
+  func set_state()   [line 36]
+    <- state_machine.init()     [line 25]
+
+  func get_current_state()   [line 49]
+    <- turn_manager.finish_turn()     [line 32]
+
+  func handle_click()   [line 52]
+
+#endregion
+
+#region tank_base.gd
+  func _ready()   [line 21]
+
+  func _process()   [line 24]
+
+  func _on_move_vector_changed()   [line 52]
+
+#endregion
+
+#region tender_wagon.gd
+  func _ready()   [line 6]
+
+  func _process()   [line 13]
+
+  func on_click()   [line 16]
+
+#endregion
+
+#region terrainWFC_service.gd
+  func _ready()   [line 24]
+
+  func setup()   [line 27]
+
+  func generate()   [line 39]
+
+  func _lowest_entropy()   [line 65]
+
+  func _propagate()   [line 76]
+
+  func build_region_in_tilemap()   [line 101]
+
+#endregion
+
+#region terrain_service.gd
+  func get_cost()   [line 4]
+
+  func get_elevation()   [line 7]
+    <- navigation_graph_service._build_nodes()     [line 143]
+    <- navigation_graph_service._build_nodes_2x2()     [line 154]
+
+#endregion
+
+#region tile_occupancy_service.gd
+  func _ready()   [line 22]
+
+  func register_footprint()   [line 26]
+
+  func unregister_footprint()   [line 31]
+
+  func register()   [line 36]
+
+  func unregister()   [line 43]
+
+  func get_occupied_tiles()   [line 53]
+
+  func get_entities()   [line 56]
+    <- combat_scene.on_bullet_hit()     [line 493]
+    <- resource_manager.get_resource_in_tile()     [line 136]
+
+  func get_units()   [line 59]
+    <- combat_idle_state.handle_click()     [line 17]
+    <- combat_scene._assign_units_to_pods()     [line 293]
+    <- combat_unit_selected_state.handle_click()     [line 40]
+    <- unit_manager._update_seen_enemies()     [line 385]
+    <- units_overlay._draw()     [line 19]
+
+  func get_buildings()   [line 66]
+
+  func get_resources()   [line 73]
+
+  func get_walls()   [line 81]
+    <- walls_overlay._draw_tile_walls()     [line 30]
+
+  func get_roads()   [line 88]
+
+  func is_occupied()   [line 95]
+    <- pathfinding_service.find_path()     [line 21]
+    <- pathfinding_service.find_path_OLD()     [line 73]
+
+  func is_occupied_static()   [line 98]
+    <- navigation_graph_service._build_nodes()     [line 143]
+    <- navigation_graph_service.is_walkable_2x2()     [line 65]
+
+  func is_footprint_free()   [line 105]
+
+  func is_blocked()   [line 112]
+
+  func get_all_occupied_tiles()   [line 117]
+
+  func get_all_entities()   [line 120]
+
+#endregion
+
+#region trade_hud.gd
+  func _ready()   [line 6]
+
+  func _process()   [line 11]
+
+  func update_gold()   [line 14]
+
+#endregion
+
+#region trade_menu.gd
+  func initialize()   [line 19]
+    -> trade_menu.update_labels()     [line 61]
+
+  func get_info()   [line 28]
+
+  func update_resource()   [line 36]
+    -> trade_menu.update_labels()     [line 61]
+
+  func show_buy_mode()   [line 44]
+
+  func show_sell_mode()   [line 52]
+
+  func update_labels()   [line 61]
+    <- trade_menu.initialize()     [line 19]
+    <- trade_menu.update_resource()     [line 36]
+
+  func _on_button_pressed()   [line 68]
+
+  func _on_button_2_pressed()   [line 72]
+
+#endregion
+
+#region trade_scene.gd
+  func _ready()   [line 66]
+    -> audio_service.play_music()     [line 95]
+    -> trade_scene._connect_signals()     [line 170]
+    -> trade_scene._inject_services()     [line 154]
+    -> trade_scene._load_map()     [line 202]
+
+  func initialize()   [line 81]
+    -> game_state.get_all_city_names()     [line 173]
+    -> game_state.get_all_industry_names()     [line 189]
+    -> trade_scene.load_city_resources_from_game_state()     [line 111]
+    -> trade_scene.load_loader_vehicle()     [line 151]
+    -> trade_scene.load_train_from_game_state()     [line 142]
+
+  func leave_scene()   [line 104]
+
+  func load_city_resources_from_game_state()   [line 111]
+    -> city_inventory.initialize_resource()     [line 15]
+    -> game_state.get_city_by_name()     [line 176]
+    -> resource_manager.spawn_crate()     [line 56]
+
+    <- trade_scene.initialize()     [line 81]
+
+  func load_industry_resources_from_game_state()   [line 130]
+    -> resource_manager.spawn_resource()     [line 84]
+
+  func load_train_from_game_state()   [line 142]
+    -> game_state.get_player_train()     [line 160]
+    -> horizontal_train.set_speed()     [line 134]
+
+    <- trade_scene.initialize()     [line 81]
+
+  func load_loader_vehicle()   [line 151]
+    <- trade_scene.initialize()     [line 81]
+
+  func _inject_services()   [line 154]
+    <- trade_scene._ready()     [line 66]
+
+  func _connect_signals()   [line 170]
+    <- trade_scene._ready()     [line 66]
+
+  func _process()   [line 181]
+    -> trade_scene._process_intro()     [line 191]
+    -> trade_scene._process_outro()     [line 196]
+
+  func _process_intro()   [line 191]
+    <- trade_scene._process()     [line 181]
+
+  func _process_outro()   [line 196]
+    -> scene_manager.leave_city()     [line 31]
+
+    <- trade_scene._process()     [line 181]
+
+  func _load_map()   [line 202]
+    -> game_state.load()     [line 238]
+    -> grid_service.set_tile_size()     [line 53]
+
+    <- trade_scene._ready()     [line 66]
+
+  func _unhandled_input()   [line 231]
+    -> grid_service.world_to_tile()     [line 70]
+    -> trade_scene._handle_tile_click()     [line 295]
+    -> trade_scene._handle_traffic_light_click()     [line 264]
+    -> trade_scene._handle_wagon_click()     [line 270]
+    -> trade_scene.on_esc_pressed()     [line 312]
+    -> trade_scene.on_i_pressed()     [line 367]
+    -> trade_scene.on_j_pressed()     [line 347]
+    -> trade_scene.on_k_pressed()     [line 357]
+    -> trade_scene.on_u_pressed()     [line 330]
+
+  func _handle_traffic_light_click()   [line 264]
+    -> traffic_light.toggle()     [line 17]
+
+    <- trade_scene._unhandled_input()     [line 231]
+
+  func _handle_wagon_click()   [line 270]
+    <- trade_scene._unhandled_input()     [line 231]
+
+  func _handle_tile_click()   [line 295]
+    <- trade_scene._unhandled_input()     [line 231]
+
+  func _handle_city_resource_click()   [line 304]
+
+  func on_esc_pressed()   [line 312]
+    -> city_inventory.get_buy_price()     [line 35]
+    -> loader_inventory.get_resource_type()     [line 17]
+
+    <- trade_scene._unhandled_input()     [line 231]
+
+  func on_u_pressed()   [line 330]
+    -> game_state.get_money()     [line 149]
+    -> horizontal_train.xpos_to_wagon_idx()     [line 83]
+    -> merchandise_wagon.close_doors()     [line 15]
+    -> merchandise_wagon.open_doors()     [line 12]
+    -> trade_service.transfer_from_train_to_loader()     [line 64]
+    -> train_inventory.get_wagon_current_resource()     [line 93]
+
+    <- trade_scene._unhandled_input()     [line 231]
+
+  func on_j_pressed()   [line 347]
+    -> game_state.get_money()     [line 149]
+    -> resource_manager.xpos_to_resource_name()     [line 113]
+    -> trade_service.transfer_from_loader_to_city()     [line 40]
+
+    <- trade_scene._unhandled_input()     [line 231]
+
+  func on_k_pressed()   [line 357]
+    -> game_state.get_money()     [line 149]
+    -> resource_manager.xpos_to_resource_name()     [line 113]
+    -> trade_service.transfer_from_city_to_loader()     [line 9]
+
+    <- trade_scene._unhandled_input()     [line 231]
+
+  func on_i_pressed()   [line 367]
+    -> game_state.get_money()     [line 149]
+    -> horizontal_train.xpos_to_wagon_idx()     [line 83]
+    -> loader_inventory.get_resource_type()     [line 17]
+    -> merchandise_wagon.close_doors()     [line 15]
+    -> merchandise_wagon.open_doors()     [line 12]
+    -> trade_service.transfer_from_loader_to_train()     [line 88]
+
+    <- trade_scene._unhandled_input()     [line 231]
+
+  func _on_city_resource_amount_changed()   [line 386]
+    -> resource_manager.update_resource_qty()     [line 131]
+
+  func _on_train_money_changed()   [line 389]
+
+#endregion
+
+#region trade_service.gd
+  func transfer_from_city_to_loader()   [line 9]
+    -> city_inventory.get_buy_price()     [line 35]
+    -> game_state.get_money()     [line 149]
+    -> game_state.subtract_money()     [line 155]
+    -> loader_inventory.is_full()     [line 14]
+    -> loader_inventory.pick_from_city()     [line 34]
+
+    <- trade_scene.on_k_pressed()     [line 357]
+
+  func transfer_from_loader_to_city()   [line 40]
+    -> city_inventory.get_sell_price()     [line 40]
+    -> game_state.add_money()     [line 152]
+    -> loader_inventory.finalize_into_city()     [line 64]
+    -> loader_inventory.get_resource_type()     [line 17]
+
+    <- trade_scene.on_j_pressed()     [line 347]
+
+  func transfer_from_train_to_loader()   [line 64]
+    -> loader_inventory.is_full()     [line 14]
+    -> loader_inventory.pick_from_wagon()     [line 52]
+    -> train_inventory.get_wagon_current_resource()     [line 93]
+    -> train_inventory.remove_resource_qty_from_wagon()     [line 163]
+
+    <- trade_scene.on_u_pressed()     [line 330]
+
+  func transfer_from_loader_to_train()   [line 88]
+    -> loader_inventory.finalize_into_wagon()     [line 71]
+    -> loader_inventory.get_resource_type()     [line 17]
+    -> train_inventory.add_resource_qty_to_wagon()     [line 151]
+    -> train_inventory.wagon_can_store()     [line 102]
+
+    <- trade_scene.on_i_pressed()     [line 367]
+
+#endregion
+
+#region traffic_light.gd
+  func check_click()   [line 9]
+
+  func toggle()   [line 17]
+    <- trade_scene._handle_traffic_light_click()     [line 264]
+
+#endregion
+
+#region train_inventory.gd
+  func _ready()   [line 27]
+
+  func add_wagon()   [line 69]
+    -> train_inventory.create_wagon()     [line 73]
+
+  func create_wagon()   [line 73]
+    <- train_inventory.add_wagon()     [line 69]
+
+  func get_wagon_count()   [line 81]
+
+  func get_wagon_info()   [line 84]
+
+  func get_wagon_type()   [line 87]
+
+  func get_wagon_capacity()   [line 90]
+
+  func get_wagon_current_resource()   [line 93]
+    <- trade_scene.on_u_pressed()     [line 330]
+    <- trade_service.transfer_from_train_to_loader()     [line 64]
+    <- train_inventory.add_resource_qty_to_wagon()     [line 151]
+
+  func get_wagon_resource_qty()   [line 96]
+    <- train_inventory.remove_resource_qty_from_wagon()     [line 163]
+
+  func get_wagon_free_space()   [line 99]
+    <- train_inventory.add_resource_qty_to_wagon()     [line 151]
+    <- train_inventory.get_wagon_capacity_for_resource()     [line 126]
+
+  func wagon_can_store()   [line 102]
+    <- trade_service.transfer_from_loader_to_train()     [line 88]
+    <- train_inventory.add_resource_qty_to_wagon()     [line 151]
+    <- train_inventory.get_wagon_capacity_for_resource()     [line 126]
+    <- train_inventory.get_wagons_idx_that_can_store()     [line 119]
+
+  func get_wagons_idx_that_can_store()   [line 119]
+    -> train_inventory.wagon_can_store()     [line 102]
+
+  func get_wagon_capacity_for_resource()   [line 126]
+    -> train_inventory.get_wagon_free_space()     [line 99]
+    -> train_inventory.wagon_can_store()     [line 102]
+
+  func has_money()   [line 133]
+
+  func add_resource_qty_to_wagon()   [line 151]
+    -> game_state.update_wagon_cargo()     [line 226]
+    -> quest_manager.notify_goods_collected()     [line 96]
+    -> train_inventory.get_wagon_current_resource()     [line 93]
+    -> train_inventory.get_wagon_free_space()     [line 99]
+    -> train_inventory.wagon_can_store()     [line 102]
+
+    <- trade_service.transfer_from_loader_to_train()     [line 88]
+
+  func remove_resource_qty_from_wagon()   [line 163]
+    -> game_state.update_wagon_cargo()     [line 226]
+    -> quest_manager.notify_goods_collected()     [line 96]
+    -> train_inventory.get_wagon_resource_qty()     [line 96]
+
+    <- trade_service.transfer_from_train_to_loader()     [line 64]
+
+#endregion
+
+#region train_manager.gd
+  func _ready()   [line 80]
+
+  func spawn_train()   [line 84]
+
+  func _process()   [line 128]
+
+  func recenter_player_train()   [line 136]
+
+  func camera_lock_to_engine_toggle()   [line 140]
+    <- navigation_scene.camera_lock_toggle()     [line 226]
+
+  func reverse_player_train()   [line 146]
+    -> navigation_train.reverse_train()     [line 222]
+
+    <- navigation_scene._handle_reverse_train()     [line 220]
+    <- navigation_scene.reverse_player_train_direction()     [line 229]
+
+  func gear_toggle()   [line 149]
+
+  func on_train_tile_changed()   [line 154]
+    -> train_manager._check_tile_events()     [line 157]
+
+  func _check_tile_events()   [line 157]
+    -> cities_manager.get_city_by_entry_tile()     [line 55]
+    -> cities_manager.is_entry_tile()     [line 58]
+    -> navigation_train.inmediate_stop()     [line 234]
+
+    <- train_manager.on_train_tile_changed()     [line 154]
+
+#endregion
+
+#region turn_manager.gd
+  func start_combat()   [line 29]
+    <- combat_scene._ready()     [line 78]
+
+  func finish_turn()   [line 32]
+    -> state_machine.get_current_state()     [line 49]
+
+    <- combat_scene._handle_global_input()     [line 442]
+    <- turn_manager._on_faction_finished()     [line 39]
+
+  func _on_faction_finished()   [line 39]
+    -> turn_manager.finish_turn()     [line 32]
+
+  func update_state_label()   [line 44]
+
+#endregion
+
+#region ui_wasd.gd
+  func _process()   [line 10]
+
+  func _input()   [line 22]
+
+#endregion
+
+#region unit.gd
+  func _ready()   [line 45]
+    -> generic_bar.update_value()     [line 17]
+
+  func inject_dependencies()   [line 51]
+
+  func _wire_signals()   [line 55]
+
+  func initialize()   [line 64]
+    -> unit.set_id()     [line 69]
+    -> unit.set_team()     [line 75]
+
+  func set_id()   [line 69]
+    <- soldier.initialize()     [line 32]
+    <- unit.initialize()     [line 64]
+
+  func set_team()   [line 75]
+    <- soldier.initialize()     [line 32]
+    <- unit.initialize()     [line 64]
+
+  func set_soldier_type()   [line 82]
+
+  func get_current_action()   [line 85]
+    <- unit_action_aim.enter()     [line 4]
+    <- unit_action_dead.enter()     [line 5]
+    <- unit_action_idle.enter()     [line 4]
+    <- unit_xcom_2.set_orientation()     [line 80]
+    <- unit_xcom_2.toggle_crouch()     [line 51]
+
+  func _on_health_changed()   [line 89]
+    -> generic_bar.update_value()     [line 17]
+
+  func _on_died()   [line 93]
+    -> audio_service.play_sfx()     [line 181]
+    -> unit.set_state()     [line 109]
+
+  func set_state()   [line 109]
+    -> unit.update_state_label()     [line 145]
+
+    <- unit._on_died()     [line 93]
+
+  func set_orientation()   [line 114]
+    <- unit.move_to_tile()     [line 167]
+    <- unit.turn_left()     [line 125]
+    <- unit.turn_right()     [line 121]
+
+  func turn_right()   [line 121]
+    -> unit.set_orientation()     [line 114]
+
+  func turn_left()   [line 125]
+    -> unit.set_orientation()     [line 114]
+
+  func apply_damage()   [line 132]
+    -> audio_service.play_sfx()     [line 181]
+
+  func _draw()   [line 137]
+
+  func update_state_label()   [line 145]
+    <- unit.set_state()     [line 109]
+
+  func update_tile_label()   [line 148]
+    <- unit_manager._on_unit_arrived_to_tile()     [line 344]
+
+  func update_ap_label()   [line 151]
+    <- unit_manager._on_unit_arrived_to_tile()     [line 344]
+
+  func stop_animation()   [line 157]
+
+  func set_selected()   [line 160]
+    -> navigation_graph_service.get_reachable_tiles()     [line 79]
+
+    <- faction_ai.run_next_unit()     [line 38]
+
+  func move_to_tile()   [line 167]
+    -> grid_service.get_orientation()     [line 111]
+    -> unit.set_orientation()     [line 114]
+
+  func _on_unit_arrived_to_tile()   [line 179]
+
+  func compute_visible_enemies()   [line 184]
+
+  func on_movement_finished()   [line 187]
+
+  func _on_ap_changed()   [line 192]
+    -> generic_bar.update_value()     [line 17]
+
+  func _on_ap_exhausted()   [line 196]
+
+  func get_ap()   [line 199]
+
+  func get_health_ratio()   [line 207]
+
+  func find_advance_tile()   [line 217]
+    <- unit_behavior_advance.enter()     [line 6]
+    <- unit_behavior_evaluate.evaluate_xcom1()     [line 35]
+
+  func has_good_shoot()   [line 221]
+    <- unit_behavior_evaluate._do_action_1()     [line 133]
+    <- unit_behavior_evaluate.evaluate_xcom1()     [line 35]
+
+#endregion
+
+#region unit_action_aim.gd
+  func enter()   [line 4]
+    -> unit.get_current_action()     [line 85]
+    -> unit_xcom_2.play_animation()     [line 92]
+
+  func exit()   [line 9]
+
+  func update()   [line 12]
+
+  func handle_click()   [line 15]
+
+#endregion
+
+#region unit_action_attack.gd
+  func enter()   [line 9]
+    -> unit_action_attack._spawn_projectile()     [line 31]
+
+  func exit()   [line 22]
+
+  func update()   [line 25]
+
+  func handle_click()   [line 28]
+
+  func _spawn_projectile()   [line 31]
+    -> weapon_service.fire_bullet()     [line 23]
+
+    <- unit_action_attack.enter()     [line 9]
+
+  func _on_animation_finished()   [line 41]
+
+#endregion
+
+#region unit_action_dead.gd
+  func enter()   [line 5]
+    -> unit.get_current_action()     [line 85]
+    -> unit_xcom_2.play_animation()     [line 92]
+
+  func exit()   [line 18]
+
+  func update()   [line 21]
+
+  func handle_click()   [line 24]
+
+#endregion
+
+#region unit_action_idle.gd
+  func enter()   [line 4]
+    -> unit.get_current_action()     [line 85]
+    -> unit_xcom_2.play_animation()     [line 92]
+
+  func exit()   [line 9]
+
+  func update()   [line 12]
+
+  func handle_click()   [line 15]
+
+#endregion
+
+#region unit_action_move.gd
+  func enter()   [line 43]
+    -> grid_service.tile_to_world()     [line 67]
+    -> unit_xcom_2.play_animation()     [line 92]
+
+  func exit()   [line 67]
+
+  func update()   [line 70]
+    -> grid_service.tile_to_world()     [line 67]
+
+  func handle_click()   [line 84]
+
+#endregion
+
+#region unit_ai.gd
+  func _ready()   [line 12]
+
+  func update_state_label()   [line 16]
+
+  func take_turn()   [line 19]
+
+  func _on_unit_arrived_to_tile()   [line 31]
+
+  func on_unit_reached_destination()   [line 34]
+
+#endregion
+
+#region unit_behavior_advance.gd
+  func enter()   [line 6]
+    -> unit.find_advance_tile()     [line 217]
+
+  func exit()   [line 15]
+
+  func update()   [line 18]
+
+#endregion
+
+#region unit_behavior_attack.gd
+  func enter()   [line 8]
+    -> unit_manager.request_shoot()     [line 150]
+
+  func exit()   [line 22]
+
+  func update()   [line 25]
+
+#endregion
+
+#region unit_behavior_engage.gd
+  func enter()   [line 4]
+
+  func exit()   [line 7]
+
+  func update()   [line 10]
+
+#endregion
+
+#region unit_behavior_evaluate.gd
+  func _dummy()   [line 14]
+
+  func enter()   [line 23]
+    -> unit_behavior_evaluate._evaluate_xcom2()     [line 123]
+
+  func exit()   [line 28]
+
+  func update()   [line 31]
+
+  func evaluate_xcom1()   [line 35]
+    -> unit.find_advance_tile()     [line 217]
+    -> unit.has_good_shoot()     [line 221]
+    -> unit_manager.get_primary_target_for()     [line 379]
+    -> unit_manager.is_unit_in_cover_against_enemy()     [line 189]
+
+  func _evaluate_xcom2()   [line 123]
+    -> unit_behavior_evaluate._do_action_1()     [line 133]
+    -> unit_behavior_evaluate._do_action_2()     [line 192]
+
+    <- unit_behavior_evaluate.enter()     [line 23]
+
+  func _do_action_1()   [line 133]
+    -> unit.has_good_shoot()     [line 221]
+    -> unit_manager.choose_best_target()     [line 268]
+    -> unit_manager.get_seen_enemies_for()     [line 373]
+    -> unit_manager.is_unit_in_cover_against_all_enemies()     [line 193]
+
+    <- unit_behavior_evaluate._evaluate_xcom2()     [line 123]
+
+  func _do_action_2()   [line 192]
+    <- unit_behavior_evaluate._evaluate_xcom2()     [line 123]
+
+  func on_unit_reached_destination()   [line 197]
+
+#endregion
+
+#region unit_behavior_idle.gd
+  func enter()   [line 4]
+
+  func exit()   [line 7]
+
+  func update()   [line 10]
+
+#endregion
+
+#region unit_behavior_overwatch.gd
+  func enter()   [line 6]
+
+  func exit()   [line 17]
+
+  func update()   [line 20]
+
+#endregion
+
+#region unit_behavior_patrol.gd
+  func enter()   [line 4]
+
+  func exit()   [line 7]
+
+  func update()   [line 10]
+
+#endregion
+
+#region unit_behavior_retreat.gd
+  func enter()   [line 6]
+
+  func exit()   [line 11]
+
+  func update()   [line 14]
+
+#endregion
+
+#region unit_behavior_seek_cover.gd
+  func enter()   [line 7]
+    -> unit_manager.calculate_path_for_unit()     [line 293]
+    -> unit_manager.find_safest_tile()     [line 222]
+    -> unit_manager.start_unit_movement()     [line 302]
+
+  func exit()   [line 21]
+
+  func update()   [line 24]
+
+#endregion
+
+#region unit_manager.gd
+  func _ready()   [line 48]
+
+  func _inject_dependencies()   [line 51]
+
+  func _wire_signals()   [line 54]
+
+  func spawn_unit()   [line 58]
+    -> grid_service.tile_to_world()     [line 67]
+
+    <- combat_scene._spawn_units_from_map()     [line 320]
+
+  func get_unit_tile()   [line 107]
+    <- combat_unit_selected_state.handle_click()     [line 40]
+
+  func select_unit()   [line 113]
+    -> camera_controller.center_at_tile()     [line 35]
+
+  func unselect_unit()   [line 118]
+
+  func get_next_unit_by_team()   [line 121]
+    <- combat_scene.select_next_unit()     [line 486]
+
+  func get_units_by_team()   [line 127]
+    <- combat_scene._update_enemy_visibility()     [line 514]
+    <- exploration_service._compute_merged_player_visibility()     [line 61]
+    <- exploration_service._update_units_visibility()     [line 68]
+    <- faction_ai.take_turn()     [line 16]
+    <- unit_manager.get_all_units()     [line 130]
+    <- unit_manager.recalculate_all_units_seen_enemies()     [line 338]
+    <- unit_manager.recalculate_all_units_vision()     [line 332]
+
+  func get_all_units()   [line 130]
+    -> unit_manager.get_units_by_team()     [line 127]
+
+  func apply_damage_to_unit()   [line 136]
+    <- combat_scene.on_bullet_hit()     [line 493]
+    <- unit_manager.on_projectile_hit()     [line 178]
+
+  func can_unit_see_enemy()   [line 140]
+    <- unit_manager.is_unit_in_cover_against_all_enemies()     [line 193]
+
+  func request_shoot()   [line 150]
+    -> los_service.has_los()     [line 84]
+    -> unit_manager.execute_shoot()     [line 170]
+
+    <- combat_unit_aiming_state._attempt_shot()     [line 43]
+    <- unit_behavior_attack.enter()     [line 8]
+
+  func execute_shoot()   [line 170]
+    -> ap_component.use_ap()     [line 13]
+
+    <- unit_manager.request_shoot()     [line 150]
+
+  func on_projectile_hit()   [line 178]
+    -> unit_manager.apply_damage_to_unit()     [line 136]
+
+  func is_unit_in_cover()   [line 185]
+    -> cover_service.get_cover_value()     [line 68]
+
+  func is_unit_in_cover_against_enemy()   [line 189]
+    -> cover_service.get_cover_against()     [line 42]
+
+    <- unit_behavior_evaluate.evaluate_xcom1()     [line 35]
+    <- unit_manager.is_unit_in_cover_against_all_enemies()     [line 193]
+
+  func is_unit_in_cover_against_all_enemies()   [line 193]
+    -> unit_manager.can_unit_see_enemy()     [line 140]
+    -> unit_manager.is_unit_in_cover_against_enemy()     [line 189]
+
+    <- unit_behavior_evaluate._do_action_1()     [line 133]
+
+  func find_safest_tile()   [line 222]
+    -> navigation_graph_service.get_reachable_tiles()     [line 79]
+    -> unit_manager.evaluate_tile_defensiveness()     [line 240]
+
+    <- unit_behavior_seek_cover.enter()     [line 7]
+
+  func evaluate_tile_defensiveness()   [line 240]
+    -> cover_service.get_cover_against()     [line 42]
+    -> los_service.has_los()     [line 84]
+
+    <- unit_manager.find_safest_tile()     [line 222]
+
+  func choose_best_target()   [line 268]
+    -> accuracy_service.compute_hit_chance()     [line 10]
+    -> cover_service.get_cover_against()     [line 42]
+
+    <- unit_behavior_evaluate._do_action_1()     [line 133]
+
+  func calculate_path_for_unit()   [line 293]
+    -> pathfinding_service.find_path()     [line 21]
+
+    <- unit_behavior_seek_cover.enter()     [line 7]
+
+  func start_unit_movement()   [line 302]
+    -> unit_manager._give_next_tile()     [line 309]
+
+    <- combat_unit_selected_state._confirm_move()     [line 25]
+    <- pod_ai_manager.dumb_pod_action()     [line 21]
+    <- unit_behavior_seek_cover.enter()     [line 7]
+    <- unit_manager.on_move_vector_changed()     [line 418]
+
+  func _give_next_tile()   [line 309]
+    -> unit_manager._on_unit_reached_destination()     [line 317]
+
+    <- unit_manager._on_unit_arrived_to_tile()     [line 344]
+    <- unit_manager.start_unit_movement()     [line 302]
+
+  func _on_unit_reached_destination()   [line 317]
+    -> unit_xcom_2.play_animation()     [line 92]
+
+    <- unit_manager._give_next_tile()     [line 309]
+
+  func update_vision()   [line 326]
+    -> grid_service.get_tiles_in_vision_cone()     [line 156]
+    -> los_service.filter_visible_tiles()     [line 108]
+
+    <- unit_manager._on_unit_arrived_to_tile()     [line 344]
+    <- unit_manager.on_unit_orientation_changed()     [line 403]
+    <- unit_manager.recalculate_all_units_vision()     [line 332]
+
+  func recalculate_all_units_vision()   [line 332]
+    -> unit_manager.get_units_by_team()     [line 127]
+    -> unit_manager.update_vision()     [line 326]
+
+    <- combat_scene.initialize()     [line 94]
+
+  func recalculate_all_units_seen_enemies()   [line 338]
+    -> unit_manager._update_seen_enemies()     [line 385]
+    -> unit_manager.get_units_by_team()     [line 127]
+    -> unit_manager.get_visible_tiles_for()     [line 370]
+
+    <- combat_scene.initialize()     [line 94]
+
+  func _on_unit_arrived_to_tile()   [line 344]
+    -> ap_component.use_ap()     [line 13]
+    -> unit.update_ap_label()     [line 151]
+    -> unit.update_tile_label()     [line 148]
+    -> unit_manager._give_next_tile()     [line 309]
+    -> unit_manager._update_seen_enemies()     [line 385]
+    -> unit_manager.update_vision()     [line 326]
+
+  func get_visible_tiles_for()   [line 370]
+    <- exploration_service._compute_merged_player_visibility()     [line 61]
+    <- unit_manager.recalculate_all_units_seen_enemies()     [line 338]
+
+  func get_seen_enemies_for()   [line 373]
+    -> unit_manager._update_seen_enemies()     [line 385]
+
+    <- unit_behavior_evaluate._do_action_1()     [line 133]
+    <- unit_manager.get_primary_target_for()     [line 379]
+
+  func get_primary_target_for()   [line 379]
+    -> unit_manager.get_seen_enemies_for()     [line 373]
+
+    <- unit_behavior_evaluate.evaluate_xcom1()     [line 35]
+
+  func _update_seen_enemies()   [line 385]
+    -> tile_occupancy_service.get_units()     [line 59]
+
+    <- unit_manager._on_unit_arrived_to_tile()     [line 344]
+    <- unit_manager.get_seen_enemies_for()     [line 373]
+    <- unit_manager.on_unit_orientation_changed()     [line 403]
+    <- unit_manager.recalculate_all_units_seen_enemies()     [line 338]
+
+  func on_unit_orientation_changed()   [line 403]
+    -> unit_manager._update_seen_enemies()     [line 385]
+    -> unit_manager.update_vision()     [line 326]
+
+  func on_move_vector_changed()   [line 418]
+    -> unit_manager.start_unit_movement()     [line 302]
+
+  func on_aim_pressed()   [line 426]
+
+  func on_aim_released()   [line 429]
+
+#endregion
+
+#region unit_xcom_2.gd
+  func toggle_crouch()   [line 51]
+    -> unit.get_current_action()     [line 85]
+    -> unit_xcom_2.play_animation()     [line 92]
+
+    <- combat_unit_selected_state.handle_key()     [line 134]
+
+  func set_weapon_type()   [line 56]
+
+  func set_soldier_type()   [line 61]
+    -> unit_xcom_2.play_animation()     [line 92]
+
+  func set_orientation()   [line 80]
+    -> unit.get_current_action()     [line 85]
+    -> unit_xcom_2.play_animation()     [line 92]
+
+    <- unit_xcom_2.move_to_tile()     [line 124]
+
+  func play_animation()   [line 92]
+    <- unit_action_aim.enter()     [line 4]
+    <- unit_action_dead.enter()     [line 5]
+    <- unit_action_idle.enter()     [line 4]
+    <- unit_action_move.enter()     [line 43]
+    <- unit_manager._on_unit_reached_destination()     [line 317]
+    <- unit_xcom_2.set_orientation()     [line 80]
+    <- unit_xcom_2.set_soldier_type()     [line 61]
+    <- unit_xcom_2.toggle_crouch()     [line 51]
+
+  func move_to_tile()   [line 124]
+    -> grid_service.get_orientation()     [line 111]
+    -> unit_xcom_2.set_orientation()     [line 80]
+
+#endregion
+
+#region units_overlay.gd
+  func _ready()   [line 6]
+
+  func redraw()   [line 11]
+    -> units_overlay._draw()     [line 19]
+
+  func update()   [line 15]
+    -> units_overlay._draw()     [line 19]
+
+  func _draw()   [line 19]
+    -> grid_service.tile_to_world()     [line 67]
+    -> tile_occupancy_service.get_units()     [line 59]
+
+    <- units_overlay.redraw()     [line 11]
+    <- units_overlay.update()     [line 15]
+
+#endregion
+
+#region vehicle_unit.gd
+  func check_click()   [line 40]
+
+  func _on_area_2d_input_event()   [line 50]
+
+  func set_resource_type()   [line 56]
+    <- horizontal_train.set_wagon_resource_type()     [line 128]
+
+  func set_resource_qty()   [line 63]
+    <- horizontal_train.set_wagon_resource_qty()     [line 131]
+
+#endregion
+
+#region wall.gd
+  func apply_damage()   [line 7]
+
+#endregion
+
+#region wall_edge.gd
+  func set_frame()   [line 7]
+
+  func apply_damage()   [line 10]
+
+#endregion
+
+#region wall_manager.gd
+  func _ready()   [line 31]
+
+  func spawn_full_wall()   [line 35]
+    -> grid_service.tile_to_world()     [line 67]
+
+    <- combat_scene._spawn_walls_from_map()     [line 358]
+
+  func spawn_left_wall()   [line 64]
+    -> grid_service.tile_to_world()     [line 67]
+
+    <- combat_scene._spawn_walls_from_map()     [line 358]
+
+  func spawn_right_wall()   [line 87]
+    -> grid_service.tile_to_world()     [line 67]
+
+    <- combat_scene._spawn_walls_from_map()     [line 358]
+
+  func apply_damage_to_wall()   [line 109]
+    <- combat_scene.on_bullet_hit()     [line 493]
+
+  func apply_damage_to_wall_edge()   [line 112]
+
+  func _process()   [line 140]
+
+#endregion
+
+#region walls_overlay.gd
+  func _ready()   [line 15]
+
+  func redraw()   [line 18]
+    -> walls_overlay._draw()     [line 23]
+
+  func _draw()   [line 23]
+    -> walls_overlay._draw_edge_walls()     [line 51]
+
+    <- walls_overlay.redraw()     [line 18]
+
+  func _draw_tile_walls()   [line 30]
+    -> grid_service.tile_to_world()     [line 67]
+    -> tile_occupancy_service.get_walls()     [line 81]
+
+  func _draw_edge_walls()   [line 51]
+    -> edge_occupancy_service.get_all_edges()     [line 33]
+    -> walls_overlay._edge_to_screen_points()     [line 61]
+
+    <- walls_overlay._draw()     [line 23]
+
+  func _edge_to_screen_points()   [line 61]
+    -> grid_service.tile_to_world()     [line 67]
+
+    <- walls_overlay._draw_edge_walls()     [line 51]
+
+#endregion
+
+#region weapon_component.gd
+  func _ready()   [line 17]
+
+  func shoot_at()   [line 21]
+    -> bullet.fire()     [line 25]
+
+#endregion
+
+#region weapon_service.gd
+  func _ready()   [line 19]
+
+  func fire_bullet()   [line 23]
+    -> audio_service.play_sfx()     [line 181]
+    -> bullet.fire()     [line 25]
+    -> grid_service.tile_to_world()     [line 67]
+
+    <- unit_action_attack._spawn_projectile()     [line 31]
+
+#endregion
+
+#region ORPHANS  (no known calls in or out)
+
+  OLDcombat_state_machine._ready()     [line 8]
+  OLDcombat_state_machine.handle_click()     [line 35]
+  ap_component.get_ap()     [line 23]
+  assistant_ui.ask_confirmation()     [line 26]
+  audio_service.is_music_playing()     [line 172]
+  audio_service.pause_music()     [line 156]
+  audio_service.resume_music()     [line 161]
+  building._ready()     [line 7]
+  building_manager._ready()     [line 17]
+  building_manager.register_building()     [line 50]
+  building_manager.unregister_building()     [line 53]
+  buildings_overlay._draw()     [line 10]
+  buildings_overlay.redraw()     [line 6]
+  bullet._ready()     [line 21]
+  camera_controller._process()     [line 62]
+  camera_controller._ready()     [line 19]
+  camera_controller.set_pos()     [line 39]
+  city_inventory.get_all_info()     [line 24]
+  city_inventory.get_available_qty()     [line 30]
+  city_inventory.get_resource_info()     [line 27]
+  city_inventory.get_storage_capacity()     [line 45]
+  combat_hud._on_reverse_button_pressed()     [line 5]
+  combat_idle_state._ready()     [line 5]
+  combat_idle_state.enter()     [line 8]
+  combat_idle_state.exit()     [line 11]
+  combat_idle_state.update()     [line 14]
+  combat_scene._handle_key_press()     [line 437]
+  combat_scene._wire_signals()     [line 185]
+  combat_scene.update_state_label()     [line 450]
+  combat_scene.update_turn_label()     [line 454]
+  combat_unit_aiming_state._ready()     [line 15]
+  combat_unit_moving_state._ready()     [line 7]
+  combat_unit_moving_state.enter()     [line 10]
+  combat_unit_moving_state.exit()     [line 15]
+  combat_unit_moving_state.handle_click()     [line 22]
+  combat_unit_moving_state.update()     [line 19]
+  combat_unit_selected_state._ready()     [line 9]
+  combat_unit_selected_state.exit()     [line 18]
+  combat_unit_selected_state.update()     [line 22]
+  container_wagon._process()     [line 12]
+  container_wagon._ready()     [line 7]
+  container_wagon.on_click()     [line 15]
+  cover_overlay.clear()     [line 17]
+  crate.set_qty()     [line 21]
+  defensiveness_overlay.update()     [line 7]
+  edge._init()     [line 19]
+  edge.get_tiles()     [line 24]
+  edge_factory.create_edge()     [line 8]
+  edge_occupancy_service._ready()     [line 9]
+  edge_occupancy_service.clear()     [line 40]
+  edge_occupancy_service.get_tiles()     [line 37]
+  enemy_turn_state.enter()     [line 5]
+  exploration_layer.hide_all()     [line 12]
+  exploration_layer.is_tile_explored()     [line 37]
+  exploration_service._ready()     [line 12]
+  exploration_service._recalculate()     [line 26]
+  faction_ai._ready()     [line 13]
+  game_state.get_city_by_location()     [line 179]
+  game_state.get_industry_by_id()     [line 198]
+  game_state.get_industry_by_location()     [line 195]
+  game_state.get_industry_by_name()     [line 192]
+  game_state.get_wagon_cargo()     [line 168]
+  game_state.load_initial_industries()     [line 120]
+  game_state.save_player_train()     [line 208]
+  game_state.set_city()     [line 185]
+  game_state.set_industry()     [line 201]
+  game_state.set_player_train()     [line 163]
+  game_state.set_wagon_cargo()     [line 166]
+  generic_bar._ready()     [line 12]
+  generic_state.enter()     [line 13]
+  generic_state.exit()     [line 17]
+  generic_state.update()     [line 20]
+  grid_service.turn_left()     [line 96]
+  grid_service.turn_right()     [line 103]
+  grid_service.world_to_tilef()     [line 76]
+  health_bar._ready()     [line 12]
+  health_bar.update_health()     [line 17]
+  health_component._ready()     [line 11]
+  health_component.get_health_ratio()     [line 32]
+  health_component.heal()     [line 25]
+  health_component.take_damage()     [line 14]
+  hitbox_component._on_area_entered()     [line 11]
+  hitbox_component._ready()     [line 6]
+  hitbox_component.disable()     [line 19]
+  hitbox_component.enable()     [line 15]
+  horizontal_train._on_train_just_stopped()     [line 56]
+  horizontal_train._process()     [line 23]
+  horizontal_train._ready()     [line 20]
+  horizontal_train.add_wagon()     [line 92]
+  horizontal_train.check_wagon_click()     [line 160]
+  horizontal_train_manager._on_train_money_changed()     [line 55]
+  horizontal_train_manager.check_wagon_click()     [line 62]
+  horizontal_train_manager.gear_down()     [line 20]
+  horizontal_train_manager.gear_up()     [line 18]
+  hurtbox_component._on_died()     [line 23]
+  hurtbox_component._ready()     [line 9]
+  hurtbox_component.take_damage()     [line 13]
+  i_resource_container.add_resource_amount()     [line 10]
+  i_resource_container.get_available_qty()     [line 4]
+  i_resource_container.get_storage_capacity()     [line 7]
+  i_resource_container.remove_resource_amount()     [line 13]
+  idle_state.enter()     [line 5]
+  loader_component.get_cargo_type()     [line 91]
+  loader_component.get_qty()     [line 94]
+  loader_component.is_empty()     [line 88]
+  loader_component.load_crate()     [line 102]
+  loader_component.set_crate_qty()     [line 119]
+  loader_component.unload_crate()     [line 110]
+  loader_inventory.get_origin()     [line 23]
+  loader_inventory.get_qty()     [line 20]
+  loader_vehicle._process()     [line 134]
+  loader_vehicle.gear_down()     [line 79]
+  loader_vehicle.gear_up()     [line 72]
+  loader_vehicle.get_cargo_type()     [line 98]
+  loader_vehicle.get_qty()     [line 101]
+  loader_vehicle.is_empty()     [line 95]
+  loader_vehicle.load_crate()     [line 110]
+  loader_vehicle.set_crate_qty()     [line 127]
+  loader_vehicle.unload_crate()     [line 118]
+  locomotive_wagon._ready()     [line 6]
+  locomotive_wagon.on_click()     [line 13]
+  locomotive_wagon.set_money()     [line 10]
+  los_overlay.draw_debug_line()     [line 22]
+  master_hud._ready()     [line 5]
+  merchandise_wagon._ready()     [line 6]
+  merchandise_wagon.on_click()     [line 18]
+  navigation_graph_service._compare_cost()     [line 126]
+  navigation_hud._on_button_findengine_pressed()     [line 32]
+  navigation_hud._on_button_minimap_pressed()     [line 49]
+  navigation_hud._on_button_save_pressed()     [line 46]
+  navigation_hud._physics_process()     [line 13]
+  navigation_hud.update_gold()     [line 20]
+  navigation_hud.update_time()     [line 29]
+  navigation_locomotive._ready()     [line 19]
+  navigation_locomotive.set_heading()     [line 32]
+  navigation_scene._wire_signals()     [line 107]
+  navigation_scene.recenter_player_train()     [line 223]
+  navigation_train._ready()     [line 110]
+  navigation_wagon._ready()     [line 43]
+  navigation_wagon.disable_all_attachments()     [line 115]
+  navigation_wagon.set_heading()     [line 120]
+  object_manager._process()     [line 10]
+  object_manager._ready()     [line 5]
+  objects_overlay._process()     [line 10]
+  objects_overlay._ready()     [line 5]
+  paths_overlay._ready()     [line 8]
+  patrolling_state.enter()     [line 5]
+  player_turn_state.enter()     [line 10]
+  pod.get_all_units()     [line 32]
+  pod.initialize()     [line 21]
+  pod.on_arrived_to_tile()     [line 51]
+  pod.on_movement_finished()     [line 54]
+  pod.take_turn()     [line 35]
+  pod.update_state_label()     [line 48]
+  pod_ai_manager._ready()     [line 8]
+  pod_manager.get_next_pod()     [line 64]
+  pod_manager.get_pod_by_tile()     [line 57]
+  pod_manager.register_pod()     [line 77]
+  pod_manager.unregister_pod()     [line 80]
+  quest.from_dict()     [line 48]
+  quest.to_dict()     [line 32]
+  quest_objective.from_dict()     [line 63]
+  quest_objective.to_dict()     [line 51]
+  rail_edge._init()     [line 8]
+  rail_edge.get_cost()     [line 16]
+  rail_edge.get_edges()     [line 13]
+  rail_edge_factory.create_edge()     [line 4]
+  rail_service.get_tile_edges()     [line 210]
+  rails_overlay._ready()     [line 15]
+  reachable_tiles_overlay.clear()     [line 12]
+  resource._process()     [line 66]
+  resource._ready()     [line 54]
+  resource.set_qty()     [line 62]
+  resource.set_type()     [line 57]
+  resource_manager._ready()     [line 52]
+  road_service._process()     [line 30]
+  road_service._ready()     [line 11]
+  road_service.get_occupied_tiles()     [line 22]
+  road_service.has_road()     [line 26]
+  roads_overlay._ready()     [line 7]
+  scene_manager._process()     [line 10]
+  scene_manager._ready()     [line 7]
+  selection_manager.clear_selection()     [line 13]
+  selection_manager.get_selected_unit()     [line 18]
+  selection_manager.select_unit()     [line 6]
+  soldier._ready()     [line 28]
+  state_machine._process()     [line 33]
+  state_machine.handle_click()     [line 52]
+  tank_base._on_move_vector_changed()     [line 52]
+  tank_base._process()     [line 24]
+  tank_base._ready()     [line 21]
+  tender_wagon._process()     [line 13]
+  tender_wagon._ready()     [line 6]
+  tender_wagon.on_click()     [line 16]
+  terrainWFC_service._lowest_entropy()     [line 65]
+  terrainWFC_service._propagate()     [line 76]
+  terrainWFC_service._ready()     [line 24]
+  terrainWFC_service.build_region_in_tilemap()     [line 101]
+  terrainWFC_service.generate()     [line 39]
+  terrainWFC_service.setup()     [line 27]
+  terrain_service.get_cost()     [line 4]
+  tile_occupancy_service._ready()     [line 22]
+  tile_occupancy_service.get_all_entities()     [line 120]
+  tile_occupancy_service.get_all_occupied_tiles()     [line 117]
+  tile_occupancy_service.get_buildings()     [line 66]
+  tile_occupancy_service.get_occupied_tiles()     [line 53]
+  tile_occupancy_service.get_resources()     [line 73]
+  tile_occupancy_service.get_roads()     [line 88]
+  tile_occupancy_service.is_blocked()     [line 112]
+  tile_occupancy_service.is_footprint_free()     [line 105]
+  tile_occupancy_service.register()     [line 36]
+  tile_occupancy_service.register_footprint()     [line 26]
+  tile_occupancy_service.unregister()     [line 43]
+  tile_occupancy_service.unregister_footprint()     [line 31]
+  trade_hud._process()     [line 11]
+  trade_hud._ready()     [line 6]
+  trade_hud.update_gold()     [line 14]
+  trade_menu._on_button_2_pressed()     [line 72]
+  trade_menu._on_button_pressed()     [line 68]
+  trade_menu.get_info()     [line 28]
+  trade_menu.show_buy_mode()     [line 44]
+  trade_menu.show_sell_mode()     [line 52]
+  trade_scene._handle_city_resource_click()     [line 304]
+  trade_scene._on_train_money_changed()     [line 389]
+  trade_scene.leave_scene()     [line 104]
+  traffic_light.check_click()     [line 9]
+  train_inventory._ready()     [line 27]
+  train_inventory.get_wagon_capacity()     [line 90]
+  train_inventory.get_wagon_count()     [line 81]
+  train_inventory.get_wagon_info()     [line 84]
+  train_inventory.get_wagon_type()     [line 87]
+  train_inventory.has_money()     [line 133]
+  train_manager._process()     [line 128]
+  train_manager._ready()     [line 80]
+  train_manager.gear_toggle()     [line 149]
+  train_manager.recenter_player_train()     [line 136]
+  train_manager.spawn_train()     [line 84]
+  turn_manager.update_state_label()     [line 44]
+  ui_wasd._input()     [line 22]
+  ui_wasd._process()     [line 10]
+  unit._draw()     [line 137]
+  unit._on_ap_exhausted()     [line 196]
+  unit._on_unit_arrived_to_tile()     [line 179]
+  unit._wire_signals()     [line 55]
+  unit.compute_visible_enemies()     [line 184]
+  unit.get_ap()     [line 199]
+  unit.get_health_ratio()     [line 207]
+  unit.inject_dependencies()     [line 51]
+  unit.on_movement_finished()     [line 187]
+  unit.set_soldier_type()     [line 82]
+  unit.stop_animation()     [line 157]
+  unit_action_aim.exit()     [line 9]
+  unit_action_aim.handle_click()     [line 15]
+  unit_action_aim.update()     [line 12]
+  unit_action_attack._on_animation_finished()     [line 41]
+  unit_action_attack.exit()     [line 22]
+  unit_action_attack.handle_click()     [line 28]
+  unit_action_attack.update()     [line 25]
+  unit_action_dead.exit()     [line 18]
+  unit_action_dead.handle_click()     [line 24]
+  unit_action_dead.update()     [line 21]
+  unit_action_idle.exit()     [line 9]
+  unit_action_idle.handle_click()     [line 15]
+  unit_action_idle.update()     [line 12]
+  unit_action_move.exit()     [line 67]
+  unit_action_move.handle_click()     [line 84]
+  unit_ai._on_unit_arrived_to_tile()     [line 31]
+  unit_ai._ready()     [line 12]
+  unit_ai.on_unit_reached_destination()     [line 34]
+  unit_ai.take_turn()     [line 19]
+  unit_ai.update_state_label()     [line 16]
+  unit_behavior_advance.exit()     [line 15]
+  unit_behavior_advance.update()     [line 18]
+  unit_behavior_attack.exit()     [line 22]
+  unit_behavior_attack.update()     [line 25]
+  unit_behavior_engage.enter()     [line 4]
+  unit_behavior_engage.exit()     [line 7]
+  unit_behavior_engage.update()     [line 10]
+  unit_behavior_evaluate._dummy()     [line 14]
+  unit_behavior_evaluate.exit()     [line 28]
+  unit_behavior_evaluate.on_unit_reached_destination()     [line 197]
+  unit_behavior_evaluate.update()     [line 31]
+  unit_behavior_idle.enter()     [line 4]
+  unit_behavior_idle.exit()     [line 7]
+  unit_behavior_idle.update()     [line 10]
+  unit_behavior_overwatch.enter()     [line 6]
+  unit_behavior_overwatch.exit()     [line 17]
+  unit_behavior_overwatch.update()     [line 20]
+  unit_behavior_patrol.enter()     [line 4]
+  unit_behavior_patrol.exit()     [line 7]
+  unit_behavior_patrol.update()     [line 10]
+  unit_behavior_retreat.enter()     [line 6]
+  unit_behavior_retreat.exit()     [line 11]
+  unit_behavior_retreat.update()     [line 14]
+  unit_behavior_seek_cover.exit()     [line 21]
+  unit_behavior_seek_cover.update()     [line 24]
+  unit_manager._inject_dependencies()     [line 51]
+  unit_manager._ready()     [line 48]
+  unit_manager._wire_signals()     [line 54]
+  unit_manager.on_aim_pressed()     [line 426]
+  unit_manager.on_aim_released()     [line 429]
+  unit_manager.unselect_unit()     [line 118]
+  unit_xcom_2.set_weapon_type()     [line 56]
+  units_overlay._ready()     [line 6]
+  vehicle_unit._on_area_2d_input_event()     [line 50]
+  vehicle_unit.check_click()     [line 40]
+  wall.apply_damage()     [line 7]
+  wall_edge.apply_damage()     [line 10]
+  wall_edge.set_frame()     [line 7]
+  wall_manager._process()     [line 140]
+  wall_manager._ready()     [line 31]
+  wall_manager.apply_damage_to_wall_edge()     [line 112]
+  walls_overlay._ready()     [line 15]
+  weapon_component._ready()     [line 17]
+  weapon_service._ready()     [line 19]
+
+#endregion

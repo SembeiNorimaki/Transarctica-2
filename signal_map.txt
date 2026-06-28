@@ -1,0 +1,317 @@
+#region ap_component.ap_changed
+  emitted_by:    ap_component.reset_ap()     [line 21]
+  emitted_by:    ap_component.use_ap()     [line 15]
+
+  connected_to:  unit._on_ap_changed     [line 60]
+#endregion
+
+#region ap_component.ap_exhausted
+  emitted_by:    ap_component.use_ap()     [line 17]
+
+  connected_to:  unit._on_ap_exhausted     [line 61]
+#endregion
+
+#region barracks_wagon.unload_soldiers
+  emitted_by:    barracks_wagon._unload_soldiers()     [line 9]
+#endregion
+
+#region building_manager.building_spawned
+  emitted_by:    building_manager     [line 48]
+
+  connected_to:  combat_scene.buildings_overlay.redraw     [line 197]
+#endregion
+
+#region bullet.bullet_hit
+  emitted_by:    bullet._physics_process()     [line 41]
+#endregion
+
+#region city_inventory.city_resource_amount_changed
+  emitted_by:    city_inventory.add_resource_amount()     [line 57]
+  emitted_by:    city_inventory.remove_resource_amount()     [line 66]
+
+  connected_to:  trade_scene._on_city_resource_amount_changed     [line 173]
+#endregion
+
+#region combat_hud.reverse_pressed
+  emitted_by:    combat_hud._on_reverse_button_pressed()     [line 6]
+#endregion
+
+#region faction_ai.faction_finished
+  emitted_by:    faction_ai.run_next_unit()     [line 41]
+
+  connected_to:  combat_scene.turn_manager._on_faction_finished     [line 203]
+#endregion
+
+#region health_component.died
+  emitted_by:    health_component.take_damage()     [line 23]
+  emitted_by:    hurtbox_component     [line 26]
+
+  connected_to:  hurtbox_component.Callable(self, "_on_died"     [line 11]
+  connected_to:  unit._on_died     [line 58]
+#endregion
+
+#region health_component.health_changed
+  emitted_by:    health_component.heal()     [line 29]
+  emitted_by:    health_component.take_damage()     [line 19]
+
+  connected_to:  unit._on_health_changed     [line 57]
+#endregion
+
+#region hitbox_component.hit
+  emitted_by:    hitbox_component     [line 13]
+#endregion
+
+#region hurtbox_component.died
+  emitted_by:    health_component.take_damage()     [line 23]
+  emitted_by:    hurtbox_component     [line 26]
+
+  connected_to:  hurtbox_component.Callable(self, "_on_died"     [line 11]
+  connected_to:  unit._on_died     [line 58]
+#endregion
+
+#region navigation_hud.camera_lock_to_engine_toggle
+  emitted_by:    navigation_hud._on_button_findengine_pressed()     [line 37]
+
+  connected_to:  navigation_scene.camera_lock_toggle     [line 114]
+#endregion
+
+#region navigation_hud.findengine_pressed
+  emitted_by:    navigation_hud._on_button_findengine_pressed()     [line 44]
+
+  connected_to:  navigation_scene.recenter_player_train     [line 111]
+#endregion
+
+#region navigation_hud.minimap_pressed
+  emitted_by:    navigation_hud._on_button_minimap_pressed()     [line 50]
+#endregion
+
+#region navigation_hud.save_pressed
+  emitted_by:    navigation_hud._on_button_save_pressed()     [line 47]
+#endregion
+
+#region navigation_locomotive.tile_changed
+  emitted_by:    navigation_locomotive._check_tile_change()     [line 53]
+  emitted_by:    navigation_wagon._check_tile_change()     [line 139]
+
+  connected_to:  navigation_train._on_wagon_tile_changed     [line 160]
+  connected_to:  navigation_train._on_locomotive_tile_changed     [line 145]
+#endregion
+
+#region navigation_train.train_tile_changed
+  emitted_by:    navigation_train     [line 265]
+
+  connected_to:  train_manager.on_train_tile_changed     [line 98]
+#endregion
+
+#region navigation_wagon.tile_changed
+  emitted_by:    navigation_locomotive._check_tile_change()     [line 53]
+  emitted_by:    navigation_wagon._check_tile_change()     [line 139]
+
+  connected_to:  navigation_train._on_wagon_tile_changed     [line 160]
+  connected_to:  navigation_train._on_locomotive_tile_changed     [line 145]
+#endregion
+
+#region pod.movement_finished
+  emitted_by:    pod.on_movement_finished()     [line 55]
+  emitted_by:    unit.on_movement_finished()     [line 189]
+#endregion
+
+#region pod.turn_finished
+  emitted_by:    pod.take_turn()     [line 37]
+  emitted_by:    unit_behavior_evaluate     [line 46]
+  emitted_by:    unit_behavior_evaluate     [line 146]
+  emitted_by:    unit_behavior_evaluate._evaluate_xcom2()     [line 131]
+  emitted_by:    unit_behavior_evaluate.evaluate_xcom1()     [line 39]
+  emitted_by:    unit_behavior_evaluate.on_unit_reached_destination()     [line 199]
+  emitted_by:    unit_behavior_overwatch.enter()     [line 11]
+
+  connected_to:  faction_ai._on_unit_finished, CONNECT_ONE_SHOT     [line 45]
+#endregion
+
+#region pod_manager.pod_spawned
+  emitted_by:    pod_manager     [line 48]
+#endregion
+
+#region quest_manager.quest_accepted
+  emitted_by:    quest_manager.accept_quest()     [line 74]
+
+  connected_to:  quest_ui._on_quest_accepted     [line 12]
+#endregion
+
+#region quest_manager.quest_completed
+  emitted_by:    quest_manager.complete_quest()     [line 144]
+
+  connected_to:  quest_ui._on_quest_completed     [line 13]
+#endregion
+
+#region quest_manager.quest_objective_updated
+  emitted_by:    quest_manager.process_event()     [line 121]
+
+  connected_to:  quest_ui._on_quest_objective_updated     [line 14]
+#endregion
+
+#region quest_manager.quests_updated
+  emitted_by:    quest_manager.accept_quest()     [line 75]
+  emitted_by:    quest_manager.complete_quest()     [line 155]
+  emitted_by:    quest_manager.load_from_game_state()     [line 245]
+  emitted_by:    quest_manager.process_event()     [line 129]
+
+  connected_to:  quest_ui.refresh_ui     [line 11]
+#endregion
+
+#region road_service.road_spawned
+  emitted_by:    road_service     [line 20]
+#endregion
+
+#region trade_menu.on_button_clicked
+  emitted_by:    trade_menu._on_button_2_pressed()     [line 73]
+  emitted_by:    trade_menu._on_button_pressed()     [line 69]
+#endregion
+
+#region train_inventory.train_money_changed
+  connected_to:  trade_scene._on_train_money_changed     [line 174]
+#endregion
+
+#region train_inventory.wagon_resource_amount_changed
+  emitted_by:    train_inventory.add_resource_qty_to_wagon()     [line 158]
+  emitted_by:    train_inventory.remove_resource_qty_from_wagon()     [line 166]
+
+  connected_to:  trade_scene.horizontal_train_manager._on_wagon_resource_amount_changed     [line 172]
+#endregion
+
+#region train_inventory.wagon_resource_type_changed
+  emitted_by:    train_inventory.add_resource_qty_to_wagon()     [line 156]
+  emitted_by:    train_inventory.remove_resource_qty_from_wagon()     [line 170]
+
+  connected_to:  trade_scene.horizontal_train_manager._on_wagon_resource_type_changed     [line 171]
+#endregion
+
+#region train_manager.train_reached_city
+  emitted_by:    train_manager._check_tile_events()     [line 162]
+
+  connected_to:  navigation_scene._on_train_reached_city     [line 109]
+#endregion
+
+#region train_manager.train_reached_destination
+  (no emits or connects found)
+#endregion
+
+#region train_manager.train_spawned
+  emitted_by:    train_manager     [line 109]
+#endregion
+
+#region train_manager.train_tile_changed
+  emitted_by:    navigation_train     [line 265]
+
+  connected_to:  train_manager.on_train_tile_changed     [line 98]
+#endregion
+
+#region ui_wasd.aim_pressed
+  emitted_by:    ui_wasd._input()     [line 25]
+#endregion
+
+#region ui_wasd.aim_released
+  emitted_by:    ui_wasd._input()     [line 27]
+#endregion
+
+#region ui_wasd.move_vector_changed
+  emitted_by:    ui_wasd     [line 19]
+
+  connected_to:  tank_base._on_move_vector_changed     [line 22]
+#endregion
+
+#region unit.movement_finished
+  emitted_by:    pod.on_movement_finished()     [line 55]
+  emitted_by:    unit.on_movement_finished()     [line 189]
+#endregion
+
+#region unit.unit_arrived_to_tile
+  emitted_by:    unit._on_unit_arrived_to_tile()     [line 181]
+  emitted_by:    unit_action_move.update()     [line 76]
+  emitted_by:    unit_manager     [line 367]
+
+  connected_to:  combat_scene.units_overlay.update     [line 189]
+  connected_to:  combat_scene.paths_overlay.update     [line 190]
+  connected_to:  combat_scene.exploration_service.on_unit_tile_changed     [line 191]
+  connected_to:  unit.unit_manager._on_unit_arrived_to_tile     [line 56]
+  connected_to:  unit_action_move.unit._on_unit_arrived_to_tile     [line 47]
+#endregion
+
+#region unit_action_move.unit_arrived_to_tile
+  emitted_by:    unit._on_unit_arrived_to_tile()     [line 181]
+  emitted_by:    unit_action_move.update()     [line 76]
+  emitted_by:    unit_manager     [line 367]
+
+  connected_to:  combat_scene.units_overlay.update     [line 189]
+  connected_to:  combat_scene.paths_overlay.update     [line 190]
+  connected_to:  combat_scene.exploration_service.on_unit_tile_changed     [line 191]
+  connected_to:  unit.unit_manager._on_unit_arrived_to_tile     [line 56]
+  connected_to:  unit_action_move.unit._on_unit_arrived_to_tile     [line 47]
+#endregion
+
+#region unit_ai.turn_finished
+  emitted_by:    pod.take_turn()     [line 37]
+  emitted_by:    unit_behavior_evaluate     [line 46]
+  emitted_by:    unit_behavior_evaluate     [line 146]
+  emitted_by:    unit_behavior_evaluate._evaluate_xcom2()     [line 131]
+  emitted_by:    unit_behavior_evaluate.evaluate_xcom1()     [line 39]
+  emitted_by:    unit_behavior_evaluate.on_unit_reached_destination()     [line 199]
+  emitted_by:    unit_behavior_overwatch.enter()     [line 11]
+
+  connected_to:  faction_ai._on_unit_finished, CONNECT_ONE_SHOT     [line 45]
+#endregion
+
+#region unit_manager.unit_arrived_to_tile
+  emitted_by:    unit._on_unit_arrived_to_tile()     [line 181]
+  emitted_by:    unit_action_move.update()     [line 76]
+  emitted_by:    unit_manager     [line 367]
+
+  connected_to:  combat_scene.units_overlay.update     [line 189]
+  connected_to:  combat_scene.paths_overlay.update     [line 190]
+  connected_to:  combat_scene.exploration_service.on_unit_tile_changed     [line 191]
+  connected_to:  unit.unit_manager._on_unit_arrived_to_tile     [line 56]
+  connected_to:  unit_action_move.unit._on_unit_arrived_to_tile     [line 47]
+#endregion
+
+#region unit_manager.unit_changed_orientation
+  emitted_by:    unit_manager     [line 410]
+
+  connected_to:  combat_scene._unit_changed_orientation     [line 195]
+#endregion
+
+#region unit_manager.unit_reached_destination
+  emitted_by:    unit_manager._on_unit_reached_destination()     [line 323]
+
+  connected_to:  combat_scene._unit_reached_destination     [line 194]
+#endregion
+
+#region unit_manager.unit_spawned
+  emitted_by:    unit_manager     [line 99]
+
+  connected_to:  combat_scene.units_overlay.redraw     [line 187]
+#endregion
+
+#region unit_manager.unit_visibility_changed
+  emitted_by:    unit_manager     [line 401]
+#endregion
+
+#region wall_manager.wall_spawned
+  emitted_by:    wall_manager     [line 62]
+  emitted_by:    wall_manager     [line 84]
+  emitted_by:    wall_manager     [line 106]
+
+  connected_to:  combat_scene.walls_overlay.redraw     [line 200]
+#endregion
+
+#region weapon_component.fired
+  emitted_by:    weapon_component     [line 41]
+#endregion
+
+#region weapon_component.out_of_ammo
+  emitted_by:    weapon_component.shoot_at()     [line 24]
+#endregion
+
+#region weapon_component.request_bullet_fire
+  emitted_by:    weapon_component     [line 38]
+#endregion
+
