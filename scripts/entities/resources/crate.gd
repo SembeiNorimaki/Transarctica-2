@@ -9,17 +9,17 @@ var qty := 0
 
 # "InWagon", "InGround"
 func set_mode(mode_: String):
-	if mode_ == "InWagon":
-		current_sprite = sprite_inwagon
-		sprite_inwagon.visible = true
-		sprite_inground.visible = false
-	else:
-		current_sprite = sprite_inground
-		sprite_inwagon.visible = false
-		sprite_inground.visible = true
+    if mode_ == "InWagon":
+        current_sprite = sprite_inwagon
+        sprite_inwagon.visible = true
+        sprite_inground.visible = false
+    else:
+        current_sprite = sprite_inground
+        sprite_inwagon.visible = false
+        sprite_inground.visible = true
 
 func set_qty(qty_: int):
-	print("Setting crate qty to %s" % qty_)
+	# print("Setting crate qty to %s" % qty_)
 	qty = qty_
 	if qty_ == 0:
 		current_sprite.visible = false
@@ -29,4 +29,3 @@ func set_qty(qty_: int):
 	else:
 		current_sprite.frame = qty_ - 1
 		current_sprite.visible = true
-	

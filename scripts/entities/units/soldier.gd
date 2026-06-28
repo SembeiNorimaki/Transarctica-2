@@ -26,11 +26,11 @@ const SOLDIER_HIT_SFX: AudioStream = preload("res://assets/audio/SoldierHit.wav"
 const SOLDIER_DIES_SFX: AudioStream = preload("res://assets/audio/SoldierDies.wav")
 
 func _ready() -> void:
-	# Connect signals
-	pass
+    # Connect signals
+    pass
 
 func initialize(id_: String, team_id_: String) -> void:
-	set_id(id_)
-	set_team(team_id_)
-	id_label.text = id
-	
+    set_id(id_)
+    set_team(team_id_)
+    id_label.text = id
+    

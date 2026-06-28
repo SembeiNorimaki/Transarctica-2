@@ -5,22 +5,23 @@ class_name PlayerTurnState
 # var selected_unit: Unit = null
 
 # func _ready():
-# 	pass
+#     pass
 
 func enter(params = {}):
-    print("PlayerTurnState entered")
+    # print("PlayerTurnState entered")
+    pass
 # 	selected_unit = params["selected_unit"]
 # 	#parent_scene.selection_manager.select_unit(selected_unit)
 
 # func exit(params = {}):
-# 	pass
-# 	#parent_scene.selection_manager.clear_selection()
+#     pass
+#     #parent_scene.selection_manager.clear_selection()
 
 # func update(delta: float):
-# 	pass
+#     pass
 
 # func handle_click(tile: Vector2i, button_index: int):
-# 	pass
+#     pass
 
 
 # extends GenericState

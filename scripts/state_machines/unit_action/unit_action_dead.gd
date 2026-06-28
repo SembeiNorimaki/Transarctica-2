@@ -3,7 +3,7 @@ extends GenericState
 class_name UnitActionDeadState
 
 func enter(params = {}):
-	print("UnitSM enter state Dead")
+	# print("UnitSM enter state Dead")
 	if params.has("unit"):
 		var unit: Unit = params["unit"]
 		unit.torso.visible = false
@@ -12,14 +12,14 @@ func enter(params = {}):
 		unit.right_arm.visible = false
 		unit.weapon.visible = false
 		unit.dead_part.visible = true
-		print("Unit current action:", unit.get_current_action())
+		# print("Unit current action:", unit.get_current_action())
 		unit.play_animation(unit.get_current_action(), unit.orientation)
 
 func exit(params = {}):
-	pass
+    pass
 
 func update(delta: float):
-	pass
+    pass
 
 func handle_click(tile: Vector2i, button_index: int):
-	pass
+    pass

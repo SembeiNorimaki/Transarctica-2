@@ -12,7 +12,7 @@ var active_quests: Dictionary = {}
 var completed_quests: Array[String] = []
 
 func _ready() -> void:
-	print("QuestManager: Initializing...")
+	# print("QuestManager: Initializing...")
 	load_quest_database()
 	# GameState is an autoload, let's wait a bit to ensure it is fully ready before loading quests
 	call_deferred("load_from_game_state")
@@ -20,7 +20,7 @@ func _ready() -> void:
 func load_quest_database() -> void:
 	var path = "res://scripts/data/quests.json"
 	if not FileAccess.file_exists(path):
-		print("QuestManager: Warning, quests.json not found at ", path)
+		# print("QuestManager: Warning, quests.json not found at ", path)
 		return
 		
 	var file = FileAccess.open(path, FileAccess.READ)
@@ -29,17 +29,17 @@ func load_quest_database() -> void:
 	
 	if json_data is Dictionary:
 		quest_database = json_data
-		print("QuestManager: Successfully loaded ", quest_database.keys().size(), " quests from database.")
+		# print("QuestManager: Successfully loaded ", quest_database.keys().size(), " quests from database.")
 	else:
-		print("QuestManager: Error parsing quests.json")
-
+		# print("QuestManager: Error parsing quests.json")
+		pass
 func accept_quest(quest_id: String) -> void:
 	if not quest_database.has(quest_id):
-		print("QuestManager: Quest ", quest_id, " not found in database.")
+		# print("QuestManager: Quest ", quest_id, " not found in database.")
 		return
 		
 	if active_quests.has(quest_id) or completed_quests.has(quest_id):
-		print("QuestManager: Quest ", quest_id, " is already active or completed.")
+		# print("QuestManager: Quest ", quest_id, " is already active or completed.")
 		return
 		
 	var data = quest_database[quest_id]
@@ -69,7 +69,7 @@ func accept_quest(quest_id: String) -> void:
 		quest.objectives.append(obj)
 		
 	active_quests[quest_id] = quest
-	print("QuestManager: Quest accepted: ", quest.title)
+	# print("QuestManager: Quest accepted: ", quest.title)
 	
 	emit_signal("quest_accepted", quest)
 	emit_signal("quests_updated")
@@ -80,56 +80,56 @@ func accept_quest(quest_id: String) -> void:
 		notify_city_reached(GameState.state.current_city)
 
 func notify_city_reached(city_name: String) -> void:
-	# Track current city globally in state
-	GameState.state["current_city"] = city_name
-	GameState.save()
-	
-	process_event("reach_city", {"city_name": city_name})
+    # Track current city globally in state
+    GameState.state["current_city"] = city_name
+    GameState.save()
+    
+    process_event("reach_city", {"city_name": city_name})
 
 func notify_goods_delivered(city_name: String, resource_name: String, qty: int) -> void:
-	process_event("deliver_goods", {
-		"city_name": city_name,
-		"resource_name": resource_name,
-		"qty": qty
-	})
+    process_event("deliver_goods", {
+        "city_name": city_name,
+        "resource_name": resource_name,
+        "qty": qty
+    })
 
 func notify_goods_collected(resource_name: String, qty: int) -> void:
-	process_event("collect_goods", {
-		"resource_name": resource_name,
-		"qty": qty
-	})
+    process_event("collect_goods", {
+        "resource_name": resource_name,
+        "qty": qty
+    })
 
 func notify_money_changed(money: int) -> void:
-	process_event("earn_money", {
-		"money": money
-	})
+    process_event("earn_money", {
+        "money": money
+    })
 
 func process_event(event_type: String, event_data: Dictionary) -> void:
-	var changed = false
-	var completed_this_run = []
-	
-	for quest_id in active_quests:
-		var quest = active_quests[quest_id]
-		var quest_changed = false
-		
-		for obj in quest.objectives:
-			var old_val = obj.current_qty
-			var old_status = obj.is_completed
-			if obj.update_progress(event_type, event_data):
-				quest_changed = true
-				changed = true
-				emit_signal("quest_objective_updated", quest, obj)
-				
-		if quest_changed:
-			if quest.is_completed():
-				completed_this_run.append(quest)
-				
-	if changed:
-		save_to_game_state()
-		emit_signal("quests_updated")
-		
-	for quest in completed_this_run:
-		complete_quest(quest)
+    var changed = false
+    var completed_this_run = []
+    
+    for quest_id in active_quests:
+        var quest = active_quests[quest_id]
+        var quest_changed = false
+        
+        for obj in quest.objectives:
+            var old_val = obj.current_qty
+            var old_status = obj.is_completed
+            if obj.update_progress(event_type, event_data):
+                quest_changed = true
+                changed = true
+                emit_signal("quest_objective_updated", quest, obj)
+                
+        if quest_changed:
+            if quest.is_completed():
+                completed_this_run.append(quest)
+                
+    if changed:
+        save_to_game_state()
+        emit_signal("quests_updated")
+        
+    for quest in completed_this_run:
+        complete_quest(quest)
 
 func complete_quest(quest: Quest) -> void:
 	var quest_id = quest.id
@@ -140,7 +140,7 @@ func complete_quest(quest: Quest) -> void:
 	completed_quests.append(quest_id)
 	quest.status = "completed"
 	
-	print("QuestManager: Quest completed: ", quest.title)
+	# print("QuestManager: Quest completed: ", quest.title)
 	emit_signal("quest_completed", quest)
 	
 	# Process rewards
@@ -156,7 +156,7 @@ func complete_quest(quest: Quest) -> void:
 
 func claim_rewards(quest: Quest) -> void:
 	var rewards = quest.rewards
-	print("QuestManager: Claiming rewards for ", quest.title, ": ", rewards)
+	# print("QuestManager: Claiming rewards for ", quest.title, ": ", rewards)
 	
 	# Check if trade scene is active
 	var is_trade_active = false
@@ -214,7 +214,7 @@ func save_to_game_state() -> void:
 		
 	GameState.state["quests"] = quests_state
 	GameState.save()
-	print("QuestManager: Saved quest state to GameState.")
+	# print("QuestManager: Saved quest state to GameState.")
 
 func load_from_game_state() -> void:
 	active_quests.clear()
@@ -235,11 +235,11 @@ func load_from_game_state() -> void:
 			quest.from_dict(active_dict[q_id])
 			active_quests[String(q_id)] = quest
 			
-		print("QuestManager: Loaded quest state. Active: ", active_quests.size(), ", Completed: ", completed_quests.size())
+		# print("QuestManager: Loaded quest state. Active: ", active_quests.size(), ", Completed: ", completed_quests.size())
 		
 	# Brand new game! Start the first tutorial quest
 	if active_quests.is_empty() and completed_quests.is_empty():
-		print("QuestManager: No quest state found in GameState. Starting first tutorial quest.")
+		# print("QuestManager: No quest state found in GameState. Starting first tutorial quest.")
 		accept_quest("quest_tutorial_1")
 		
 	emit_signal("quests_updated")

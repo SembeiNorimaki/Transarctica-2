@@ -17,38 +17,38 @@ var speed := 0.0
 
 
 func _ready() -> void:
-	pass
+    pass
 
 func set_pos(new_pos: Vector2):
-	position = new_pos
-	current_tile = grid_service.world_to_tile(new_pos)
+    position = new_pos
+    current_tile = grid_service.world_to_tile(new_pos)
 
 func set_orientation(new_ori: String):
-	print("Setting locomotive orientation to %s" % new_ori)
+	# print("Setting locomotive orientation to %s" % new_ori)
 	if orientation != new_ori:
 		orientation = new_ori
 		update_animation()
 		
 func set_heading(new_heading: Vector2):
-	heading = new_heading
+    heading = new_heading
 
 func update_animation():
-	sprite.set_animation(orientation)
-	sprite.play(orientation)
+    sprite.set_animation(orientation)
+    sprite.play(orientation)
 
 func _update_labels():
-	label.text = "%s,%s\n%s\n%s" % [current_tile.x, current_tile.y, orientation, heading]
+    label.text = "%s,%s\n%s\n%s" % [current_tile.x, current_tile.y, orientation, heading]
 
 func _process(delta):
-	_move(delta)
-	_check_tile_change()
-	_update_labels()
+    _move(delta)
+    _check_tile_change()
+    _update_labels()
 
 func _move(delta: float):
-	position += heading * speed * delta
+    position += heading * speed * delta
 
 func _check_tile_change():
-	var new_tile = grid_service.world_to_tile(position)
-	if current_tile != new_tile:
-		emit_signal("tile_changed", self, current_tile, new_tile)
-		current_tile = new_tile
+    var new_tile = grid_service.world_to_tile(position)
+    if current_tile != new_tile:
+        emit_signal("tile_changed", self, current_tile, new_tile)
+        current_tile = new_tile
