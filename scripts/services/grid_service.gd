@@ -24,6 +24,11 @@ var tile_half_size: Vector2i
 var map_origin: Vector2 # is basically half the tile_size
 var map_size: Vector2i
 
+# Precomputed vision cone offsets.
+# Key: "%d_%d_%s" % [view_range, view_angle_deg, orientation]
+# Value: Array[Vector2i] of offsets relative to origin (0,0)
+var _cone_cache: Dictionary = {}
+
 
 var ORIENTATION_VECTORS := {
     "N": Vector2(0, -1),
@@ -153,39 +158,51 @@ func get_orientation(from_tile: Vector2i, to_tile: Vector2i) -> String:
 
     return ori
 
+# Precomputes cone offsets for all 8 orientations for the given (view_range, view_angle) pair.
+# Call this once at startup (or whenever unit vision parameters are known).
+func precompute_vision_cones(view_range: int, view_angle: float) -> void:
+    for orientation in ORIENTATIONS:
+        var key := _cone_key(view_range, view_angle, orientation)
+        if _cone_cache.has(key):
+            continue  # already computed for this parameter set
+
+        var offsets: Array[Vector2i] = []
+        var forward := ORIENTATION_VECTORS[orientation]
+        var half_angle := deg_to_rad(view_angle / 2.0)
+
+        for x in range(-view_range, view_range + 1):
+            for y in range(-view_range, view_range + 1):
+                var offset := Vector2i(x, y)
+                if offset == Vector2i.ZERO:
+                    continue
+                if offset.length() > view_range:
+                    continue
+                var dir := Vector2(offset).normalized()
+                if abs(forward.angle_to(dir)) <= half_angle + 0.01:
+                    offsets.append(offset)
+
+        _cone_cache[key] = offsets
+        #print("[GridService] Precomputed cone '%s': %d tiles" % [key, offsets.size()])
+
+
 func get_tiles_in_vision_cone(origin: Vector2i, orientation: String, view_angle: float, view_range: int) -> Array[Vector2i]:
-    #print("get tiles in vision cone %s %s %s %s %s" % [origin, orientation, view_angle, view_range, map_size])
+    var key := _cone_key(view_range, view_angle, orientation)
+
+    # Cache miss: precompute all 8 orientations for this (range, angle) pair on first use.
+    # Subsequent calls with the same parameters pay only the cheap offset-apply cost below.
+    if not _cone_cache.has(key):
+        precompute_vision_cones(view_range, view_angle)
+
+    var offsets: Array[Vector2i] = _cone_cache[key]
     var result: Array[Vector2i] = []
-    var forward = ORIENTATION_VECTORS[orientation]
-    var half_angle = deg_to_rad(view_angle / 2.0)
-
-    # Iterate all tiles in a square around the unit
-    #for x in range(max(0, origin.x - view_range), min(map_size.x, origin.x + view_range + 1)):
-    #    for y in range(max(0, origin.y - view_range), min(map_size.y, origin.y + view_range + 1)):
-    
-
-    for x in range(origin.x - view_range, origin.x + view_range + 1):
-        for y in range(origin.y - view_range, origin.y + view_range + 1):
-            var tile := Vector2i(x, y)
-            # Skip origin
-            if tile == origin:
-                continue
-            # Range check
-            var delta = tile - origin
-            if delta.length() > view_range:
-                continue
-            
-            
-            # Angle check
-            var dir = Vector2(delta).normalized()
-            var angle = forward.angle_to(dir)
-            if abs(angle) <= half_angle + 0.01:
-                result.append(tile)
-            
-    #print("GS Cone tiles %s" % result.size())
-    #print("xrange: %s - %s" % [origin.x - view_range, origin.x + view_range])
-    #print("yrange: %s - %s" % [origin.y - view_range, origin.y + view_range])
+    result.resize(offsets.size())
+    for i in offsets.size():
+        result[i] = origin + offsets[i]
     return result
+
+
+func _cone_key(view_range: int, view_angle: float, orientation: String) -> String:
+    return "%d_%d_%s" % [view_range, int(view_angle), orientation]
 
 func is_inside_map(tile: Vector2i) -> bool:
     return tile.x >= 0 and tile.x < map_size.x and tile.y >= 0 and tile.y < map_size.y
