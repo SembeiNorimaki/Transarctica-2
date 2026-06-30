@@ -12,7 +12,8 @@ func redraw():
     _draw()
     queue_redraw()
 
-func update(unit, old_tile, new_tile):
+func update(unit, new_tile):
+    print("Unit overlay update, new tile %s" % new_tile)
     _draw()
     queue_redraw()
 

@@ -10,7 +10,7 @@ var _tiles_to_draw_blue = []
 
 
 func redraw() -> void:
-    _draw()
+    queue_redraw()
 
 func _draw():
     for tile in _tiles_to_draw_red:
@@ -19,7 +19,6 @@ func _draw():
         _highlight_tile(tile, Color(0, 1, 0, 0.2))
     for tile in _tiles_to_draw_blue:
         _highlight_tile(tile, Color(0, 0, 1, 0.2))
-    queue_redraw()
         
 func _highlight_tile(tile, color_):
     var world_pos = grid_service.tile_to_world(tile)

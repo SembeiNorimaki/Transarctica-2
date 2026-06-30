@@ -34,6 +34,7 @@ func unregister_footprint(anchor: Vector2i, offsets: Array[Vector2i], entity: Ob
         unregister(tile, entity)
 
 func register(tile: Vector2i, entity: Object) -> void:
+    print("TOS: registering entity %s to tile %s" % [entity.name, tile])
     var list = _occupied_tiles.get(tile)
     if list == null:
         list = []
@@ -41,6 +42,7 @@ func register(tile: Vector2i, entity: Object) -> void:
     list.append(entity)
 
 func unregister(tile: Vector2i, entity: Object) -> void:
+    print("TOS: unregistering entity %s from tile %s" % [entity.name, tile])
     var list = _occupied_tiles.get(tile)
     if list == null:
         return

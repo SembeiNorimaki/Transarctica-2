@@ -13,6 +13,7 @@ var pathfinding_service: PathfindingService
 var accuracy_service: AccuracyService
 var defensiveness_overlay: DefensivenessOverlay
 var fov_overlay: FOVOverlay
+var paths_overlay: PathOverlay
 
 var unit_paths := {} # Dict of units -> path
 var units_to_tile := {} # Dict of units -> tile_position
@@ -42,6 +43,7 @@ signal unit_arrived_to_tile(unit, new_tile)
 signal unit_reached_destination(unit)
 signal unit_changed_orientation(unit, new_orientation)
 signal unit_visibility_changed(unit, new_spotted: Array, lost_sight: Array)
+signal unit_path_started(unit, path)
 
 #signal unit_action_finished(unit)
 
@@ -92,9 +94,8 @@ func spawn_unit(tile_pos: Vector2i, unit_type_: String, owner_id: String) -> voi
     # Register in units_to_tile
     units_to_tile[unit] = tile_pos
 
-    # Connect the tile_change signal
-    #unit.connect("tile_changed", self._on_unit_tile_changed)
-    #    unit.connect("orientation_changed", self._on_unit_orientation_changed)
+    # Forward the unit's per-tile arrival to unit_manager so occupancy + vision stay in sync
+    unit.unit_arrived_to_tile.connect(_on_unit_arrived_to_tile)
 
     emit_signal("unit_spawned", unit)
 
@@ -171,12 +172,24 @@ func execute_shoot(shooter: Unit, target_tile: Vector2i) -> void:
     # Deduct AP
     shooter.ap_component.use_ap(shooter.weapon.ap_cost)
 
-    # Tell the unit to enter AttackActionState
-    shooter.action_sm.set_state("AttackState", {"unit": shooter, "target_tile": target_tile, "weapon_service": weapon_service})
+    # Pass through AimState first so the weapon sprite is raised,
+    # then AimState will auto-chain into AttackState immediately.
+    shooter.action_sm.set_state("AimState", {
+        "unit": shooter,
+        "target_tile": target_tile,
+        "weapon_service": weapon_service,
+        "auto_fire": true
+    })
 
 
 func on_projectile_hit(shooter: Unit, target: Unit) -> void:
     apply_damage_to_unit(target, shooter.weapon.damage)
+
+func has_unit_good_shoot(shooter: Unit, enemy: Unit) -> bool:
+    return true
+
+func get_hit_chance_for(shooter: Unit, target: Unit) -> float:
+    return 1.0
 
 #endregion
 
@@ -201,6 +214,9 @@ func is_unit_in_cover_against_all_enemies(unit, enemies: Array) -> bool:
 
     return true
 
+func get_cover_of_enemy_against(unit, enemy) -> float:
+    return cover_service.get_cover_against(enemy.current_tile, unit.current_tile)
+    
 
 # # Finds the best cover tile relative to a specific enemy
 # func find_best_cover(unit, enemy) -> Vector2i:
@@ -224,6 +240,9 @@ func find_safest_tile(unit, enemies: Array) -> Vector2i:
     var best_score = evaluate_tile_defensiveness(unit.current_tile, enemies)
 
     for tile in navigation_graph_service.get_reachable_tiles(unit, 10.0):
+        # Skip tiles already occupied by another unit
+        if tile_occupancy_service.is_occupied(tile):
+            continue
         var score := evaluate_tile_defensiveness(tile, enemies)
         if score > 0.0:
             defensiveness_overlay.danger_map[tile] = score
@@ -270,7 +289,7 @@ func choose_best_target(unit: Unit, enemies: Array) -> Unit:
     var best_score := -INF
 
     for enemy in enemies:
-        if not los_service.has_line_of_sight(unit.current_tile, enemy.current_tile):
+        if not los_service.has_los(unit.current_tile, enemy.current_tile):
             continue
 
         var hit = accuracy_service.compute_hit_chance(unit, unit.weapon, unit.current_tile, enemy.current_tile)
@@ -291,17 +310,17 @@ func choose_best_target(unit: Unit, enemies: Array) -> Unit:
 #region Movement orchestration
 
 func calculate_path_for_unit(unit: Unit, target_tile: Vector2i) -> Array[Vector2i]:
-    # print("AAA", unit.current_tile)
     var path_and_cost = pathfinding_service.find_path(unit.current_tile, target_tile)
+    if path_and_cost.is_empty():
+        return []
     var path = path_and_cost[0]
-    var path_cost = path_and_cost[1]
-    
     return path
 
     
 func start_unit_movement(unit: Unit, path: Array[Vector2i]) -> void:
     #print("Received path %s for unit %s" % [path, unit.id])
     path.pop_front() # remove first point since it's the current tile
+    unit_path_started.emit(unit, path)
     unit_paths[unit] = path
     _give_next_tile(unit)
     unit.set_state("MoveState", {"unit": unit})

@@ -27,7 +27,7 @@ func build_cover_map(all_tiles: Array):
         }
         # Only store tiles that have ANY cover
         if entry.N > 0.0 or entry.S > 0.0 or entry.W > 0.0 or entry.E > 0.0:
-            print("Found cover in tile %s" % tile)
+            #print("Found cover in tile %s" % tile)
             cover_map[tile] = entry
     cover_overlay.show_covers(cover_map)
         

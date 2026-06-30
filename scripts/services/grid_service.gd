@@ -164,10 +164,10 @@ func precompute_vision_cones(view_range: int, view_angle: float) -> void:
     for orientation in ORIENTATIONS:
         var key := _cone_key(view_range, view_angle, orientation)
         if _cone_cache.has(key):
-            continue  # already computed for this parameter set
+            continue # already computed for this parameter set
 
         var offsets: Array[Vector2i] = []
-        var forward := ORIENTATION_VECTORS[orientation]
+        var forward = ORIENTATION_VECTORS[orientation]
         var half_angle := deg_to_rad(view_angle / 2.0)
 
         for x in range(-view_range, view_range + 1):

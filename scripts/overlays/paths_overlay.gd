@@ -9,27 +9,28 @@ func _ready():
     set_process(false)
 
 func redraw():
-    _draw()
+    queue_redraw()
     
 func show_path(path_: Array[Vector2i], path_cost_: Array[float]):
     path_tiles = path_
     path_cost = path_cost_
-    _draw()
     queue_redraw()
 
+func show_path_debug(unit, path_: Array[Vector2i]):
+    show_path(path_.duplicate(), [])
+
 func update(unit, prev_tile, new_tile):
-    _draw()
     queue_redraw()
 
 func clear_path():
-    #path_tiles.clear()
-    _draw()
+    path_tiles.clear()
+    queue_redraw()
 
 func _draw():
     if path_tiles.is_empty():
         return
     var prev_tile = path_tiles[0]
-    var prev_cost = path_cost[0]
+    var prev_cost = path_cost[0] if not path_cost.is_empty() else 0.0
     var prev_world_pos = grid_service.tile_to_world(prev_tile)
     var prev_local_pos = prev_world_pos
     var accum_cost = 0
@@ -38,7 +39,7 @@ func _draw():
         var tile = path_tiles[i]
         var world_pos = grid_service.tile_to_world(tile)
         var local_pos = world_pos
-        var cost = path_cost[i]
+        var cost = path_cost[i] if i < path_cost.size() else 0.0
         accum_cost += cost
         #print("Drawing path at:", local_pos)
         draw_circle(local_pos, 2, Color.BLACK)

@@ -19,6 +19,7 @@ class_name Unit
 @onready var owner_label = $Labels/OwnerLabel
 @onready var tile_label = $Labels/TileLabel
 @onready var ap_label = $Labels/APLabel
+@onready var action_idx_label = $Labels/ActionIdx
 
 var grid_service: GridService
 var unit_manager: UnitManager
@@ -32,13 +33,14 @@ var id: String = ""
 var team_id: String = ""
 var move_speed := 40.0
 var orientation := "SE"
-var view_angle := 90.0
+var view_angle := 50.0
 var view_range := 12
 var is_alive := true
 var move_range: float = 12.0
 
 signal movement_finished
 signal unit_arrived_to_tile(unit, tile: Vector2i)
+signal shot_completed
 
 const SOLDIER_HIT_SFX: AudioStream = preload("res://assets/audio/SoldierHit.wav")
 const SOLDIER_DIES_SFX: AudioStream = preload("res://assets/audio/SoldierDies.wav")
@@ -151,6 +153,9 @@ func update_tile_label():
 
 func update_ap_label():
     ap_label.text = "AP: %s" % ap_component.get_ap()
+
+func update_action_idx_label(idx: int):
+    action_idx_label.text = "A%s" % idx
 
 # func play_animation(name):
 #     sprite.play(name)

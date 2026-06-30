@@ -32,6 +32,7 @@ class_name CombatScene
 @onready var weapon_service: WeaponService = $Services/WeaponService
 @onready var exploration_service: ExplorationService = $Services/ExplorationService
 @onready var cover_service: CoverService = $Services/CoverService
+@onready var accuracy_service: AccuracyService = $Services/AccuracyService
 
 # Overlays
 @onready var units_overlay: Node2D = $Overlays/UnitsOverlay
@@ -120,7 +121,9 @@ func _inject_services():
     unit_manager.pathfinding_service = pathfinding_service
     unit_manager.defensiveness_overlay = defensiveness_overlay
     unit_manager.fov_overlay = fov_overlay
-    
+    unit_manager.paths_overlay = paths_overlay
+    unit_manager.accuracy_service = accuracy_service
+
     building_manager.tile_occupancy_service = tile_occupancy_service
     building_manager.grid_service = grid_service
     wall_manager.tile_occupancy_service = tile_occupancy_service
@@ -191,6 +194,7 @@ func _wire_signals():
     unit_manager.connect("unit_spawned", units_overlay.redraw)
     unit_manager.unit_arrived_to_tile.connect(units_overlay.update)
     unit_manager.unit_arrived_to_tile.connect(paths_overlay.update)
+    unit_manager.unit_path_started.connect(paths_overlay.show_path_debug)
     unit_manager.unit_arrived_to_tile.connect(exploration_service.on_unit_tile_changed)
     #unit_manager.unit_removed.connect(units_overlay.redraw)
     unit_manager.unit_reached_destination.connect(_unit_reached_destination)
@@ -514,7 +518,7 @@ func set_cursor(cursor_name: String) -> void:
 #                  CombatScene._unit_changed_orientation
 func _update_enemy_visibility():
     var visible_tiles = exploration_service.get_merged_visible_tiles()
-    print("CombatScene: N Visible tiles: %s" % visible_tiles.size())
+    #print("CombatScene: N Visible tiles: %s" % visible_tiles.size())
     for enemy in unit_manager.get_units_by_team("Enemy"):
         if enemy.current_tile in visible_tiles:
             # print("Showing enemy %s" % enemy.id)

@@ -35,7 +35,7 @@ text = "Id"
 offset_top = 25.0
 offset_right = 40.0
 offset_bottom = 48.0
-text = "State"
+text = "ActionState"
 
 [node name="OwnerLabel" type="Label" parent="Labels" unique_id=1674598644]
 offset_top = 38.0
@@ -54,6 +54,12 @@ offset_top = 69.0
 offset_right = 40.0
 offset_bottom = 92.0
 text = "AP"
+
+[node name="ActionIdx" type="Label" parent="Labels" unique_id=1023242922]
+offset_top = 89.0
+offset_right = 40.0
+offset_bottom = 112.0
+text = "ActionIdx"
 
 [node name="ActionStateMachine" parent="." unique_id=117593771 instance=ExtResource("4_hix5a")]
 

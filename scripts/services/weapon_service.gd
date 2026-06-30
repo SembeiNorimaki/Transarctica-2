@@ -20,7 +20,7 @@ func _ready():
     pass
 
 # Public API
-func fire_bullet(bullet_scene: PackedScene, from_tile: Vector2i, to_tile: Vector2i, shooter: Unit) -> void:
+func fire_bullet(bullet_scene: PackedScene, from_tile: Vector2i, to_tile: Vector2i, shooter: Unit) -> Bullet:
     var from_pos = grid_service.tile_to_world(from_tile)
     var to_pos = grid_service.tile_to_world(to_tile)
     #print("Firing bullet from %s to %s" % [from_pos, to_pos])
@@ -31,3 +31,4 @@ func fire_bullet(bullet_scene: PackedScene, from_tile: Vector2i, to_tile: Vector
     #print("Firing bullet from %s to %s" % [from_pos, to_pos])
     bullet.fire(from_pos, to_pos)
     AudioService.play_sfx(SHOOT_SFX)
+    return bullet

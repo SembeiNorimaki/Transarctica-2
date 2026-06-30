@@ -30,13 +30,19 @@ func handle_click(tile: Vector2i, button_index: int):
 
 func _spawn_projectile():
     var weapon = unit.weapon
-    weapon_service.fire_bullet(
+    var bullet = weapon_service.fire_bullet(
         weapon.BULLET_SCENE,
         unit.current_tile,
         target_tile,
         unit)
+    if bullet:
+        bullet.bullet_hit.connect(_on_bullet_hit, CONNECT_ONE_SHOT)
 
-    # Projectile will emit "hit" → UnitManager handles damage
+
+func _on_bullet_hit():
+    unit.shot_completed.emit()
+    state_machine.set_state("IdleState", {"unit": unit})
+
 
 func _on_animation_finished():
     state_machine.set_state("IdleState")

@@ -62,7 +62,7 @@ func _compute_merged_player_visibility():
     merged_player_visibility = []
     for unit in unit_manager.get_units_by_team("Player"):
         var tiles = unit_manager.get_visible_tiles_for(unit)
-        print("Unit %s vision: %s tiles" % [unit.id, tiles.size()])
+        # print("Unit %s vision: %s tiles" % [unit.id, tiles.size()])
         merged_player_visibility.append_array(tiles)
 
 func _update_units_visibility(selected_unit: Unit) -> void:

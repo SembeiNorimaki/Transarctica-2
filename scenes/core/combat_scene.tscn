@@ -189,6 +189,7 @@ script = ExtResource("30_5cjt0")
 script = ExtResource("35_1mvnh")
 
 [node name="ReachableTilesOverlay" type="Node2D" parent="Overlays" unique_id=1386394038]
+visible = false
 script = ExtResource("37_yqry4")
 
 [node name="CoverOverlay" type="Node2D" parent="Overlays" unique_id=888146013]
