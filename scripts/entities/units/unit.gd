@@ -56,7 +56,9 @@ func inject_dependencies() -> void:
 
 
 func _wire_signals() -> void:
-    unit_arrived_to_tile.connect(unit_manager._on_unit_arrived_to_tile)
+    # TODO: Wagons are units?? but dont have a unit_manager. 
+    if unit_manager:
+        unit_arrived_to_tile.connect(unit_manager._on_unit_arrived_to_tile)
     health_component.health_changed.connect(_on_health_changed)
     health_component.died.connect(_on_died)
 
@@ -97,6 +99,7 @@ func _on_died():
     hp_bar.visible = false
     AudioService.play_sfx(SOLDIER_DIES_SFX)
     set_state("DeadState", {"unit": self})
+    unit_manager.remove_unit(self)
 
 
 #func _process(delta: float) -> void:

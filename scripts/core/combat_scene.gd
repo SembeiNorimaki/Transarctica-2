@@ -63,6 +63,7 @@ class_name CombatScene
 
 # Cursor
 @onready var aim_cursor: Sprite2D = $AimCursor
+@onready var master_hud: Control = $CanvasLayer/MasterHUD
 
 var is_intro := true
 var is_outro := false
@@ -199,6 +200,7 @@ func _wire_signals():
     #unit_manager.unit_removed.connect(units_overlay.redraw)
     unit_manager.unit_reached_destination.connect(_unit_reached_destination)
     unit_manager.unit_changed_orientation.connect(_unit_changed_orientation)
+    unit_manager.unit_died.connect(_on_unit_died)
     building_manager.building_spawned.connect(buildings_overlay.redraw)
     #building_manager.building_removed.connect(buildings_overlay.redraw)
     wall_manager.wall_spawned.connect(walls_overlay.redraw)
@@ -319,7 +321,7 @@ func _load_train():
     var train_data = GameState.get_player_train()
     horizontal_train = horizontal_train_manager.spawn_train(train_initial_tile, train_data)
     horizontal_train.set_speed(horizontal_train.max_speed)
-    horizontal_train.add_child(horizontal_train)
+    train_container.add_child(horizontal_train)
     print("Spawned horizontal train at tile: %s" % train_initial_tile)
 
 func _spawn_units(units_tilemap: TileMapLayer) -> void:
@@ -435,6 +437,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _handle_wagon_click(wagon_id: int) -> void:
     print("Wagon clicked: %s" % wagon_id)
     var wagon = horizontal_train_manager.player_train.wagons[wagon_id]
+    master_hud.show_hud("WagonHUD", {"wagon_id": wagon_id})
     wagon.on_click()
 
 func _handle_tile_click(tile: Vector2i, button_index: int) -> void:
@@ -485,6 +488,30 @@ func _unit_reached_destination(unit):
 func _unit_changed_orientation(unit, new_orientation):
     exploration_service.on_unit_orientation_changed(unit, new_orientation)
     _update_enemy_visibility()
+
+func _on_unit_died(_unit: Unit) -> void:
+    if unit_manager.get_units_by_team("Enemy").is_empty():
+        _on_combat_victory()
+    elif unit_manager.get_units_by_team("Player").is_empty():
+        _on_combat_defeat()
+
+func _on_combat_victory() -> void:
+    print("[CombatScene] VICTORY — all enemies defeated")
+    state_machine.set_state("CombatEndState", {"result": "victory"})
+
+func _on_combat_defeat() -> void:
+    print("[CombatScene] DEFEAT — all player units lost")
+    state_machine.set_state("CombatEndState", {"result": "defeat"})
+
+func show_end_screen(result: String) -> void:
+    var msg = "VICTORY!" if result == "victory" else "DEFEAT"
+    state_label.text = msg
+    state_label.add_theme_color_override("font_color",
+        Color.GREEN if result == "victory" else Color.RED)
+    if result == "victory":
+        # Give the player a moment to see the result, then trigger the outro
+        await get_tree().create_timer(2.0).timeout
+        is_outro = true
 #endregion
 
 

@@ -1,1 +1,56 @@
 extends Control
+class_name WagonHUD
+
+@onready var portrait: TextureRect = $HBoxContainerLeft/Portrait
+@onready var content_container: HBoxContainer = $HBoxContainerCenter
+
+const PORTRAITS: Dictionary = {
+    "LocomotiveWagon": preload("res://assets/sprites/wagons/trade/locomotive_tr.png"),
+    "TenderWagon": preload("res://assets/sprites/wagons/trade/tender_tr.png"),
+    "BarracksWagon": preload("res://assets/sprites/wagons/trade/barracks_tr.png"),
+    "CannonWagon": preload("res://assets/sprites/wagons/trade/cannon_tr.png"),
+    "MerchandiseWagon": preload("res://assets/sprites/wagons/trade/merchandise_tr.png"),
+}
+
+# Default soldier portrait — swap per unit type when you have more assets
+const SOLDIER_PORTRAIT: Texture2D = preload("res://assets/sprites/soldier.png")
+
+func setup(params: Dictionary) -> void:
+    var wagon_id: int = params.get("wagon_id", -1)
+    if wagon_id < 0:
+        return
+
+    var wagon_data: Dictionary = GameState.get_player_train().wagons[wagon_id]
+    var wagon_type: String = wagon_data.get("type", "")
+
+    # Set the portrait for this wagon type
+    portrait.texture = PORTRAITS.get(wagon_type, null)
+
+    # Populate the content area based on wagon type
+    _clear_content()
+    if wagon_type == "BarracksWagon":
+        _populate_barracks(wagon_data)
+
+func _clear_content() -> void:
+    for child in content_container.get_children():
+        child.queue_free()
+
+func _populate_barracks(wagon_data: Dictionary) -> void:
+    var unit_ids: Array = wagon_data.get("unit_ids", [])
+    for unit_id in unit_ids:
+        var unit_data: Dictionary = GameState.get_unit(unit_id)
+        if unit_data.is_empty():
+            continue
+        _add_unit_slot(unit_data)
+
+func _add_unit_slot(unit_data: Dictionary) -> void:
+    var slot := TextureRect.new()
+    slot.texture = SOLDIER_PORTRAIT
+    slot.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+    slot.custom_minimum_size = Vector2(40, 40)
+    slot.tooltip_text = "HP: %s/%s  XP: %s" % [
+        unit_data.get("hp", "?"),
+        unit_data.get("max_hp", "?"),
+        unit_data.get("experience", 0)
+    ]
+    content_container.add_child(slot)

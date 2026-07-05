@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://b2h206dmxnp2u" path="res://scripts/state_machines/combat/combat_unit_selected_state.gd" id="3_sepk8"]
 [ext_resource type="Script" uid="uid://gi7f8o4i1aa" path="res://scripts/state_machines/combat/combat_unit_moving_state.gd" id="4_xuewf"]
 [ext_resource type="Script" uid="uid://du1pqxf1c2pk4" path="res://scripts/state_machines/combat/combat_unit_aiming_state.gd" id="5_m8fr2"]
+[ext_resource type="Script" uid="uid://cdw2spjfwvp68" path="res://scripts/state_machines/combat/combat_end_state.gd" id="6_h54sj"]
 
 [node name="CombatStateMachine" type="Node" unique_id=1659863097]
 script = ExtResource("1_3isnl")
@@ -20,3 +21,6 @@ script = ExtResource("4_xuewf")
 
 [node name="UnitAimingState" type="Node" parent="." unique_id=1883554065]
 script = ExtResource("5_m8fr2")
+
+[node name="CombatEndState" type="Node" parent="." unique_id=587959328]
+script = ExtResource("6_h54sj")

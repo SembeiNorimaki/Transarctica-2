@@ -14,6 +14,7 @@ func enter(params = {}):
     selected_unit = params["selected_unit"]
     owner_node.selection_manager.select_unit(selected_unit)
     owner_node.camera_controller.center_at_tile(selected_unit.current_tile)
+    owner_node.master_hud.show_hud("UnitHUD")
 
 func exit(params = {}):
     pass

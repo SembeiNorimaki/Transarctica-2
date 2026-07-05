@@ -44,6 +44,7 @@ signal unit_reached_destination(unit)
 signal unit_changed_orientation(unit, new_orientation)
 signal unit_visibility_changed(unit, new_spotted: Array, lost_sight: Array)
 signal unit_path_started(unit, path)
+signal unit_died(unit)
 
 #signal unit_action_finished(unit)
 
@@ -136,6 +137,20 @@ func get_all_units() -> Array:
 
 func apply_damage_to_unit(unit: Unit, amount: int):
     unit.apply_damage(amount)
+
+func remove_unit(unit: Unit) -> void:
+    var team = unit.team_id
+    units[team].erase(unit)
+    # Unregister from occupancy so the tile is freed for other units
+    tile_occupancy_service.unregister(units_to_tile.get(unit, unit.current_tile), unit)
+    units_to_tile.erase(unit)
+    # Also clean up vision tracking
+    visible_tiles_by_unit.erase(unit)
+    # Remove the dead unit from every observer's seen-enemies list
+    for observer in seen_enemies_by_unit:
+        seen_enemies_by_unit[observer].erase(unit)
+    seen_enemies_by_unit.erase(unit)
+    emit_signal("unit_died", unit)
 
 
 func can_unit_see_enemy(unit: Unit, enemy: Unit) -> bool:

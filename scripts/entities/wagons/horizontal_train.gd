@@ -100,8 +100,8 @@ func add_wagon(wagon_data: Dictionary):
     # connect signals
     
     
-    var resource_name = wagon_data.cargo_name
-    var resource_qty = wagon_data.cargo_qty
+    var resource_name = wagon_data.get("cargo_name", "")
+    var resource_qty = wagon_data.get("cargo_qty", 0)
 
 
     wagon.call_deferred("set_resource_type", resource_name)

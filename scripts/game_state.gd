@@ -92,13 +92,16 @@ var _cities_by_location = {}
 var _cities_by_id = {}
 var _industries_by_location = {}
 var _industries_by_id = {}
+var _units_state: Dictionary = {}
 
 #region initialization
 func _ready() -> void:
     # print("Game state Ready")
     load_initial_cities("cities_World2.json")
     #load_initial_industries("industries.json")
+    load_initial_units("units.json")
     load_initial_player_train("player_train.json")
+    
     
     # print(_cities_state.keys())
 
@@ -139,7 +142,16 @@ func load_initial_player_train(filename: String):
     var file = FileAccess.open("res://data/%s" % filename, FileAccess.READ)
     var train_data = JSON.parse_string(file.get_as_text())
     _player_train_state = train_data
-    
+
+func load_initial_units(filename: String) -> void:
+    _units_state = {}
+    var file = FileAccess.open("res://data/%s" % filename, FileAccess.READ)
+    if file == null:
+        push_error("GameState: could not open %s" % filename)
+        return
+    var data = JSON.parse_string(file.get_as_text())
+    _units_state = data
+
 #endregion
 
 #region publicAPI
@@ -200,6 +212,49 @@ func get_industry_by_id(id: String) -> Dictionary:
 func set_industry(industry_name: String, industry_data: Dictionary) -> void:
     _industries_state[industry_name] = industry_data
 
+
+# Units
+func get_unit(id: String) -> Dictionary:
+    return _units_state.get(id, {})
+
+func get_all_units() -> Dictionary:
+    return _units_state
+
+func add_unit(data: Dictionary) -> String:
+    # Auto-generate a sequential ID
+    var idx := _units_state.size()
+    var id := "s%d" % idx
+    while _units_state.has(id): # avoid collision if there are gaps
+        idx += 1
+        id = "s%d" % idx
+    data["id"] = id
+    _units_state[id] = data
+    return id
+
+func update_unit(id: String, data: Dictionary) -> void:
+    if _units_state.has(id):
+        _units_state[id].merge(data, true) # true = overwrite existing keys
+    else:
+        push_error("GameState.update_unit: unknown unit id '%s'" % id)
+
+func remove_unit(id: String) -> void:
+    _units_state.erase(id)
+
+# Convenience: resolve unit_ids for a specific barracks wagon index
+func get_units_in_barracks(wagon_idx: int) -> Array[Dictionary]:
+    var wagon = _player_train_state.wagons[wagon_idx]
+    var result: Array[Dictionary] = []
+    for uid in wagon.get("unit_ids", []):
+        var unit_data = get_unit(uid)
+        if not unit_data.is_empty():
+            result.append(unit_data)
+    return result
+
+# Remove a unit ID from its barracks wagon (call on permadeath alongside remove_unit)
+func remove_unit_from_barracks(unit_id: String) -> void:
+    for wagon in _player_train_state.wagons:
+        if wagon.get("type") == "BarracksWagon":
+            wagon.get("unit_ids", []).erase(unit_id)
 
 #endregion
 

@@ -13,9 +13,12 @@ func hide_all() -> void:
     for hud in huds.values():
         hud.hide()
 
-func show_hud(hud_name: String) -> void:
+func show_hud(hud_name: String, params: Dictionary = {}) -> void:
     hide_all()
     if huds.has(hud_name):
-        huds[hud_name].show()
+        var hud = huds[hud_name]
+        hud.show()
+        if hud.has_method("setup"):
+            hud.setup(params)
     else:
         print("Error, HUD %s not found" % hud_name)

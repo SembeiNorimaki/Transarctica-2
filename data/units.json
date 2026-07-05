@@ -1,0 +1,23 @@
+{
+    "s0": {
+        "id": "s0",
+        "type": "xcom",
+        "hp": 100,
+        "max_hp": 100,
+        "experience": 0
+    },
+    "s1": {
+        "id": "s1",
+        "type": "xcom",
+        "hp": 80,
+        "max_hp": 100,
+        "experience": 45
+    },
+    "s2": {
+        "id": "s2",
+        "type": "xcom",
+        "hp": 80,
+        "max_hp": 100,
+        "experience": 45
+    }
+}
