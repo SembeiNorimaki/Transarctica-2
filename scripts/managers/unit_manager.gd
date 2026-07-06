@@ -58,12 +58,12 @@ func _wire_signals() -> void:
     pass
 
 #region unit spawning
-func spawn_unit(tile_pos: Vector2i, unit_type_: String, owner_id: String) -> void:
+func spawn_unit(tile_pos: Vector2i, unit_type_: String, owner_id: String) -> Unit:
     var unit_info = UnitTypes.TYPES["unit_xcom"]
     var team = owner_id
     var footprint = unit_info.footprint
 
-    # print("Spawning a %s belonging to %s to tile %s" % [unit_type_, owner_id, tile_pos])
+    print("[UnitManager] spawn_unit called: type=%s  owner=%s  tile=%s" % [unit_type_, owner_id, tile_pos])
     var id = "u%s%s" % [team[0], next_unit_id[team]] # Player unit with id=3 -> uP3
     next_unit_id[team] += 1
     
@@ -99,6 +99,7 @@ func spawn_unit(tile_pos: Vector2i, unit_type_: String, owner_id: String) -> voi
     unit.unit_arrived_to_tile.connect(_on_unit_arrived_to_tile)
 
     emit_signal("unit_spawned", unit)
+    return unit
 
 #endregion
 

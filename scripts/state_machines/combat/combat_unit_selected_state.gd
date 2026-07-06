@@ -15,11 +15,12 @@ func enter(params = {}):
     owner_node.selection_manager.select_unit(selected_unit)
     owner_node.camera_controller.center_at_tile(selected_unit.current_tile)
     owner_node.master_hud.show_hud("UnitHUD")
+    owner_node.unit_manager.update_vision(selected_unit)
 
 func exit(params = {}):
-    pass
-    #print("Exiting unit selected state")
-    #parent_scene.selection_manager.clear_selection()
+    owner_node.selection_manager.clear_selection()
+    owner_node.fov_overlay._tiles_to_draw_blue = []
+    owner_node.fov_overlay.redraw()
 func update(delta: float):
     pass
 

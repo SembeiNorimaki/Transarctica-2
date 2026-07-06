@@ -1,6 +1,8 @@
 extends Control
 class_name WagonHUD
 
+signal unit_deploy_requested(unit_id: String, unit_type: String)
+
 @onready var portrait: TextureRect = $HBoxContainerLeft/Portrait
 @onready var content_container: HBoxContainer = $HBoxContainerCenter
 
@@ -44,13 +46,23 @@ func _populate_barracks(wagon_data: Dictionary) -> void:
         _add_unit_slot(unit_data)
 
 func _add_unit_slot(unit_data: Dictionary) -> void:
-    var slot := TextureRect.new()
-    slot.texture = SOLDIER_PORTRAIT
-    slot.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-    slot.custom_minimum_size = Vector2(40, 40)
-    slot.tooltip_text = "HP: %s/%s  XP: %s" % [
+    var unit_id: String  = unit_data.get("id", "")
+    var unit_type: String = unit_data.get("type", "")
+
+    var btn := Button.new()
+    btn.custom_minimum_size = Vector2(40, 40)
+    btn.tooltip_text = "HP: %s/%s  XP: %s" % [
         unit_data.get("hp", "?"),
         unit_data.get("max_hp", "?"),
         unit_data.get("experience", 0)
     ]
-    content_container.add_child(slot)
+
+    var portrait_rect := TextureRect.new()
+    portrait_rect.texture = SOLDIER_PORTRAIT
+    portrait_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+    portrait_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+    portrait_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+    btn.add_child(portrait_rect)
+
+    btn.pressed.connect(func(): unit_deploy_requested.emit(unit_id, unit_type))
+    content_container.add_child(btn)

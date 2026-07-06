@@ -17,6 +17,10 @@ class_name CombatScene
 @onready var train_container: Node2D = $Containers/Trains
 @onready var train_inventory: TrainInventory = $Containers/TrainInventory
 
+# HUD
+@onready var master_hud: Control = $CanvasLayer/MasterHUD
+@onready var wagon_hud = $CanvasLayer/MasterHUD/WagonHUD
+
 # Controllers
 @onready var camera_controller: CameraController = $Controllers/CameraController
 
@@ -63,11 +67,13 @@ class_name CombatScene
 
 # Cursor
 @onready var aim_cursor: Sprite2D = $AimCursor
-@onready var master_hud: Control = $CanvasLayer/MasterHUD
 
 var is_intro := true
 var is_outro := false
 var horizontal_train: HorizontalTrain = null
+
+# Tracks the most recently clicked wagon for WagonDeployState
+var _last_clicked_wagon: Node = null
 
 var train_initial_tile := Vector2(10, 10)
 var camera_initial_tile := Vector2i(25, 0)
@@ -212,6 +218,9 @@ func _wire_signals():
     # ui_wasd.connect("move_vector_changed", unit_manager.on_move_vector_changed)
     # ui_wasd.connect("aim_pressed", unit_manager.on_aim_pressed)
     # ui_wasd.connect("aim_released", unit_manager.on_aim_released)
+
+    # WagonHUD: entering deploy state when a unit portrait is clicked
+    wagon_hud.unit_deploy_requested.connect(_on_unit_deploy_requested)
 
 #endregion
 
@@ -437,8 +446,41 @@ func _unhandled_input(event: InputEvent) -> void:
 func _handle_wagon_click(wagon_id: int) -> void:
     print("Wagon clicked: %s" % wagon_id)
     var wagon = horizontal_train_manager.player_train.wagons[wagon_id]
-    master_hud.show_hud("WagonHUD", {"wagon_id": wagon_id})
-    wagon.on_click()
+    _last_clicked_wagon = wagon
+    state_machine.set_state("WagonSelectedState", {
+        "wagon_id": wagon_id,
+        "wagon": wagon,
+    })
+
+
+func _on_unit_deploy_requested(unit_id: String, unit_type: String) -> void:
+    if _last_clicked_wagon == null:
+        return
+    # Candidate tiles above the wagon, checked left-to-right
+    const SPAWN_OFFSETS: Array[Vector2i] = [
+        Vector2i(-2, -2),
+        Vector2i(-2, -1),
+        Vector2i(-1, -2),
+    ]
+    var wagon_tile := grid_service.world_to_tile(_last_clicked_wagon.global_position)
+    var deploy_tile: Vector2i = Vector2i(-1, -1)
+    for offset in SPAWN_OFFSETS:
+        var candidate := wagon_tile + offset
+        if grid_service.is_inside_map(candidate) and tile_occupancy_service.get_entities(candidate).is_empty():
+            deploy_tile = candidate
+            break
+    if deploy_tile == Vector2i(-1, -1):
+        push_warning("[CombatScene] No free deploy tile found near wagon %s" % _last_clicked_wagon.name)
+        return
+    var spawned_unit := unit_manager.spawn_unit(deploy_tile, unit_type, "Player")
+    spawned_unit.call_deferred("set_orientation", "NW")
+    # Remove soldier from the barracks wagon in GameState
+    GameState.remove_unit_from_barracks(unit_id)
+    # Refresh the HUD so the portrait disappears
+    var wagon_id: int = horizontal_train_manager.player_train.wagons.find(_last_clicked_wagon)
+    if wagon_id >= 0:
+        wagon_hud.setup({"wagon_id": wagon_id})
+
 
 func _handle_tile_click(tile: Vector2i, button_index: int) -> void:
     # print("Tile clicked %s" % tile)
