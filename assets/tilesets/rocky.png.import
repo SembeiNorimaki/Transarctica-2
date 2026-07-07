@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cf0y4ca16jdiv"
-path="res://.godot/imported/desert.png-2e33e98a12c554ad3e1f069a8743dbfc.ctex"
+uid="uid://c435uuhuj31iq"
+path="res://.godot/imported/rocky.png-809ceb4299911c51ce7132ebfa107f53.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tilesets/desert.png"
-dest_files=["res://.godot/imported/desert.png-2e33e98a12c554ad3e1f069a8743dbfc.ctex"]
+source_file="res://assets/tilesets/rocky.png"
+dest_files=["res://.godot/imported/rocky.png-809ceb4299911c51ce7132ebfa107f53.ctex"]
 
 [params]
 
