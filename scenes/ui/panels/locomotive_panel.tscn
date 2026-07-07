@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://devmdo647s0qq"]
+
+[ext_resource type="Script" uid="uid://wcc10uf74u7e" path="res://scripts/ui/wagon_panels/locomotive_panel.gd" id="1_lpscr"]
+
+[node name="LocomotivePanel" type="HBoxContainer" unique_id=1284720814]
+offset_right = 383.0
+offset_bottom = 108.0
+script = ExtResource("1_lpscr")
+
+[node name="TitleLabel" type="Label" parent="." unique_id=1637923545]
+layout_mode = 2
+text = "Locomotive"
+
+[node name="HpLabel" type="Label" parent="." unique_id=1754753953]
+layout_mode = 2
+text = "Hull: — / —"
+
+[node name="HpBar" type="ProgressBar" parent="." unique_id=884910807]
+custom_minimum_size = Vector2(120, 14)
+layout_mode = 2
+
+[node name="StatusLabel" type="Label" parent="." unique_id=1548858651]
+layout_mode = 2
+text = "Status: —"

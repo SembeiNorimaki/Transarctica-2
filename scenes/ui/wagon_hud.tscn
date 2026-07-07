@@ -2,10 +2,6 @@
 
 [ext_resource type="Script" uid="uid://cdy0t6cee3sdb" path="res://scripts/ui/wagon_hud.gd" id="1_xapbt"]
 [ext_resource type="Texture2D" uid="uid://d1wihq5v4ewt3" path="res://assets/sprites/wagons/trade/merchandise_tr.png" id="2_hywjp"]
-[ext_resource type="Texture2D" uid="uid://c0banlbrh5qnd" path="res://assets/sprites/captain.png" id="3_ys4sp"]
-[ext_resource type="Texture2D" uid="uid://bdluay8sb06y6" path="res://assets/sprites/elite.png" id="4_owosk"]
-[ext_resource type="Texture2D" uid="uid://ttwkc8krubku" path="res://assets/sprites/liquidator.png" id="5_1pdpj"]
-[ext_resource type="Texture2D" uid="uid://cqv7bv8s5s4fr" path="res://assets/sprites/redops.png" id="6_358ww"]
 
 [node name="WagonHUD" type="Control" unique_id=368405506]
 custom_minimum_size = Vector2(0, 60)
@@ -53,19 +49,3 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Unit1" type="TextureRect" parent="HBoxContainerCenter" unique_id=1460289830]
-layout_mode = 2
-texture = ExtResource("3_ys4sp")
-
-[node name="Unit2" type="TextureRect" parent="HBoxContainerCenter" unique_id=514952577]
-layout_mode = 2
-texture = ExtResource("4_owosk")
-
-[node name="Unit3" type="TextureRect" parent="HBoxContainerCenter" unique_id=1826104191]
-layout_mode = 2
-texture = ExtResource("5_1pdpj")
-
-[node name="Unit4" type="TextureRect" parent="HBoxContainerCenter" unique_id=1447076123]
-layout_mode = 2
-texture = ExtResource("6_358ww")

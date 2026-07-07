@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dm648o647s0qq"]
+
+[ext_resource type="Script" uid="uid://5nudgpjyk7qc" path="res://scripts/ui/wagon_panels/tender_panel.gd" id="1_tpscr"]
+
+[node name="TenderPanel" type="HBoxContainer" unique_id=79868539]
+offset_right = 177.0
+offset_bottom = 81.0
+script = ExtResource("1_tpscr")
+
+[node name="TitleLabel" type="Label" parent="." unique_id=1303533079]
+layout_mode = 2
+text = "Fuel"
+
+[node name="FuelLabel" type="Label" parent="." unique_id=1496134581]
+layout_mode = 2
+text = "—"
+
+[node name="FuelBar" type="ProgressBar" parent="." unique_id=1883900785]
+custom_minimum_size = Vector2(120, 14)
+layout_mode = 2

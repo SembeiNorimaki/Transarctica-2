@@ -4,20 +4,23 @@
         "type": "liquidator",
         "hp": 100,
         "max_hp": 100,
-        "experience": 0
+        "experience": 0,
+        "weapon": "sniper_rifle"
     },
     "s1": {
         "id": "s1",
         "type": "liquidator",
         "hp": 80,
         "max_hp": 100,
-        "experience": 45
+        "experience": 45,
+        "weapon": "assault_rifle"
     },
     "s2": {
         "id": "s2",
         "type": "liquidator",
         "hp": 80,
         "max_hp": 100,
-        "experience": 45
+        "experience": 45,
+        "weapon": "assault_rifle"
     }
 }

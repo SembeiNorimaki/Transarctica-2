@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://clrxlqblyhtyd" path="res://assets/tilesets/forest.png" id="1_o06wp"]
 [ext_resource type="Texture2D" uid="uid://dl3faa65k4mdk" path="res://assets/tilesets/terrain65_52.png" id="2_2nn31"]
+[ext_resource type="Texture2D" uid="uid://bkpinikordcuk" path="res://assets/sprites/forest_zi2.png" id="3_5rbu1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2nn31"]
 texture = ExtResource("1_o06wp")
@@ -24,9 +25,17 @@ texture = ExtResource("2_2nn31")
 texture_region_size = Vector2i(65, 52)
 0:0/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r121k"]
+texture = ExtResource("3_5rbu1")
+texture_region_size = Vector2i(123, 102)
+0:0/0 = 0
+0:1/0 = 0
+0:2/0 = 0
+
 [resource]
 tile_shape = 1
 tile_layout = 5
 tile_size = Vector2i(64, 32)
 sources/0 = SubResource("TileSetAtlasSource_2nn31")
 sources/1 = SubResource("TileSetAtlasSource_5rbu1")
+sources/2 = SubResource("TileSetAtlasSource_r121k")

@@ -9,6 +9,7 @@
 [ext_resource type="TileSet" uid="uid://cn1mah6f2h2yr" path="res://assets/tilesets/ufo.tres" id="6_4735l"]
 [ext_resource type="Texture2D" uid="uid://blqori2m6v0o5" path="res://assets/tilesets/directions.png" id="7_6s13l"]
 [ext_resource type="Texture2D" uid="uid://coekvdlx482ny" path="res://assets/tilesets/URBAN.PNG" id="7_mp2ox"]
+[ext_resource type="Texture2D" uid="uid://bkpinikordcuk" path="res://assets/sprites/forest_zi2.png" id="8_k1w2v"]
 [ext_resource type="TileSet" uid="uid://cl4eqvpcy7aig" path="res://scenes/maps/rails.tres" id="10_pfful"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mp2ox"]
@@ -54,12 +55,34 @@ texture_region_size = Vector2i(32, 40)
 4:5/0 = 0
 4:5/0/texture_origin = Vector2i(0, 12)
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bdji8"]
+texture = ExtResource("8_k1w2v")
+texture_region_size = Vector2i(123, 102)
+1:0/0 = 0
+2:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+0:0/0 = 0
+
 [sub_resource type="TileSet" id="TileSet_6bhn3"]
 tile_shape = 1
 tile_layout = 5
-tile_size = Vector2i(32, 16)
+tile_size = Vector2i(64, 32)
 sources/0 = SubResource("TileSetAtlasSource_6s13l")
 sources/1 = SubResource("TileSetAtlasSource_xtedm")
+sources/5 = SubResource("TileSetAtlasSource_bdji8")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_40dtt"]
 texture = ExtResource("7_mp2ox")

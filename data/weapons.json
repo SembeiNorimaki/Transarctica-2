@@ -1,0 +1,18 @@
+{
+    "ak47": {
+        "id": "w0",
+        "name": "ak47",
+        "damage": 10,
+        "accuracy": 80,
+        "range": 5,
+        "atlas_file": "handob_ak47.png"
+    },
+    "sniper_rifle": {
+        "id": "w1",
+        "name": "sniper_rifle",
+        "damage": 20,
+        "accuracy": 90,
+        "range": 10,
+        "atlas_file": "handob_sniper_rifle.png"
+    }
+}

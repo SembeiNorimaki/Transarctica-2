@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://1brcks1pnl1ab"]
+
+[ext_resource type="Script" path="res://scripts/ui/wagon_panels/barracks_panel.gd" id="1_bpscr"]
+
+[node name="BarracksPanel" type="HBoxContainer"]
+script = ExtResource("1_bpscr")
+
+[node name="TitleLabel" type="Label" parent="."]
+text = "Units:"
+
+[node name="UnitsContainer" type="HBoxContainer" parent="."]

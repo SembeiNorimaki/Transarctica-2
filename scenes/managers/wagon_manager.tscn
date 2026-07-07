@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dij7u16xau7lb"]
+
+[ext_resource type="Script" uid="uid://behp6devchfhg" path="res://scripts/managers/wagon_manager.gd" id="1_jp5jn"]
+
+[node name="WagonManager" type="Node" unique_id=1613741586]
+script = ExtResource("1_jp5jn")

@@ -1,7 +1,8 @@
 extends Control
 class_name WagonHUD
 
-signal unit_deploy_requested(unit_id: String, unit_type: String)
+# Injected by CombatScene
+var wagon_manager: WagonManager = null
 
 @onready var portrait: TextureRect = $HBoxContainerLeft/Portrait
 @onready var content_container: HBoxContainer = $HBoxContainerCenter
@@ -14,55 +15,36 @@ const PORTRAITS: Dictionary = {
     "MerchandiseWagon": preload("res://assets/sprites/wagons/trade/merchandise_tr.png"),
 }
 
-# Default soldier portrait — swap per unit type when you have more assets
-const SOLDIER_PORTRAIT: Texture2D = preload("res://assets/sprites/soldier.png")
+# Map wagon type → panel scene. Add new entries here as wagon types grow.
+const PANELS: Dictionary = {
+    "BarracksWagon":    preload("res://scenes/ui/panels/barracks_panel.tscn"),
+    "MerchandiseWagon": preload("res://scenes/ui/panels/merchandise_panel.tscn"),
+    "TenderWagon":      preload("res://scenes/ui/panels/tender_panel.tscn"),
+    "LocomotiveWagon":  preload("res://scenes/ui/panels/locomotive_panel.tscn"),
+}
+
+var _current_wagon_id: int = -1
 
 func setup(params: Dictionary) -> void:
     var wagon_id: int = params.get("wagon_id", -1)
     if wagon_id < 0:
         return
 
+    _current_wagon_id = wagon_id
     var wagon_data: Dictionary = GameState.get_player_train().wagons[wagon_id]
     var wagon_type: String = wagon_data.get("type", "")
 
-    # Set the portrait for this wagon type
+    # Update wagon portrait
     portrait.texture = PORTRAITS.get(wagon_type, null)
 
-    # Populate the content area based on wagon type
+    # Swap in the right content panel
     _clear_content()
-    if wagon_type == "BarracksWagon":
-        _populate_barracks(wagon_data)
+    var panel_scene: PackedScene = PANELS.get(wagon_type, null)
+    if panel_scene:
+        var panel = panel_scene.instantiate()
+        content_container.add_child(panel)
+        panel.setup(wagon_data, wagon_id, wagon_manager)
 
 func _clear_content() -> void:
     for child in content_container.get_children():
         child.queue_free()
-
-func _populate_barracks(wagon_data: Dictionary) -> void:
-    var unit_ids: Array = wagon_data.get("unit_ids", [])
-    for unit_id in unit_ids:
-        var unit_data: Dictionary = GameState.get_unit(unit_id)
-        if unit_data.is_empty():
-            continue
-        _add_unit_slot(unit_data)
-
-func _add_unit_slot(unit_data: Dictionary) -> void:
-    var unit_id: String  = unit_data.get("id", "")
-    var unit_type: String = unit_data.get("type", "")
-
-    var btn := Button.new()
-    btn.custom_minimum_size = Vector2(40, 40)
-    btn.tooltip_text = "HP: %s/%s  XP: %s" % [
-        unit_data.get("hp", "?"),
-        unit_data.get("max_hp", "?"),
-        unit_data.get("experience", 0)
-    ]
-
-    var portrait_rect := TextureRect.new()
-    portrait_rect.texture = SOLDIER_PORTRAIT
-    portrait_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-    portrait_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-    portrait_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
-    btn.add_child(portrait_rect)
-
-    btn.pressed.connect(func(): unit_deploy_requested.emit(unit_id, unit_type))
-    content_container.add_child(btn)

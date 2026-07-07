@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dgb3xo647s0qq"]
+
+[ext_resource type="Script" uid="uid://b3jh3lxc1pwso" path="res://scripts/ui/wagon_panels/merchandise_panel.gd" id="1_mpscr"]
+
+[node name="MerchandisePanel" type="HBoxContainer" unique_id=160386618]
+offset_right = 65.0
+offset_bottom = 50.0
+script = ExtResource("1_mpscr")
+
+[node name="TitleLabel" type="Label" parent="." unique_id=1167953536]
+layout_mode = 2
+text = "Cargo"
+
+[node name="CargoLabel" type="Label" parent="." unique_id=1604040703]
+layout_mode = 2
+text = "—"
