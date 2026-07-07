@@ -17,12 +17,14 @@ const PORTRAITS: Dictionary = {
 # Default soldier portrait — swap per unit type when you have more assets
 const SOLDIER_PORTRAIT: Texture2D = preload("res://assets/sprites/soldier.png")
 
+var current_wagon_id: int = -1
+
 func setup(params: Dictionary) -> void:
-    var wagon_id: int = params.get("wagon_id", -1)
-    if wagon_id < 0:
+    current_wagon_id = params.get("wagon_id", -1)
+    if current_wagon_id < 0:
         return
 
-    var wagon_data: Dictionary = GameState.get_player_train().wagons[wagon_id]
+    var wagon_data: Dictionary = GameState.get_player_train().wagons[current_wagon_id]
     var wagon_type: String = wagon_data.get("type", "")
 
     # Set the portrait for this wagon type
@@ -46,7 +48,7 @@ func _populate_barracks(wagon_data: Dictionary) -> void:
         _add_unit_slot(unit_data)
 
 func _add_unit_slot(unit_data: Dictionary) -> void:
-    var unit_id: String  = unit_data.get("id", "")
+    var unit_id: String = unit_data.get("id", "")
     var unit_type: String = unit_data.get("type", "")
 
     var btn := Button.new()
