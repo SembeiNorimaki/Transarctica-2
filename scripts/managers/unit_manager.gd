@@ -59,18 +59,18 @@ func _wire_signals() -> void:
 
 #region unit spawning
 func spawn_unit(tile_pos: Vector2i, unit_type_: String, owner_id: String) -> Unit:
-    var unit_info = UnitTypes.TYPES["unit_xcom"]
+    print("UnitManager: Spawning unit of type %s" % unit_type_)
     var team = owner_id
-    var footprint = unit_info.footprint
+    var footprint = UnitDatabase.get_footprint(unit_type_)
 
     print("[UnitManager] spawn_unit called: type=%s  owner=%s  tile=%s" % [unit_type_, owner_id, tile_pos])
     var id = "u%s%s" % [team[0], next_unit_id[team]] # Player unit with id=3 -> uP3
     next_unit_id[team] += 1
     
-    var unit = unit_info.scene.instantiate()
+    var unit = UnitDatabase.get_scene(unit_type_).instantiate()
     
     unit.call_deferred("set_soldier_type", unit_type_)
-    unit.call_deferred("set_weapon_type", "TacticalSniperRifle")
+    unit.call_deferred("set_weapon_type", "SniperRifle")
     #unit.call_deferred("set_weapon_type", "AK47")
 
     # Dependency injection

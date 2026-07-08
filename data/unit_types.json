@@ -1,0 +1,44 @@
+{
+    "elite_soldier": {
+        "atlas_file": "res://assets/sprites/ELITE_SOLDIER.png",
+        "atlas_placeholder_x": 0,
+        "view_range": 8,
+        "view_angle": 90,
+        "footprint": "1x1"
+    },
+    "liquidator": {
+        "atlas_file": "res://assets/sprites/EXALT_LIQUIDATOR.png",
+        "atlas_placeholder_x": 1,
+        "view_range": 15,
+        "view_angle": 180,
+        "footprint": "1x1"
+    },
+    "pioneer": {
+        "atlas_file": "res://assets/sprites/ZSRR_PIONEER.png",
+        "atlas_placeholder_x": 2,
+        "view_range": 15,
+        "view_angle": 180,
+        "footprint": "1x1"
+    },
+    "redops": {
+        "atlas_file": "res://assets/sprites/ZSRR_RED_OPS_MALE.png",
+        "atlas_placeholder_x": 3,
+        "view_range": 15,
+        "view_angle": 180,
+        "footprint": "1x1"
+    },
+    "swat": {
+        "atlas_file": "res://assets/sprites/SWAT.png",
+        "atlas_placeholder_x": 4,
+        "view_range": 15,
+        "view_angle": 180,
+        "footprint": "1x1"
+    },
+    "mercenary": {
+        "atlas_file": "res://assets/sprites/SYNDICATE_MERC_CAPTAIN.png",
+        "atlas_placeholder_x": 5,
+        "view_range": 15,
+        "view_angle": 180,
+        "footprint": "1x1"
+    }
+}

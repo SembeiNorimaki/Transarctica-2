@@ -12,6 +12,28 @@ const FOOTPRINTS = {
     ]
 }
 
+
+const XCOM_TYPES = {
+    "liquidator": {
+        "atlas_file": "res://assets/sprites/ELITE_SOLDIER.png"
+    },
+    "elite_soldier": {
+        "atlas_file": "res://assets/sprites/EXALT_LIQUIDATOR.png"
+    },
+    "pioneer": {
+        "atlas_file": "res://assets/sprites/ZSRR_PIONEER.png"
+    },
+    "redops": {
+        "atlas_file": "res://assets/sprites/ZSRR_RED_OPS_MALE.png"
+    },
+    "swat": {
+        "atlas_file": "res://assets/sprites/SWAT.png"
+    },
+    "mercenary": {
+        "atlas_file": "res://assets/sprites/SYNDICATE_MERC_CAPTAIN.png"
+    }
+}
+
 const TYPES = {
     "unit_xcom": {
         "scene": preload("res://scenes/entities/units/unit_xcom2.tscn"),

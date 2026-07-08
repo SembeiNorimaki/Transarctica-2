@@ -345,8 +345,8 @@ func _spawn_units(units_tilemap: TileMapLayer) -> void:
     for tile in units_tilemap.get_used_cells():
         var atlas_coords = units_tilemap.get_cell_atlas_coords(tile)
         var source_id = units_tilemap.get_cell_source_id(tile)
-        var unit_type = UnitTypes.get_unit_type_from_atlas_coords(atlas_coords)
-        var owner_id = UnitTypes.get_owner_id_from_atlas_coords(atlas_coords)
+        var unit_type = UnitDatabase.get_unit_type_from_atlas_coords(atlas_coords)
+        var owner_id = UnitDatabase.get_owner_id_from_atlas_coords(atlas_coords)
         unit_manager.spawn_unit(tile, unit_type, owner_id)
 
         # Remove the placeholder tile

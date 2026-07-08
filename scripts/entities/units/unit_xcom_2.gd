@@ -54,31 +54,25 @@ func toggle_crouch():
     play_animation(get_current_action(), orientation)
 
 func set_weapon_type(id: String):
-    var frames_dict = SoldierAtlasLoader.get_weapon_type(id)
+    var frames_dict = WeaponAtlasLoader.get_weapon_type(id)
     weapon_sprite.sprite_frames = frames_dict["weapon"]
     #print("Weapon: %s" % weapon.sprite_frames.get_animation_names())
 
-func set_soldier_type(id: String):
-    #print("Setting soldier type to %s" % id)
-    var frames_dict = SoldierAtlasLoader.get_soldier_type(id)
-    #print("FramesDict:", frames_dict["dead_part"])
+
+# Sets the unit to a specific type: eg: liquidator, pioneer, etc.
+func set_soldier_type(unit_type: String):
+    var frames_dict = SoldierAtlasLoader.get_unit_type(unit_type)
     torso_sprite.sprite_frames = frames_dict["torso"]
     legs_sprite.sprite_frames = frames_dict["legs"]
     left_arm_sprite.sprite_frames = frames_dict["left_arm"]
     right_arm_sprite.sprite_frames = frames_dict["right_arm"]
     dead_part_sprite.sprite_frames = frames_dict["dead_part"]
 
-    var animation_name = "%s_%s" % ["IdleState", orientation]
+    # TODO: Should probably not be here
     play_animation("IdleState", orientation)
-
-    #print("Torso: %s" % torso.sprite_frames.get_animation_names())
-    #print("Legs: %s" % legs.sprite_frames.get_animation_names())
-    #print("Left arm: %s" % left_arm.sprite_frames.get_animation_names())
-    #print("Right arm: %s" % right_arm.sprite_frames.get_animation_names())
 
 # Set orientation calls play animation
 func set_orientation(new_orientation: String):
-    # print("Setting orientation to %s" % new_orientation)
     orientation = new_orientation
     # set the part z-indexes in the correct order
     for i in range(5):
@@ -91,10 +85,8 @@ func set_orientation(new_orientation: String):
 
 func play_animation(state_: String, orientation_: String):
     if state_ == "DeadState":
-        # print("playing animation dead, ", dead_part_sprite)
         dead_part_sprite.play("DeadState_default")
         return
-
 
     var animation_name = "%s_%s" % [state_, orientation_]
     

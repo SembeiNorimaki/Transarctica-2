@@ -1,0 +1,14 @@
+{
+    "AK47": {
+        "atlas_file": "res://assets/sprites/weapons/handob_AK47.png",
+        "damage": 10,
+        "accuracy": 80,
+        "range": 5
+    },
+    "SniperRifle": {
+        "atlas_file": "res://assets/sprites/weapons/handob_SniperRifle.png",
+        "damage": 20,
+        "accuracy": 90,
+        "range": 10
+    }
+}
