@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://byvgppfj2rovm"]
+
+[ext_resource type="Script" uid="uid://bcw8i66pistdi" path="res://data/database/wall_database.gd" id="1_xyc7n"]
+
+[node name="WallDatabase" type="Node" unique_id=810881824]
+script = ExtResource("1_xyc7n")

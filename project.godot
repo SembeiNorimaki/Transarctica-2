@@ -32,6 +32,7 @@ Assistant="*res://autoload/assistant_ui.tscn"
 UnitDatabase="*uid://bm2kbkrs6tgic"
 WeaponDatabase="*uid://ubpgckkscx8i"
 FootprintDatabase="*uid://debgebqas8afs"
+WallDatabase="*uid://byvgppfj2rovm"
 
 [display]
 

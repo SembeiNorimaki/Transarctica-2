@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bi3jy3gh5rmgd"]
+
+[ext_resource type="Script" uid="uid://cyik5o370gh8s" path="res://scripts/entities/walls/wall.gd" id="1_aj05e"]
+[ext_resource type="Texture2D" uid="uid://blv5q8lr7syuw" path="res://assets/tilesets/walls/Walls_Full.png" id="2_y3ndi"]
+[ext_resource type="PackedScene" uid="uid://b6oluegp0dk6m" path="res://scenes/components/health_component.tscn" id="3_eaihm"]
+
+[node name="WallFull" type="Node2D" unique_id=2129869029]
+script = ExtResource("1_aj05e")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=973046159]
+texture = ExtResource("2_y3ndi")
+hframes = 10
+
+[node name="HealthComponent" parent="." unique_id=1467030158 instance=ExtResource("3_eaihm")]

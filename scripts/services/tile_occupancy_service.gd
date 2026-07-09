@@ -83,7 +83,7 @@ func get_resources(tile: Vector2i) -> Array:
 func get_walls(tile: Vector2i) -> Array:
     var walls = []
     for entity in get_entities(tile):
-        if entity is Wall:
+        if entity is WallFull:
             walls.append(entity)
     return walls
 

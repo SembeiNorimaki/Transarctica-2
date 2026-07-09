@@ -1,17 +1,14 @@
 [gd_scene format=3 uid="uid://coher4ttxgyuj"]
 
-[ext_resource type="Texture2D" uid="uid://coekvdlx482ny" path="res://assets/tilesets/URBAN.PNG" id="1_h351l"]
+[ext_resource type="Texture2D" uid="uid://dmd4cjhth1n7p" path="res://assets/tilesets/walls/Walls_N.png" id="2_63moa"]
 [ext_resource type="Script" uid="uid://ck0tkkbtrddba" path="res://scripts/entities/walls/wall_edge.gd" id="2_fr4sv"]
 [ext_resource type="PackedScene" uid="uid://b6oluegp0dk6m" path="res://scenes/components/health_component.tscn" id="3_c1rku"]
 
-[node name="WallEdge" type="Node2D" unique_id=1933741372]
+[node name="WallLeft" type="Node2D" unique_id=1933741372]
 script = ExtResource("2_fr4sv")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1839077360]
-position = Vector2(0, -26)
-scale = Vector2(2, 2)
-texture = ExtResource("1_h351l")
-hframes = 8
-vframes = 15
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1372629159]
+texture = ExtResource("2_63moa")
+hframes = 10
 
 [node name="HealthComponent" parent="." unique_id=1467030158 instance=ExtResource("3_c1rku")]
