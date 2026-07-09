@@ -32,11 +32,14 @@ tile_map_data = PackedByteArray("AAAVAAEAAgACAAEAAAARAAEAAgADAAEAAAA=")
 [node name="Pods" parent="." index="4" unique_id=153022531]
 tile_map_data = PackedByteArray("AAAKAAQAAQAAAAAAAAALAAMAAQAAAAEAAAALAAUAAQAAAAEAAAA=")
 
-[node name="Right" parent="Walls" parent_id_path=PackedInt32Array(1842706946) index="1" unique_id=1484547573]
-tile_map_data = PackedByteArray("AAAeAAAAAAAAAAAAAAAbAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAfAAAAAAAAAAAAAAA=")
+[node name="Walls" parent="." index="5" unique_id=1842706946]
+y_sort_enabled = true
 
-[node name="Left" parent="Walls" parent_id_path=PackedInt32Array(1842706946) index="2" unique_id=638782247]
-tile_map_data = PackedByteArray("AAAZAAMAAAADAAAAAAAZAAQAAAADAAAAAAAZAAIAAAADAAAAAAAZAAEAAAABAAAAAAAZAAUAAAABAAAAAAA=")
+[node name="Right" parent="Walls" index="1" unique_id=1484547573]
+tile_map_data = PackedByteArray("AAAZAAYAAAAAAAAAAAAaAAYAAAAAAAAAAAAZAAAAAAAAAAAAAAA=")
+
+[node name="Left" parent="Walls" index="2" unique_id=638782247]
+tile_map_data = PackedByteArray("AAAZAAMAAAADAAAAAAAZAAQAAAADAAAAAAAZAAIAAAADAAAAAAAZAAEAAAABAAAAAAAZAAUAAAABAAAAAAAZAAAAAAABAAAAAAA=")
 tile_set = SubResource("TileSet_oin7f")
 
 [node name="PatrolPoints" parent="." index="6" unique_id=1822908890]

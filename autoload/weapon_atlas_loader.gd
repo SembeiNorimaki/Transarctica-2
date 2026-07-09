@@ -1,41 +1,17 @@
 extends Node
+class_name WeaponAtlasLoader
 
 const WEAPON_ATLAS_LAYOUT = preload("res://data/weaponXcomLayout.gd")
 
-var weapon_cache = {}
-var weapon_info_cache = {}
-
-
-func get_weapon_type(id: String):
-    return weapon_cache[id]
-
-
-func get_weapon_info(id: String) -> Dictionary:
-    return weapon_info_cache.get(id, {})
-
-
-func _ready():
-    _load_weapons()
-
-func _load_weapons():
-    var file = FileAccess.open("res://data/weapon_types.json", FileAccess.READ)
-    var data = JSON.parse_string(file.get_as_text())
-    for weapon_name in data.keys():
-        var w_data = data[weapon_name]
-        var atlas = load(w_data.atlas_file)
-        _load_weapon_type(weapon_name, atlas)
-
-func _load_weapon_type(id: String, atlas: Texture2D):
-    print("Load weapon type %s" % id)
-    if weapon_cache.has(id):
-        return
+func load_weapon_type(id: String, atlas: Texture2D) -> Dictionary:
     var parts := {
         "weapon": SpriteFrames.new()
     }
+
     for part in parts.keys():
         _build_weapon_frames(parts[part], atlas, part)
 
-    weapon_cache[id] = parts
+    return parts
 
 func _build_weapon_frames(frames: SpriteFrames, atlas: Texture2D, part: String):
     var layout = WEAPON_ATLAS_LAYOUT.atlas[part]

@@ -25,6 +25,7 @@
 [ext_resource type="Script" uid="uid://d2ktl7ghvdn82" path="res://scripts/services/edge_occupancy_service.gd" id="14_0gh8j"]
 [ext_resource type="PackedScene" uid="uid://cbxffx4parq4x" path="res://scenes/services/grid_service.tscn" id="15_5cjt0"]
 [ext_resource type="Script" uid="uid://f5sk7dbtjeks" path="res://scripts/overlays/paths_overlay.gd" id="15_b5i4r"]
+[ext_resource type="Script" uid="uid://b8ux68l1iexu3" path="res://scripts/managers/projectile_manager.gd" id="15_eg051"]
 [ext_resource type="PackedScene" uid="uid://w8jrafekm730" path="res://scenes/services/tile_occupancy_service.tscn" id="16_4fugr"]
 [ext_resource type="Script" uid="uid://dxr5vptb6cbh" path="res://scripts/services/los_service.gd" id="16_cv4ch"]
 [ext_resource type="Script" uid="uid://dlyrmrlwsmr6x" path="res://scripts/services/weapon_service.gd" id="17_0wpcq"]
@@ -95,6 +96,9 @@ script = ExtResource("11_5cjt0")
 
 [node name="PodAIManager" type="Node" parent="Managers" unique_id=1335145418]
 script = ExtResource("13_codwp")
+
+[node name="ProjectileManager" type="Node" parent="Managers" unique_id=834472061]
+script = ExtResource("15_eg051")
 
 [node name="Controllers" type="Node" parent="." unique_id=2045951238]
 

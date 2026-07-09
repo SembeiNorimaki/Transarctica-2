@@ -53,20 +53,22 @@ func toggle_crouch():
     is_crouching = not is_crouching
     play_animation(get_current_action(), orientation)
 
-func set_weapon_type(id: String):
-    var frames_dict = WeaponAtlasLoader.get_weapon_type(id)
-    weapon_sprite.sprite_frames = frames_dict["weapon"]
-    #print("Weapon: %s" % weapon.sprite_frames.get_animation_names())
-
+func set_weapon_type(weapon_type: String):
+    var parts = WeaponDatabase.get_weapon_data(weapon_type).parts
+    weapon_sprite.sprite_frames = parts["weapon"]
+    play_animation("IdleState", orientation)
 
 # Sets the unit to a specific type: eg: liquidator, pioneer, etc.
 func set_soldier_type(unit_type: String):
-    var frames_dict = SoldierAtlasLoader.get_unit_type(unit_type)
-    torso_sprite.sprite_frames = frames_dict["torso"]
-    legs_sprite.sprite_frames = frames_dict["legs"]
-    left_arm_sprite.sprite_frames = frames_dict["left_arm"]
-    right_arm_sprite.sprite_frames = frames_dict["right_arm"]
-    dead_part_sprite.sprite_frames = frames_dict["dead_part"]
+    view_range = UnitDatabase.get_unit_data(unit_type).view_range
+    view_angle = UnitDatabase.get_unit_data(unit_type).view_angle
+
+    var parts = UnitDatabase.get_unit_data(unit_type).parts
+    torso_sprite.sprite_frames = parts["torso"]
+    legs_sprite.sprite_frames = parts["legs"]
+    left_arm_sprite.sprite_frames = parts["left_arm"]
+    right_arm_sprite.sprite_frames = parts["right_arm"]
+    dead_part_sprite.sprite_frames = parts["dead_part"]
 
     # TODO: Should probably not be here
     play_animation("IdleState", orientation)

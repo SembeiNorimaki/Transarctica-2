@@ -29,6 +29,8 @@ GameState="*uid://ccrkd2eqch3c3"
 QuestManager="*res://autoload/quest_manager.tscn"
 AudioService="*res://autoload/audio_service.tscn"
 Assistant="*res://autoload/assistant_ui.tscn"
+UnitDatabase="*uid://bm2kbkrs6tgic"
+WeaponDatabase="*uid://ubpgckkscx8i"
 
 [display]
 

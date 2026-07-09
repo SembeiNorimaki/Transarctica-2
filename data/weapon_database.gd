@@ -1,7 +1,8 @@
 extends Node
-class_name WeaponDatabase
 
 var weapon_cache = {}
+
+var weapon_atlas_loader = WeaponAtlasLoader.new()
 
 #region API methods
 func get_weapon_data(id: String):

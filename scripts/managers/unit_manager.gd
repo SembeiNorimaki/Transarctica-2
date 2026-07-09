@@ -48,6 +48,18 @@ signal unit_died(unit)
 
 #signal unit_action_finished(unit)
 
+const FOOTPRINTS = {
+    "1x1": [
+        Vector2i(0, 0)
+    ],
+    "2x2": [
+        Vector2i(0, 0),
+        Vector2i(0, 1),
+        Vector2i(1, 0),
+        Vector2i(1, 1)
+    ]
+}
+
 func _ready() -> void:
     pass
 
@@ -89,7 +101,7 @@ func spawn_unit(tile_pos: Vector2i, unit_type_: String, owner_id: String) -> Uni
     get_node("../../Containers/Units").add_child(unit)
 
     # Register in occupancy
-    for offset in UnitTypes.FOOTPRINTS[footprint]:
+    for offset in FOOTPRINTS[footprint]:
         tile_occupancy_service.register(tile_pos + offset, unit)
 
     # Register in units_to_tile

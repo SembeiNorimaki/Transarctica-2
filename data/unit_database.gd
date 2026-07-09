@@ -1,7 +1,10 @@
 extends Node
-class_name UnitDatabase
+
 
 var unit_cache = {}
+
+var unit_atlas_loader = UnitAtlasLoader.new()
+var unit_scene = preload("res://scenes/entities/units/unit_xcom2.tscn")
 
 #region API methods
 func get_unit_data(id: String):
@@ -19,10 +22,11 @@ func get_owner_id_from_atlas_coords(atlas_coords):
     return "Enemy"
 
 func get_footprint(unit_type_: String):
-    return get(unit_cache[unit_type_].footprint, null)
+    return unit_cache[unit_type_].footprint
 
 func get_scene(unit_type_: String):
-    pass
+    return unit_scene
+    #unit_cache[unit_type_].scene_file
     
 #endregion
 
@@ -38,7 +42,7 @@ func _load_units():
         unit_cache[unit_name] = u_data
 
         var atlas = load(u_data.atlas_file)
-        var parts = soldier_atlas_loader.load_unit_type(unit_name, atlas)
-        unit_cache[unit_name].parts = parts
+        var parts = unit_atlas_loader.load_unit_type(unit_name, atlas)
+        print("atlas: ", atlas, "parts: ", parts)
 
-        # needs also:   scene and footprint
+        unit_cache[unit_name].parts = parts
