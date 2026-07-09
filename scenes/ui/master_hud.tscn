@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://boyrh8km2fvhn"]
 
-[ext_resource type="Script" uid="uid://m1bnjh6hvfnd" path="res://scripts/ui/master_hud.gd" id="1_jx5eh"]
+[ext_resource type="Script" uid="uid://m1bnjh6hvfnd" path="res://scripts/ui/huds/master_hud.gd" id="1_jx5eh"]
 [ext_resource type="PackedScene" uid="uid://dmpx52ivxd6by" path="res://scenes/ui/unit_hud.tscn" id="2_sqtu0"]
 [ext_resource type="PackedScene" uid="uid://f66qwbf4mlhf" path="res://scenes/ui/wagon_hud.tscn" id="3_8os72"]
 [ext_resource type="PackedScene" uid="uid://dn7qpd5tgtte0" path="res://scenes/ui/empty_hud.tscn" id="4_a8llo"]

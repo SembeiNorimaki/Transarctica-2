@@ -7,6 +7,7 @@ extends Unit
 @onready var weapon_sprite: AnimatedSprite2D = $Parts/Weapon
 @onready var dead_part_sprite: AnimatedSprite2D = $Parts/Dead
 
+var unit_type := "" # pioneer, redops....
 
 @onready var render_order = {
     "N": [weapon_sprite, left_arm_sprite, legs_sprite, torso_sprite, right_arm_sprite],
@@ -53,13 +54,16 @@ func toggle_crouch():
     is_crouching = not is_crouching
     play_animation(get_current_action(), orientation)
 
+
 func set_weapon_type(weapon_type: String):
+    weapon.set_type(weapon_type)
     var parts = WeaponDatabase.get_weapon_data(weapon_type).parts
     weapon_sprite.sprite_frames = parts["weapon"]
     play_animation("IdleState", orientation)
 
 # Sets the unit to a specific type: eg: liquidator, pioneer, etc.
-func set_soldier_type(unit_type: String):
+func set_soldier_type(unit_type_: String):
+    unit_type = unit_type_
     view_range = UnitDatabase.get_unit_data(unit_type).view_range
     view_angle = UnitDatabase.get_unit_data(unit_type).view_angle
 
@@ -73,6 +77,7 @@ func set_soldier_type(unit_type: String):
     # TODO: Should probably not be here
     play_animation("IdleState", orientation)
 
+#region orientation
 # Set orientation calls play animation
 func set_orientation(new_orientation: String):
     orientation = new_orientation
@@ -84,6 +89,16 @@ func set_orientation(new_orientation: String):
     play_animation(get_current_action(), new_orientation)
     unit_manager.on_unit_orientation_changed(self, new_orientation)
     queue_redraw()
+
+func turn_right(amount: int) -> void:
+    var new_ori = grid_service.turn_right(orientation, amount)
+    set_orientation(new_ori)
+
+func turn_left(amount: int) -> void:
+    var new_ori = grid_service.turn_left(orientation, amount)
+    set_orientation(new_ori)
+#endregion
+
 
 func play_animation(state_: String, orientation_: String):
     if state_ == "DeadState":

@@ -1,14 +1,20 @@
 {
     "AK47": {
         "atlas_file": "res://assets/sprites/weapons/handob_AK47.png",
+        "bigob_file": "res://assets/sprites/weapons/bigob_AK47.png",
         "damage": 10,
         "accuracy": 80,
-        "range": 5
+        "range": 50,
+        "ammo": 10,
+        "ap_cost": 20
     },
     "SniperRifle": {
         "atlas_file": "res://assets/sprites/weapons/handob_SniperRifle.png",
+        "bigob_file": "res://assets/sprites/weapons/bigob_PSG-1.png",
         "damage": 20,
         "accuracy": 90,
-        "range": 10
+        "range": 50,
+        "ammo": 3,
+        "ap_cost": 40
     }
 }

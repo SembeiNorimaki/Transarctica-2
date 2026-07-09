@@ -31,6 +31,7 @@ AudioService="*res://autoload/audio_service.tscn"
 Assistant="*res://autoload/assistant_ui.tscn"
 UnitDatabase="*uid://bm2kbkrs6tgic"
 WeaponDatabase="*uid://ubpgckkscx8i"
+FootprintDatabase="*uid://debgebqas8afs"
 
 [display]
 

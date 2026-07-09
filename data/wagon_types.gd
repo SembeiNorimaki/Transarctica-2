@@ -10,7 +10,8 @@ const TYPES = {
         "horizontal_size": Vector2i(256, 66),
         "stores": [],
         "default_cargo": "",
-        "capacity": 0
+        "capacity": 0,
+        "footprint": "wagon_large"
     },
     "BarracksWagon": {
         "horizontal_scene": preload("res://scenes/entities/wagons/barracks_wagon.tscn"),
@@ -22,7 +23,8 @@ const TYPES = {
         "navigation_size": Vector2i(78, 55),
         "stores": ["Soldiers"],
         "default_cargo": "Soldiers",
-        "capacity": 6
+        "capacity": 6,
+        "footprint": "wagon_small"
     },
     "CannonWagon": {
         "horizontal_scene": preload("res://scenes/entities/wagons/cannon_wagon.tscn"),
@@ -34,7 +36,8 @@ const TYPES = {
         "navigation_size": Vector2i(78, 55),
         "stores": ["Ammunition"],
         "default_cargo": "Ammunition",
-        "capacity": 20
+        "capacity": 20,
+        "footprint": "wagon_small"
     },
     "MerchandiseWagon": {
         "horizontal_scene": preload("res://scenes/entities/wagons/merchandise_wagon.tscn"),
@@ -46,7 +49,8 @@ const TYPES = {
         "navigation_size": Vector2i(78, 55),
         "stores": ["Crate"],
         "default_cargo": "Crate",
-        "capacity": 10
+        "capacity": 10,
+        "footprint": "wagon_small"
     },
     "TenderWagon": {
         "horizontal_scene": preload("res://scenes/entities/wagons/tender_wagon.tscn"),
@@ -58,7 +62,8 @@ const TYPES = {
         "navigation_size": Vector2i(78, 55),
         "stores": ["Coal"],
         "default_cargo": "Coal",
-        "capacity": 100
+        "capacity": 100,
+        "footprint": "wagon_small"
     },
     "GondolaWagon": {
         "horizontal_scene": preload("res://scenes/entities/wagons/gondola_wagon.tscn"),
@@ -70,7 +75,8 @@ const TYPES = {
         "navigation_size": Vector2i(78, 55),
         "stores": ["Iron", "Copper"],
         "default_cargo": "Iron",
-        "capacity": 60
+        "capacity": 60,
+        "footprint": "wagon_small"
     },
     "OpenWagon": {
         "horizontal_scene": preload("res://scenes/entities/wagons/open_wagon.tscn"),
@@ -82,7 +88,8 @@ const TYPES = {
         "navigation_size": Vector2i(78, 55),
         "stores": ["Wood", "IronRods"],
         "default_cargo": "Wood",
-        "capacity": 70
+        "capacity": 70,
+        "footprint": "wagon_small"
     },
 
     "ContainerWagon": {
@@ -94,13 +101,7 @@ const TYPES = {
         "horizontal_size": Vector2i(299, 33),
         "stores": ["Container"],
         "default_cargo": "Container",
-        "capacity": 4
+        "capacity": 4,
+        "footprint": "wagon_small"
     }
 }
-
-
-#func get_unit_type_from_atlas_coords(source_id: int, coords: Vector2i) -> String:
-#    return atlas_map[source_id][coords]
-
-#func get_owner_id_from_atlas_coords(coords: Vector2i) -> String:
-#    return atlas_x_to_team[coords.x]

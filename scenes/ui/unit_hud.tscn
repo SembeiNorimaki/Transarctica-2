@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dmpx52ivxd6by"]
 
-[ext_resource type="Script" uid="uid://bx4ikhhd0v6u5" path="res://scripts/ui/unit_hud.gd" id="1_m88i7"]
+[ext_resource type="Script" uid="uid://bx4ikhhd0v6u5" path="res://scripts/ui/huds/unit_hud.gd" id="1_m88i7"]
 [ext_resource type="Texture2D" uid="uid://bdluay8sb06y6" path="res://assets/sprites/elite.png" id="2_p8pfq"]
 [ext_resource type="Texture2D" uid="uid://b8m5ljdco7n2l" path="res://assets/sprites/weapons/arisaka.png" id="3_22bqf"]
 
@@ -32,6 +32,7 @@ grow_vertical = 2
 alignment = 1
 
 [node name="Portrait" type="TextureRect" parent="HBoxContainer" unique_id=1322957884]
+custom_minimum_size = Vector2(64, 80)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -51,7 +52,7 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer2" unique_id=1289603581]
+[node name="Weapon" type="TextureRect" parent="HBoxContainer2" unique_id=1289603581]
 layout_mode = 2
 texture = ExtResource("3_22bqf")
 

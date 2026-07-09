@@ -14,7 +14,11 @@ func enter(params = {}):
     selected_unit = params["selected_unit"]
     owner_node.selection_manager.select_unit(selected_unit)
     owner_node.camera_controller.center_at_tile(selected_unit.current_tile)
-    owner_node.master_hud.show_hud("UnitHUD")
+    var hud_params = {
+        "unit_type": selected_unit.unit_type,
+        "weapon_type": selected_unit.weapon.get_type()
+    }
+    owner_node.master_hud.show_hud("UnitHUD", hud_params)
     owner_node.unit_manager.update_vision(selected_unit)
 
 func exit(params = {}):

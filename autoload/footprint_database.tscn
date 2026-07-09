@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://debgebqas8afs"]
+
+[ext_resource type="Script" uid="uid://b00mjxjnx6yft" path="res://data/database/footprint_database.gd" id="1_iw47j"]
+
+[node name="FootprintDatabase" type="Node" unique_id=2074682378]
+script = ExtResource("1_iw47j")

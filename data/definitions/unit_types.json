@@ -3,41 +3,51 @@
         "atlas_file": "res://assets/sprites/ELITE_SOLDIER.png",
         "scene_file": "res://scenes/entities/units/unit_xcom2.tscn",
         "footprint": "1x1",
+        "default_weapon": "AK47",
         "atlas_placeholder_x": 0,
         "view_range": 8,
-        "view_angle": 90
+        "view_angle": 90,
+        "ap": 100
     },
     "liquidator": {
         "atlas_file": "res://assets/sprites/EXALT_LIQUIDATOR.png",
         "scene_file": "res://scenes/entities/units/unit_xcom2.tscn",
         "footprint": "1x1",
+        "default_weapon": "AK47",
         "atlas_placeholder_x": 1,
         "view_range": 15,
-        "view_angle": 180
+        "view_angle": 180,
+        "ap": 100
     },
     "pioneer": {
         "atlas_file": "res://assets/sprites/ZSRR_PIONEER.png",
         "scene_file": "res://scenes/entities/units/unit_xcom2.tscn",
         "footprint": "1x1",
+        "default_weapon": "AK47",
         "atlas_placeholder_x": 2,
         "view_range": 15,
-        "view_angle": 90
+        "view_angle": 90,
+        "ap": 100
     },
     "redops": {
         "atlas_file": "res://assets/sprites/ZSRR_RED_OPS_MALE.png",
         "scene_file": "res://scenes/entities/units/unit_xcom2.tscn",
         "footprint": "1x1",
+        "default_weapon": "AK47",
         "atlas_placeholder_x": 3,
         "view_range": 15,
-        "view_angle": 360
+        "view_angle": 360,
+        "ap": 100
     },
     "swat": {
         "atlas_file": "res://assets/sprites/SWAT.png",
         "scene_file": "res://scenes/entities/units/unit_xcom2.tscn",
         "footprint": "1x1",
+        "default_weapon": "AK47",
         "atlas_placeholder_x": 4,
         "view_range": 15,
-        "view_angle": 180
+        "view_angle": 180,
+        "ap": 100
     },
     "mercenary": {
         "atlas_file": "res://assets/sprites/SYNDICATE_MERC_CAPTAIN.png",
@@ -45,6 +55,7 @@
         "footprint": "1x1",
         "atlas_placeholder_x": 5,
         "view_range": 15,
-        "view_angle": 180
+        "view_angle": 180,
+        "ap": 100
     }
 }

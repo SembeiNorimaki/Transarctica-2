@@ -341,13 +341,22 @@ func _load_train():
     train_container.add_child(horizontal_train)
     print("Spawned horizontal train at tile: %s" % train_initial_tile)
 
+# spawns units from tilemap placeholders.
+# unit will carry the default weapon of its type
 func _spawn_units(units_tilemap: TileMapLayer) -> void:
     for tile in units_tilemap.get_used_cells():
         var atlas_coords = units_tilemap.get_cell_atlas_coords(tile)
         var source_id = units_tilemap.get_cell_source_id(tile)
         var unit_type = UnitDatabase.get_unit_type_from_atlas_coords(atlas_coords)
         var owner_id = UnitDatabase.get_owner_id_from_atlas_coords(atlas_coords)
-        unit_manager.spawn_unit(tile, unit_type, owner_id)
+        var aux = UnitDatabase.get_unit_data(unit_type)
+
+        var unit_info = {
+            "unit_type": unit_type,
+            "weapon_type": aux.default_weapon,
+            "owner_id": owner_id
+        }
+        unit_manager.spawn_unit(tile, unit_info)
 
         # Remove the placeholder tile
         units_tilemap.erase_cell(tile)
@@ -550,9 +559,9 @@ func on_bullet_hit(position: Vector2i, damage: int):
     print("Entities found in tile: ", entities_)
     if entities_.size() > 0:
         if entities_[0] is Unit:
-            unit_manager.apply_damage_to_unit(entities_[0], 10)
+            unit_manager.apply_damage_to_unit(entities_[0], damage)
         else:
-            wall_manager.apply_damage_to_wall(entities_[0], 10)
+            wall_manager.apply_damage_to_wall(entities_[0], damage)
 
 # called by combat_unit_aiming_state when entering/exit the state    
 func set_cursor(cursor_name: String) -> void:

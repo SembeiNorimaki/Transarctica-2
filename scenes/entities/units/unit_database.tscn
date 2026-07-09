@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://f8tk0m1cj5r8"]
 
-[ext_resource type="Script" uid="uid://dunlx57024etn" path="res://data/unit_database.gd" id="1_05mju"]
+[ext_resource type="Script" uid="uid://dunlx57024etn" path="res://data/database/unit_database.gd" id="1_05mju"]
 
 [node name="UnitDatabase" type="Node"]
 script = ExtResource("1_05mju")

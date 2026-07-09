@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://f66qwbf4mlhf"]
 
-[ext_resource type="Script" uid="uid://cdy0t6cee3sdb" path="res://scripts/ui/wagon_hud.gd" id="1_xapbt"]
+[ext_resource type="Script" uid="uid://cdy0t6cee3sdb" path="res://scripts/ui/huds/wagon_hud.gd" id="1_xapbt"]
 [ext_resource type="Texture2D" uid="uid://d1wihq5v4ewt3" path="res://assets/sprites/wagons/trade/merchandise_tr.png" id="2_hywjp"]
 
 [node name="WagonHUD" type="Control" unique_id=368405506]

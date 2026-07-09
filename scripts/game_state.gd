@@ -85,6 +85,24 @@ var _player_train_state = {
     ]
 }
 
+var _units_state: Dictionary = {
+    "u0": {
+        "id": "u0",
+        "type": "liquidator",
+        "hp": 100,
+        "max_hp": 100,
+        "experience": 0,
+        "weapon": "SniperRifle"
+    },
+    "u1": {
+        "id": "u1",
+        "type": "redops",
+        "hp": 100,
+        "max_hp": 100,
+        "experience": 0,
+        "weapon": "AK47"
+    }
+}
 
 # cities_state stores cities by name. To retrieve cities by location or id, this dictionaries provide a correspondence loc->name and id->name
 # in any case, to get cities data, use the API calls get_city_by_name, get_city_by_location, get_city_by_id
@@ -92,25 +110,26 @@ var _cities_by_location = {}
 var _cities_by_id = {}
 var _industries_by_location = {}
 var _industries_by_id = {}
-var _units_state: Dictionary = {}
+
 
 #region initialization
 func _ready() -> void:
     # print("Game state Ready")
-    load_initial_cities("cities_World2.json")
+    load_initial_cities("res://data/newgame/cities_World2.json")
     #load_initial_industries("industries.json")
-    load_initial_units("units.json")
-    load_initial_player_train("player_train.json")
+    load_initial_units("res://data/newgame/units.json")
+    load_initial_player_train("res://data/newgame/player_train.json")
     
     
     # print(_cities_state.keys())
 
+# Loads initial cities into _cities_state, _cities_by_location and _cities_by_id 
 func load_initial_cities(filename: String):
     _cities_state = {}
     _cities_by_location = {}
     _cities_by_id = {}
 
-    var file = FileAccess.open("res://data/%s" % filename, FileAccess.READ)
+    var file = FileAccess.open(filename, FileAccess.READ)
     var data = JSON.parse_string(file.get_as_text())
     for city_id in data.keys():
         var city_name = data[city_id].Name
@@ -119,12 +138,13 @@ func load_initial_cities(filename: String):
         _cities_by_id[int(city_id)] = city_name
         _cities_state[city_name] = data[city_id]
 
+# Loads initial industries into _industries_state, _industries_by_location and _industries_by_id 
 func load_initial_industries(filename: String):
     _industries_state = {}
     _industries_by_location = {}
     _industries_by_id = {}
 
-    var file = FileAccess.open("res://data/%s" % filename, FileAccess.READ)
+    var file = FileAccess.open(filename, FileAccess.READ)
     var data = JSON.parse_string(file.get_as_text())
     for industry_id in data.keys():
         var industry_name = data[industry_id].Name
@@ -136,16 +156,18 @@ func load_initial_industries(filename: String):
         
     state["industries"] = data
 
+# Loads initial player train into _player_train_state
 func load_initial_player_train(filename: String):
     _player_train_state = {}
 
-    var file = FileAccess.open("res://data/%s" % filename, FileAccess.READ)
+    var file = FileAccess.open(filename, FileAccess.READ)
     var train_data = JSON.parse_string(file.get_as_text())
     _player_train_state = train_data
 
+# Loads initial player train into _units_state
 func load_initial_units(filename: String) -> void:
     _units_state = {}
-    var file = FileAccess.open("res://data/%s" % filename, FileAccess.READ)
+    var file = FileAccess.open(filename, FileAccess.READ)
     if file == null:
         push_error("GameState: could not open %s" % filename)
         return

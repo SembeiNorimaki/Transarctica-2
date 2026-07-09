@@ -1,7 +1,7 @@
 extends Node
 class_name WeaponAtlasLoader
 
-const WEAPON_ATLAS_LAYOUT = preload("res://data/weaponXcomLayout.gd")
+const WEAPON_ATLAS_LAYOUT = preload("res://data/definitions/weaponXcomLayout.gd")
 
 func load_weapon_type(id: String, atlas: Texture2D) -> Dictionary:
     var parts := {

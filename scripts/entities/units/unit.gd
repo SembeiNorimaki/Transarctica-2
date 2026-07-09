@@ -66,14 +66,16 @@ func _wire_signals() -> void:
     ap_component.ap_exhausted.connect(_on_ap_exhausted)
 
 
-func initialize(id_: String, team_id_: String) -> void:
+func initialize(id_: String, tile_pos_: Vector2i, team_id_: String) -> void:
     set_id(id_)
-    id_label.text = id
     set_team(team_id_)
+    set_tile_pos(tile_pos_)
 
+#region setters
 func set_id(id_: String) -> void:
     if id == "":
         id = id_
+        id_label.text = id
     else:
         push_error("Unit already has an id")
 
@@ -83,10 +85,21 @@ func set_team(team_id_: String):
     if team_id == "enemy":
         sprite.modulate = Color.RED
 
+# given a tile_pos, sets current_tile and position
+func set_tile_pos(tile_pos_: Vector2i) -> void:
+    current_tile = tile_pos_
+    position = grid_service.tile_to_world(tile_pos_)
 
+# given a position_, sets current_tile and position
+func set_world_pos(pos_: Vector2i) -> void:
+    position = pos_
+    current_tile = grid_service.world_to_tile(pos_)
+
+# Virtual methods. Overriden by unitXcom2
 func set_soldier_type(_id: String):
     pass
-    
+#endregion
+
 func get_current_action():
     return action_sm.current_state.name
 
@@ -117,20 +130,13 @@ func set_state(state: String, params = {}) -> void:
     update_state_label(state)
 
 #region orientation
-func set_orientation(new_orientation: String):
+#func set_orientation(new_orientation: String):
     #print("Unit: Setting orientation to %s" % new_orientation)
-    orientation = new_orientation
-    sprite.set_animation(new_orientation)
-    unit_manager.on_unit_orientation_changed(self, new_orientation)
-    queue_redraw()
+    #orientation = new_orientation
+    #sprite.set_animation(new_orientation)
+    #unit_manager.on_unit_orientation_changed(self, new_orientation)
+    #queue_redraw()
 
-func turn_right(amount: int) -> void:
-    var new_ori = grid_service.turn_right(orientation, amount)
-    set_orientation(new_ori)
-
-func turn_left(amount: int) -> void:
-    var new_ori = grid_service.turn_left(orientation, amount)
-    set_orientation(new_ori)
 
 #endregion
 
@@ -173,16 +179,16 @@ func set_selected(selected: bool) -> void:
     sprite_selected.visible = selected
 
 
-func move_to_tile(tile: Vector2i):
-    #print("Unit %s instructed to move to tile %s" % [id, tile])
-    target_tile = tile
-    # calculate new orientation
-    #var delta = target_tile - current_tile
-    var new_ori = grid_service.get_orientation(current_tile, target_tile)
-    set_orientation(new_ori)
-    #set_state("MoveState", {"unit": self})
-    #
-    #set_process(true)
+# func move_to_tile(tile: Vector2i):
+#     #print("Unit %s instructed to move to tile %s" % [id, tile])
+#     target_tile = tile
+#     # calculate new orientation
+#     #var delta = target_tile - current_tile
+#     var new_ori = grid_service.get_orientation(current_tile, target_tile)
+#     set_orientation(new_ori)
+#     #set_state("MoveState", {"unit": self})
+#     #
+#     #set_process(true)
 
 
 func _on_unit_arrived_to_tile(tile: Vector2i):

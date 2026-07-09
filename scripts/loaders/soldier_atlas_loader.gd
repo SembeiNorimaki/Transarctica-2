@@ -1,7 +1,7 @@
 extends Node
 class_name UnitAtlasLoader
 
-const UNIT_ATLAS_LAYOUT = preload("res://data/unitXcomLayout.gd")
+const UNIT_ATLAS_LAYOUT = preload("res://data/definitions/unitXcomLayout.gd")
 
 func load_unit_type(id: String, atlas: Texture2D) -> Dictionary:
     print("load unit type: ", id, " with atlas: ", atlas)
@@ -36,3 +36,6 @@ func _build_unit_frames(frames: SpriteFrames, atlas: Texture2D, part: String):
                 subtex.atlas = atlas
                 subtex.region = region
                 frames.add_frame(animation_name, subtex)
+
+func _load_unit_portraits(atlas: Texture2D):
+    pass

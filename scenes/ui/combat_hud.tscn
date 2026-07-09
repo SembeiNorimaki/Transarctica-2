@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b8fisgbo673ps"]
 
 [ext_resource type="Texture2D" uid="uid://ykl6jubllwh3" path="res://assets/sprites/hud/frame.png" id="1_0ogqn"]
-[ext_resource type="Script" uid="uid://brg6wvbrycnxc" path="res://scripts/ui/combat_hud.gd" id="1_jg42h"]
+[ext_resource type="Script" uid="uid://brg6wvbrycnxc" path="res://scripts/ui/huds/combat_hud.gd" id="1_jg42h"]
 [ext_resource type="Texture2D" uid="uid://dnjwekb8cwvso" path="res://assets/sprites/hud/button_findengine.png" id="2_jg42h"]
 [ext_resource type="Texture2D" uid="uid://caiypx6q01mb" path="res://assets/sprites/hud/button_save.png" id="3_y6eve"]
 [ext_resource type="Texture2D" uid="uid://mxmlqi38duam" path="res://assets/sprites/hud/button_minimap.png" id="4_7lswf"]

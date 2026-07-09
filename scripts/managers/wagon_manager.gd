@@ -33,12 +33,14 @@ func request_unit_unloading(wagon_id: int, unit_id: String) -> void:
         push_warning("[WagonManager] No free deploy tile near wagon %s" % wagon_id)
         return
 
-    # Resolve unit type from GameState
     var unit_data: Dictionary = GameState.get_unit(unit_id)
-    var unit_type: String = unit_data.get("type", "unit_xcom")
 
-    # Spawn the unit on the grid
-    var spawned_unit := unit_manager.spawn_unit(deploy_tile, unit_type, "Player")
+    var unit_info = {
+        "unit_type": unit_data.unit_type,
+        "weapon_type": unit_data.weapon_type,
+        "owner_id": unit_data.owner_id
+    }
+    var spawned_unit := unit_manager.spawn_unit(deploy_tile, unit_info)
     spawned_unit.call_deferred("set_orientation", "NW")
 
     # Remove the soldier from the barracks wagon in GameState

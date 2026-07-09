@@ -48,17 +48,6 @@ signal unit_died(unit)
 
 #signal unit_action_finished(unit)
 
-const FOOTPRINTS = {
-    "1x1": [
-        Vector2i(0, 0)
-    ],
-    "2x2": [
-        Vector2i(0, 0),
-        Vector2i(0, 1),
-        Vector2i(1, 0),
-        Vector2i(1, 1)
-    ]
-}
 
 func _ready() -> void:
     pass
@@ -70,38 +59,40 @@ func _wire_signals() -> void:
     pass
 
 #region unit spawning
-func spawn_unit(tile_pos: Vector2i, unit_type_: String, owner_id: String) -> Unit:
-    print("UnitManager: Spawning unit of type %s" % unit_type_)
-    var team = owner_id
-    var footprint = UnitDatabase.get_footprint(unit_type_)
+#func spawn_unit(tile_pos: Vector2i, unit_type_: String, owner_id: String) -> Unit:
+func spawn_unit(tile_pos: Vector2i, unit_info: Dictionary) -> Unit:
+    # unit_info must have:
+    #   - unit_type: String = "liquidator"
+    #   - weapon_type: String = "AK47"
+    #   - owner_id: String = "Player"
+    # }
+    print("UnitManager: Spawning unit of type %s" % unit_info.unit_type)
 
-    print("[UnitManager] spawn_unit called: type=%s  owner=%s  tile=%s" % [unit_type_, owner_id, tile_pos])
-    var id = "u%s%s" % [team[0], next_unit_id[team]] # Player unit with id=3 -> uP3
-    next_unit_id[team] += 1
+    # TODO: Some units already have an id!
+    var id = "u%s%s" % [unit_info.owner_id[0], next_unit_id[unit_info.owner_id]] # Player unit with id=3 -> uP3
+    next_unit_id[unit_info.owner_id] += 1
     
-    var unit = UnitDatabase.get_scene(unit_type_).instantiate()
+    var unit = UnitDatabase.get_scene(unit_info.unit_type).instantiate()
     
-    unit.call_deferred("set_soldier_type", unit_type_)
-    unit.call_deferred("set_weapon_type", "SniperRifle")
-    #unit.call_deferred("set_weapon_type", "AK47")
-
     # Dependency injection
     unit.grid_service = grid_service
     unit.unit_manager = self
     unit.navigation_graph_service = navigation_graph_service
 
-    unit.call_deferred("initialize", id, team)
-    unit.position = grid_service.tile_to_world(tile_pos)
-    unit.current_tile = tile_pos
-
-    units[team].append(unit)
+    unit.call_deferred("set_soldier_type", unit_info.unit_type)
+    unit.call_deferred("set_weapon_type", unit_info.weapon_type)
+    unit.call_deferred("initialize", id, tile_pos, unit_info.owner_id)
+    
+    units[unit_info.owner_id].append(unit)
 
     
     # Add to scene tree
     get_node("../../Containers/Units").add_child(unit)
 
     # Register in occupancy
-    for offset in FOOTPRINTS[footprint]:
+    var footprint = UnitDatabase.get_footprint(unit_info.unit_type)
+    print("footprint: ", footprint)
+    for offset in FootprintDatabase.get_footprint(footprint):
         tile_occupancy_service.register(tile_pos + offset, unit)
 
     # Register in units_to_tile

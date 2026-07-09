@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bv0f62tp4rwkn"
-path="res://.godot/imported/nav_Locomotive.png-aa95efd78b8c2d2508b1e5fa5d51c56c.ctex"
+uid="uid://dpflknlj1yso3"
+path="res://.godot/imported/bigob_AK47.png-d293df3e23f292d42ab76a0a0f23e83e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/wagons/navigation/nav_Locomotive.png"
-dest_files=["res://.godot/imported/nav_Locomotive.png-aa95efd78b8c2d2508b1e5fa5d51c56c.ctex"]
+source_file="res://assets/sprites/weapons/bigob_AK47.png"
+dest_files=["res://.godot/imported/bigob_AK47.png-d293df3e23f292d42ab76a0a0f23e83e.ctex"]
 
 [params]
 
