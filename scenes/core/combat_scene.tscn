@@ -165,7 +165,6 @@ y_sort_enabled = true
 [node name="TrainInventory" parent="Containers" unique_id=868915929 instance=ExtResource("26_g7udr")]
 
 [node name="Overlays" type="Node2D" parent="." unique_id=1455232822]
-visible = false
 
 [node name="UnitsOverlay" type="Node2D" parent="Overlays" unique_id=2028059611]
 script = ExtResource("10_3c7v3")

@@ -5,13 +5,15 @@ const weapon_definitions_file = "res://data/definitions/weapon_types.json"
 # this is an example of weapon_cache structure.
 # the dict is cleared at _ready()
 var weapon_cache = {
-    "parts": {},
-    "bigob": null, # image
-    "damage": 10,
-    "accuracy": 80,
-    "range": 5,
-    "ammo": 3,
-    "ap_cost": 20
+    "AK47": {
+        "parts": {},
+        "bigob": null, # image
+        "damage": 10,
+        "accuracy": 80,
+        "range": 5,
+        "ammo": 3,
+        "ap_cost": 20
+    }
 }
 
 var weapon_atlas_loader = WeaponAtlasLoader.new()

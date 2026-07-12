@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://coher4ttxgyuj"]
 
-[ext_resource type="Texture2D" uid="uid://dmd4cjhth1n7p" path="res://assets/tilesets/walls/Walls_N.png" id="2_63moa"]
+[ext_resource type="Texture2D" uid="uid://d4kag0ti8hagm" path="res://assets/tilesets/walls/WallsL.png" id="2_63moa"]
 [ext_resource type="Script" uid="uid://ck0tkkbtrddba" path="res://scripts/entities/walls/wall_edge.gd" id="2_fr4sv"]
 [ext_resource type="PackedScene" uid="uid://b6oluegp0dk6m" path="res://scenes/components/health_component.tscn" id="3_c1rku"]
 
@@ -9,6 +9,6 @@ script = ExtResource("2_fr4sv")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1372629159]
 texture = ExtResource("2_63moa")
-hframes = 10
+offset = Vector2(0, -24)
 
 [node name="HealthComponent" parent="." unique_id=1467030158 instance=ExtResource("3_c1rku")]

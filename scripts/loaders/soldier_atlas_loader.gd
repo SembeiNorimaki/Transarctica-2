@@ -4,7 +4,7 @@ class_name UnitAtlasLoader
 const UNIT_ATLAS_LAYOUT = preload("res://data/definitions/unitXcomLayout.gd")
 
 func load_unit_type(id: String, atlas: Texture2D) -> Dictionary:
-    print("load unit type: ", id, " with atlas: ", atlas)
+    #print("load unit type: ", id, " with atlas: ", atlas)
     var parts := {
         "legs": SpriteFrames.new(),
         "torso": SpriteFrames.new(),

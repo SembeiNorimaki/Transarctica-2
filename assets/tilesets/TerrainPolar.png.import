@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cef5rkdy7c3vt"
-path="res://.godot/imported/Walls_E.png-44472dbc3b33e4f3a31f62c797a74f62.ctex"
+uid="uid://bkli222frovkw"
+path="res://.godot/imported/TerrainPolar.png-8711368a13251107a5985d3b72348916.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tilesets/walls/Walls_E.png"
-dest_files=["res://.godot/imported/Walls_E.png-44472dbc3b33e4f3a31f62c797a74f62.ctex"]
+source_file="res://assets/tilesets/TerrainPolar.png"
+dest_files=["res://.godot/imported/TerrainPolar.png-8711368a13251107a5985d3b72348916.ctex"]
 
 [params]
 

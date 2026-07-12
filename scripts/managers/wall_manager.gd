@@ -40,13 +40,14 @@ func spawn_full_wall(tile_pos: Vector2i, atlas_coords: Vector2i) -> void:
 
 func spawn_left_wall(tile_pos: Vector2i, atlas_coords: Vector2i) -> void:
     var wall: WallEdge = WallDatabase.WALL_LEFT_SCENE.instantiate()
+    var wall_name = WallDatabase.get_wall_name_from_coords(atlas_coords)
 
     # convert tile -> world
     var world_pos = grid_service.tile_to_world(tile_pos)
     wall.position = world_pos
     wall.current_tile = tile_pos
-    var frame = atlas_coords.x
-    wall.call_deferred("set_frame", frame)
+
+    wall.call_deferred("set_type", wall_name, "left")
 
     # Add to scene tree
     get_node("../../Containers/Walls").add_child(wall)
@@ -62,13 +63,14 @@ func spawn_left_wall(tile_pos: Vector2i, atlas_coords: Vector2i) -> void:
 
 func spawn_right_wall(tile_pos: Vector2i, atlas_coords: Vector2i) -> void:
     var wall: WallEdge = WallDatabase.WALL_RIGHT_SCENE.instantiate()
+    var wall_name = WallDatabase.get_wall_name_from_coords(atlas_coords)
 
     # convert tile -> world
     var world_pos = grid_service.tile_to_world(tile_pos)
     wall.position = world_pos
     wall.current_tile = tile_pos
-    var frame = atlas_coords.x
-    wall.call_deferred("set_frame", frame)
+    
+    wall.call_deferred("set_type", wall_name, "right")
 
     # Add to scene tree
     get_node("../../Containers/Walls").add_child(wall)

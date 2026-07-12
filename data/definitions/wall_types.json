@@ -1,0 +1,38 @@
+{
+    "wall1": {
+        "atlas_coords": {
+            "ok": [0, 0],
+            "destroyed": [2, 0]
+        },
+        "is_destructible": true,
+        "wall_type": "Normal",
+        "hp": 10
+    },
+    "window1": {
+        "atlas_coords": {
+            "ok": [1, 0],
+            "destroyed": [2, 0]
+        },
+        "is_destructible": true,
+        "wall_type": "Window",
+        "hp": 10
+    },
+    "wall2": {
+        "atlas_coords": {
+            "ok": [3, 0],
+            "destroyed": [5, 0]
+        },
+        "is_destructible": true,
+        "wall_type": "Normal",
+        "hp": 10
+    },
+    "window2": {
+        "atlas_coords": {
+            "ok": [4, 0],
+            "destroyed": [5, 0]
+        },
+        "is_destructible": true,
+        "wall_type": "Window",
+        "hp": 10
+    }
+}
