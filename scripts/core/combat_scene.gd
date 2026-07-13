@@ -263,6 +263,8 @@ func _load_map(map_file: String) -> void:
     print("Map size %s" % grid_service.map_size)
 
     # Spawn units, buildings, walls, and roads
+
+    _randomize_terrain(new_map.get_node("Terrain"))
     
     _spawn_units(new_map.get_node("Units"))
     _spawn_buildings(new_map.get_node("Buildings"))
@@ -281,6 +283,45 @@ func _load_map(map_file: String) -> void:
     # Compute navigation_graph and covers
     navigation_graph_service.build_graph(map_root.get_node("Level1").get_node("Terrain"))
     cover_service.build_cover_map(navigation_graph_service.nodes.keys())
+
+
+func _randomize_terrain(terrain_tilemap: TileMapLayer):
+    var base_tile = Vector2i(0, 0)
+    var alternative_prob = 0.1
+    var alternative_tiles = {
+        Vector2i(8, 0): 2.0,
+        Vector2i(9, 0): 1.0,
+        Vector2i(4, 1): 2.0,
+        Vector2i(5, 1): 2.0,
+        Vector2i(5, 0): 1.0,
+        Vector2i(6, 0): 1.0,
+        Vector2i(7, 0): 1.0
+        
+    }
+
+    var total_weight = 0.0
+    for weight in alternative_tiles.values():
+        total_weight += weight
+
+    for cell in terrain_tilemap.get_used_cells():
+        var source_id = terrain_tilemap.get_cell_source_id(cell)
+        var atlas_coords = terrain_tilemap.get_cell_atlas_coords(cell)
+
+        if atlas_coords != base_tile:
+            continue
+
+        if randf() > alternative_prob:
+            continue
+
+        var pick = randf() * total_weight
+        var chosen_tile = base_tile
+        for tile in alternative_tiles.keys():
+            pick -= alternative_tiles[tile]
+            if pick <= 0.0:
+                chosen_tile = tile
+                break
+
+        terrain_tilemap.set_cell(cell, source_id, chosen_tile)
 
 
 func _load_patrol_points(patrol_tilemap: TileMapLayer, starting_tile: Vector2i) -> Array[Vector2i]:
