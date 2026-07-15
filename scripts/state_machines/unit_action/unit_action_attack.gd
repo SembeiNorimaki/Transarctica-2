@@ -36,7 +36,7 @@ func _spawn_projectile():
         target_tile,
         unit)
     if bullet:
-        bullet.bullet_hit.connect(_on_bullet_hit, CONNECT_ONE_SHOT)
+        bullet.projectile_hit.connect(_on_bullet_hit, CONNECT_ONE_SHOT)
 
 
 func _on_bullet_hit():

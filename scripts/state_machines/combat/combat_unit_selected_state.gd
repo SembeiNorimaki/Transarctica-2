@@ -1,7 +1,6 @@
 extends GenericState
 class_name UnitSelectedState
 
-var selected_unit: Unit = null
 
 var preview_tile: Vector2i = Vector2i(-1, -1)
 var preview_path: Array[Vector2i] = []
@@ -11,15 +10,15 @@ func _ready():
     
 func enter(params = {}):
     print("Enter CombatUnitSelectedState with params %s" % params)
-    selected_unit = params["selected_unit"]
-    owner_node.selection_manager.select_unit(selected_unit)
-    owner_node.camera_controller.center_at_tile(selected_unit.current_tile)
+    owner_node.selection_manager.select_unit(params["selected_unit"])
+    var unit = owner_node.selection_manager.get_selected_unit()
+    owner_node.camera_controller.center_at_tile(unit.current_tile)
     var hud_params = {
-        "unit_type": selected_unit.unit_type,
-        "weapon_type": selected_unit.weapon.get_type()
+        "unit_type": unit.unit_type,
+        "weapon_type": unit.weapon.get_type()
     }
     owner_node.master_hud.show_hud("UnitHUD", hud_params)
-    owner_node.unit_manager.update_vision(selected_unit)
+    owner_node.unit_manager.update_vision(unit)
 
 func exit(params = {}):
     owner_node.selection_manager.clear_selection()
@@ -30,9 +29,10 @@ func update(delta: float):
 
 func _confirm_move():
     # Order the unit to move
+    var unit = owner_node.selection_manager.get_selected_unit()
     var unit_manager = owner_node.unit_manager
     print("Confirm path ", preview_path)
-    unit_manager.start_unit_movement(selected_unit, preview_path)
+    unit_manager.start_unit_movement(unit, preview_path)
 
     # Clear preview
     #preview_tile = Vector2i(-1, -1)
@@ -40,7 +40,7 @@ func _confirm_move():
     #parent_scene.paths_overlay.clear_path()
 
     # Transition to moving state
-    state_machine.set_state("UnitMovingState", {"selected_unit": selected_unit})
+    state_machine.set_state("UnitMovingState")
 
 
 func handle_click(tile: Vector2i, button_index: int):
@@ -52,14 +52,15 @@ func handle_click(tile: Vector2i, button_index: int):
     # Right click:
     #    Rotate unit so it looks in this direction
     if button_index == MOUSE_BUTTON_RIGHT:
-        var new_orientation = owner_node.grid_service.get_orientation(selected_unit.current_tile, tile)
-        selected_unit.set_orientation(new_orientation)
+        var unit = owner_node.selection_manager.get_selected_unit()
+        var new_orientation = owner_node.grid_service.get_orientation(unit.current_tile, tile)
+        unit.set_orientation(new_orientation)
     elif button_index == MOUSE_BUTTON_LEFT:
         # Check if there is a unit in this tile:
         var units: Array = owner_node.tile_occupancy_service.get_units(tile)
         
         # case 1: clicked on a tile with a different unit -> select it
-        if units.size() > 0 and units[0] != selected_unit and units[0].team_id == "Player":
+        if units.size() > 0 and units[0] != owner_node.selection_manager.get_selected_unit() and units[0].team_id == "Player":
             state_machine.set_state("UnitSelectedState", {"selected_unit": units[0]})
         # case 2: Clicked on a tile without units
         elif units.size() == 0:
@@ -71,7 +72,7 @@ func handle_click(tile: Vector2i, button_index: int):
             # Otherwise calculate new path
             var pathfinder = owner_node.pathfinding_service
             var unit_manager = owner_node.unit_manager
-            var unit_tile = unit_manager.get_unit_tile(selected_unit)
+            var unit_tile = unit_manager.get_unit_tile(owner_node.selection_manager.get_selected_unit())
             var path_and_cost = pathfinder.find_path(unit_tile, tile)
             var path = path_and_cost[0]
             var path_cost = path_and_cost[1]
@@ -138,11 +139,12 @@ func handle_click(tile: Vector2i, button_index: int):
 # q toggles aim
 # c toggles crouch
 func handle_key(event: InputEventKey):
+    var unit = owner_node.selection_manager.get_selected_unit()
     if event.is_action_pressed("tab"):
         owner_node.select_next_unit()
     elif event.is_action_pressed("q"):
         print("Action pressed q")
-        state_machine.set_state("UnitAimingState", {"selected_unit": selected_unit})
+        state_machine.set_state("UnitAimingState", {"selected_unit": unit})
     elif event.is_action_pressed("c"):
         print("Action pressed c")
-        selected_unit.toggle_crouch()
+        unit.toggle_crouch()

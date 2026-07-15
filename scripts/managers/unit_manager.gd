@@ -174,9 +174,9 @@ func request_shoot(shooter: Unit, target_tile: Vector2i) -> bool:
         return false
     
     # Validate LOS
-    if not los_service.has_los(shooter.current_tile, target_tile):
+    #if not los_service.has_los(shooter.current_tile, target_tile):
         # print("Error, no LOS to target tile")
-        return false
+        #return false
     
     # Validate range
     var dist = shooter.current_tile.distance_to(target_tile)

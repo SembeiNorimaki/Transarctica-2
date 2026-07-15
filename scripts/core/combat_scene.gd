@@ -191,6 +191,7 @@ func _inject_services():
     
     weapon_service.los_service = los_service
     weapon_service.grid_service = grid_service
+    weapon_service.edge_occupancy_service = edge_occupancy_service
     weapon_service.projectiles_container = projectiles_container
 
     exploration_service.grid_service = grid_service
@@ -590,6 +591,36 @@ func select_next_unit():
     if next_unit:
         state_machine.set_state("UnitSelectedState", {"selected_unit": next_unit})
 
+
+# called by bullet.gd when it crosses a wall edge between two tiles
+func on_bullet_hit_wall_edge(tile_a: Vector2i, tile_b: Vector2i, damage: int) -> void:
+    print("[CombatScene] Bullet hit wall edge between %s and %s, damage: %d" % [tile_a, tile_b, damage])
+    # WallFull nodes are registered in tile_occupancy_service on their own tile.
+    # WallEdge nodes are NOT in tile_occupancy_service, so we check both tiles
+    # and apply damage to the first wall-like entity found.
+    for tile in [tile_a, tile_b]:
+        for entity in tile_occupancy_service.get_entities(tile):
+            if entity is WallFull:
+                wall_manager.apply_damage_to_wall(entity, damage)
+                return
+            if entity is WallEdge:
+                wall_manager.apply_damage_to_wall_edge(entity, damage)
+                return
+
+# called by Projectile._on_hit() when is_explosive is true
+func on_explosion(world_pos: Vector2, radius_tiles: int, damage: int) -> void:
+    print("[CombatScene] Explosion at %s, radius: %d, damage: %d" % [world_pos, radius_tiles, damage])
+    var center_tile = grid_service.world_to_tile(world_pos)
+    for dx in range(-radius_tiles, radius_tiles + 1):
+        for dy in range(-radius_tiles, radius_tiles + 1):
+            var tile = center_tile + Vector2i(dx, dy)
+            for entity in tile_occupancy_service.get_entities(tile):
+                if entity is Unit:
+                    unit_manager.apply_damage_to_unit(entity, damage)
+                elif entity is WallFull:
+                    wall_manager.apply_damage_to_wall(entity, damage)
+                elif entity is WallEdge:
+                    wall_manager.apply_damage_to_wall_edge(entity, damage)
 
 # TODO: this called by bullet.gd. But bullet also emits bullet_hit signal
 func on_bullet_hit(position: Vector2i, damage: int):
